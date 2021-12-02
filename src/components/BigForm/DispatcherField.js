@@ -16,7 +16,7 @@ import { useDebouncedCallback } from "use-debounce";
 // '&:'
 // }})
 const useStyles = makeStyles({
-  textField: {
+  root: {
     // borderRadius: "0",
     border: "0px",
     "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
@@ -29,18 +29,19 @@ const useStyles = makeStyles({
         borderRadius: "0",
         // border: "1px solid gray",
       },
+    "& .MuiInputLabel-outlined": {
+      textAlign: "center",
+      font: "normal normal normal 16px/19px Work Sans",
+      letterSpacing: "0px",
+      color: "#8A8A8A",
+      opacity: "1",
+    },
   },
 });
 const DispatcherField = (props) => {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { authState, setAuthState } = useContext(AuthContext);
-  // const ownState = useSelector((state) => state[props.formState[props.id]]);
-  // const [isSearching, setIsSearching] = useState(false);
   const classes = useStyles();
-  // useEffect(() => {
-  //   console.log('dispatcher ownState', props);
-  // }, [props]);
-  // const dispatch = useDispatch();
 
   const handleChange = async (e) => {
     console.log("handling change in dispatcher", e.target.value);
@@ -74,26 +75,9 @@ const DispatcherField = (props) => {
       .catch((err) => {
         console.log("err", err);
       });
-    // }
-    // try {
-    //   await axios.put(
-    //     "http://10.0.0.197:3030/api/onboarding/289334a4-50f3-11ec-be49-d08e7912923c",
-    //     { fieldToUpdate }
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    // }
-    // dispatch(
-    //   fieldDataSlice.actions.putFile({
-    //     id: props.id,
-    //     value: e.target.value,
-    //   })
-    // );
-
-    // axios.put('randomURLasdasdsadsad', data);
+ 
   };
 
-  // const debouncedHandleChange = debounce(handleChange, 50);
 
   const debounced = useDebouncedCallback(handleChange, 400);
 

@@ -8,7 +8,7 @@ import { Typography } from "@material-ui/core";
 import PseudoForm from "./PseudoForm";
 import FileForm from "./FileForm";
 import TermsForm from "./TermsForm";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "./ProgressBar"; 
 import { useSelector } from "react-redux";
 import axios from "axios";
 import FieldContext from "../../context/fields";
@@ -20,61 +20,9 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import auth from "../../context/auth";
+import { useStyles } from "../../styles/UiForm";
 
 const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    gap: "10%",
-    "& .MuiPaper-root.MuiStepper-root.MuiStepper-horizontal.MuiPaper-elevation0":
-      {},
-    "&.MuiSvgIcon-root.MuiStepIcon-root": {
-      width: "5rem",
-    },
-    "& .MuiStepLabel-root.MuiStepLabel-horizontal": {
-      display: "flex",
-      flexDirection: "column",
-    },
-    "& .MuiStepLabel-iconContainer": {
-      padding: "0",
-    },
-    "& .MuiSvgIcon-root.MuiStepIcon-root": {
-      transform: "scale(2) translateY(23%)",
-    },
-    "&. MuiInputBase-input.MuiOutlinedInput-input": {
-      borderRadius: "0",
-      borderWidth: "3px",
-    },
-    "& .MuiStepConnector-line.MuiStepConnector-lineHorizontal": {
-      borderTopWidth: "2px",
-    },
-  },
-  progressContainer: {
-    display: "flex",
-    alignItems: "center",
-    gap: "30px",
-    "& .MuiLinearProgress-root.MuiLinearProgress-colorPrimary.MuiLinearProgress-determinate":
-      {
-        flex: "1",
-      },
-  },
-  navButton: {
-    // boxSizing: "border-box",
-    padding: ".35rem 1.65rem",
-    borderRadius: "0",
-    backgroundSize: "100% 205%",
-    backgroundOrigin: "padding",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center 100%",
-    backgroundImage: "linear-gradient(to bottom, blue 50%, transparent 50%)",
-    border: "3px blue solid",
-    transition: ".2s",
-    "&:hover": {
-      backgroundPosition: "center 0",
-      color: "white",
-    },
-  },
-}));
 
 const StepperFormComplex = () => {
   // const uuid = React.useRef(window.search); ///////FIXXXXXXXXXX
@@ -202,7 +150,7 @@ const StepperFormComplex = () => {
     //   accepted: true,
     //   ...authState,
     // });
-    if (authState.isAccepted && authState.progress <= 95)
+    if (authState.isAccepted)//&& authState.progress <= 95
       window.location.pathname = "finale";
     // navigate.push("finale");
   };
@@ -221,12 +169,12 @@ const StepperFormComplex = () => {
 
   return (
     <Box className={classes.container}>
-      <Box sx={{ width: "100%" }}>
+      <Box className = {classes.BoxContainer}>
         <Stepper className={classes.root} nonLinear activeStep={activeStep}>
           {steps.map((label, i) => (
             <Step key={label} completed={completed[i]}>
               <StepButton
-                sx={{ color: "white", width: "5%" }}
+                className={classes.Label}
                 // className={classes.root}
                 color="inherit"
                 onClick={handleStep(i)}
@@ -236,9 +184,9 @@ const StepperFormComplex = () => {
             </Step>
           ))}
         </Stepper>
+        <Box style={{padding:"50px"}}>
         <ProgressBar />
         <Box>
-          <Typography variant="h4">On-Boarding Documentation</Typography>
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
               {activeStep === 0 ? (
@@ -246,9 +194,9 @@ const StepperFormComplex = () => {
               ) : activeStep === 1 ? (
                 <FileForm />
               ) : (
-                <p>
+                
                   <TermsForm />
-                </p>
+                
               )}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -286,6 +234,7 @@ const StepperFormComplex = () => {
               )}
             </Box>
           </React.Fragment>
+        </Box>
         </Box>
       </Box>
     </Box>

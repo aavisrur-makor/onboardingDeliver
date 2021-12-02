@@ -1,5 +1,5 @@
 import { FormControlLabel, makeStyles } from "@material-ui/core";
-import { Box, Input, Typography } from "@material-ui/core";
+import { Box, Input, Typography,IconButton } from "@material-ui/core";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { useContext, useState } from "react";
 import axios from "axios";
@@ -10,6 +10,8 @@ import CheckIcon from "@material-ui/icons/Check";
 import InfoIcon from "@material-ui/icons/Info";
 import FileContext from "../../context/files";
 import AuthContext from "../../context/auth";
+import {ReactComponent as InfoSvg} from "../../assets/circleoutline.svg"
+
 
 const useStyles = makeStyles({
   uploaderAttach: {
@@ -67,11 +69,11 @@ const UploaderField = (props) => {
 
   return (
     <Box style={{ display: "flex", ...props.style }}>
-      <Typography>
+      <Typography className = {classes.proofLabel}>
         {/* {isUploaded && <span>v</span>}  */}
         {props.label}
       </Typography>
-      {props.info && <InfoIcon />}
+      {props.info && <IconButton><InfoSvg /></IconButton>}
       {fileState[props.id] && (
         <Typography>
           <CheckIcon />
@@ -81,6 +83,12 @@ const UploaderField = (props) => {
       <FormControlLabel
         className={classes.uploaderAttach}
         sx={{ color: "white" }}
+        label={
+          <Box sx={{ display: "flex" }}>
+            <AttachFileIcon />
+            <Typography>Attach File</Typography>
+          </Box>
+        }
         control={
           <StyledInput
             type="file"
@@ -94,12 +102,7 @@ const UploaderField = (props) => {
             {props.label}
           </StyledInput>
         }
-        label={
-          <Box sx={{ display: "flex" }}>
-            <AttachFileIcon />
-            <Typography>Attach File</Typography>
-          </Box>
-        }
+        
       />
     </Box>
   );

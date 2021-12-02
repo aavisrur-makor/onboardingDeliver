@@ -1,5 +1,5 @@
 import React, { memo, useContext } from "react";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles,Typography} from "@material-ui/core";
 import DispatcherField from "./DispatcherField";
 import { formData } from "../../utils/formData";
 import { useSelector } from "react-redux";
@@ -20,9 +20,22 @@ const useStyles = makeStyles({
       // gap: "4px",
     },
   },
+  formControl: {
+    "& .MuiFormControl-root": {
+      background: "0% 0% no-repeat padding-box",
+      border: "none",
+      opacity: "1",
+    },
+  },
+  titleText: {
+    fontWeight:"bold", 
+    font: "normal normal bold 24px/29px Cormorant Garamond"
+  }
 });
 
-const PseudoForm = memo(function (props) {
+
+
+const PseudoForm = function (props) {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { steps } = props;
   // const state = useSelector((state) => {
@@ -36,11 +49,18 @@ const PseudoForm = memo(function (props) {
   }, [fieldState]);
 
   return (
-    <Grid container direction="column" className={classes.root} spacing={3}>
+    <Grid container direction="column" className={classes.formControl} spacing={3}>
+      
+      <Grid  item xs={11}>
+      <Typography className={classes.titleText} variant ="body1">
+        On-Boarding Documentation
+      </Typography>
+      </Grid>
+
       <Grid item>
         <Grid container spacing={3}>
           {formData.form1.grid1.map(({ label, id }) => (
-            <Grid className={classes.root} item xs={6}>
+            <Grid item xs={6}>
               <DispatcherField value={fieldState[id]} id={id} label={label} />
             </Grid>
           ))}
@@ -52,7 +72,7 @@ const PseudoForm = memo(function (props) {
       <Grid item spacing={3}>
         <Grid container spacing={3}>
           {formData.form1.grid2.map(({ label, id }) => (
-            <Grid className={classes.root} item xs={12}>
+            <Grid item xs={12}>
               <DispatcherField value={fieldState[id]} id={id} label={label} />
             </Grid>
           ))}
@@ -77,7 +97,7 @@ const PseudoForm = memo(function (props) {
       </Grid>
     </Grid>
   );
-});
+};
 
 export default PseudoForm;
 

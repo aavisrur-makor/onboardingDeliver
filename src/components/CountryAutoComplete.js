@@ -57,16 +57,18 @@ export default CountryAutoComplete;
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {
-    border: "solid #5f3c2b",
     color: "#6d6d6d",
-    marginTop: "20px",
+    background: "0% 0% no-repeat padding-box",
+    border: "1px solid #B9C6CD",
+    opacity: "1"
   },
   inputRoot: {
-    color: "white",
+    color: "black",
+    font: "normal normal normal 16px/19px Work Sans"
   },
   paper: {
-    backgroundColor: "#001333",
-    color: "white",
+
+    color: "black",
   },
   popper: {
     color: "white",

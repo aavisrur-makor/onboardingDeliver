@@ -1,4 +1,4 @@
-import { Box, Card, makeStyles } from "@material-ui/core";
+import { Box,IconButton,Grid ,Card, makeStyles } from "@material-ui/core";
 import _ from "lodash";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import UploaderField from "./UploaderField";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import DeleteIcon from "@material-ui/icons/Delete";
+import {ReactComponent as AddIcon} from './../../assets/icons/Group46.svg';
+import {ReactComponent as TrashIcon} from './../../assets/icons/trashIcon.svg';
 
 import axios from "axios";
 // import { useStyles } from "../../styles";
@@ -13,7 +15,36 @@ import axios from "axios";
 const useStyles = makeStyles({
   root: {
     cursor: "pointer",
+
   },
+  boxContainer:{
+    marginTop:"32px",
+    "&.MuiBox-root":{
+      display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginTop:"40px"
+    },"& .MuiTypography":{
+      color:"red"
+    },
+  },subBoxContainer:{
+    border:"1px solid #B9C6CD",
+    width:"600px",
+    display:"flex",
+    justifyContent:"space-between",
+    alignItems:"center",
+    
+
+    "& .MuiBox-root":{
+    
+    display:"flex",
+    justifyContent:"space-between",
+    alignItems:"center",
+    padding:"10px"
+    }
+  },
+  
 });
 
 function DynamicInputGroup() {
@@ -39,23 +70,32 @@ function DynamicInputGroup() {
   };
 
   return (
-    <Box>
+  
+    <Grid container justifyContent = "space-between"  className = {classes.boxContainer}>
+    <Grid item xs ={6} className = {classes.subBoxContainer}>
       {inputIDs.map((id) => {
-        /////////////////////make sure setFileState is called
         return (
-          <Box>
+          <>
             <UploaderField id={id} label={"Proof of Identity/Address"} />
-            <DeleteIcon
-              className={classes.root}
+            {/* <Box>
+            <AttachFileIcon />
+            <Typography>Attach File</Typography>
+            </Box> */}
+            <IconButton>
+            <TrashIcon
               onClick={() => deleteField(id)}
             />
-          </Box>
+            </IconButton>
+            </>
         );
       })}
-      <Box onClick={handleAdd}>
-        <AddCircleOutlineIcon className={classes.root} />
-      </Box>
-    </Box>
+    </Grid>
+     <Grid item  xs ={6} onClick={handleAdd}>
+     <IconButton>
+       <AddIcon/>
+     </IconButton>
+   </Grid>
+   </Grid>
   );
 }
 
