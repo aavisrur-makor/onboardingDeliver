@@ -38,6 +38,10 @@ const App = () => {
     e.preventDefault();
   });
 
+  useEffect(() => {
+    console.log('PROCESS< PORT', process.env.REACT_APP_PORT);
+  });
+
   // const { fieldState, setFieldState } = useContext(FieldContext);
   // const { fileState, setFileState } = useContext(FileContext);
   // const { authState, setAuthState } = useContext(AuthContext);
