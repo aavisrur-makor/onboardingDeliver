@@ -1,23 +1,24 @@
-import { FormControlLabel, makeStyles } from "@material-ui/core";
-import { Box, Input, Typography,IconButton } from "@material-ui/core";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useContext, useState } from "react";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import fileDataSlice from "../store/fileDataSlice";
-import { withStyles } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import InfoIcon from "@material-ui/icons/Info";
-import FileContext from "../../context/files";
-import AuthContext from "../../context/auth";
-import {ReactComponent as InfoSvg} from "../../assets/circleoutline.svg"
-
+import { FormControlLabel, makeStyles } from '@material-ui/core';
+import { Box, Input, Typography, IconButton, Popover } from '@material-ui/core';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { useContext, useState, memo } from 'react';
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import fileDataSlice from '../store/fileDataSlice';
+import { withStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import InfoIcon from '@material-ui/icons/Info';
+import FileContext from '../../context/files';
+import AuthContext from '../../context/auth';
+import InfoPopoverButton from '../InfoPopoverButton';
+import { ReactComponent as InfoSvg } from '../../assets/circleoutline.svg';
 
 const useStyles = makeStyles({
   uploaderAttach: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
   },
 });
+
 const UploaderField = (props) => {
   // const state = useSelector((state) => state.fileData);
   // const dispatch = useDispatch();
@@ -31,14 +32,14 @@ const UploaderField = (props) => {
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
       const formData = new FormData();
-      formData.append("file", target.files[0]);
+      formData.append('file', target.files[0]);
       const fileType = target.files[0].type;
       // console.log(target.files[0]);
       // console.log(fileType);
       if (
-        fileType.includes("image") ||
-        fileType.includes("text") ||
-        fileType.includes("pdf")
+        fileType.includes('image') ||
+        fileType.includes('text') ||
+        fileType.includes('pdf')
       ) {
         console.log(target.id);
         await axios
@@ -48,7 +49,7 @@ const UploaderField = (props) => {
           )
           .then((res) => {
             if (res.status === 200) {
-              console.log("200 in files", res.data.progress);
+              console.log('200 in files', res.data.progress);
               setAuthState((prev) => ({
                 ...authState,
                 progress: res.data.progress,
@@ -67,13 +68,18 @@ const UploaderField = (props) => {
     }
   };
 
+  const handlePopover = () => {};
+
   return (
-    <Box style={{ display: "flex", ...props.style }}>
-      <Typography className = {classes.proofLabel}>
+    <Box
+      style={{ display: 'flex', ...props.style, alignItems: 'center' }}
+      key={props.id}
+    >
+      <Typography className={classes.proofLabel}>
         {/* {isUploaded && <span>v</span>}  */}
         {props.label}
       </Typography>
-      {props.info && <IconButton><InfoSvg /></IconButton>}
+      {props.info && <InfoPopoverButton info={props.info} />}
       {fileState[props.id] && (
         <Typography>
           <CheckIcon />
@@ -82,27 +88,23 @@ const UploaderField = (props) => {
       )}
       <FormControlLabel
         className={classes.uploaderAttach}
-        sx={{ color: "white" }}
+        sx={{ color: 'white' }}
         label={
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: 'flex' }}>
             <AttachFileIcon />
             <Typography>Attach File</Typography>
           </Box>
         }
         control={
           <StyledInput
-            type="file"
+            type='file'
             id={props.id}
             inputProps={{
-              accept: "application/pdf, application/doc, application/docx",
+              accept: 'application/pdf, application/doc, application/docx',
             }}
             onChange={handleChange}
-          >
-            {fileState[props.id] && <span>v</span>}
-            {props.label}
-          </StyledInput>
+          />
         }
-        
       />
     </Box>
   );
@@ -112,6 +114,6 @@ export default UploaderField;
 
 export const StyledInput = withStyles((theme) => ({
   root: {
-    display: "none",
+    display: 'none',
   },
 }))(Input);
