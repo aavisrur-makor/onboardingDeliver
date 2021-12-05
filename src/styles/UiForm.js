@@ -58,6 +58,11 @@ export const useStyles = makeStyles((theme) => ({
       color: "#B9C6CD",
       fontSize: "1em",
     },
+    "& .MuiLinearProgress-colorPrimary": {
+      backgroundColor: "#D6DFE4",
+    },
+    "& .MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate fill":
+      {},
   },
   navButton: {
     // boxSizing: "border-box",

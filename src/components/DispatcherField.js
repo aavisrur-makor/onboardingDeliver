@@ -42,7 +42,7 @@ const DispatcherField = (props) => {
     console.log("about to putting in fields", authState);
     console.log("putting in fields");
     axios
-      .put(`${process.env.REACT_BASE_URL}onboarding/${authState.uuid}`, {
+      .put(`${process.env.REACT_APP_BASE_URL}onboarding/${authState.uuid}`, {
         fieldToUpdate,
       })
       .then((res) => {
@@ -80,6 +80,9 @@ const DispatcherField = (props) => {
       label={props.label}
       value={fieldState[props.id]}
       variant="outlined"
+      maxRows={props.maxRows}
+      rows={props.rows}
+      multiline
     />
   );
 };

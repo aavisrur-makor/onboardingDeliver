@@ -2,26 +2,13 @@ import React, { useContext, useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
+import { styled } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
-import { Modal, Typography, makeStyles } from "@material-ui/core";
+import { Modal, Typography, makeStyles, FormControl } from "@material-ui/core";
 import AuthContext from "../context/auth";
-
-const useStyles = makeStyles({
-  simpleForm: {
-    minHeight: "100vh",
-    alignItems: "center",
-    "& > .MuiGrid-root.MuiGrid-item": {
-      boxShadow: "0 .7rem 2.5rem -5px rgba(0,0,0,.1)",
-      textAlign: "center",
-      padding: "2rem",
-      justifyContent: "center",
-    },
-    "& > .MuiGrid-root.MuiGrid-item > .MuiGrid-root.MuiGrid-container": {
-      marginBottom: "2rem",
-    },
-  },
-});
+import { useStyles } from "../styles/SmallForm";
 
 const SimpleForm = () => {
   const [name, setName] = useState();
@@ -29,12 +16,13 @@ const SimpleForm = () => {
   const [phone, setPhone] = useState();
   const [company, setCompany] = useState();
   const [isLogged, setLogged] = useState(false);
-  const { setAuthState } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
   const classes = useStyles();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log(e);
+    console.log("inside the submit");
     const data = {
       client_name: name,
       client_email: email,
@@ -42,8 +30,9 @@ const SimpleForm = () => {
       client_company: company,
     };
 
+    console.log("data", data);
     axios
-      .post(`${process.env.REACT_BASE_URL}api/contact`, data)
+      .post(`${process.env.REACT_APP_BASE_URL}contact`, data)
       .then((res) => {
         console.log("login res", res);
         if (res.status === 200) {
@@ -56,121 +45,135 @@ const SimpleForm = () => {
       .catch((err) => {
         console.log(err);
       });
+    setLogged(true);
   };
 
   const handleChange = (e) => {
     const { value, id } = e.target;
+    console.log("id:", id);
+    console.log("value:", value);
     switch (id) {
       case "client_name":
         setName(value);
+        break;
       case "client_email":
         setEmail(value);
+        break;
       case "client_phone":
         setPhone(value);
+        break;
       case "client_company":
         setCompany(value);
+        break;
       default:
         return null;
     }
   };
 
   return (
-    <Grid container className={classes.simpleForm}>
-      <Grid item onSubmit={handleSubmit}>
-        <Grid
-          container
-          justifyContent="center"
-          sx={{ display: "flex", marginTop: "100px" }}
-          spacing={3}
-        >
-          <Grid item md={6}>
-            <TextField
-              variant="outlined"
-              required
-              onChange={handleChange}
-              id="client_name"
-              label="Name"
-              margin="normal"
-              sx={{ border: "solid 1px grey" }}
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              inputProps={{ style: { color: "white" } }}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <TextField
-              variant="outlined"
-              required
-              onChange={handleChange}
-              id="client_email"
-              label="Email"
-              margin="normal"
-              sx={{ border: "solid 1px grey" }}
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              inputProps={{ style: { color: "white" } }}
-            />
-          </Grid>
-
-          <Grid item md={6}>
-            <TextField
-              variant="outlined"
-              required
-              onChange={handleChange}
-              id="client_phone"
-              label="Phone"
-              sx={{ border: "solid 1px grey" }}
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              inputProps={{ style: { color: "white" } }}
-            />
-          </Grid>
-          <Grid item md={6}>
-            <TextField
-              variant="outlined"
-              required
-              onChange={handleChange}
-              id="client_company"
-              label="Company"
-              sx={{ border: "solid 1px grey" }}
-              InputLabelProps={{
-                style: { color: "white" },
-              }}
-              inputProps={{ style: { color: "white" } }}
-            />
+    <Box component="form" onSubmit={handleSubmit}>
+      <Grid container className={classes.simpleForm}>
+        <Grid item xs={12}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography className={classes.clientInformation}>
+                Client Information
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container style={{ marginTop: "20px" }} spacing={3}>
+                <Grid item xs={6} className={classes.gridItemContainer}>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    required
+                    onChange={handleChange}
+                    id="client_name"
+                    label="Name"
+                    className={classes.inputFields}
+                  />
+                </Grid>
+                <Grid item xs={6} className={classes.gridItemContainer}>
+                  <TextField
+                    type="email"
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    id="client_email"
+                    label="Email"
+                    // multiline
+                    // maxRows={9}
+                    // rows='9'
+                    className={classes.inputFields}
+                  />
+                </Grid>
+                <Grid item xs={6} className={classes.gridItemContainer}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    id="client_company"
+                    label="Company"
+                    className={classes.inputFields}
+                  />
+                </Grid>
+                <Grid item xs={6} className={classes.gridItemContainer}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    onChange={handleChange}
+                    id="client_phone"
+                    label="Phone"
+                    className={classes.inputFields}
+                  />
+                </Grid>
+                <Grid item xs={12} className={classes.gridItemButtonContainer}>
+                  <Button
+                    // type="submit"
+                    className={classes.sendButton}
+                    type="submit"
+                  >
+                    Send
+                  </Button>
+                </Grid>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
-        <Button
-          sx={{
-            color: "#f1783f",
-            width: "100px",
-            border: "solid 3px #f1783f",
-            margin: "2px",
-            display: "block",
-            margintop: "24px",
-            marginLeft: "auto",
-          }}
-          onClick={handleSubmit}
-        >
-          Send
-        </Button>
-      </Grid>
+        <Modal className={classes.ModalContainer} open={isLogged}>
+          <Box className={classes.ModalBoxContainer}>
+            <Typography
+              className={classes.modalTextFontTitle}
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
+              Success!
+            </Typography>
 
-      <Modal open={isLogged}>
-        <Box>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Success!
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            You can now proceed to the link sent to you the phone number you
-            provided
-          </Typography>
-        </Box>
-      </Modal>
-    </Grid>
+            <Typography
+              className={classes.modalTextFont}
+              id="modal-modal-description"
+              sx={{ mt: 2 }}
+            >
+              You can now proceed to the link sent to you the phone number you
+              provided
+            </Typography>
+            <Button
+              onClick={() => {
+                setLogged(false);
+              }}
+              className={classes.modalButton}
+            >
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Grid>
+    </Box>
   );
 };
 export default SimpleForm;

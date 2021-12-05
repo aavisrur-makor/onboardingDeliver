@@ -20,18 +20,18 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log("PROCESS< PORT", process.env.REACT_APP_PORT);
+    console.log("PROCESS< PORT", process.env.REACT_APP_APP_PORT);
   });
 
   return (
     <Container md={6} className={classes.container} ref={appRef}>
-      {/* <Router>
+      <Router>
         <Routes>
           <Route path="/" element={<SimpleForm />}></Route>
           <Route path="/:uuid" element={<StepperFormComplex />}></Route>
           <Route path="/finale" element={<FinaleBox />}></Route>
         </Routes>
-      </Router> */}
+      </Router>
       <FinaleBox />
     </Container>
   );

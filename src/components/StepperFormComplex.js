@@ -34,10 +34,10 @@ const StepperFormComplex = () => {
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (!authState.isNewUser && params.uuid) {
       const fieldCall = axios.get(
-          `${process.env.REACT_BASE_URL}onboarding/${params.uuid}`
+          `${process.env.REACT_APP_BASE_URL}onboarding/${params.uuid}`
         ),
         fileCall = axios.get(
-          `${process.env.REACT_BASE_URL}file/${params.uuid}`
+          `${process.env.REACT_APP_BASE_URL}file/${params.uuid}`
         );
 
       axios

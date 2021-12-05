@@ -33,7 +33,7 @@ const UploaderField = (props) => {
         console.log(target.id);
         await axios
           .post(
-            `${prcess.env.REACT_BASE_URL}file/${authState.uuid}/${target.id}`,
+            `${process.env.REACT_APP_BASE_URL}file/${authState.uuid}/${target.id}`,
             formData
           )
           .then((res) => {

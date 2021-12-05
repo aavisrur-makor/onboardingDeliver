@@ -1,22 +1,22 @@
 export default {
   form1: {
     grid1: [
-      { id: "cname", label: "COPMANY nAME" },
+      { id: "cname", label: "Company Name" },
       { id: "regnumber", label: "Register Number" },
       { id: "oaddress", label: "Registered Office Address" },
       // {id: 'country', label: 'COUNTRY'},
     ],
     grid2: [
-      { id: "paddress", label: "PRINCIPAL BUSINESS ADDRESS (IF DIFFERENT)E" },
-      { id: "url", label: "WEBSITE URL" },
+      { id: "paddress", label: "Principal Buisness Address(If different)" },
+      { id: "url", label: "Website Url" },
       {
         id: "description",
-        label: "DESCRIBE THE TYPE OF BUSINESS AND ACTIVITY",
+        label: "Describe the type of Business & Activity",
       },
     ],
     grid3: [
-      { id: "directors", label: "DIRECTOR'S NAME" },
-      { id: "holders", label: "MAJOR SHAREHOLDERS NAMES" },
+      { id: "directors", label: "Director Names" },
+      { id: "holders", label: "Major Shareholder's Names" },
     ],
   },
   form2: [

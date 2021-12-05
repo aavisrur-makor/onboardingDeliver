@@ -50,8 +50,12 @@ export const useStyles = makeStyles((theme) => ({
   },
   inputFields: {
     background: "#FCFCFC 0% 0% no-repeat padding-box",
-    border: " 1px solid #B9C6CD",
+    border: "0px solid #B9C6CD",
     opacity: "1",
+    "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
+      {
+        borderRadius: "0",
+      },
   },
   //   gridItemContainer: {
   //     display: "flex",
