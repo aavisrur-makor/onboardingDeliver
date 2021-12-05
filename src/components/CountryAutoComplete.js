@@ -56,7 +56,7 @@ export const StyledAutoComplete = withStyles((theme) => ({
     border: "1px solid #B9C6CD",
     opacity: "1",
     "& .MuiSvgIcon-root": {
-      transform: "translate(10px,-3px)",
+      transform: "translate(-20px,-3px)",
     },
     "& .MuiInputLabel-formControl": {
       top: "50%",

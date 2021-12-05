@@ -6,7 +6,13 @@ const DynamicUploaderField = memo(
     useEffect(() => {
       console.log("dynamic uploader field props", props);
     }, []);
-    return <UploaderField id={props.id} label={"Proof of Identity/Address"} />;
+    return (
+      <UploaderField
+        style={{ color: "#8A8A8A" }}
+        id={props.id}
+        label={"Proof of Identity/Address"}
+      />
+    );
   },
   (prevProps, nextProps) => prevProps.id !== nextProps.id
 );

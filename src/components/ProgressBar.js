@@ -20,7 +20,7 @@ const ProgressBar = () => {
       <LinearProgress
         variant="determinate"
         className={classes.progressBar}
-        value={50}
+        value={progress}
       />
       <Typography className={classes.barValue} variant="h5" component="p">
         {progress}%

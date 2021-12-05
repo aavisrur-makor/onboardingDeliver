@@ -109,15 +109,15 @@ const TermsForm = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          border: "1px solid #5f3c2b ",
+          border: "1px solid #B9C6CD ",
           marginTop: "16px",
           height: "158px",
         }}
       >
-        <Typography className={classes.acceptLabel} variant="h6">
+        <Typography className={classes.acceptLabel}>
           Would you like to use our electronic trading platform and services?
         </Typography>
-        <Box>
+        <Box style={{ marginTop: "32px" }}>
           <Button className={classes.termButtons} onClick={handleApprove}>
             Yes
           </Button>

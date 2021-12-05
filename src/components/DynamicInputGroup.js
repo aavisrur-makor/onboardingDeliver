@@ -114,7 +114,7 @@ function DynamicInputGroup() {
           </Grid>
         );
       })}
-      <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
+      <Grid item xs={6}>
         <IconButton onClick={handleAdd}>
           <AddIcon />
         </IconButton>

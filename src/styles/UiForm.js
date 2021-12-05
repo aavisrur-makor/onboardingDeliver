@@ -38,6 +38,7 @@ export const useStyles = makeStyles((theme) => ({
     "& .MuiStepIcon-text": {
       font: "normal normal normal 16px/22px Work Sans",
       fontSize: "0.5em",
+      fill: "white",
     },
     "& .MuiTypography-body1": {
       color: "red",
@@ -57,6 +58,7 @@ export const useStyles = makeStyles((theme) => ({
     "& .MuiTypography-h5": {
       color: "#B9C6CD",
       fontSize: "1em",
+      font: "normal normal normal 16px/19px Work Sans",
     },
     "& .MuiLinearProgress-colorPrimary": {
       backgroundColor: "#D6DFE4",
@@ -83,6 +85,12 @@ export const useStyles = makeStyles((theme) => ({
   titleText: {
     fontWeight: "bold",
     font: "normal normal bold 24px/29px Cormorant Garamond",
+    marginBottom: "24px",
+  },
+  attachFileTitle: {
+    "& .MuiBox-root": {
+      color: "red",
+    },
   },
   stepper: {
     backgroundColor: "#f3f3f3",
@@ -114,6 +122,7 @@ export const useStyles = makeStyles((theme) => ({
   onBoardingTitle: {},
   progressTitle: {
     color: "#B9C6CD",
+    font: " normal normal normal 16px/19px Work Sans",
   },
   Label: {
     "& .MuiStepLabel-label.MuiStepLabel-active": {
@@ -146,7 +155,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center 100%",
     backgroundImage: "linear-gradient(to bottom, #3E2F72 50%, transparent 50%)",
-    border: "2px #222246 solid",
+    border: "3px #222246 solid",
     transition: ".2s",
     "&:hover": {
       backgroundPosition: "center 0",
@@ -159,18 +168,17 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "0px",
     color: "#222246",
     opacity: "1",
-    padding: "25px",
   },
   subAcceptLabel: {
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "center",
     textAlign: "center",
     font: "normal normal normal 16px/24px Work Sans",
     letterSpacing: "0px",
     color: "#8A8A8A",
     opacity: "1",
-    border: " 2px solid #222246",
-    opacity: "1",
-    width: "108px",
-    height: "43px",
   },
   uploader: {
     "& > .MuiBox-root": {
