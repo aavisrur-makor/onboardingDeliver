@@ -10,7 +10,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Card, makeStyles } from "@mui/styles";
 import axios from "axios";
-import { useStyles } from "../../styles";
+import { useStyles } from "../styles";
  
 function DynamicInputGroup() {
   const state = useSelector((state) => state.formData);

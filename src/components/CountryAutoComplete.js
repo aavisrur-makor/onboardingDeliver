@@ -1,15 +1,10 @@
 import React, { useContext } from "react";
-import { Box, makeStyles } from "@material-ui/core";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { countries } from "../utils/countries";
+import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
-
-const useStyles = makeStyles({
-  root: { marginTop: "0 !important" },
-});
 
 const CountryAutoComplete = () => {
   const { authState } = useContext(AuthContext);
@@ -20,7 +15,7 @@ const CountryAutoComplete = () => {
       value: e.target.value,
     };
     axios
-      .put(`http://10.0.0.197:3030/api/onboarding/${uuid}`, fieldToUpdate)
+      .put(`${process.env.REACT_BASE_RUL}onboarding/${uuid}`, fieldToUpdate)
       .then((res) => {
         console.log("country res", res);
       })
@@ -29,10 +24,8 @@ const CountryAutoComplete = () => {
       });
   };
 
-  const classes = useStyles();
   return (
     <StyledAutoComplete
-      className={classes.root}
       id="country-select-demo"
       fullWidth
       options={countries}
@@ -60,14 +53,13 @@ export const StyledAutoComplete = withStyles((theme) => ({
     color: "#6d6d6d",
     background: "0% 0% no-repeat padding-box",
     border: "1px solid #B9C6CD",
-    opacity: "1"
+    opacity: "1",
   },
   inputRoot: {
     color: "black",
-    font: "normal normal normal 16px/19px Work Sans"
+    font: "normal normal normal 16px/19px Work Sans",
   },
   paper: {
-
     color: "black",
   },
   popper: {

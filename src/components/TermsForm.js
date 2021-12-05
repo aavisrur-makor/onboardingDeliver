@@ -1,10 +1,21 @@
-import { Box, Checkbox, FormControlLabel } from '@material-ui/core';
-import { Grid, Typography, Paper, List } from '@material-ui/core';
-import { Button } from '@material-ui/core';
-import { useState, useContext, useEffect } from 'react';
-import AuthContext from '../../context/auth';
-import CheckBoxOutlineBlankSharpIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
-import { useStyles } from '../../styles/UiForm';
+import { Box, Checkbox, FormControlLabel } from "@material-ui/core";
+import { Grid, Typography, Paper, List } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { useState, useContext, useEffect } from "react";
+import AuthContext from "../context/auth";
+import CheckBoxOutlineBlankSharpIcon from "@material-ui/icons/CheckBoxOutlineBlankSharp";
+import { useStyles } from "../styles/UiForm";
+import { terms } from "../data/content";
+
+const createContentRecursively = (obj) => {
+  Object.entries(obj).map(([key, value]) => {
+    if (key === "title") {
+      return <Typography variant="h3">{}</Typography>;
+    } else if (key === "title") {
+      return <Typography variant="h3">{}</Typography>;
+    }
+  });
+};
 
 const TermsForm = () => {
   const classes = useStyles();
@@ -18,29 +29,33 @@ const TermsForm = () => {
   };
 
   const toggleAgree = (e) => {
-    const isAccepted = e.target.checked;
-    console.log('accepting ', isAccepted);
-    setAuthState((prev) => ({ isAccepted }));
+    const isAgree = e.target.checked;
+    console.log("accepting ", isAgree);
+    setAuthState((prev) => ({ ...prev, isAgree }));
+
+    //////////////////PROBABLY NEEDS TO CALL THE SERVER NOW
   };
 
   useEffect(() => {
-    console.log('authState', authState);
+    console.log("authState", authState);
   }, [authState]);
   const [isApproved, setApproved] = useState(false);
   return (
     <Box>
-      <Typography className={classes.termsOfUseLabel} variant='h4'>
+      <Typography className={classes.termsOfUseLabel} variant="h4">
         Terms of Use
       </Typography>
       <Box className={classes.termOfUseContainer}>
-        <Paper style={{ maxHeight: '600px', overflow: 'auto' }}>
-          <List style={{ maxHeight: '100%', overflow: 'auto' }}>
+        <Paper style={{ maxHeight: "600px", overflow: "auto" }}>
+          <List style={{ maxHeight: "100%", overflow: "auto" }}>
+            <Box>{}</Box>
+
             <Box>
               <Typography className={classes.termsOfUseList}>
                 1.Acceptance of the Terms
               </Typography>
               <Box className={classes.termsOfUseList}>
-                <Typography className={classes.termsOfUseList}>1.1</Typography>{' '}
+                <Typography className={classes.termsOfUseList}>1.1</Typography>{" "}
                 These Terms of Use (the “Terms”) set out the terms and
                 conditions under which you (“You” or “Your” as appropriate) can
                 trade cryptocurrencies, for example Bitcoin or Ethereum
@@ -57,7 +72,7 @@ const TermsForm = () => {
             </Box>
             <Box>
               <Box className={classes.termsOfUseList}>
-                <Typography className={classes.termsOfUseList}>1.2</Typography>{' '}
+                <Typography className={classes.termsOfUseList}>1.2</Typography>{" "}
                 You acknowledge and agree that by engaging with Enigma, placing
                 any funds with us to execute transactions or generally using the
                 Service in any way, You will be deemed to have accepted these
@@ -91,15 +106,15 @@ const TermsForm = () => {
       <Grid
         container
         style={{
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '1px solid #5f3c2b ',
-          marginTop: '16px',
-          height: '158px',
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid #5f3c2b ",
+          marginTop: "16px",
+          height: "158px",
         }}
       >
-        <Typography className={classes.acceptLabel} variant='h6'>
+        <Typography className={classes.acceptLabel} variant="h6">
           Would you like to use our electronic trading platform and services?
         </Typography>
         <Box>
@@ -111,16 +126,18 @@ const TermsForm = () => {
           </Button>
         </Box>
         <Box hidden={isApproved ? false : true}>
-          <Typography variant='h3'>AML Terms Appendix</Typography>
+          <Typography variant="h3">AML Terms Appendix</Typography>
         </Box>
       </Grid>
       <Box className={classes.acceptLabel}>
         <FormControlLabel
-          sx={{ color: 'white' }}
+          sx={{ color: "white" }}
           control={
             <Checkbox
-              style={{ color: '#271E49' }}
+              onChange={toggleAgree}
+              style={{ color: "#271E49" }}
               icon={<CheckBoxOutlineBlankSharpIcon />}
+              checked={authState.isAgree}
             />
           }
           label={
