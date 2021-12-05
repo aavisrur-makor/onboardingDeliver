@@ -28,7 +28,7 @@ const TermsForm = () => {
   }, [authState]);
   const [isApproved, setApproved] = useState(false);
   return (
-    <Box sx={{ padding: '0 4rem' }}>
+    <Box>
       <Typography className={classes.termsOfUseLabel} variant='h4'>
         Terms of Use
       </Typography>
@@ -131,7 +131,7 @@ const TermsForm = () => {
           }
         />
       </Box>
-      <Box className={classes.acceptLabel}>
+      <Box className={classes.subAcceptLabel}>
         <Typography>
           The sumitted documentation will be rewviwews bby the Cinokuance
           deoartment.

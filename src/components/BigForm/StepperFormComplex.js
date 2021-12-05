@@ -58,7 +58,7 @@ const StepperFormComplex = () => {
           axios.spread((res1, res2) => {
             // const [res1, res2] = data;
             console.log(res1.data, 'inside Use effect');
-            const textFields = res1.data[0];
+            const textFields = res1.data;
             const fileFields = {};
             res2.data.forEach((file) => {
               fileFields[file.field_name] = file.file_name;
@@ -69,7 +69,7 @@ const StepperFormComplex = () => {
             setFileState(fileFields);
             setAuthState((prev) => ({
               ...prev,
-              progress: res1.data[0].progress,
+              progress: res1.data.progress,
             }));
           })
         )

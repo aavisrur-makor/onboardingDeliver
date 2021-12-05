@@ -86,12 +86,12 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
     background: '0% 0% no-repeat padding-box',
     boxShadow: '0px 5px 15px #4E4E4E29',
     opacity: '1',
-    top: '435px',
-    left: '483px',
-    width: '958px',
     // height: '1195px',
     padding: '50px',
   },
@@ -121,16 +121,36 @@ export const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
   },
   termButtons: {
-    border: ' 2px solid #222246',
-    opacity: '1',
-    width: '108px',
-    height: '43px',
+    padding: '10px 50px',
+    
+    marginRight:"30px",
+    borderRadius: '0',
+    backgroundSize: '100% 205%',
+    backgroundOrigin: 'padding',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center 100%',
+    backgroundImage: 'linear-gradient(to bottom, #3E2F72 50%, transparent 50%)',
+    border: '2px #222246 solid',
+    transition: '.2s',
+    '&:hover': {
+      backgroundPosition: 'center 0',
+      color: 'white',
+    },
+    
   },
   acceptLabel: {
     textAlign: 'center',
     font: 'normal normal normal 16px/24px Work Sans',
     letterSpacing: '0px',
-    color: '#3E2F71',
+    color: '#222246',
+    opacity: '1',
+    padding:"25px"
+  },
+  subAcceptLabel:{
+    textAlign: 'center',
+    font: 'normal normal normal 16px/24px Work Sans',
+    letterSpacing: '0px',
+    color: '#8A8A8A',
     opacity: '1',
   },
   termsOfUseLabel: {

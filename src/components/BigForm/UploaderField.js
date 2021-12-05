@@ -44,7 +44,7 @@ const UploaderField = (props) => {
         console.log(target.id);
         await axios
           .post(
-            `http://10.0.0.197:3030/api/file/6ba26ce7-536b-11ec-be49-d08e7912923c/${target.id}`,
+            `http://10.0.0.197:3030/api/file/${authState.uuid}/${target.id}`,
             formData
           )
           .then((res) => {

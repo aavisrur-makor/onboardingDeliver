@@ -52,6 +52,7 @@ function DynamicInputGroup() {
   // const [inputIDs, setInputIDs] = useState([`extra-file-1`]);
   const { fileState, setFileState } = useContext(FileContext);
   const { f_proofs, extraProofs } = fileState;
+
   // const proofFiles = [
   //   { name: 'moshe' },
   //   { name: 'moshe 2' },

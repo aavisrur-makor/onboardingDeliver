@@ -56,7 +56,7 @@ const FileForm = ({ step }) => {
         by a director certifying that no individual owns 25% or more and leave
         this field empty){' '}
       </Typography>
-      <DynamicInputGroup />
+      {/* <DynamicInputGroup /> */}
     </Box>
   );
 };

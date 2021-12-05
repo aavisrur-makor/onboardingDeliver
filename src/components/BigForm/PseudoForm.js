@@ -36,7 +36,9 @@ const useStyles = makeStyles({
 
 
 const PseudoForm = function (props) {
+ 
   const { fieldState, setFieldState } = useContext(FieldContext);
+  console.log(fieldState);
   const { steps } = props;
   // const state = useSelector((state) => {
   //   console.log("stately", state);
