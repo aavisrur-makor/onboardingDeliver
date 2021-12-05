@@ -1,4 +1,4 @@
-export const formData = {
+export default {
   form1: {
     grid1: [
       { id: "cname", label: "COPMANY nAME" },

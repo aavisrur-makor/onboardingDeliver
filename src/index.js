@@ -1,18 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import App from './App';
-import ChiefProvider from './components/ChiefProvider';
-import store from './components/store/store';
-import './index.css';
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import ChiefProvider from "./components/ChiefProvider";
+import "./index.css";
 
 ReactDOM.render(
-  <React.StrictMode>
-    {/* <Provider store = {store}> */}
+  <StrictMode>
     <ChiefProvider>
       <App />
     </ChiefProvider>
-    {/* </Provider> */}
-  </React.StrictMode>,
-  document.getElementById('root')
+  </StrictMode>,
+  document.getElementById("root")
 );

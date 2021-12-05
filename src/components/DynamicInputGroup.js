@@ -1,55 +1,47 @@
-import { Box, IconButton, Grid, Card, makeStyles } from '@material-ui/core';
-import _ from 'lodash';
-import { useState, useEffect, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { IconButton, Grid, makeStyles } from "@material-ui/core";
+import _ from "lodash";
+import { useEffect, useContext } from "react";
+import FileContext from "../context/files";
+import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
+import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 
-import UploaderField from './UploaderField';
-import FileContext from '../../context/files';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { ReactComponent as AddIcon } from './../../assets/icons/Group46.svg';
-import { ReactComponent as TrashIcon } from './../../assets/icons/trashIcon.svg';
-
-import axios from 'axios';
-import DynamicUploaderField from '../DynamicUploaderField';
-// import { useStyles } from "../../styles";
+import axios from "axios";
+import DynamicUploaderField from "./DynamicUploaderField";
 
 const useStyles = makeStyles({
   root: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   dynamicContainer: {
-    marginTop: '32px',
-    '&.MuiBox-root': {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-      marginTop: '40px',
+    marginTop: "32px",
+    "&.MuiBox-root": {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      marginTop: "40px",
     },
-    '& .MuiTypography': {
-      color: 'red',
+    "& .MuiTypography": {
+      color: "red",
     },
   },
   subDynamicContainer: {
-    border: '1px solid #B9C6CD',
-    width: '600px',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    border: "1px solid #B9C6CD",
+    width: "600px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
 
-    '& .MuiBox-root': {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      padding: '10px',
+    "& .MuiBox-root": {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "10px",
     },
   },
 });
 
 function DynamicInputGroup() {
-  // const state = useSelector((state) => state.formData);
-  // const [inputIDs, setInputIDs] = useState([`extra-file-1`]);
   const { fileState, setFileState } = useContext(FileContext);
   const { f_proofs, extraProofs } = fileState;
   // const proofFiles = [
@@ -70,18 +62,18 @@ function DynamicInputGroup() {
   }, []);
   useEffect(() => {
     const { f_proofs, extraProofs } = fileState;
-    console.log('filestate rerender', f_proofs, extraProofs);
+    console.log("filestate rerender", f_proofs, extraProofs);
   }, [fileState]);
 
   const handleAdd = () => {
-    console.log('adding dynamic nput');
+    console.log("adding dynamic nput");
     setFileState({ ...fileState, extraProofs: extraProofs + 1 });
     // setInputIDs((prev) => [`PROOF-IDENTITY-ADDRESS-${prev.length}`, ...prev]);
   };
 
   const deleteField = (id) => {
     axios
-      .delete('url', {
+      .delete("url", {
         fileId: id,
       })
       .then((res) => {
@@ -106,7 +98,7 @@ function DynamicInputGroup() {
           : String(Math.round(Math.random() * 100));
         //////change back to proofFiles
         return (
-          <Grid item xs={6} className={classes.subDynamicContainer}>
+          <Grid item xs={12} className={classes.subDynamicContainer}>
             <DynamicUploaderField
               // key={supposedFileName}
               id={supposedFileName}
@@ -121,7 +113,7 @@ function DynamicInputGroup() {
           </Grid>
         );
       })}
-      <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
+      <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
         <IconButton onClick={handleAdd}>
           <AddIcon />
         </IconButton>
