@@ -1,23 +1,23 @@
-import React, { useEffect, useContext } from "react";
-import { Box } from "@material-ui/core";
-import { Stepper } from "@material-ui/core";
-import { Step } from "@material-ui/core";
-import { StepButton } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import PseudoForm from "./PseudoForm";
-import FileForm from "./FileForm";
-import TermsForm from "./TermsForm";
-import ProgressBar from "./ProgressBar";
-import axios from "axios";
-import FieldContext from "../context/fields";
-import FileContext from "../context/files";
-import AuthContext from "../context/auth";
+import React, { useEffect, useContext } from 'react';
+import { Box, Grid } from '@material-ui/core';
+import { Stepper } from '@material-ui/core';
+import { Step } from '@material-ui/core';
+import { StepButton } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import PseudoForm from './PseudoForm';
+import FileForm from './FileForm';
+import TermsForm from './TermsForm';
+import ProgressBar from './ProgressBar';
+import axios from 'axios';
+import FieldContext from '../context/fields';
+import FileContext from '../context/files';
+import AuthContext from '../context/auth';
 
-import { useParams } from "react-router";
-import { useStyles } from "../styles/UiForm";
+import { useParams } from 'react-router';
+import { useStyles } from '../styles/UiForm';
 
-const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
+const steps = ['Submit Documentation', 'Attach Documents', 'Terms of Use'];
 
 const StepperFormComplex = () => {
   const classes = useStyles();
@@ -27,10 +27,10 @@ const StepperFormComplex = () => {
   const { authState, setAuthState } = useContext(AuthContext);
   const params = useParams();
 
-  console.log("statetest", authState);
+  console.log('statetest', authState);
 
   useEffect(() => {
-    console.log("uuid useeffect", authState, params.uuid);
+    console.log('uuid useeffect', authState, params.uuid);
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (!authState.isNewUser && params.uuid) {
       const fieldCall = axios.get(
@@ -104,18 +104,18 @@ const StepperFormComplex = () => {
   };
 
   const handleAccept = () => {
-    if (authState.isAccepted) window.location.pathname = "finale";
+    if (authState.isAccepted) window.location.pathname = 'finale';
   };
 
   return (
-    <Box className={classes.container} ref={null}>
-      <Box className={classes.BoxContainer}>
+    <Grid container className={classes.container} ref={null} justify='center'>
+      <Grid item xs={12} className={classes.BoxContainer}>
         <Stepper className={classes.root} nonLinear activeStep={activeStep}>
           {steps.map((label, i) => (
             <Step key={label} completed={completed[i]}>
               <StepButton
                 className={classes.Label}
-                color="inherit"
+                color='inherit'
                 onClick={handleStep(i)}
               >
                 {label}
@@ -123,56 +123,68 @@ const StepperFormComplex = () => {
             </Step>
           ))}
         </Stepper>
-        <Box sx={{ padding: "0 4rem" }}>
-          <ProgressBar />
-          <Box>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              {activeStep === 0 ? (
-                <PseudoForm value={fieldState} />
-              ) : activeStep === 1 ? (
-                <FileForm />
-              ) : (
-                <TermsForm />
-              )}
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              {activeStep !== 0 && (
-                <Button
-                  className={classes.navButton}
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Back
-                </Button>
-              )}
-              <Box sx={{ flex: "1 1 auto" }} />
-              {activeStep !== 2 ? (
-                <Button
-                  className={classes.navButton}
-                  onClick={handleNext}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Next
-                </Button>
-              ) : (
-                <Button
-                  className={classes.navButton}
-                  onClick={handleAccept}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Accept and Send
-                </Button>
-              )}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+      </Grid>
+      <Grid item>
+        <Grid container md={10} justify='center'>
+          <Grid item xs={12} sx={{ padding: '0 4rem' }}>
+            <ProgressBar />
+          </Grid>
+          <Grid item>
+            {activeStep === 0 ? (
+              <PseudoForm value={fieldState} />
+            ) : activeStep === 1 ? (
+              <FileForm />
+            ) : (
+              <TermsForm />
+            )}
+          </Grid>
+          <Grid item sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Grid container>
+              <Grid item>
+                {activeStep !== 0 && (
+                  <Button
+                    className={classes.navButton}
+                    color='inherit'
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mr: 1 }}
+                    variant='outlined'
+                  >
+                    Back
+                  </Button>
+                )}
+              </Grid>
+              <Grid
+                item
+                // sx={{ flex: '1 1 auto' }}
+                xs={12}
+                // sx={{ flex: '1 1 auto', justifyContent: 'space-between' }}
+              >
+                {activeStep !== 2 ? (
+                  <Button
+                    className={classes.navButton}
+                    onClick={handleNext}
+                    sx={{ mr: 1 }}
+                    variant='outlined'
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    className={classes.navButton}
+                    onClick={handleAccept}
+                    sx={{ mr: 1 }}
+                    variant='outlined'
+                  >
+                    Accept and Send
+                  </Button>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
