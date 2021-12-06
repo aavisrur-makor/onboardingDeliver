@@ -46,7 +46,7 @@ export const useStyles = makeStyles((theme) => ({
   progressContainer: {
     display: "flex",
     alignItems: "center",
-    marginBottom: "2rem",
+    marginBottom: "1rem",
     gap: "30px",
     "& .MuiLinearProgress-root": {
       flex: "1",
@@ -169,7 +169,7 @@ export const useStyles = makeStyles((theme) => ({
     opacity: "1",
     border: " 2px solid #222246",
     opacity: "1",
-    width: "108px",
+    // width: "108px",
     height: "43px",
   },
   uploader: {

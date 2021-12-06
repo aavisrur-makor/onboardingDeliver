@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { styled } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
+import StyledButton from "../components/StyledButton";
 import axios from "axios";
 import { Modal, Typography, makeStyles, FormControl } from "@material-ui/core";
 import AuthContext from "../context/auth";
@@ -131,13 +131,13 @@ const SimpleForm = () => {
                   />
                 </Grid>
                 <Grid item xs={12} className={classes.gridItemButtonContainer}>
-                  <Button
+                  <StyledButton
                     // type="submit"
                     className={classes.sendButton}
                     type="submit"
                   >
                     Send
-                  </Button>
+                  </StyledButton>
                 </Grid>
               </Grid>
             </Grid>
@@ -162,14 +162,14 @@ const SimpleForm = () => {
               You can now proceed to the link sent to you the phone number you
               provided
             </Typography>
-            <Button
+            <StyledButton
               onClick={() => {
                 setLogged(false);
               }}
               className={classes.modalButton}
             >
               Close
-            </Button>
+            </StyledButton>
           </Box>
         </Modal>
       </Grid>

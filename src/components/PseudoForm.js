@@ -15,7 +15,9 @@ import FieldContext from "../context/fields";
 
 const useStyles = makeStyles({
   root: {
-    "& .MuiGrid-root.MuiGrid-container": {},
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 0,
+    },
   },
   formControl: {
     "& .MuiFormControl-root": {
@@ -32,9 +34,13 @@ const useStyles = makeStyles({
     display: "flex",
     marginTop: "0 !important",
     padding: "1rem 0 0 1rem",
-    "& .MuiAutocomplete-root": { padding: "15px 0 0 10px" },
+    "& .MuiAutocomplete-root": {
+      padding: "15px 0 0 10px",
+    },
     "& .MuiInputBase-root": {
       marginTop: "0",
+
+      // boxShadow: "inset 0 0 0 1px #B9C6CD",
     },
     "& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ": {
       content: "none",
@@ -54,12 +60,7 @@ const PseudoForm = function (props) {
   React.useEffect(() => {}, [fieldState]);
 
   return (
-    <Grid
-      container
-      direction="column"
-      className={classes.formControl}
-      spacing={3}
-    >
+    <Grid container direction="column" className={classes.root} spacing={3}>
       <Grid item xs={11}>
         <Typography className={classes.titleText} variant="body1">
           On-Boarding Documentation

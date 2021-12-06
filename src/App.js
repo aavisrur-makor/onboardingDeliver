@@ -8,8 +8,8 @@ import useEventListener from "./hooks/useEventListener";
 
 const useStyles = makeStyles({
   container: {
-    width: "50%",
-    backgroundColor: "white",
+    // width: "50%",
+    // backgroundColor: "white",
   },
 });
 
@@ -24,7 +24,7 @@ const App = () => {
   });
 
   return (
-    <Container md={6} className={classes.container} ref={appRef}>
+    <Container xs={12} md={6} className={classes.container} ref={appRef}>
       <Router>
         <Routes>
           <Route path="/" element={<SimpleForm />}></Route>

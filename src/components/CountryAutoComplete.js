@@ -60,8 +60,16 @@ export const StyledAutoComplete = withStyles((theme) => ({
     },
     "& .MuiInputLabel-formControl": {
       top: "50%",
-      transform: "translateY(calc(-50%))",
+      transform: "translateY(calc(-50% - 5px))",
     },
+    "& .MuiInput-underline:after": { content: "none" },
+    "& .MuiInputBase-input.MuiInput-input.MuiAutocomplete-input.MuiAutocomplete-inputFocused.MuiInputBase-inputAdornedEnd":
+      {
+        transform: "translate(2px, -3px)",
+        font: "Roboto, Helvetica, Aria, sans-serif",
+        color: "rgba(0, 0, 0, 0.87)",
+        letterSpacing: "0",
+      },
   },
 
   inputRoot: {

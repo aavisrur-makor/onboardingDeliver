@@ -10,8 +10,24 @@ import AuthContext from "../context/auth";
 import InfoPopoverButton from "./InfoPopoverButton";
 
 const useStyles = makeStyles({
+  proofLabel: {
+    color: "#8A8A8A",
+    display: "flex",
+    alignItems: "center",
+    font: "normal normal normal 16px/19px Work Sans",
+  },
   uploaderAttach: {
-    marginLeft: "auto",
+    borderTop: "1px solid #D6DFE4",
+    borderBottom: "1px solid #D6DFE4",
+  },
+  uploader: {
+    borderTop: "1px solid #D6DFE4",
+    "&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type": {
+      borderBottom: "1px solid #D6DFE4",
+    },
+    "& .MuiFormControlLabel-root": {
+      marginLeft: "auto",
+    },
   },
 });
 
@@ -58,6 +74,7 @@ const UploaderField = (props) => {
 
   return (
     <Box
+      className={classes.uploader}
       style={{ display: "flex", ...props.style, alignItems: "center" }}
       key={props.id}
     >
@@ -70,7 +87,6 @@ const UploaderField = (props) => {
         </Typography>
       )}
       <FormControlLabel
-        className={classes.uploaderAttach}
         sx={{ color: "white" }}
         label={
           <Box sx={{ display: "flex" }}>

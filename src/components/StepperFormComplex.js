@@ -2,9 +2,9 @@ import React, { useEffect, useContext } from "react";
 import { Box } from "@material-ui/core";
 import { Stepper } from "@material-ui/core";
 import { Step } from "@material-ui/core";
-import { StepButton } from "@material-ui/core";
+import { StepButton, Grid } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
+import { Typography, makeStyles } from "@material-ui/core";
 import PseudoForm from "./PseudoForm";
 import FileForm from "./FileForm";
 import TermsForm from "./TermsForm";
@@ -15,12 +15,82 @@ import FileContext from "../context/files";
 import AuthContext from "../context/auth";
 
 import { useParams } from "react-router";
-import { useStyles } from "../styles/UiForm";
+import StyledButton from "./StyledButton";
+import { useStyles as useMixins } from "../styles/mixins";
 
 const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
 
+const useStyles = makeStyles({
+  root: {
+    gap: "7%",
+    paddingBottom: "1rem",
+    "&.MuiSvgIcon-root.MuiStepIcon-root": {
+      width: "5rem",
+    },
+    "& .MuiStepLabel-root.MuiStepLabel-horizontal": {
+      display: "flex",
+      flexDirection: "column",
+    },
+    "& .MuiStepLabel-iconContainer": {
+      padding: "0px",
+    },
+    "& .MuiSvgIcon-root.MuiStepIcon-root": {
+      transform: "scale(2) translateY(23%)",
+    },
+    "&. MuiInputBase-input.MuiOutlinedInput-input": {
+      borderRadius: "0",
+      borderWidth: "3px",
+    },
+    "& .MuiStepConnector-line.MuiStepConnector-lineHorizontal": {
+      borderTopWidth: "2px",
+      padding: "10px",
+    },
+    "& .MuiStepIcon-root": {
+      top: "493px",
+      left: "615px",
+      opacity: "1",
+    },
+    "& .MuiStepIcon-root.MuiStepIcon-active": {
+      color: "#3E2F71",
+    },
+    "& .MuiStepIcon-text": {
+      font: "normal normal normal 16px/22px Work Sans",
+      fontSize: "0.5em",
+    },
+    "& .MuiTypography-body1": {
+      color: "red",
+    },
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    background: "0% 0% no-repeat padding-box",
+    boxShadow: "0px 5px 15px #4E4E4E29",
+    opacity: "1",
+    background: "0% 0% no-repeat padding-box",
+    boxShadow: "0px 5px 15px #4E4E4E29",
+    padding: "2rem 2rem 4rem",
+  },
+  label: {
+    "& .MuiStepLabel-label.MuiStepLabel-active": {
+      font: "normal normal medium 16px/24px Work Sans",
+      fontWeight: "bold",
+    },
+    "& .MuiStepLabel-label": {
+      marginTop: "30px",
+      font: "normal normal medium 16px/24px Work Sans",
+      textAlign: "center",
+      fontWeight: "bold",
+    },
+  },
+  navButtonRight: {
+    marginLeft: "auto",
+  },
+});
+
 const StepperFormComplex = () => {
   const classes = useStyles();
+  const mixins = useMixins();
 
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { fileState, setFileState } = useContext(FileContext);
@@ -108,13 +178,13 @@ const StepperFormComplex = () => {
   };
 
   return (
-    <Box className={classes.container} ref={null}>
-      <Box className={classes.BoxContainer}>
+    <Grid container className={classes.container}>
+      <Grid item xs={12}>
         <Stepper className={classes.root} nonLinear activeStep={activeStep}>
           {steps.map((label, i) => (
             <Step key={label} completed={completed[i]}>
               <StepButton
-                className={classes.Label}
+                className={classes.label}
                 color="inherit"
                 onClick={handleStep(i)}
               >
@@ -123,56 +193,62 @@ const StepperFormComplex = () => {
             </Step>
           ))}
         </Stepper>
-        <Box sx={{ padding: "0 4rem" }}>
-          <ProgressBar />
-          <Box>
-            <Typography sx={{ mt: 2, mb: 1 }}>
-              {activeStep === 0 ? (
-                <PseudoForm value={fieldState} />
-              ) : activeStep === 1 ? (
-                <FileForm />
-              ) : (
-                <TermsForm />
-              )}
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+      </Grid>
+      <Grid item className={classes.BoxContainer} xs={10}>
+        <Grid container direction="column">
+          <Grid item>
+            <ProgressBar />
+          </Grid>
+          <Grid item className={mixins.formBody}>
+            {activeStep === 0 ? (
+              <PseudoForm value={fieldState} />
+            ) : activeStep === 1 ? (
+              <FileForm />
+            ) : (
+              <TermsForm />
+            )}
+          </Grid>
+          <Grid item>
+            <Grid container>
               {activeStep !== 0 && (
-                <Button
-                  className={classes.navButton}
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Back
-                </Button>
+                <Grid item>
+                  <StyledButton
+                    // className={classes.navButton}
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mr: 1 }}
+                    variant="outlined"
+                  >
+                    Back
+                  </StyledButton>
+                </Grid>
               )}
-              <Box sx={{ flex: "1 1 auto" }} />
-              {activeStep !== 2 ? (
-                <Button
-                  className={classes.navButton}
-                  onClick={handleNext}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Next
-                </Button>
-              ) : (
-                <Button
-                  className={classes.navButton}
-                  onClick={handleAccept}
-                  sx={{ mr: 1 }}
-                  variant="outlined"
-                >
-                  Accept and Send
-                </Button>
-              )}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+              <Grid item className={classes.navButtonRight}>
+                {activeStep !== 2 ? (
+                  <StyledButton
+                    onClick={handleNext}
+                    sx={{ mr: 1 }}
+                    variant="outlined"
+                  >
+                    Next
+                  </StyledButton>
+                ) : (
+                  <StyledButton
+                    // className={classes.navButton}
+                    onClick={handleAccept}
+                    sx={{ mr: 1 }}
+                    variant="outlined"
+                  >
+                    Accept and Send
+                  </StyledButton>
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 
