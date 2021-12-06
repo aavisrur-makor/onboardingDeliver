@@ -82,7 +82,7 @@ const SimpleForm = () => {
             </Grid>
             <Grid item xs={12}>
               <Grid container style={{ marginTop: "20px" }} spacing={3}>
-                <Grid item xs={6} className={classes.gridItemContainer}>
+                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
                     variant="outlined"
                     fullWidth
@@ -93,7 +93,7 @@ const SimpleForm = () => {
                     className={classes.inputFields}
                   />
                 </Grid>
-                <Grid item xs={6} className={classes.gridItemContainer}>
+                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
                     type="email"
                     variant="outlined"
@@ -108,7 +108,7 @@ const SimpleForm = () => {
                     className={classes.inputFields}
                   />
                 </Grid>
-                <Grid item xs={6} className={classes.gridItemContainer}>
+                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
                     variant="outlined"
                     required
@@ -119,7 +119,7 @@ const SimpleForm = () => {
                     className={classes.inputFields}
                   />
                 </Grid>
-                <Grid item xs={6} className={classes.gridItemContainer}>
+                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
                     variant="outlined"
                     required

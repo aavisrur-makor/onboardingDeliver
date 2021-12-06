@@ -99,7 +99,7 @@ function DynamicInputGroup() {
           : String(Math.round(Math.random() * 100));
         //////change back to proofFiles
         return (
-          <Grid item xs={12} className={classes.subDynamicContainer}>
+          <Grid item xs={10} className={classes.subDynamicContainer}>
             <DynamicUploaderField
               // key={supposedFileName}
               id={supposedFileName}
@@ -114,11 +114,9 @@ function DynamicInputGroup() {
           </Grid>
         );
       })}
-      <Grid item xs={6} style={{ display: "flex", justifyContent: "center" }}>
-        <IconButton onClick={handleAdd}>
-          <AddIcon />
-        </IconButton>
-      </Grid>
+      <IconButton onClick={handleAdd}>
+        <AddIcon />
+      </IconButton>
     </Grid>
   );
 }

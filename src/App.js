@@ -1,4 +1,4 @@
-import { Container, makeStyles } from "@material-ui/core";
+import { Container, makeStyles, useTheme } from "@material-ui/core";
 import React, { useEffect } from "react";
 import StepperFormComplex from "./components/StepperFormComplex";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
+
   const appRef = useEventListener("copy", (e) => {
     e.preventDefault();
   });

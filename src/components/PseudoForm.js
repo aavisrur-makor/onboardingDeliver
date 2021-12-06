@@ -62,21 +62,23 @@ const PseudoForm = function (props) {
   return (
     <Grid container direction="column" className={classes.root} spacing={3}>
       <Grid item xs={11}>
-        <Typography className={classes.titleText} variant="body1">
-          On-Boarding Documentation
-        </Typography>
+        {!props.query && (
+          <Typography className={classes.titleText} variant="body1">
+            On-Boarding Documentation
+          </Typography>
+        )}
       </Grid>
 
       <Grid item>
         <Grid container spacing={3}>
           {formData.form1.grid1.map(({ label, id }) => {
             return (
-              <Grid item xs={6}>
+              <Grid item xs={12} md={6}>
                 <DispatcherField value={fieldState[id]} id={id} label={label} />
               </Grid>
             );
           })}
-          <Grid item xs={6} className={classes.countryAutoComplete}>
+          <Grid item xs={12} md={6} className={classes.countryAutoComplete}>
             <CountryAutoComplete />
           </Grid>
         </Grid>
@@ -94,7 +96,7 @@ const PseudoForm = function (props) {
       <Grid item xs={12}>
         <Grid container spacing={3}>
           {formData.form1.grid3.map(({ label, id }) => (
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
               <DispatcherField
                 value={fieldState[id]}
                 multiline

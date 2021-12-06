@@ -1,19 +1,30 @@
 import React, { useEffect, useContext } from "react";
-import { Box, makeStyles, Typography, Grid } from "@material-ui/core";
+import {
+  Box,
+  makeStyles,
+  Typography,
+  Grid,
+  useMediaQuery,
+} from "@material-ui/core";
 import formData from "../data/formData";
 import UploaderField from "./UploaderField";
 import FileContext from "../context/files";
 import DynamicInputGroup from "./DynamicInputGroup";
 import { useStyles } from "../styles/UiForm";
+import { useTheme } from "@emotion/react";
 
-const FileForm = ({ step }) => {
+const FileForm = ({ query }) => {
   const classes = useStyles();
 
   useEffect(() => {});
   return (
     <Grid container>
       <Grid item>
-        <Typography className={classes.titleText}>Documents</Typography>
+        {!query && (
+          <Typography gutterBottom className={classes.titleText}>
+            Documents
+          </Typography>
+        )}
       </Grid>
       <Grid item className={classes.uploader}>
         <Grid container>

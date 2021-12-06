@@ -11,11 +11,11 @@ export default withStyles({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center 100%",
     backgroundImage: "linear-gradient(to bottom, #3E2F72 50%, transparent 50%)",
-    border: "3px #3E2F72 solid",
+    border: "3px solid #3E2F71",
     transition: ".2s",
     "&:hover": {
       backgroundPosition: "center 0",
-      color: "white",
+      color: "#FFFFFF",
     },
   },
 })(Button);

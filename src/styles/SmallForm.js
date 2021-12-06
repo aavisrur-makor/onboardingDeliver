@@ -11,6 +11,9 @@ export const useStyles = makeStyles((theme) => ({
       // boxSizing: 'border-box',
       boxShadow: "0 .7rem 2.5rem -5px rgba(0,0,0,.1)",
       padding: "100px",
+      [theme.breakpoints.down("md")]: {
+        padding: "5%",
+      },
       justifyContent: "center",
     },
     // "& > .MuiGrid-root.MuiGrid-item > .MuiGrid-root.MuiGrid-container": {

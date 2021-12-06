@@ -46,7 +46,7 @@ export const useStyles = makeStyles((theme) => ({
   progressContainer: {
     display: "flex",
     alignItems: "center",
-    marginBottom: "1rem",
+    marginBottom: "2rem",
     gap: "30px",
     "& .MuiLinearProgress-root": {
       flex: "1",
@@ -57,12 +57,11 @@ export const useStyles = makeStyles((theme) => ({
     "& .MuiTypography-h5": {
       color: "#B9C6CD",
       fontSize: "1em",
+      font: "normal normal normal 16px/19px Work Sans",
     },
     "& .MuiLinearProgress-colorPrimary": {
       backgroundColor: "#D6DFE4",
     },
-    "& .MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate fill":
-      {},
   },
   navButton: {
     // boxSizing: "border-box",
@@ -83,17 +82,49 @@ export const useStyles = makeStyles((theme) => ({
   titleText: {
     fontWeight: "bold",
     font: "normal normal bold 24px/29px Cormorant Garamond",
+    marginBottom: "24px",
   },
   stepper: {
-    backgroundColor: "#f3f3f3",
-    borderRadius: "10px",
-    color: "white",
-    "& .MuiStepLabel-label": {
-      color: "black",
+    "& .MuiStepLabel-root.MuiStepLabel-horizontal": {
+      display: "flex",
+      flexDirection: "column",
+    },
+    "& .MuiStepLabel-iconContainer": {
+      padding: "0px",
+    },
+    "& .MuiSvgIcon-root.MuiStepIcon-root": {
+      transform: "scale(2) translateY(23%)",
+    },
+    "&. MuiInputBase-input.MuiOutlinedInput-input": {
+      borderRadius: "0",
+      borderWidth: "3px",
+    },
+    "& .MuiStepConnector-line.MuiStepConnector-lineHorizontal": {
+      borderTopWidth: "2px",
+      padding: "10px",
+    },
+    "& .MuiStepIcon-root": {},
+    "& .MuiStepIcon-text": {
+      font: "normal normal normal Work Sans",
+    },
+    "& .MuiStepIcon-active": {
+      color: "#3E2F71",
+      border: "none",
+      "& .MuiStepIcon-text": {
+        fill: "#fff",
+      },
+    },
+    "& .MuiStepIcon-root": {
+      color: "white",
+      border: "1px solid #222246",
+      borderRadius: "100%",
     },
     "& .MuiStepIcon-text": {
-      font: "Work Sans",
+      fill: "#000",
     },
+  },
+  navButtonRight: {
+    marginLeft: "auto",
   },
   container: {
     display: "flex",
@@ -105,11 +136,14 @@ export const useStyles = makeStyles((theme) => ({
     background: "0% 0% no-repeat padding-box",
     boxShadow: "0px 5px 15px #4E4E4E29",
     opacity: "1",
-    top: "435px",
-    left: "483px",
-    width: "958px",
+
     // height: '1195px',
     padding: "50px",
+    width: "calc(100vw - 1500px)",
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      padding: "0",
+    },
   },
   onBoardingTitle: {},
   progressTitle: {
@@ -127,12 +161,32 @@ export const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
     },
   },
+  // proofLabel: {
+  //   color: "#8A8A8A",
+  //   display: "flex",
+  //   alignItems: "center",
+  //   font: "normal normal normal 16px/19px Work Sans",
+  // },
   proofLabel: {
     color: "#8A8A8A",
     display: "flex",
     alignItems: "center",
     font: "normal normal normal 16px/19px Work Sans",
   },
+  uploaderAttach: {
+    borderTop: "1px solid #D6DFE4",
+    borderBottom: "1px solid #D6DFE4",
+  },
+  // uploader: {
+  //   borderTop: "1px solid #D6DFE4",
+  //   "&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type": {
+  //     borderBottom: "1px solid #D6DFE4",
+  //   },
+  //   "& .MuiFormControlLabel-root": {
+  //     marginLeft: "auto",
+  //   },
+  // },
+
   uploaderAttach: {
     marginLeft: "auto",
   },
@@ -167,7 +221,6 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "0px",
     color: "#8A8A8A",
     opacity: "1",
-    border: " 2px solid #222246",
     opacity: "1",
     // width: "108px",
     height: "43px",
@@ -183,10 +236,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   acceptLabel: {
     textAlign: "center",
-    font: "normal normal normal 16px/24px Work Sans",
-    letterSpacing: "0px",
-    color: "#3E2F71",
-    opacity: "1",
+    // font: "normal normal normal 16px/24px Work Sans",
+    // letterSpacing: "0px",
+    // color: "#3E2F71",
+    // opacity: "1",
   },
   termsOfUseLabel: {
     textAlign: "left",
@@ -194,7 +247,7 @@ export const useStyles = makeStyles((theme) => ({
     letterSpacing: "0px",
     color: "#222246",
     opacity: "1",
-    padding: "24px 0",
+    // padding: "24px 0",
   },
   termsOfUseList: {
     color: "#3E2F71",
@@ -202,8 +255,6 @@ export const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   termOfUseContainer: {
-    background: "#FCFCFC 0% 0% no-repeat padding-box",
-    border: "1px solid #B9C6CD",
     opacity: "1",
     "&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar": {
       width: "60px",
@@ -226,5 +277,11 @@ export const useStyles = makeStyles((theme) => ({
     "&::-webkit-scrollbar-thumb:hover": {
       background: "#b30000",
     },
+  },
+  yesNoContainer: {
+    padding: "2rem",
+    border: "1px solid #B9C6CD ",
+    alignItems: "center",
+    rowGap: "1.5rem",
   },
 }));

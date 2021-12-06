@@ -7,6 +7,7 @@ import CheckBoxOutlineBlankSharpIcon from "@material-ui/icons/CheckBoxOutlineBla
 // import { useStyles } from "../styles/UiForm";
 import { terms } from "../data/content";
 import StyledButton from "../components/StyledButton";
+import { useStyles } from "../styles/UiForm";
 
 const createContentRecursively = (obj) => {
   Object.entries(obj).map(([key, value]) => {
@@ -17,74 +18,7 @@ const createContentRecursively = (obj) => {
     }
   });
 };
-
-const useStyles = makeStyles({
-  yesNoContainer: {
-    padding: "2rem",
-    border: "1px solid #5f3c2b ",
-    alignItems: "center",
-    rowGap: "1.5rem",
-  },
-  termsOfUseLabel: {
-    textAlign: "left",
-    font: "normal normal bold 24px/29px Cormorant Garamond",
-    letterSpacing: "0px",
-    color: "#222246",
-    opacity: "1",
-    // padding: "24px 0",
-  },
-  termsOfUseList: {
-    color: "#3E2F71",
-    fontFamily: "Work Sans",
-    padding: "20px",
-  },
-  termOfUseContainer: {
-    opacity: "1",
-    "&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar": {
-      width: "60px",
-    },
-    /* Track */
-    "&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar-track":
-      {
-        boxShadow: "inset 0 0 5px grey",
-        borderRadius: "10px",
-      },
-
-    /* Handle */
-    "&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded-webkit-scrollbar-thumb":
-      {
-        background: "red",
-        borderRadius: "10px",
-      },
-
-    /* Handle on hover */
-    "&::-webkit-scrollbar-thumb:hover": {
-      background: "#b30000",
-    },
-  },
-  acceptLabel: {
-    // alignSelf: "center",
-    textAlign: "center",
-    // font: "normal normal normal 16px/24px Work Sans",
-    // letterSpacing: "0px",
-    // color: "#222246",
-    // opacity: "1",
-    // padding: "25px",
-  },
-  subAcceptLabel: {
-    // alignSelf: "center",
-    textAlign: "center",
-    // font: "normal normal normal 16px/24px Work Sans",
-    // letterSpacing: "0px",
-    // color: "#8A8A8A",
-    // opacity: "1",
-    // border: " 2px solid #222246",
-    // opacity: "1",
-    // height: "43px",
-  },
-});
-
-const TermsForm = () => {
+const TermsForm = (props) => {
   const classes = useStyles();
   const { authState, setAuthState } = useContext(AuthContext);
 
@@ -110,9 +44,11 @@ const TermsForm = () => {
   return (
     <Grid container spacing={2}>
       <Grid item>
-        <Typography className={classes.termsOfUseLabel} variant="h4">
-          Terms of Use
-        </Typography>
+        {!props.query && (
+          <Typography className={classes.termsOfUseLabel} variant="h4">
+            Terms of Use
+          </Typography>
+        )}
       </Grid>
       <Grid spacing={0} item className={classes.termOfUseContainer}>
         {/* <Paper style={{ maxHeight: "600px", overflow: "auto" }}> */}
@@ -176,7 +112,7 @@ const TermsForm = () => {
       <Grid item xs={12}>
         <Grid container direction="column" className={classes.yesNoContainer}>
           <Grid item>
-            <Typography variant="h6">
+            <Typography style={{ color: "#3E2F71" }} variant="h6">
               Would you like to use our electronic trading platform and
               services?
             </Typography>

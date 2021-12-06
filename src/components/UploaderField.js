@@ -89,7 +89,7 @@ const UploaderField = (props) => {
       <FormControlLabel
         sx={{ color: "white" }}
         label={
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: "flex", color: "#3E2F71" }}>
             <AttachFileIcon />
             <Typography>Attach File</Typography>
           </Box>
