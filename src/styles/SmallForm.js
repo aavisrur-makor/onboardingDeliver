@@ -13,14 +13,6 @@ export const useStyles = makeStyles((theme) => ({
       padding: "100px",
       justifyContent: "center",
     },
-    // "& > .MuiGrid-root.MuiGrid-item > .MuiGrid-root.MuiGrid-container": {
-    //   padding: "2rem",
-    // },
-    // // '& > .MuiGrid-root.MuiGrid-item >  .MuiGrid-root.MuiGrid-container': {
-    //   boxShadow: '0 .7rem 1.9rem rgba(0,0,0,.1)',
-    //   textAlign: 'center',
-    //   justifyContent: 'center',
-    // },
   },
   sendButtonContainer: {
     display: "flex",

@@ -110,7 +110,7 @@ const StepperFormComplex = () => {
   return (
     <Box className={classes.container} ref={null}>
       <Box className={classes.BoxContainer}>
-        <Stepper className={classes.root} nonLinear activeStep={activeStep}>
+        <Stepper className={classes.stepper} nonLinear activeStep={activeStep}>
           {steps.map((label, i) => (
             <Step key={label} completed={completed[i]}>
               <StepButton

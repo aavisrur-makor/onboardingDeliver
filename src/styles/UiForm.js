@@ -2,48 +2,6 @@ import { TextField, withStyles, makeStyles } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 
 export const useStyles = makeStyles((theme) => ({
-  root: {
-    gap: "7%",
-    "& .MuiPaper-root.MuiStepper-root.MuiStepper-horizontal.MuiPaper-elevation0":
-      {},
-    "&.MuiSvgIcon-root.MuiStepIcon-root": {
-      width: "5rem",
-    },
-    "& .MuiStepLabel-root.MuiStepLabel-horizontal": {
-      display: "flex",
-      flexDirection: "column",
-    },
-    "& .MuiStepLabel-iconContainer": {
-      padding: "0px",
-    },
-    "& .MuiSvgIcon-root.MuiStepIcon-root": {
-      transform: "scale(2) translateY(23%)",
-    },
-    "&. MuiInputBase-input.MuiOutlinedInput-input": {
-      borderRadius: "0",
-      borderWidth: "3px",
-    },
-    "& .MuiStepConnector-line.MuiStepConnector-lineHorizontal": {
-      borderTopWidth: "2px",
-      padding: "10px",
-    },
-    "& .MuiStepIcon-root": {
-      top: "493px",
-      left: "615px",
-      opacity: "1",
-    },
-    "& .MuiStepIcon-root.MuiStepIcon-active": {
-      color: "#3E2F71",
-    },
-    "& .MuiStepIcon-text": {
-      font: "normal normal normal 16px/22px Work Sans",
-      fontSize: "0.5em",
-      fill: "white",
-    },
-    "& .MuiTypography-body1": {
-      color: "red",
-    },
-  },
   progressContainer: {
     display: "flex",
     alignItems: "center",
@@ -63,12 +21,11 @@ export const useStyles = makeStyles((theme) => ({
     "& .MuiLinearProgress-colorPrimary": {
       backgroundColor: "#D6DFE4",
     },
-    "& .MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Determinate fill":
-      {},
   },
   navButton: {
     // boxSizing: "border-box",
     padding: ".35rem 1.65rem",
+    marginTop: "45px",
     borderRadius: "0",
     backgroundSize: "100% 205%",
     backgroundOrigin: "padding",
@@ -87,20 +44,44 @@ export const useStyles = makeStyles((theme) => ({
     font: "normal normal bold 24px/29px Cormorant Garamond",
     marginBottom: "24px",
   },
-  attachFileTitle: {
-    "& .MuiBox-root": {
-      color: "red",
-    },
-  },
+  attachFileTitle: {},
   stepper: {
-    backgroundColor: "#f3f3f3",
-    borderRadius: "10px",
-    color: "white",
-    "& .MuiStepLabel-label": {
-      color: "black",
+    "& .MuiStepLabel-root.MuiStepLabel-horizontal": {
+      display: "flex",
+      flexDirection: "column",
+    },
+    "& .MuiStepLabel-iconContainer": {
+      padding: "0px",
+    },
+    "& .MuiSvgIcon-root.MuiStepIcon-root": {
+      transform: "scale(2) translateY(23%)",
+    },
+    "&. MuiInputBase-input.MuiOutlinedInput-input": {
+      borderRadius: "0",
+      borderWidth: "3px",
+    },
+    "& .MuiStepConnector-line.MuiStepConnector-lineHorizontal": {
+      borderTopWidth: "2px",
+      padding: "10px",
+    },
+    "& .MuiStepIcon-root": {},
+    "& .MuiStepIcon-text": {
+      font: "normal normal normal Work Sans",
+    },
+    "& .MuiStepIcon-active": {
+      color: "#3E2F71",
+      border: "none",
+      "& .MuiStepIcon-text": {
+        fill: "#fff",
+      },
+    },
+    "& .MuiStepIcon-root": {
+      color: "white",
+      border: "1px solid #222246",
+      borderRadius: "100%",
     },
     "& .MuiStepIcon-text": {
-      font: "Work Sans",
+      fill: "#000",
     },
   },
   container: {
@@ -115,7 +96,7 @@ export const useStyles = makeStyles((theme) => ({
     opacity: "1",
     top: "435px",
     left: "483px",
-    width: "958px",
+    width: "calc(100vw - 1558px)",
     // height: '1195px',
     padding: "50px",
   },
@@ -131,16 +112,14 @@ export const useStyles = makeStyles((theme) => ({
     },
     "& .MuiStepLabel-label": {
       marginTop: "30px",
-      font: "normal normal medium 16px/24px Work Sans",
+      font: "normal normal normal 16px/24px Work Sans",
       textAlign: "center",
-      fontWeight: "bold",
     },
   },
   proofLabel: {
     color: "#8A8A8A",
     display: "flex",
     alignItems: "center",
-    font: "normal normal normal 16px/19px Work Sans",
   },
   uploaderAttach: {
     marginLeft: "auto",

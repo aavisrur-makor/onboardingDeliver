@@ -14,8 +14,9 @@ const CountryAutoComplete = () => {
       field: e.target.id,
       value: e.target.value,
     };
+    console.log("checking the field", fieldToUpdate);
     axios
-      .put(`${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`, fieldToUpdate)
+      .put(`${process.env.REACT_APP_BASE_RUL}entity/${uuid}`, fieldToUpdate)
       .then((res) => {
         console.log("country res", res);
       })
@@ -55,12 +56,12 @@ export const StyledAutoComplete = withStyles((theme) => ({
     background: "0% 0% no-repeat padding-box",
     border: "1px solid #B9C6CD",
     opacity: "1",
-    "& .MuiSvgIcon-root": {
-      transform: "translate(-20px,-3px)",
-    },
     "& .MuiInputLabel-formControl": {
       top: "50%",
       transform: "translateY(calc(-50%))",
+    },
+    "& .MuiButtonBase-root": {
+      transform: "translate(-20px,-3px)",
     },
   },
 

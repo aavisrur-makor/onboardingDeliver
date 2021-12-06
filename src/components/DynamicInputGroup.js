@@ -45,11 +45,6 @@ function DynamicInputGroup() {
   const { fileState, setFileState } = useContext(FileContext);
   const { f_proofs, extraProofs } = fileState;
 
-  // const proofFiles = [
-  //   { name: 'moshe' },
-  //   { name: 'moshe 2' },
-  //   { name: 'moshe 3' },
-  // ];
   const classes = useStyles();
 
   useEffect(() => {
@@ -99,7 +94,7 @@ function DynamicInputGroup() {
           : String(Math.round(Math.random() * 100));
         //////change back to proofFiles
         return (
-          <Grid item xs={12} className={classes.subDynamicContainer}>
+          <Grid item xs={7} className={classes.subDynamicContainer}>
             <DynamicUploaderField
               // key={supposedFileName}
               id={supposedFileName}
@@ -114,7 +109,7 @@ function DynamicInputGroup() {
           </Grid>
         );
       })}
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <IconButton onClick={handleAdd}>
           <AddIcon />
         </IconButton>

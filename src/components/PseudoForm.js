@@ -14,9 +14,7 @@ import FieldContext from "../context/fields";
 // ];
 
 const useStyles = makeStyles({
-  root: {
-    "& .MuiGrid-root.MuiGrid-container": {},
-  },
+  root: {},
   formControl: {
     "& .MuiFormControl-root": {
       background: "0% 0% no-repeat padding-box",
