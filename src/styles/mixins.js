@@ -1,13 +1,18 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
   formBody: {
-    marginBottom: "3rem",
+    marginBottom: '3rem',
   },
   unroundedField: {
-    "& .MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline":
+    '& .MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline':
       {
         borderRadius: 0,
       },
   },
-});
+  mobileParagraphs: {
+    [theme.breakpoints.down('sm')]: {
+      textAlign: 'justify',
+    },
+  },
+}));
