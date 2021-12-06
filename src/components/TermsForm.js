@@ -39,8 +39,8 @@ const useStyles = makeStyles({
     padding: "20px",
   },
   termOfUseContainer: {
-    background: "#FCFCFC 0% 0% no-repeat padding-box",
-    border: "1px solid #B9C6CD",
+    // background: "#FCFCFC 0% 0% no-repeat padding-box",
+    // border: "1px solid #B9C6CD",
     opacity: "1",
     "&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar": {
       width: "60px",
@@ -116,8 +116,9 @@ const TermsForm = () => {
           Terms of Use
         </Typography>
       </Grid>
-      <Grid item className={classes.termOfUseContainer}>
-        <Paper style={{ maxHeight: "600px", overflow: "auto" }}>
+      <Grid spacing={0} item className={classes.termOfUseContainer}>
+        {/* <Paper style={{ maxHeight: "600px", overflow: "auto" }}> */}
+        <Paper>
           <List style={{ maxHeight: "100%", overflow: "auto" }}>
             <Box>{}</Box>
 
@@ -173,6 +174,7 @@ const TermsForm = () => {
             </Box>
           </List>
         </Paper>
+        {/* </Paper> */}
       </Grid>
       <Grid item xs={12}>
         <Grid container direction="column" className={classes.yesNoContainer}>
