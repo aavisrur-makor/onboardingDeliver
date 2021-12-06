@@ -49,6 +49,7 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: '2rem',
     gap: '30px',
     '& .MuiLinearProgress-root': {
+      borderRadius: '10px',
       flex: '1',
     },
     '& .MuiLinearProgress-barColorPrimary': {
@@ -85,6 +86,7 @@ export const useStyles = makeStyles((theme) => ({
     marginBottom: '24px',
   },
   stepper: {
+    gap: '2rem',
     '& .MuiStepLabel-root.MuiStepLabel-horizontal': {
       display: 'flex',
       flexDirection: 'column',
@@ -237,9 +239,6 @@ export const useStyles = makeStyles((theme) => ({
     '& > .MuiBox-root:last-child': {
       borderBottom: '1px solid rgba(0,0,0,.1)',
     },
-    [theme.breakpoints.down('sm')]: {
-      alignItems: 'start',
-    },
   },
   acceptLabel: {
     textAlign: 'center',
@@ -269,27 +268,30 @@ export const useStyles = makeStyles((theme) => ({
   },
   termOfUseContainer: {
     opacity: '1',
-    '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar': {
-      width: '60px',
-    },
-    /* Track */
-    '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar-track':
-      {
-        boxShadow: 'inset 0 0 5px grey',
-        borderRadius: '10px',
-      },
+    border: '1px solid #B9C6CD',
+    maxHeight: '80vh',
+    overflow: 'auto',
+    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar': {
+    //   width: '60px',
+    // },
+    // /* Track */
+    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar-track':
+    //   {
+    //     boxShadow: 'inset 0 0 5px grey',
+    //     borderRadius: '10px',
+    //   },
 
-    /* Handle */
-    '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded-webkit-scrollbar-thumb':
-      {
-        background: 'red',
-        borderRadius: '10px',
-      },
+    // /* Handle */
+    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded-webkit-scrollbar-thumb':
+    //   {
+    //     background: 'red',
+    //     borderRadius: '10px',
+    //   },
 
-    /* Handle on hover */
-    '&::-webkit-scrollbar-thumb:hover': {
-      background: '#b30000',
-    },
+    // /* Handle on hover */
+    // '&::-webkit-scrollbar-thumb:hover': {
+    //   background: '#b30000',
+    // },
   },
   agreeToServiceBox: {
     padding: '2rem 1rem',
