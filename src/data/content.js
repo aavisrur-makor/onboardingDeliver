@@ -1,17 +1,17 @@
 export const terms = {
   1: {
-    title: "1. Acceptance of the Terms",
+    title: "Acceptance of the Terms",
     1: "These Terms of Use (the “Terms”) set out the terms and conditions under which you (“You” or “Your” as appropriate) can trade cryptocurrencies, for example Bitcoin or Ethereum (“Crypto” or “Cryptocurrency”) using Enigma Securities Limited as a broker (the “Service”). Enigma Securities Ltd (“Enigma”, “Us”, “We” or “Our” as appropriate) is a company registered in England and Wales with company number 11114339 and registered office located at Gossard House, 7/8 Saville Row, London, W1S 3PE, United Kingdom. Enigma is an Appointed Representative of Makor Securities London Ltd which is authorised and regulated (Reference No: 625054) by the Financial Conduct Authority (the “FCA”). ",
     2: "   You acknowledge and agree that by engaging with Enigma, placing any funds with us to execute transactions or generally using the Service in any way, You will be deemed to have accepted these Terms. You understand that each order submitted to Enigma (whether by voice broking, email or via any other electronic interface that We may provide and/or accept) may result in Your entry into one or more binding transactions (a “Transaction”). You assume full financial and performance responsibility for all such Transactions created as a result of the process set out in these Terms.",
   },
   2: {
-    title: "2. Amendment to the Terms",
+    title: "Amendment to the Terms",
     content:
       "      Unless We consider any amendment to be a material change to the Terms (in which case we will provide You with not less than 7 (seven) days’ prior notice (a “Notice”)), We reserve the right to amend the Terms at any time without prior notice to You. All changes shall take effect immediately and an updated version of the Terms shall be published on Our website. If You do not agree to any amendment then You should stop using the Service immediately.",
   },
   3: {
     title: "Risks",
-    1: "      Unless We consider any amendment to be a material change to the Terms (in which case we will provide You with not less than 7 (seven) days’ prior notice (a “Notice”)), We reserve the right to amend the Terms at any time without prior notice to You. All changes shall take effect immediately and an updated version of the Terms shall be published on Our website. If You do not agree to any amendment then You should stop using the Service immediately.",
+    1: "Cryptocurrencies such as Bitcoin and Ethereum are not currently classified as a type of regulated financial instrument under the current European regulatory framework (including MiFID II). This means that the Service and Related Services are not governed by the same rules and regulations that apply to similar services relating to other products, for example, derivatives. You will not therefore benefit from the statutory client money protections available to clients receiving regulated investment services, including access to the Financial Services Compensation Scheme and the Financial Ombudsman for dispute resolution. The FCA client money regime, as set out in the FCA’s Client Asset Sourcebook, will also not apply to our provision of the Services to You.",
     2: "   The risk of loss in trading or holding Cryptocurrency can be high. The price of a given Cryptocurrency can vary greatly in a very short space of time. Many Cryptocurrencies are not backed by any asset, commodity or central bank. You should ensure that You fully understand these risks and You may therefore wish to take legal or financial advice before using the Service or placing any order. ",
   },
   4: {
@@ -62,22 +62,22 @@ export const terms = {
     4: "   As described above, Your money and Cryptocurrency will not be segregated. Consequently, If We or a Third- Party Account Provider become insolvent, there may be delays in identifying individual assets, increasing the risk of loss. ",
   },
   12: {
-    title: "tax",
+    title: "Tax",
     content:
       "      It is Your sole responsibility to determine whether and to what extent any taxes apply to the Transactions and, if applicable to report and remit the correct payment to the appropriate tax authorities. Enigma does not and will not provide any advice with respect to the tax implications of Your entry into Transactions. ",
   },
   13: {
-    title: "delivery",
+    title: "Delivery",
     content:
       "      Following the execution of a Transaction, delivery will occur on Enigma’s records and Your Account balance will be updated accordingly. ",
   },
   14: {
-    title: "security",
+    title: "Security",
     1: "   You shall be solely responsible for controlling and monitoring the use of the password to Your Account, and shall not permit any person to provide Your password, to any third party. You acknowledge and agree that You shall be bound by any actions taken through the use of Your Account including all orders and the resulting Transactions or other arrangements, as applicable, whether or not such actions were authorised by You. We accept no liability for any loss that You may sustain due to compromise of Your password and/or Account that did not arise directly as a result of Our loss or negligence. If You believe Your Account has been compromised, You should Contact Us immediately at ",
     2: "   By registering an Account, You agree to be bound by and to indemnify and hold Enigma harmless for any and all actions taken by, or omissions of, individuals using an instruction to transfer Crypto to a digital wallet (a “Wallet”). ",
   },
   15: {
-    title: "information provided",
+    title: "Information provided",
     1: "   Any information provided to You via Our website or otherwise does not amount to investment advice. You may use this information for the purposes of the Service only, and shall not disseminate or reproduce the information in any way. Any price quoted or referenced on the website if applicable may be different from the execution price of the Transaction. ",
     2: "    We provide the Service on an “as-is” basis to facilitate the submission of orders and execution of Transactions and any reasonably related activity (the “Permitted Purpose”). ",
   },
@@ -96,27 +96,71 @@ export const terms = {
       1: " You shall indemnify, defend and hold Enigma harmless for any and all claims, losses or damages arising from or related to any breach of the foregoing representations and warranties; and ",
       2: " Enigma may terminate Your Account immediately upon written notice in the event that it concludes, in its reasonable opinion, that You have materially breached any representation or warranty under this Agreement (following applicable notice, grace and cure periods). ",
     },
-    18: {
-      title: "Limitation of Liability",
-      content:
-        "      Enigma shall not be liable to You or any person for any losses, liabilities, damages, claims, costs or expenses arising from: </br>       (i) the performance of any Related Services; </br>      (ii) any delay in the execution of a Transaction; or </br>        (iii) the occurrence of any event describe in Clause 17, above (except where such an event was caused by Our negligence, fraud or wilful default). Without limitation to the above, in no event shall Enigma be liable for any amount greater than the value of the Crypto and fiat currency that is credited to, (or where applicable, ought to have been credited to, Your Account) at the time of any alleged loss or claim. ",
-    },
-    19: {
-      title: "Termination",
-      content:
-        "      We may, at Our sole discretion: (i) close Your Account for any reason by giving seven (7) days’ notice or (ii) with or without prior notice suspend or terminate the Service (or any part of the Service) without liability to You. If Your Account is in credit on the date of termination (howsoever occurring), We will aim to transfer the funds and/or Crypto to Your bank account or Crypto wallet (as applicable) within 3 working days minus any Fees or payments that are due to Us. ",
-    },
-    20: {
-      title: "Supplemental Terms",
-      content:
-        "If You have agreed to use Connectivity or a Trading Platform (both as defined in Appendix 1), the terms of Appendix 1 will also apply.",
-    },
-    21: {
-      title: "Governing Law",
-      content:
-        "      These Terms are governed by and construed in accordance with the law of England and Wales. The courts of England and Wales will have exclusive jurisdiction to adjudicate any dispute arising under or in connection with these Terms. ",
-    },
+  },
+  17: {
+    title: "No Warranty",
+    1: 'The Services are provided on an "as is" and "as available" basis. To the maximum extent permitted by applicable law, we specifically disclaim any implied warranties of title, merchantability, fitness for a particular purpose and/or non-infringement. We do not make any representations or warranties that access to any part of the Services will be uninterrupted or error-free."  }',
+    2: "Neither Enigma nor its affiliates gives any express or implied warranties or representations (including warranties of satisfactory quality and fitness) relating to: (i) any third party systems or protocols used to support the Service; (ii) the long-term value of any Crypto; (iii) the liquidity of any Crypto market or exchange; (iv) the accuracy or timeliness of historical Crypto price data made available to You by one of Our brokers; (v) the amount of time needed to execute a Transaction following an order (which is dependent on factors outside of Our control); (vi) the immutability or security of blockchain or underlying software underpinning any Crypto or any digital wallet (including the Enigma Wallet) associated with the Service (together, the “Technology”); or (vii) the freedom of the Technology from any errors, viruses or disruption.",
+  },
+  18: {
+    title: "Limitation of Liability",
+    content:
+      "      Enigma shall not be liable to You or any person for any losses, liabilities, damages, claims, costs or expenses arising from: </br>       (i) the performance of any Related Services; </br>      (ii) any delay in the execution of a Transaction; or </br>        (iii) the occurrence of any event describe in Clause 17, above (except where such an event was caused by Our negligence, fraud or wilful default). Without limitation to the above, in no event shall Enigma be liable for any amount greater than the value of the Crypto and fiat currency that is credited to, (or where applicable, ought to have been credited to, Your Account) at the time of any alleged loss or claim. ",
+  },
+  19: {
+    title: "Termination",
+    content:
+      "      We may, at Our sole discretion: (i) close Your Account for any reason by giving seven (7) days’ notice or (ii) with or without prior notice suspend or terminate the Service (or any part of the Service) without liability to You. If Your Account is in credit on the date of termination (howsoever occurring), We will aim to transfer the funds and/or Crypto to Your bank account or Crypto wallet (as applicable) within 3 working days minus any Fees or payments that are due to Us. ",
+  },
+  20: {
+    title: "Supplemental Terms",
+    content:
+      "If You have agreed to use Connectivity or a Trading Platform (both as defined in Appendix 1), the terms of Appendix 1 will also apply.",
+  },
+  21: {
+    title: "Governing Law",
+    content:
+      "      These Terms are governed by and construed in accordance with the law of England and Wales. The courts of England and Wales will have exclusive jurisdiction to adjudicate any dispute arising under or in connection with these Terms. ",
   },
 };
 
-export const electronics = {};
+export const appendix = {
+  ["A - 1"]:
+    "Access and use: We may permit You to place transaction orders in cryptocurrencies and derivatives thereof (including foreign exchange) with us by direct electronic communication to us through an electronic system (“Connectivity”). We may also provide You with electronic access to a facility to enable You to execute transactions electronically through us on execution venues that we (or an affiliated entity) are a member or participant and which we may notify to You (the “Trading Platform”) which includes all related software and accompanying documentation. Your right to use Connectivity or the Trading Platform and any financial data, market and business information provided on or through Connectivity at the Trading Platform (“Information”) is limited to use for the purpose of receiving and viewing Information for the transmission and execution of transaction orders. We may amend the terms of this Appendix 1 with respect to the addition of a financial instrument or an execution issue to our Connectivity or Trading Platform services.",
+  ["A - 2"]:
+    "Central counterparty, clearing agent or prime broker: The terms of this paragraph A.2. apply to cryptocurrency derivatives. We may provide Connectivity to the Trading Platform for the execution of transactions on an exchange, multilateral trading facility or other regulated market or trading platform (where the transaction is cleared through a central counterparty) for execution of transactions. We may make Your access to and use of Connectivity to the Trading Platform for execution of such transactions conditional upon Your execution of a give-up agreement on terms approved by us with (i) a clearing member and/or an execution broker member of the relevant exchange, multilateral trading facility or regulated market; or (ii) or a prime broker participant or centralcounterparty for the relevant multilateral trading facility, regulated market or trading platform. We may pay a portion of the fees or charges we receive from You for our services to a central counterparty or operator of an exchange, multilateral trading facility, other regulated market or trading platform.",
+  ["A - 3"]:
+    "Licence: Connectivity and the Trading Platform are owned by us (and/or an affiliated entity) or third parties that licence their use to us (and/or an affiliated entity). You acknowledge and agree that Connectivity and the Trading Platform are the exclusive property of ours and/or the Licensors, and that the Information is the exclusive property of ours and/or the Licensors or such licensor’s third party vendors or their suppliers, and we the Licensor and such third party vendors and their suppliers retain all proprietary right, title, and interest, including, without limitation, copyright, in the Information. We grant You a personal, limited, revocable, non-exclusive, nontransferable licence to access and use Connectivity and the Trading Platform under the terms of this Appendix 1. You shall not copy, license, sell, transfer, make available Connectivity or the Trading Platform or information to any other person. You shall not remove or alter any copyright notice or other proprietary or restrictive notice contained in Connectivity, the Trading Platform or Information.",
+  ["A - 4"]:
+    "Access responsibility: You are responsible for obtaining and maintaining, at Your cost, the necessary computer equipment and internet access required to enable You to access and use the Connectivity, the Trading Platform and Information. You are responsible for any equipment, software or internet access provided by a third party which You require to access and use Connectivity and the Trading Platform. You acknowledge and agree that we (and affiliated entities) are not responsible for any Connectivity or Trading Platform interface applications with third parties such as execution venues, information vendors and other investment firms such as derivative exchange execution and clearing brokers.",
+  ["A - 5"]:
+    "Information changes: Certain Information may be provided by third parties. If any of the Information ceases to be furnished by any third party vendors in a manner which is compatible with Connectivity or the Trading Platform, we may remove as much Information as is affected, without advance notice, without incurring any liability to You, and without any change to any of Your payment or other obligations. Further, we may modify, amend, alter, update, supplement or replace Connectivity or the Trading Platform software (which, among other things, determines the functionality and appearance of some or all of the Connectivity or Trading Platform features) from time to time, in whole or in part, without any notice (except for material changes to functionality as reasonably practical), without incurring any liability to You, and without any change to any of Your payment or other obligations. You acknowledge and agree that Your use of Connectivity or the Trading Platform after any modification, amendment, alteration, update, supplement or replacement shall constitute Your acceptance of such modification, amendment, alteration, update, supplement or replacement.",
+  ["A - 6"]:
+    'Security: You shall keep any user name, password or access code (referred to in this Appendix 1 as "User Codes") provided to You for Connectivity or access to the Trading Platform confidential and secure. You shall be responsible for the safeguarding and security of Your User Codes. You shall be solely responsible for all orders and transactions arising from any person\'s Connectivity use or access to the Trading Platform using Your User Codes notwithstanding any lack of our access controls or the failure of any access controls we may have implemented. You shall notify us immediately and in writing in the event of (i) any loss or theft of part or all of the User Codes; or (ii) any actual or suspected unauthorised use of the User Codes; or (iii) any actual or suspected breach of security or confidentiality of the User Codes. You shall maintain with respect to Connectivity and the Trading Platform adequate systems and controls to ensure that (i) use is only by authorised personnel; (ii) order accuracy, order size, compliance with credit and order limits is checked and validated; and (iii) order direction, order duplication and order retransmission errors do not occur. You will ensure that no computer viruses, worms or similar items are introduced through Connectivity to our computer systems and networks or to the Trading Platform. You will be responsible for the installation and proper use of any virus detection software which we may require.',
+  ["A - 7"]:
+    'System risk: Connectivity the Trading Platform and Information is provided "as is". The entire risk as to the quality and performance of Connectivity or the Trading Platform or Information and any third party related goods and services is with You. We (or affiliated entities) make no warranties (express or implied), representations, or guarantees as to merchantability, fitness for any particular purpose, performance, service continuity, absence of interruptions or errors or otherwise with respect to Connectivity or the Trading Platform or Information. Neither we nor our affiliated entities nor licensors, third party vendors or suppliers of Connectivity, the Trading Platform or Information, shall have any obligation or liability to maintain Connectivity, the Trading Platform or Information or to supply any corrections, updates or releases. We reserve the right, in our absolute discretion, and without prior notice, to reject cancel or refuse to display or seek execution of any order for any reason. We may at any time and in our absolute discretion impose and vary limits and conditions upon the placement of orders using Connectivity or the Trading Platform including limits on size, order types and execution venues and conditions concerning collateral requirements.',
+  ["A - 8"]:
+    "No execution guarantee: You acknowledge and agree that Connectivity or Trading Platform order entry does not guarantee order execution. We will not be responsible for any execution of orders that are not received by reason of Connectivity or Trading Platform malfunction or otherwise. When You use Connectivity or the Trading Platform, unless You have received an electronic order acknowledgement, Your order will be deemed not to have been received. In the event You dispute or deny knowledge of any order which has been electronically acknowledged we will in either case be entitled immediately to liquidate or otherwise offset the position in the relevant investment or financial instrument without prejudice to such other rights we may have under this Appendix 1. Execution venues may reject or cancel Your transaction orders for which we accept no responsibility. You acknowledge that: (1) orders may be delayed for many reasons and the price of a security at the time of order entry may not be the same as the price of such security at the time such order is executed; and (2) cancellation of orders may not be possible prior to execution, even if the cancellation order is received prior to the time at which the order was to be executed.",
+  ["A - 9"]: {
+    content:
+      "System compliance training: You shall provide Your employees that use the Connectivity or Trading Platform with adequate information and training upon (i) the terms of this Appendix 1; and (ii) execution venue rules which we or our affiliated entities are subject and which You must also comply to ensure there is no breach of such rules by us or an affiliated entity. With respect to Connectivity or Trading Platform use for transactions on regulated markets, multilateral trading facilities or exchanges You shall neither engage in, nor facilitate, nor fail to take reasonable steps to prevent:",
+    a: "any action or any course of conduct that has the effect, or may be expected to have the effect, of artificially and/or abnormally moving the price or value of any cryptocurrency, or securities admitted to the regulated market or exchange, or any instrument underlying such cryptocurrency or securities or the level of any index of which such cryptocurrency or securities are a component",
+    b: "entering artificial orders or otherwise entering into or causing any artificial transaction",
+    c: "reporting a fictitious transaction or any other false data to the regulated market, exchange or other competent authority or causing such data to be input into any of their systems",
+    d: "any action or any course of conduct that creates or may reasonably be expected to create any false or misleading impression as to the market in, or price or value of, any cryptocurrency, securities or related financial instruments",
+    e: "any other action or any other course of conduct that may damage the integrity and the transparency of the regulated market or exchange; or",
+    f: "agreeing or acting in concert with, or providing any assistance to, any person with a view to or in connection with any action or course of conduct referred to in paragraphs (a) to (f) inclusive.",
+  },
+  ["A - 10"]:
+    'System misuse: You shall not use the Connectivity or Trading Platform for orders or transactions for or in connection with any activity which may constitute a fraudulent or illegal purpose or market abuse or otherwise use the Connectivity or Trading Platform in contravention of any applicable law and regulatory provisions. For the purposed of this Appendix 1 "market abuse" means behaviour in relation to investments which involves insider dealing, market manipulation or market distortion in breach of applicable laws or regulatory provisions. You undertake to familiarise Yourself and comply with any applicable law and regulatory provisions concerning the short sale of securities if You seek to execute a short sale transaction and You will ensure that Your use of the Connectivity or the Trading Platform will not result in a breach by us (or any affiliated entity) of any applicable law and regulatory provisions concerning the short sale of securities or any terms of this Appendix 1 concerning short sale orders or transactions.',
+  ["A - 11"]:
+    'Order entry error: If an order entry is made using the Connectivity or Trading Platform by mistake or does not reflect the intended transaction (an "erroneous order") then You shall be responsible for amending or cancelling such orders as necessary and for closing any resultant positions subject to our rights in this Appendix 1.',
+  ["A - 12"]:
+    "Pre-execution controls: We reserve the right to limit Your use of Connectivity and the Trading Platform and apply pre-execution trading controls as may be appropriate to preserve compliance with Applicable Regulations or this Appendix 1 or any other trading limits or redirection which may be notified to You. With respect to use of Connectivity or the Trading Platform we shall have the right to reject or cancel orders or enter off-setting orders or restrict Your ability to enter further orders in the event You act in breach of the terms concerning Connectivity or the Trading Platform in this Appendix 1. Connectivity or the Trading Platform, Your access thereto and any information, service feature or function provided by means of Connectivity or the Trading Platform may be changed, limited, suspended, discontinued or terminated by us at any time without notice or liability.",
+  ["A - 13"]:
+    "Disclaimer: Neither ourselves nor any affiliated entity (nor any director, officer or employee thereof) shall have any liability to You or any third party for any losses (including loss of profits), expenses, costs, claims, damages (including punitive, special or exemplary damages) or for any account of profits or other restitutionary relief of any kind whatsoever arising from or incidental to the provision of access to or use of Connectivity or the Trading Platform or Information (including any failure to provide access to Connectivity or the Trading Platform or any operational failure of Connectivity or the Trading Platform or the introduction of any viruses, worms or similar items into Your computer systems and networks through Connectivity or the Trading Platform or any software we provide).",
+  ["A - 14"]:
+    'Indemnity: You shall indemnify and hold us and any affiliated entity harmless (and our respective employees, officers, directors and agents) from and against any and all claims, demands, legal actions or proceedings and all liabilities, damages, losses, expenses and costs (including legal and accounting fees and expenses) (collectively "Losses") arising out of or incidental to Your use of, or access to, Connectivity or the Trading Platform or any associated third party services or equipment provided under the terms of this Appendix 1 except to the extent that any such Losses, as finally determined by a Court of competent jurisdiction, were caused solely and directly by dishonest or wilful misconduct of us or any affiliated entity.',
+  ["A - 15"]:
+    "Third party software: To the extent that You are using Connectivity or the Trading Platform in conjunction with a third party software (including, but not limited to, an algorithm), we expressly disclaim liability for any Losses arising from such third party software. This disclaimer is without prejudice to any other provision of the Terms or Appendix 1.",
+};
