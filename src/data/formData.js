@@ -1,43 +1,55 @@
 export default {
   form1: {
     grid1: [
-      { id: "cname", label: "Company Name" },
-      { id: "regnumber", label: "Register Number" },
-      { id: "oaddress", label: "Registered Office Address" },
+      { id: "legal_entity_name", label: "Company Name" },
+      { id: "registration_number", label: "Register Number" },
+      { id: "registration_gapi_location", label: "Registered Office Address" },
       // {id: 'country', label: 'COUNTRY'},
     ],
     grid2: [
-      { id: "paddress", label: "Principal Buisness Address(If different)" },
-      { id: "url", label: "Website Url" },
       {
-        id: "description",
+        id: "business_gapi_location",
+        label: "Principal Buisness Address(If different)",
+      },
+      { id: "website", label: "Website Url" },
+      {
+        id: "activity_description",
         label: "Describe the type of Business & Activity",
       },
     ],
     grid3: [
-      { id: "directors", label: "Director Names" },
-      { id: "holders", label: "Major Shareholder's Names" },
+      { id: "director_list", label: "Director Names" },
+      { id: "shareholder_list", label: "Major Shareholder's Names" },
     ],
   },
   form2: [
-    { id: "CERTIFICATE", label: "CERTIFICATE OF INCORPORATION" },
     {
-      id: "ARTICLES",
+      id: "certificate of incorporation",
+      label: "CERTIFICATE OF INCORPORATION",
+    },
+    {
+      id: "articles of association",
       label: "ARTICLES OF ASSOCIATION / MEMORANDUM OF ASSOCIATION",
     },
-    { id: "PROOF", label: "DIRECTOR'S NAME" },
+    { id: "proof of business address", label: "DIRECTOR'S NAME" },
     {
-      id: "DIRECTORS",
+      id: "directors list",
       label: "PROOF OF REGISTERED OR PRINCIPAL BUSINESS ADDRESS",
     },
-    { id: "SHAREHOLDERS", label: "COMPANY DIRECTORS' LIST DATED AND SIGNED" },
-    { id: "FUNDS", label: "SOURCE OF FUNDS/WEALTH" },
     {
-      id: "OWNERSHIP",
+      id: "shareholders list",
+      label: "COMPANY DIRECTORS' LIST DATED AND SIGNED",
+    },
+    { id: "source of funds", label: "SOURCE OF FUNDS/WEALTH" },
+    {
+      id: "chart of organisation",
       label: "OWNERSHIP STRUCTURE SCHEME/ORGANIZATIONAL CHART OR EQUIVALENT",
     },
-    { id: "COMPLIANCE", label: "COMPLIANCE KYC AML POLICY" },
-    { id: "STATEMENT", label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)" },
+    { id: "aml policy", label: "COMPLIANCE KYC AML POLICY" },
+    {
+      id: "financial statement",
+      label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)",
+    },
     { id: "PROOFS", label: "DIRECTOR'S NAME" },
   ],
   // form3: {},

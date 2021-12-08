@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   Box,
   Input,
+  useMediaQuery,
 } from "@material-ui/core";
 import { useEffect, useState, memo } from "react";
 import { useStyles } from "../styles/UiForm";
@@ -20,6 +21,7 @@ const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
+  const query = useMediaQuery("(max-width:600px)");
   const supposedFileName = "";
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
@@ -76,9 +78,9 @@ const DynamicUploaderField = memo((props) => {
       key={props.id}
       alignItems="center"
     >
-      <Grid item>
+      <Grid item xs={query ? 12 : 6}>
         <Grid container>
-          <Grid item>
+          <Grid item x>
             <Typography className={classes.proofLabel}>
               Proof of Identity/Address
             </Typography>
@@ -86,9 +88,9 @@ const DynamicUploaderField = memo((props) => {
         </Grid>
       </Grid>
 
-      <Grid item>
+      <Grid item xs={query ? 6 : 5}>
         <FormControlLabel
-          sx={{ color: "white" }}
+          style={{ color: "white" }}
           label={
             <Box
               sx={{ display: "flex", flexDirection: "row", color: "#3E2F71" }}
@@ -111,8 +113,8 @@ const DynamicUploaderField = memo((props) => {
           }
         />
       </Grid>
-      <Grid item>
-        <IconButton style={{ marginLeft: "auto" }}>
+      <Grid style={{ textAlign: "right" }} item xs={query ? 6 : 1}>
+        <IconButton>
           <TrashIcon onClick={() => deleteField(supposedFileName)} />
         </IconButton>
       </Grid>

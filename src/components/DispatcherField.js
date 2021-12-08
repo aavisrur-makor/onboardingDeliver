@@ -38,13 +38,14 @@ const DispatcherField = (props) => {
       field: e.target.id,
       value: fieldState[e.target.id],
     };
-
+    console.log("FIELD TO UPDATE", fieldToUpdate);
     console.log("about to putting in fields", authState);
     console.log("putting in fields");
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}onboarding/${authState.uuid}`, {
-        fieldToUpdate,
-      })
+      .put(
+        `http://10.0.0.191:3030/api/onboarding/${authState.uuid}`,
+        fieldToUpdate
+      )
       .then((res) => {
         if (res.status === 200) {
           console.log("200 in fields", res.data.progress);

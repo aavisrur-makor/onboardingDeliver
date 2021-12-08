@@ -52,7 +52,6 @@ export const useStyles = makeStyles((theme) => ({
     opacity: "1",
   },
   inputFields: {
-    background: "#FCFCFC 0% 0% no-repeat padding-box",
     border: "0px solid #B9C6CD",
     opacity: "1",
     "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
@@ -102,5 +101,24 @@ export const useStyles = makeStyles((theme) => ({
   modalButton: {
     border: "2px solid #222246",
     opacity: "1",
+  },
+  dialAutoComplete: {
+    display: "flex",
+    marginTop: "0 !important",
+    "& .MuiAutocomplete-root": {
+      padding: "15px 0 0 10px",
+    },
+    "& .MuiInputBase-root": {
+      marginTop: "0",
+
+      // boxShadow: "inset 0 0 0 1px #B9C6CD",
+    },
+    "& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ": {
+      content: "none",
+    },
+    "& .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiFormLabel-filled":
+      { display: "none" },
+    "& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty":
+      { display: "none" },
   },
 }));

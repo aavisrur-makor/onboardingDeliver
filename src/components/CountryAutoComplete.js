@@ -1,12 +1,19 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import countries from "../data/countries";
+// import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
 
-const CountryAutoComplete = () => {
+const CountryAutoComplete = (props) => {
+  const [countries, setCountries] = useState([]);
+  useEffect(async () => {
+    const countriesData = await axios.get(
+      "http://10.0.0.191:3030/api/onboarding/country"
+    );
+    await setCountries(countriesData.data);
+  }, []);
   const { authState } = useContext(AuthContext);
   const { uuid } = authState;
   const handleChange = (e) => {
@@ -28,16 +35,17 @@ const CountryAutoComplete = () => {
     <StyledAutoComplete
       id="country"
       fullWidth
+      className={props.className}
       label={"country"}
       options={countries}
       autoHighlight
-      getOptionLabel={(option) => option.label}
+      getOptionLabel={(option) => option.name}
       onChange={handleChange}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
           disableOutline
-          label="Choose a country"
+          label="Country"
           inputProps={{
             ...params.inputProps,
             autoComplete: "new-password", // disable autocomplete and autofill
@@ -62,7 +70,7 @@ export const StyledAutoComplete = withStyles((theme) => ({
     "& .MuiInputLabel-formControl": {
       top: "50%",
 
-      transform: "translateY(calc(-50%))",
+      transform: "translateY(calc(-65%))",
     },
 
     "& .MuiButtonBase-root": {

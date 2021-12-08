@@ -82,8 +82,8 @@ const TermsForm = (props) => {
             </Grid>
           </Grid>
           <Grid item hidden={isApproved ? false : true}>
-            <Grid container spacing={3}>
-              {createTermsAppendixContent(appendix, classes)}
+            <Grid className={classes.termOfUseContainer} container spacing={3}>
+              {createTermsAppendixContent(appendix, classes)}s
             </Grid>
           </Grid>
         </Grid>

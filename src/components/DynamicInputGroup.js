@@ -37,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: "10px",
     },
   },
+  addButton: {
+    "& .MuiIconButton-label": {
+      marginTop: "20px",
+    },
+  },
   subDynamicContainer: {
     border: "1px solid #B9C6CD",
     display: "flex",
@@ -119,8 +124,8 @@ function DynamicInputGroup() {
           </Grid>
         );
       })}
-      <IconButton onClick={handleAdd}>
-        <AddIcon />
+      <IconButton className={classes.addButton} onClick={handleAdd}>
+        <AddIcon style={{ marginRight: "20px" }} />
       </IconButton>
     </Grid>
   );

@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SimpleForm from "./components/SimpleForm";
 import FinaleBox from "./components/FinaleBox";
 import useEventListener from "./hooks/useEventListener";
+import { useState } from "react";
+import axios from "axios";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -17,10 +19,6 @@ const App = () => {
 
   const appRef = useEventListener("copy", (e) => {
     e.preventDefault();
-  });
-
-  useEffect(() => {
-    console.log("PROCESS< PORT", process.env.REACT_APP_APP_PORT);
   });
 
   return (

@@ -9,6 +9,9 @@ import axios from "axios";
 import { Modal, Typography, makeStyles, FormControl } from "@material-ui/core";
 import AuthContext from "../context/auth";
 import { useStyles } from "../styles/SmallForm";
+import { Autocomplete } from "@mui/material";
+import CountryAutoComplete from "./CountryAutoComplete";
+import DialPhoneAutoComplete from "./DialPhoneAutoComplete";
 
 const SimpleForm = () => {
   const [name, setName] = useState();
@@ -18,20 +21,21 @@ const SimpleForm = () => {
   const [isLogged, setLogged] = useState(false);
   const { authState, setAuthState } = useContext(AuthContext);
   const classes = useStyles();
-  useEffect(() => {
-    axios.get("https://ip.nf/me.json").then((res) => {
-      console.log("looking for ip", res);
-    });
-  }, []);
+
+  // useEffect(async () => {
+  //   console.log("SIMPLE FORM FIRST UPLOAD");
+  //   getUserCountry();
+  // }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
     console.log("inside the submit");
     const data = {
-      client_name: name,
-      client_email: email,
-      client_phone: phone,
-      client_company: company,
+      name: name,
+      email: [email],
+      phone: [phone],
+      company: company,
     };
 
     console.log("data", data);
@@ -123,16 +127,25 @@ const SimpleForm = () => {
                     className={classes.inputFields}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    onChange={handleChange}
-                    id="client_phone"
-                    label="Phone"
-                    className={classes.inputFields}
-                  />
+                <Grid item xs={12} md={6}>
+                  <Grid justifyContent="center" container>
+                    <Grid className={classes.dialAutoComplete} item xs={4}>
+                      <DialPhoneAutoComplete
+                      // loggedUserCountry={userCountry}
+                      />
+                    </Grid>
+                    <Grid item xs={8} className={classes.gridItemContainer}>
+                      <TextField
+                        variant="outlined"
+                        required
+                        fullWidth
+                        onChange={handleChange}
+                        id="client_phone"
+                        label="Phone"
+                        className={classes.inputFields}
+                      />
+                    </Grid>
+                  </Grid>
                 </Grid>
                 <Grid item xs={12} className={classes.gridItemButtonContainer}>
                   <StyledButton

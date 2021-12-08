@@ -2,7 +2,7 @@ import { FormControlLabel, makeStyles, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { Box, Input, Typography, Grid } from "@material-ui/core";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploaderField = (props) => {
   const classes = useStyles();
+  const [file, setfile] = useState({});
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
@@ -52,21 +53,28 @@ const UploaderField = (props) => {
 
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
-      const formData = new FormData().append("file", target.files[0]);
+      console.log("sending file", target.files[0]);
+      const formData = new FormData();
+      setfile(target.files[0]);
+      formData.append("file", file);
       const fileType = target.files[0].type;
-
+      console.log("sending file", formData);
+      const data = {
+        field: target.id,
+        file: formData,
+      };
+      console.log("checking the data ", data);
       if (
         fileType.includes("image") ||
         fileType.includes("text") ||
         fileType.includes("pdf")
       ) {
         console.log(target.id);
+        console.log("uuid in the upload files", authState.uuid);
         await axios
-          .post(
-            `${process.env.REACT_APP_BASE_URL}file/${authState.uuid}/${target.id}`,
-            formData
-          )
+          .post(`http://10.0.0.191:3030/api/document/${authState.uuid}`, data)
           .then((res) => {
+            console.log(res);
             if (res.status === 200) {
               setAuthState((prev) => ({
                 ...authState,

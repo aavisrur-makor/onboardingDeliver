@@ -40,24 +40,27 @@ const StepperFormComplex = () => {
   console.log("statetest", authState);
 
   useEffect(() => {
-    console.log("uuid useeffect", authState, params.uuid);
+    console.log("uuid useeffect", fieldState, params.uuid);
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (!authState.isNewUser && params.uuid) {
       const fieldCall = axios.get(
-          `${process.env.REACT_APP_BASE_URL}onboarding/${params.uuid}`
+          `http://10.0.0.191:3030/api/onboarding/${params.uuid}`
         ),
         fileCall = axios.get(
-          `${process.env.REACT_APP_BASE_URL}file/${params.uuid}`
+          `http://10.0.0.191:3030/api/document/${params.uuid}`
         );
 
       axios
         .all([fieldCall, fileCall])
         .then(
           axios.spread((res1, res2) => {
+            console.log(res1);
             const textFields = res1.data;
             const fileFields = {};
 
             res2.data.forEach((file) => {
+              console.log(res1);
+
               fileFields[file.field_name] = file.file_name;
             });
 
@@ -71,7 +74,7 @@ const StepperFormComplex = () => {
           })
         )
         .catch((err) => {
-          console.log(err);
+          console.log("inside the error", err);
         });
     }
   }, []);
