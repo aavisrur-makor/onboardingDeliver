@@ -272,38 +272,54 @@ export const useStyles = makeStyles((theme) => ({
     padding: "20px",
   },
   termOfUseContainer: {
+    position: "relative",
     opacity: "1",
     border: "1px solid #B9C6CD",
-    maxHeight: "calc(100vh - 350px)",
+    maxHeight: "80vh",
     overflow: "auto",
-    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar': {
-    //   width: '60px',
+    padding: "2rem",
+    "&::-webkit-scrollbar": {
+      width: "9px",
+    },
+    "&::-webkit-scrollbar-track": {
+      boxShadow: "inset 0 0 6px rgba(0,0,0,0.0)",
+      backgroundColor: "rgba(0,0,0, .04)",
+      webkitBoxShadow: "inset 0 0 6px rgba(0,0,0,0.0)",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "rgba(0,0,0,.15)",
+      // outline: "1px solid slategrey",
+      borderRadius: "17px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      backgroundColor: "rgba(62,47,113, .7)",
+      // boxShadow: '0 0 45px rgba(0,0,0,.5)',
+    },
+    // "&::before": {
+    //   position: "absolute",
+    //   content: "''",
+    //   top: "0",
+    //   left: "0",                                                                       white fade for the terms of use container
+    //   width: "100%",
+    //   height: "3rem",
+    //   backgroundImage: "linear-gradient(to bottom, white, transparent)",
     // },
-    // /* Track */
-    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded::-webkit-scrollbar-track':
-    //   {
-    //     boxShadow: 'inset 0 0 5px grey',
-    //     borderRadius: '10px',
-    //   },
-
-    // /* Handle */
-    // '&.MuiPaper-root.MuiPaper-elevation1.MuiPaper-rounded-webkit-scrollbar-thumb':
-    //   {
-    //     background: 'red',
-    //     borderRadius: '10px',
-    //   },
-
-    // /* Handle on hover */
-    // '&::-webkit-scrollbar-thumb:hover': {
-    //   background: '#b30000',
-    // },
   },
-  backStepperButtons: {
-    padding: "0.5em 2em",
+  termsOfUseSectionTitle: {
+    color: "#3E2F71",
+    fontWeight: "700",
   },
-  acceptAndSendStepperButtons: {
-    padding: "0.5em 1em",
+  termsOfUseSection: {
+    padding: "0 1.5rem",
+    [theme.breakpoints.down("sm")]: {
+      padding: "0",
+    },
   },
+  termsOfUseSectionNum: {
+    color: "#8A8A8A",
+    fontWeight: "600",
+  },
+  termsOfUseIndentedSection: { marginLeft: "5px" },
   agreeToServiceBox: {
     padding: "2rem 1rem",
     border: "1px solid #B9C6CD ",
