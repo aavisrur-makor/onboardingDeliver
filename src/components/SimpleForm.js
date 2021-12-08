@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -18,7 +18,11 @@ const SimpleForm = () => {
   const [isLogged, setLogged] = useState(false);
   const { authState, setAuthState } = useContext(AuthContext);
   const classes = useStyles();
-
+  useEffect(() => {
+    axios.get("https://ip.nf/me.json").then((res) => {
+      console.log("looking for ip", res);
+    });
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(e);
@@ -32,7 +36,7 @@ const SimpleForm = () => {
 
     console.log("data", data);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}contact`, data)
+      .post(`http://10.0.0.191:3030/api/onboarding`, data)
       .then((res) => {
         console.log("login res", res);
         if (res.status === 200) {

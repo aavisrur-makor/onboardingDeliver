@@ -1,7 +1,7 @@
 import { Button } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
 
-export default withStyles({
+export default withStyles((theme) => ({
   root: {
     // boxSizing: "border-box",
     padding: ".35rem 1.9rem",
@@ -17,5 +17,11 @@ export default withStyles({
       backgroundPosition: "center 0",
       color: "#FFFFFF",
     },
+    [theme.breakpoints.down("sm")]: {
+      "&:hover": {
+        backgroundPosition: "center 100%",
+        color: "#000000",
+      },
+    },
   },
-})(Button);
+}))(Button);

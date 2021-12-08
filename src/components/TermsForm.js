@@ -1,20 +1,20 @@
-import { Box, Checkbox, FormControlLabel, makeStyles } from '@material-ui/core';
-import { Grid, Typography, Paper, List } from '@material-ui/core';
-import { Button } from '@material-ui/core';
-import { useState, useContext, useEffect } from 'react';
-import AuthContext from '../context/auth';
-import CheckBoxOutlineBlankSharpIcon from '@material-ui/icons/CheckBoxOutlineBlankSharp';
+import { Box, Checkbox, FormControlLabel, makeStyles } from "@material-ui/core";
+import { Grid, Typography, Paper, List } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { useState, useContext, useEffect } from "react";
+import AuthContext from "../context/auth";
+import CheckBoxOutlineBlankSharpIcon from "@material-ui/icons/CheckBoxOutlineBlankSharp";
 // import { useStyles } from "../styles/UiForm";
-import { terms } from '../data/content';
-import StyledButton from '../components/StyledButton';
-import { useStyles } from '../styles/UiForm';
+import { terms } from "../data/content";
+import StyledButton from "../components/StyledButton";
+import { useStyles } from "../styles/UiForm";
 
 const createContentRecursively = (obj) => {
   Object.entries(obj).map(([key, value]) => {
-    if (key === 'title') {
-      return <Typography variant='h3'>{}</Typography>;
-    } else if (key === 'title') {
-      return <Typography variant='h3'>{}</Typography>;
+    if (key === "title") {
+      return <Typography variant="h3">{}</Typography>;
+    } else if (key === "title") {
+      return <Typography variant="h3">{}</Typography>;
     }
   });
 };
@@ -31,21 +31,21 @@ const TermsForm = (props) => {
 
   const toggleAgree = (e) => {
     const isAgree = e.target.checked;
-    console.log('accepting ', isAgree);
+    console.log("accepting ", isAgree);
     setAuthState((prev) => ({ ...prev, isAgree }));
 
     //////////////////PROBABLY NEEDS TO CALL THE SERVER NOW
   };
 
   useEffect(() => {
-    console.log('authState', authState);
+    console.log("authState", authState);
   }, [authState]);
   const [isApproved, setApproved] = useState(false);
   return (
     <Grid container className={classes.termFormContainer}>
       <Grid item>
         {!props.query && (
-          <Typography className={classes.termsOfUseLabel} variant='h4'>
+          <Typography className={classes.termsOfUseLabel} variant="h4">
             Terms of Use
           </Typography>
         )}
@@ -56,7 +56,7 @@ const TermsForm = (props) => {
             1.Acceptance of the Terms
           </Typography>
           <Box className={classes.termsOfUseList}>
-            <Typography className={classes.termsOfUseList}>1.1</Typography>{' '}
+            <Typography className={classes.termsOfUseList}>1.1</Typography>{" "}
             These Terms of Use (the “Terms”) set out the terms and conditions
             under which you (“You” or “Your” as appropriate) can trade
             cryptocurrencies, for example Bitcoin or Ethereum (“Crypto” or
@@ -104,11 +104,18 @@ const TermsForm = (props) => {
       <Grid item xs={12}>
         <Grid
           container
-          direction='column'
+          direction="column"
           className={classes.agreeToServiceBox}
         >
           <Grid item>
-            <Typography style={{ color: '#3E2F71' }} variant='h6'>
+            <Typography
+              style={{
+                color: "#3E2F71",
+                textAlign: "center",
+                fontSize: "16px",
+              }}
+              variant="h6"
+            >
               Would you like to use our electronic trading platform and
               services?
             </Typography>
@@ -124,23 +131,23 @@ const TermsForm = (props) => {
             </Grid>
           </Grid>
           <Grid hidden={isApproved ? false : true}>
-            <Typography variant='h3'>AML Terms Appendix</Typography>
+            <Typography variant="h3">AML Terms Appendix</Typography>
           </Grid>
         </Grid>
       </Grid>
       <Grid item className={classes.acceptLabel} xs={12}>
         <FormControlLabel
-          sx={{ color: 'white' }}
+          className={classes.formLabelTermOfUse}
+          sx={{ color: "white" }}
           control={
             <Checkbox
               onChange={toggleAgree}
-              style={{ color: '#271E49' }}
               icon={<CheckBoxOutlineBlankSharpIcon />}
               checked={authState.isAgree}
             />
           }
           label={
-            <Typography>
+            <Typography style={{ fontSize: "16px", textAlign: "center" }}>
               Before you can submit application, you must aggree with Terms of
               Use
             </Typography>
@@ -150,13 +157,8 @@ const TermsForm = (props) => {
       <Grid item className={classes.subAcceptLabel} xs={12}>
         <Grid>
           <Typography>
-            The sumitted documentation will be rewviwews bby the Cinokuance
-            deoartment.
-          </Typography>
-        </Grid>
-        <Grid>
-          <Typography>
-            This process might take up to 14 business days.
+            The submitted documentation will be reviewed by the Compliance
+            department. This process might take up to 14 business days.
           </Typography>
         </Grid>
       </Grid>

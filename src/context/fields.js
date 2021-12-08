@@ -2,13 +2,21 @@ import { createContext } from "react";
 
 export default createContext();
 export const initialState = {
-  cname: "",
-  oaddress: "",
-  paddress: "",
-  url: "",
-  description: "",
-  directors: "",
-  regnumber: "",
+  legal_entity_name: "",
+
+  registration_number: "",
+
+  registration_gapi_location: "",
+
   country: "",
-  holders: "",
+
+  business_gapi_location: "",
+
+  website: "",
+
+  activity_description: "",
+
+  director_list: "",
+
+  shareholder_list: "",
 };

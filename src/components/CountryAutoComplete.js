@@ -26,7 +26,7 @@ const CountryAutoComplete = () => {
 
   return (
     <StyledAutoComplete
-      id="country-select-demo"
+      id="country"
       fullWidth
       label={"country"}
       options={countries}
@@ -67,6 +67,16 @@ export const StyledAutoComplete = withStyles((theme) => ({
 
     "& .MuiButtonBase-root": {
       transform: "translate(-20px,-3px)",
+    },
+    [theme.breakpoints.down("md")]: {
+      "& .MuiButtonBase-root": {
+        transform: "translate(-20px,-6px)",
+      },
+      "& .MuiInputLabel-formControl": {
+        top: "50%",
+
+        transform: "translateY(calc(-80%))",
+      },
     },
   },
 

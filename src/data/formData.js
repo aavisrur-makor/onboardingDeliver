@@ -23,7 +23,7 @@ export default {
     { id: "CERTIFICATE", label: "CERTIFICATE OF INCORPORATION" },
     {
       id: "ARTICLES",
-      label: "ARTICLES OF ASSOCIATION/MEMORANDUM OF ASSOCIATION",
+      label: "ARTICLES OF ASSOCIATION / MEMORANDUM OF ASSOCIATION",
     },
     { id: "PROOF", label: "DIRECTOR'S NAME" },
     {

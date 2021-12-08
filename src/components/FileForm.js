@@ -1,18 +1,18 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from "react";
 import {
   Box,
   makeStyles,
   Typography,
   Grid,
   useMediaQuery,
-} from '@material-ui/core';
-import formData from '../data/formData';
-import UploaderField from './UploaderField';
-import FileContext from '../context/files';
-import DynamicInputGroup from './DynamicInputGroup';
-import { useStyles } from '../styles/UiForm';
-import { useStyles as useMixins } from '../styles/mixins';
-import { useTheme } from '@emotion/react';
+} from "@material-ui/core";
+import formData from "../data/formData";
+import UploaderField from "./UploaderField";
+import FileContext from "../context/files";
+import DynamicInputGroup from "./DynamicInputGroup";
+import { useStyles } from "../styles/UiForm";
+import { useStyles as useMixins } from "../styles/mixins";
+import { useTheme } from "@emotion/react";
 
 const FileForm = ({ query }) => {
   const classes = useStyles();
@@ -33,10 +33,10 @@ const FileForm = ({ query }) => {
           {formData.form2.map(({ id, label }, i) => (
             <Grid item xs={12}>
               <UploaderField
-                style={{ padding: '16px 0' }}
+                style={{ padding: "16px 0" }}
                 id={id}
-                label={'The big brown fox jumped over the little.'}
-                info={i !== 1 && i !== formData.form2.length ? true : false}
+                label={label}
+                info={i !== 1 && i !== formData.form2.length - 1 ? true : false}
               />
             </Grid>
           ))}
@@ -45,9 +45,9 @@ const FileForm = ({ query }) => {
       <Grid item>
         <Typography
           style={{
-            backgroundColor: '#D6DFE4',
-            marginTop: '32px',
-            padding: '16px',
+            backgroundColor: "#D6DFE4",
+            marginTop: "32px",
+            padding: "16px",
           }}
           className={mixins.mobileParagraphs}
         >
