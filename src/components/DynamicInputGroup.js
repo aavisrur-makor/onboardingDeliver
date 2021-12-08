@@ -4,60 +4,80 @@ import {
   makeStyles,
   Input,
   useMediaQuery,
-} from "@material-ui/core";
-import _ from "lodash";
-import { useEffect, useContext } from "react";
-import FileContext from "../context/files";
-import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
-import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
+} from '@material-ui/core';
+import _ from 'lodash';
+import { useEffect, useContext } from 'react';
+import FileContext from '../context/files';
+import { ReactComponent as AddIcon } from './../assets/icons/Group46.svg';
+import { ReactComponent as TrashIcon } from './../assets/icons/trashIcon.svg';
 
-import axios from "axios";
-import DynamicUploaderField from "./DynamicUploaderField";
-import { useTheme } from "@material-ui/core/styles";
+import axios from 'axios';
+import DynamicUploaderField from './DynamicUploaderField';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    cursor: "pointer",
+    cursor: 'pointer',
   },
   dynamicContainer: {
-    marginTop: "32px",
-    [theme.breakpoints.down("sm")]: { justifyContent: "center" },
-    "&.MuiBox-root": {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      marginTop: "40px",
+    marginTop: '32px',
+    [theme.breakpoints.down('sm')]: { justifyContent: 'center' },
+    '&.MuiBox-root': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      marginTop: '40px',
     },
-    "& .MuiTypography": {
-      color: "red",
+    '& .MuiTypography': {
+      color: 'red',
     },
-    "& .MuiIconButton-root": {
-      padding: "0",
-      marginLeft: "10px",
+    '& .MuiIconButton-root': {
+      padding: '0',
+      marginLeft: '10px',
     },
   },
   addButton: {
-    "& .MuiIconButton-label": {
-      marginTop: "20px",
+    left: '100%',
+    transform: 'translate(1rem,-140%)',
+    '& .MuiIconButton-label': {
+      marginTop: '20px',
     },
   },
   subDynamicContainer: {
-    border: "1px solid #B9C6CD",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+    border: '1px solid #B9C6CD',
+    padding: '1rem',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
-    "& .MuiBox-root": {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px",
+    '& .MuiBox-root': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '10px',
+    },
+    '& .MuiGrid-root:first-child': {
+      marginRight: '1rem',
+    },
+    '& .MuiGrid-root:nth-child(3)': {
+      flexGrow: 1,
+    },
+    [theme.breakpoints.down('md')]: {
+      '& .MuiGrid-root:first-child': {
+        order: 0,
+      },
+      '& .MuiGrid-root:nth-child(2)': {
+        order: 2,
+        flexBasis: '100%',
+      },
+      '& .MuiGrid-root:nth-child(3)': {
+        order: 1,
+      },
     },
   },
 }));
 
-function DynamicInputGroup() {
+const DynamicInputGroup = () => {
   const { fileState, setFileState } = useContext(FileContext);
   const { f_proofs, extraProofs } = fileState;
   // const proofFiles = [
@@ -66,70 +86,93 @@ function DynamicInputGroup() {
   //   { name: 'moshe 3' },
   // ];
   const classes = useStyles();
-  const query = useMediaQuery("(max-width:600px)");
-  console.log(query);
+  const query = useMediaQuery('(max-width:600px)');
+
   useEffect(() => {
     ////////might not be ok
-    const fineTunedExtraProofs = extraProofs
+    const fineTunedExtraProofs = extraProofs.length
       ? extraProofs
       : f_proofs.length
-      ? 0
-      : 1;
+      ? []
+      : [{ fileName: '', id: Math.round(Math.random() * 10000) }];
     setFileState({ ...fileState, extraProofs: fineTunedExtraProofs });
   }, []);
-  useEffect(() => {
-    const { f_proofs, extraProofs } = fileState;
-    console.log("filestate rerender", f_proofs, extraProofs);
-  }, [fileState]);
 
   const handleAdd = () => {
-    console.log("adding dynamic nput");
-    setFileState({ ...fileState, extraProofs: extraProofs + 1 });
+    console.log('adding dynamic nput');
+    setFileState({
+      ...fileState,
+      extraProofs: [
+        ...extraProofs,
+        { fileName: '', id: Math.round(Math.random() * 10000) },
+      ],
+    });
     // setInputIDs((prev) => [`PROOF-IDENTITY-ADDRESS-${prev.length}`, ...prev]);
   };
 
-  const deleteField = (id) => {
-    axios
-      .delete("url", {
-        fileId: id,
-      })
-      .then((res) => {
-        ////////TAKE CARE OF DELETING LOCALLY
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const deleteField = (id) => {
+  //   if (f_proofs.filter((proof) => proof === id).length !== 0) {
+  //     axios
+  //       .delete('url', {
+  //         fileId: id,
+  //       })
+  //       .then((res) => {
+  //         ////////TAKE CARE OF DELETING LOCALLY
+  //         setFileState((prev) => ({
+  //           ...prev,
+  //           f_proofs: prev.f_proofs.filter((proof) => proof !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+  //         }));
+  //         console.log(res);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   } else {
+  //     setFileState((prev) => ({
+  //       ...prev,
+  //       extraProofs: prev.extraProofs.filter((proof) => proof.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+  //     }));
+  //   }
+  // };
+
+  // const handleAttachFile = () =>{
+  //   set
+  // }
 
   return (
     <Grid
       container
-      xs={query ? 12 : 9}
+      xs={12}
+      md={9}
       // justifyContent='space-between'
       // wrap
       className={classes.dynamicContainer}
     >
-      {[...f_proofs, ...new Array(extraProofs)].map((file, i) => {
-        const supposedFileName = file
-          ? file
-          : String(Math.round(Math.random() * 100));
-        //////change back to proofFiles
+      {[...f_proofs, ...extraProofs].map((supposedFile, i) => {
+        const id =
+          typeof supposedFile === 'string' ? supposedFile : supposedFile.id;
+
         return (
-          <Grid item xs={11} sm={10} className={classes.subDynamicContainer}>
+          <Grid item xs={12} className={classes.subDynamicContainer} key={id}>
             <DynamicUploaderField
-              // key={supposedFileName}
-              id={supposedFileName}
+              id={id}
+              // onChange={handleAttachFile}
             />
           </Grid>
         );
       })}
-      <IconButton className={classes.addButton} onClick={handleAdd}>
-        <AddIcon style={{ marginRight: "20px" }} />
+      <IconButton
+        className={classes.addButton}
+        onClick={handleAdd}
+        disableRipple
+        disableTouchRipple
+        focusRipple={false}
+      >
+        <AddIcon style={{ marginRight: '20px' }} />
       </IconButton>
     </Grid>
   );
-}
+};
 
 export default DynamicInputGroup;
 

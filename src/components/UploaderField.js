@@ -1,42 +1,42 @@
-import { FormControlLabel, makeStyles, useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import { Box, Input, Typography, Grid } from "@material-ui/core";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useContext, useState } from "react";
-import axios from "axios";
-import { withStyles } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import FileContext from "../context/files";
-import AuthContext from "../context/auth";
-import InfoPopoverButton from "./InfoPopoverButton";
+import { FormControlLabel, makeStyles, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import { Box, Input, Typography, Grid } from '@material-ui/core';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { useContext, useState } from 'react';
+import axios from 'axios';
+import { withStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import FileContext from '../context/files';
+import AuthContext from '../context/auth';
+import InfoPopoverButton from './InfoPopoverButton';
 
 const useStyles = makeStyles((theme) => ({
   proofLabel: {
-    color: "#8A8A8A",
-    display: "flex",
-    alignItems: "center",
-    font: "normal normal normal 16px/19px Work Sans",
-    [theme.breakpoints.down("sm")]: { flex: "2 0 0" },
+    color: '#8A8A8A',
+    display: 'flex',
+    alignItems: 'center',
+    font: 'normal normal normal 16px/19px Work Sans',
+    [theme.breakpoints.down('sm')]: { flex: '2 0 0' },
   },
   uploaderAttach: {
-    borderTop: "1px solid #D6DFE4",
-    borderBottom: "1px solid #D6DFE4",
-    [theme.breakpoints.down("sm")]: { flex: "1 0 0" },
+    borderTop: '1px solid #D6DFE4',
+    borderBottom: '1px solid #D6DFE4',
+    [theme.breakpoints.down('sm')]: { flex: '1 0 0' },
   },
   uploader: {
-    [theme.breakpoints.down("sm")]: { rowGap: ".5rem" },
-    borderTop: "1px solid #D6DFE4",
-    "&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type": {
-      borderBottom: "1px solid #D6DFE4",
+    [theme.breakpoints.down('sm')]: { rowGap: '.5rem', alignItems: 'start' },
+    borderTop: '1px solid #D6DFE4',
+    '&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type': {
+      borderBottom: '1px solid #D6DFE4',
     },
-    "& .MuiFormControlLabel-root": {
-      marginLeft: "auto",
+    '& .MuiFormControlLabel-root': {
+      marginLeft: 'auto',
     },
-    "& .MuiGrid-root.MuiGrid-item:last-child": {
-      [theme.breakpoints.down("sm")]: { flexBasis: "100%" },
+    '& .MuiGrid-root.MuiGrid-item:last-child': {
+      [theme.breakpoints.down('sm')]: { flexBasis: '100%' },
     },
-    "& .MuiGrid-root.MuiGrid-item:first-child": {
-      [theme.breakpoints.down("sm")]: { flexBasis: "90%" },
+    '& .MuiGrid-root.MuiGrid-item:first-child': {
+      [theme.breakpoints.down('sm')]: { flexBasis: '90%' },
     },
   },
   attachFileIcon: {},
@@ -49,28 +49,28 @@ const UploaderField = (props) => {
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
-  const queryMatch = useMediaQuery(theme.breakpoints.up("sm"));
+  const queryMatch = useMediaQuery(theme.breakpoints.up('sm'));
 
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
-      console.log("sending file", target.files[0]);
+      console.log('sending file', target.files[0]);
       const formData = new FormData();
       setfile(target.files[0]);
-      formData.append("file", file);
+      formData.append('file', file);
       const fileType = target.files[0].type;
-      console.log("sending file", formData);
+      console.log('sending file', formData);
       const data = {
         field: target.id,
         file: formData,
       };
-      console.log("checking the data ", data);
+      console.log('checking the data ', data);
       if (
-        fileType.includes("image") ||
-        fileType.includes("text") ||
-        fileType.includes("pdf")
+        fileType.includes('image') ||
+        fileType.includes('text') ||
+        fileType.includes('pdf')
       ) {
         console.log(target.id);
-        console.log("uuid in the upload files", authState.uuid);
+        console.log('uuid in the upload files', authState.uuid);
         await axios
           .post(`http://10.0.0.191:3030/api/document/${authState.uuid}`, data)
           .then((res) => {
@@ -97,9 +97,9 @@ const UploaderField = (props) => {
   return (
     <Grid
       container
-      justifyContent="space-between"
+      justifyContent='space-between'
       className={classes.uploader}
-      style={{ display: "flex", ...props.style, alignItems: "center" }}
+      style={{ ...props.style }}
       key={props.id}
     >
       <Grid item>
@@ -108,7 +108,7 @@ const UploaderField = (props) => {
         </Grid>
       </Grid>
 
-      <Grid style={{ marginRight: "auto" }} item>
+      <Grid style={{ marginRight: 'auto' }} item>
         {props.info && <InfoPopoverButton info={props.info} />}
         {fileState[props.id] && (
           <Typography>
@@ -119,10 +119,10 @@ const UploaderField = (props) => {
       </Grid>
       <Grid item>
         <FormControlLabel
-          sx={{ color: "white" }}
+          sx={{ color: 'white' }}
           label={
             <Box
-              sx={{ display: "flex", flexDirection: "row", color: "#3E2F71" }}
+              sx={{ display: 'flex', flexDirection: 'row', color: '#3E2F71' }}
             >
               <AttachFileIcon className={classes.attachFileIcon} />
               <Typography className={classes.attachFileLabel}>
@@ -132,10 +132,10 @@ const UploaderField = (props) => {
           }
           control={
             <StyledInput
-              type="file"
+              type='file'
               id={props.id}
               inputProps={{
-                accept: "application/pdf, application/doc, application/docx",
+                accept: 'application/pdf, application/doc, application/docx',
               }}
               onChange={handleChange}
             />
@@ -150,6 +150,6 @@ export default UploaderField;
 
 export const StyledInput = withStyles((theme) => ({
   root: {
-    display: "none",
+    display: 'none',
   },
 }))(Input);

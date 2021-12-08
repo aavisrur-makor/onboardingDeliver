@@ -1,30 +1,30 @@
-import React, { useEffect, useContext } from "react";
-import { Box } from "@material-ui/core";
-import { Stepper } from "@material-ui/core";
-import { Step } from "@material-ui/core";
-import { StepButton, Grid } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-import { Typography, makeStyles } from "@material-ui/core";
-import PseudoForm from "./PseudoForm";
-import FileForm from "./FileForm";
-import TermsForm from "./TermsForm";
-import ProgressBar from "./ProgressBar";
-import axios from "axios";
-import FieldContext from "../context/fields";
-import FileContext from "../context/files";
-import AuthContext from "../context/auth";
+import React, { useEffect, useContext } from 'react';
+import { Box } from '@material-ui/core';
+import { Stepper } from '@material-ui/core';
+import { Step } from '@material-ui/core';
+import { StepButton, Grid } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import { Typography, makeStyles } from '@material-ui/core';
+import PseudoForm from './PseudoForm';
+import FileForm from './FileForm';
+import TermsForm from './TermsForm';
+import ProgressBar from './ProgressBar';
+import axios from 'axios';
+import FieldContext from '../context/fields';
+import FileContext from '../context/files';
+import AuthContext from '../context/auth';
 
-import { useParams } from "react-router";
-import StyledButton from "./StyledButton";
-import { useStyles as useMixins } from "../styles/mixins";
-import { useStyles } from "../styles/UiForm";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { useParams } from 'react-router';
+import StyledButton from './StyledButton';
+import { useStyles as useMixins } from '../styles/mixins';
+import { useStyles } from '../styles/UiForm';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { useTheme } from "@material-ui/core";
-import MobileStepper from "./MobileStepper";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core';
+import MobileStepper from './MobileStepper';
 
-const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
+const steps = ['Submit Documentation', 'Attach Documents', 'Terms of Use'];
 
 const StepperFormComplex = () => {
   const classes = useStyles();
@@ -35,12 +35,12 @@ const StepperFormComplex = () => {
   const { authState, setAuthState } = useContext(AuthContext);
   const params = useParams();
   const theme = useTheme();
-  const queryMatch = useMediaQuery("(max-width:800px)");
+  const queryMatch = useMediaQuery('(max-width:800px)');
 
-  console.log("statetest", authState);
+  console.log('statetest', authState);
 
   useEffect(() => {
-    console.log("uuid useeffect", fieldState, params.uuid);
+    console.log('uuid useeffect', fieldState, params.uuid);
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (!authState.isNewUser && params.uuid) {
       const fieldCall = axios.get(
@@ -74,7 +74,7 @@ const StepperFormComplex = () => {
           })
         )
         .catch((err) => {
-          console.log("inside the error", err);
+          console.log('inside the error', err);
         });
     }
   }, []);
@@ -117,7 +117,7 @@ const StepperFormComplex = () => {
   };
 
   const handleAccept = () => {
-    if (authState.isAccepted) window.location.pathname = "finale";
+    if (authState.isAccepted) window.location.pathname = 'finale';
   };
 
   return (
@@ -127,7 +127,7 @@ const StepperFormComplex = () => {
           <MobileStepper
             nextStepLabel={steps[activeStep + 1]}
             stepLabel={steps[activeStep]}
-            steps={activeStep}
+            activeStep={activeStep}
           />
         </Grid>
       ) : (
@@ -141,7 +141,7 @@ const StepperFormComplex = () => {
               <Step key={label} completed={completed[i]}>
                 <StepButton
                   className={classes.Label}
-                  color="inherit"
+                  color='inherit'
                   onClick={handleStep(i)}
                 >
                   {label}
@@ -152,7 +152,7 @@ const StepperFormComplex = () => {
         </Grid>
       )}
       <Grid item className={classes.BoxContainer} xs={10}>
-        <Grid container direction="column">
+        <Grid container direction='column'>
           <Grid item>{!queryMatch && <ProgressBar />}</Grid>
           <Grid item className={mixins.formBody}>
             {activeStep === 0 ? (
@@ -169,12 +169,12 @@ const StepperFormComplex = () => {
                 <Grid item>
                   <StyledButton
                     // className={classes.navButton}
-                    color="inherit"
+                    color='inherit'
                     className={classes.backStepperButtons}
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     sx={{ mr: 1 }}
-                    variant="outlined"
+                    variant='outlined'
                   >
                     Back
                   </StyledButton>
@@ -185,7 +185,7 @@ const StepperFormComplex = () => {
                   <StyledButton
                     onClick={handleNext}
                     sx={{ mr: 1 }}
-                    variant="outlined"
+                    variant='outlined'
                   >
                     Next
                   </StyledButton>
@@ -195,7 +195,7 @@ const StepperFormComplex = () => {
                     className={classes.acceptAndSendStepperButtons}
                     onClick={handleAccept}
                     sx={{ mr: 1 }}
-                    variant="outlined"
+                    variant='outlined'
                   >
                     Accept and Send
                   </StyledButton>

@@ -11,5 +11,6 @@ export const initialState = {
   f_ownership: '',
   f_compliance: '',
   f_statment: '',
-  f_proofs: ['moshe', 'moshe 2', 'moshe 3'],
+  f_proofs: [],
+  extraProofs: [],
 };

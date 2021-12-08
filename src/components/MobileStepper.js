@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const MobileStepper = (props) => {
   const classes = useStyles();
+
   return (
     <Box style={{ display: 'flex', gap: '5%', alignItems: 'center' }}>
       <Box
@@ -43,7 +44,7 @@ const MobileStepper = (props) => {
         <CircularProgress
           className={classes.circularMain}
           variant='determinate'
-          value={(props.steps + 1) * 33.3}
+          value={(props.activeStep + 1) * 33.3}
           size='70px'
         />
         <Box
@@ -56,7 +57,7 @@ const MobileStepper = (props) => {
           alignItems='center'
           justifyContent='center'
         >
-          <Typography>{props.steps + 1} of 3</Typography>
+          <Typography>{props.activeStep + 1} of 3</Typography>
         </Box>
       </Box>
       <Box
@@ -73,7 +74,7 @@ const MobileStepper = (props) => {
           style={{ color: '#B9C6CD' }}
           className={classes.nextPageLabel}
         >
-          Next: {props.nextStepLabel}
+          {props.activeStep !== 2 && `Next: ${props.nextStepLabel}`}
         </Typography>
       </Box>
     </Box>
