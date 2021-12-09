@@ -17,6 +17,7 @@ import AuthContext from "../context/auth";
 import { IconButton } from "@material-ui/core";
 import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 import { withStyles } from "@material-ui/styles";
+import InfoPopoverButton from "./InfoPopoverButton";
 const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
   const { fileState, setFileState } = useContext(FileContext);
@@ -90,14 +91,31 @@ const DynamicUploaderField = memo((props) => {
   return (
     <Grid
       container
-      // className={classes.uploader}
-      alignItems="center"
+      className={classes.dynamicUploaderContainer}
+      // alignItems="center"
     >
-      <Grid item>
-        <Grid item x>
-          <Typography className={classes.proofLabel}>
-            Proof of Identity/Address
-          </Typography>
+      <Grid item className={classes.dynamicFieldProofContainer}>
+        <Grid container>
+          <Grid item className={classes.dynamicPopoverButton}>
+            <Typography direction="row" className={classes.proofLabel}>
+              Proof of Identity {props.id}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <InfoPopoverButton />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item className={classes.dynamicFieldProofContainer}>
+        <Grid container>
+          <Grid item>
+            <Typography direction="row" className={classes.proofLabel}>
+              Proof of Address {props.id}
+            </Typography>
+          </Grid>
+          <Grid item className={classes.dynamicPopoverButton}>
+            <InfoPopoverButton />
+          </Grid>
         </Grid>
       </Grid>
 
@@ -126,7 +144,7 @@ const DynamicUploaderField = memo((props) => {
           }
         />
       </Grid>
-      <Grid item className={classes.trashIcon} style={{ textAlign: "right" }}>
+      <Grid item className={classes.dynamicTrashIcon}>
         <IconButton>
           <TrashIcon onClick={() => handleDelete(props.id)} />
         </IconButton>

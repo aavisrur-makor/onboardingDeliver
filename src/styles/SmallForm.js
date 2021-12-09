@@ -102,11 +102,16 @@ export const useStyles = makeStyles((theme) => ({
     border: "2px solid #222246",
     opacity: "1",
   },
+  dialAutoCompleteContainer: {
+    gap: "1.25rem",
+    justifyContent: "space-between",
+  },
   dialAutoComplete: {
-    display: "flex",
     marginTop: "0 !important",
+
+    "& .MuiGrid-root.MuiGrid-item": { flex: "1" },
     "& .MuiAutocomplete-root": {
-      padding: "15px 0 0 10px",
+      padding: "15px 0 1px 10px",
     },
     "& .MuiInputBase-root": {
       marginTop: "0",
@@ -120,5 +125,8 @@ export const useStyles = makeStyles((theme) => ({
       { display: "none" },
     "& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty":
       { display: "none" },
+  },
+  dialAutoCompleteNumber: {
+    flex: 1,
   },
 }));
