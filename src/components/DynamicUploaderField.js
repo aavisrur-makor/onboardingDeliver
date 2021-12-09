@@ -5,35 +5,36 @@ import {
   Box,
   Input,
   useMediaQuery,
-} from '@material-ui/core';
-import { useEffect, useState, memo } from 'react';
-import { useStyles } from '../styles/UiForm';
-import UploaderField from './UploaderField';
-import AttachFileIcon from '@material-ui/icons/AttachFile';
-import axios from 'axios';
-import { useContext } from 'react';
-import FileContext from '../context/files';
-import AuthContext from '../context/auth';
-import { IconButton } from '@material-ui/core';
-import { ReactComponent as TrashIcon } from './../assets/icons/trashIcon.svg';
-import { withStyles } from '@material-ui/styles';
+} from "@material-ui/core";
+import { useEffect, useState, memo } from "react";
+import { useStyles } from "../styles/UiForm";
+import UploaderField from "./UploaderField";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import axios from "axios";
+import { useContext } from "react";
+import FileContext from "../context/files";
+import AuthContext from "../context/auth";
+import { IconButton } from "@material-ui/core";
+import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
+import { withStyles } from "@material-ui/styles";
+import InfoPopoverButton from "./InfoPopoverButton";
 const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
-  const query = useMediaQuery('(max-width:600px)');
+  const query = useMediaQuery("(max-width:600px)");
 
   const { f_proofs, extraProofs } = fileState;
 
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
-      const formData = new FormData().append('file', target.files[0]);
+      const formData = new FormData().append("file", target.files[0]);
       const fileType = target.files[0].type;
 
       if (
-        fileType.includes('image') ||
-        fileType.includes('text') ||
-        fileType.includes('pdf')
+        fileType.includes("image") ||
+        fileType.includes("text") ||
+        fileType.includes("pdf")
       ) {
         console.log(target.id);
         await axios
@@ -62,10 +63,10 @@ const DynamicUploaderField = memo((props) => {
   };
 
   const handleDelete = (id) => {
-    console.log('f_proofs', f_proofs);
+    console.log("f_proofs", f_proofs);
     if (f_proofs.filter((proof) => proof === id).length !== 0) {
       axios
-        .delete('url', {
+        .delete("url", {
           fileId: id,
         })
         .then((res) => {
@@ -90,23 +91,40 @@ const DynamicUploaderField = memo((props) => {
   return (
     <Grid
       container
-      // className={classes.uploader}
-      alignItems='center'
+      className={classes.dynamicUploaderContainer}
+      // alignItems="center"
     >
-      <Grid item>
-        <Grid item x>
-          <Typography className={classes.proofLabel}>
-            Proof of Identity/Address {props.id}
-          </Typography>
+      <Grid item className={classes.dynamicFieldProofContainer}>
+        <Grid container>
+          <Grid item className={classes.dynamicPopoverButton}>
+            <Typography direction="row" className={classes.proofLabel}>
+              Proof of Identity {props.id}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <InfoPopoverButton />
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid item className={classes.dynamicFieldProofContainer}>
+        <Grid container>
+          <Grid item>
+            <Typography direction="row" className={classes.proofLabel}>
+              Proof of Address {props.id}
+            </Typography>
+          </Grid>
+          <Grid item className={classes.dynamicPopoverButton}>
+            <InfoPopoverButton />
+          </Grid>
         </Grid>
       </Grid>
 
       <Grid item>
         <FormControlLabel
-          style={{ color: 'white' }}
+          style={{ color: "white" }}
           label={
             <Box
-              sx={{ display: 'flex', flexDirection: 'row', color: '#3E2F71' }}
+              sx={{ display: "flex", flexDirection: "row", color: "#3E2F71" }}
             >
               <AttachFileIcon />
               <Typography className={classes.attachFileLabel}>
@@ -116,10 +134,10 @@ const DynamicUploaderField = memo((props) => {
           }
           control={
             <StyledInput
-              type='file'
+              type="file"
               id={props.id}
               inputProps={{
-                accept: 'application/pdf, application/doc, application/docx',
+                accept: "application/pdf, application/doc, application/docx",
               }}
               onChange={handleChange}
             />
@@ -127,7 +145,7 @@ const DynamicUploaderField = memo((props) => {
         />
         ``
       </Grid>
-      <Grid item className={classes.trashIcon} style={{ textAlign: 'right' }}>
+      <Grid item className={classes.dynamicTrashIcon}>
         <IconButton>
           <TrashIcon onClick={() => handleDelete(props.id)} />
         </IconButton>
@@ -140,6 +158,6 @@ export default DynamicUploaderField;
 
 export const StyledInput = withStyles((theme) => ({
   root: {
-    display: 'none',
+    display: "none",
   },
 }))(Input);
