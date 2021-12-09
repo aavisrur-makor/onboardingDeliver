@@ -9,16 +9,13 @@ import AuthContext from "../context/auth";
 const DialPhoneAutoComplete = (props) => {
   const [dialCode, setDialCode] = useState([]);
   const [userCountry, setUserCountry] = useState();
-  const [countryDialCode, setCountryDialCode] = useState(null);
+  const [countryDialCode, setCountryDialCode] = useState({});
+  const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
 
   const getUserCountry = async () => {
     const userDetails = await axios.get("https://ip.nf/me.json");
     const country = userDetails.data.ip.country;
     setUserCountry(country);
-    console.log(userCountry);
-    console.log(
-      dialCode.filter((dial) => dial.name === userCountry)[0]?.dialing_code
-    );
   };
 
   useEffect(() => {
@@ -34,28 +31,28 @@ const DialPhoneAutoComplete = (props) => {
       // setDialCode(sortDialingCode);
     };
     fetchCountry();
-    setCountryDialCode(
-      dialCode.filter((dial) => dial.name === userCountry)[0]?.dialing_code
-    );
-    console.log("caca");
+    setCountryDialCode(dialCode.filter((dial) => dial.name === userCountry)[0]);
   }, [userCountry]);
   const { authState } = useContext(AuthContext);
   const { uuid } = authState;
 
   const handleChange = (e) => {
-    console.log(e.target.innerHTML);
-    const fieldToUpdate = {
-      field: e.target.id,
-      value: e.target.value,
-    };
-    axios
-      .put(`${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`, fieldToUpdate)
-      .then((res) => {
-        console.log("country res", res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    setCountryDialCode(e);
+    if (e) {
+      const fieldToUpdate = {
+        field: "code",
+        value: e.dialing_code,
+      };
+      axios
+        .put(
+          `${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`,
+          fieldToUpdate
+        )
+        .then((res) => {})
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -68,8 +65,10 @@ const DialPhoneAutoComplete = (props) => {
       getOptionLabel={(option) =>
         option.dialing_code ? option.dialing_code : ""
       }
-      onChange={handleChange}
-      inputValue={countryDialCode}
+      onChange={(e, value) => handleChange(value)}
+      value={countryDialCode}
+      inputValue={countryDialCodeInput}
+      onInputChange={(e, inputValue) => setCountryDialCodeInput(inputValue)}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}

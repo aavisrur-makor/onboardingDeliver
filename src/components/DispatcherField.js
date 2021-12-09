@@ -48,8 +48,6 @@ const DispatcherField = (props) => {
       )
       .then((res) => {
         if (res.status === 200) {
-          console.log("200 in fields", res.data.progress);
-          console.log("200 in fields", authState.progress);
           setAuthState((prev) => ({
             ...authState,
             progress: res.data.progress,

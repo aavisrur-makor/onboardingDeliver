@@ -24,30 +24,30 @@ export default {
   },
   form2: [
     {
-      id: "certificate of incorporation",
+      id: "certificate_of_incorporation",
       label: "CERTIFICATE OF INCORPORATION",
     },
     {
-      id: "articles of association",
+      id: "articles_of_association",
       label: "ARTICLES OF ASSOCIATION / MEMORANDUM OF ASSOCIATION",
     },
-    { id: "proof of business address", label: "DIRECTOR'S NAME" },
+    { id: "proof_of_business_address", label: "DIRECTOR'S NAME" },
     {
-      id: "directors list",
+      id: "directors_list",
       label: "PROOF OF REGISTERED OR PRINCIPAL BUSINESS ADDRESS",
     },
     {
-      id: "shareholders list",
+      id: "shareholders_list",
       label: "COMPANY DIRECTORS' LIST DATED AND SIGNED",
     },
-    { id: "source of funds", label: "SOURCE OF FUNDS/WEALTH" },
+    { id: "source_of_funds", label: "SOURCE OF FUNDS/WEALTH" },
     {
-      id: "chart of organisation",
+      id: "chart_of_organisation",
       label: "OWNERSHIP STRUCTURE SCHEME/ORGANIZATIONAL CHART OR EQUIVALENT",
     },
-    { id: "aml policy", label: "COMPLIANCE KYC AML POLICY" },
+    { id: "aml_policy", label: "COMPLIANCE KYC AML POLICY" },
     {
-      id: "financial statement",
+      id: "financial_statement",
       label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)",
     },
     { id: "PROOFS", label: "DIRECTOR'S NAME" },

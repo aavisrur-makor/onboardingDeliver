@@ -5,42 +5,62 @@ import { Autocomplete } from "@material-ui/lab";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
+import FieldContext from "../context/fields";
+import { Email } from "@material-ui/icons";
 
 const CountryAutoComplete = (props) => {
   const [countries, setCountries] = useState([]);
+  const { fieldState } = useContext(FieldContext);
+  const [countryState, setCountryState] = useState({});
+  const [countryStateInput, setCountryStateInput] = useState("");
+
   useEffect(async () => {
+    console.log("COUNTRY IN USEEFFECT", fieldState.country);
     const countriesData = await axios.get(
       "http://10.0.0.191:3030/api/onboarding/country"
     );
-    await setCountries(countriesData.data);
-  }, []);
+    setCountries(countriesData.data);
+    setCountryState(fieldState.country);
+    setCountryStateInput(fieldState.country);
+  }, [fieldState.country]);
   const { authState } = useContext(AuthContext);
   const { uuid } = authState;
-  const handleChange = (e) => {
-    const fieldToUpdate = {
-      field: e.target.id,
-      value: e.target.value,
-    };
-    axios
-      .put(`${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`, fieldToUpdate)
-      .then((res) => {
-        console.log("country res", res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
+  const handleChange = (e) => {
+    setCountryState(e);
+    console.log("value inside the handlechange", e);
+    console.log("COUNTRY VALUE", fieldState.country);
+    if (e) {
+      const fieldToUpdate = {
+        field: "country",
+        value: e.name,
+      };
+      axios
+        .put(`http://10.0.0.191:3030/api/onboarding/${uuid}`, fieldToUpdate)
+        .then((res) => {
+          console.log("country res", res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+  console.log("COUNTRY STATE", countryState);
+  console.log("Country inputState", countryStateInput);
   return (
     <StyledAutoComplete
       id="country"
+      autoComplete="off"
       fullWidth
+      value={countryState}
       className={props.className}
       label={"country"}
       options={countries}
       autoHighlight
-      getOptionLabel={(option) => option.name}
-      onChange={handleChange}
+      getOptionLabel={(option) => option.name || ""}
+      onChange={(e, value) => handleChange(value)}
+      onInputChange={(e, inputValue) => setCountryStateInput(inputValue)}
+      inputValue={countryStateInput || ""}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
