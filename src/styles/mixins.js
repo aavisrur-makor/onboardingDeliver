@@ -10,9 +10,4 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: 0,
       },
   },
-  mobileParagraphs: {
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'justify',
-    },
-  },
 }));

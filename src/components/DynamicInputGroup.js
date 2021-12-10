@@ -4,77 +4,81 @@ import {
   makeStyles,
   Input,
   useMediaQuery,
-} from "@material-ui/core";
-import _ from "lodash";
-import { useEffect, useContext } from "react";
-import FileContext from "../context/files";
-import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
-import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
+} from '@material-ui/core';
+import _ from 'lodash';
+import { useEffect, useContext } from 'react';
+import FileContext from '../context/files';
+import { ReactComponent as AddIcon } from './../assets/icons/Group46.svg';
+import { ReactComponent as TrashIcon } from './../assets/icons/trashIcon.svg';
 
-import axios from "axios";
-import DynamicUploaderField from "./DynamicUploaderField";
-import { useTheme } from "@material-ui/core/styles";
+import axios from 'axios';
+import DynamicUploaderField from './DynamicUploaderField';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    cursor: "pointer",
+    cursor: 'pointer',
   },
   dynamicContainer: {
-    marginTop: "32px",
-    [theme.breakpoints.down("sm")]: { justifyContent: "center" },
-    "&.MuiBox-root": {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      marginTop: "40px",
+    marginTop: '32px',
+    gap: '1.2rem',
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+      gap: '1.05rem',
     },
-    "& .MuiTypography": {
-      color: "red",
+    '&.MuiBox-root': {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      marginTop: '40px',
     },
-    "& .MuiIconButton-root": {
-      padding: "0",
-      marginLeft: "20px",
+    '& .MuiTypography': {
+      color: 'red',
+    },
+    '& .MuiIconButton-root': {
+      padding: '0',
+      marginLeft: '20px',
     },
   },
   addButton: {
-    transform: "translate(60vh,-55px)",
-    "& .MuiIconButton-label": {
-      marginLeft: "auto",
+    transform: 'translate(60vh,-55px)',
+    '& .MuiIconButton-label': {
+      marginLeft: 'auto',
     },
-    [theme.breakpoints.down("sm")]: {
-      transform: "translateY(15px)",
+    [theme.breakpoints.down('sm')]: {
+      transform: 'translateY(15px)',
     },
   },
   subDynamicContainer: {
-    border: "1px solid #B9C6CD",
-    padding: "1rem",
-    justifyContent: "space-between",
-    alignItems: "center",
+    border: '1px solid #B9C6CD',
+    padding: '1rem',
+    justifyContent: 'space-between',
+    alignItems: 'center',
 
-    "& .MuiBox-root": {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      padding: "10px",
+    '& .MuiBox-root': {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      padding: '10px',
     },
-    "& .MuiGrid-root:first-child": {
-      marginRight: "1rem",
+    '& .MuiGrid-root:first-child': {
+      marginRight: '1rem',
     },
-    "& .MuiGrid-root:nth-child(3)": {
-      flexGrow: 1,
+    '& .MuiGrid-root:nth-child(3)': {
+      // flexGrow: 1,
     },
-    [theme.breakpoints.down("md")]: {
-      "& .MuiGrid-root:first-child": {
-        order: 0,
-      },
-      "& .MuiGrid-root:nth-child(2)": {
-        order: 2,
-        flexBasis: "100%",
-      },
-      "& .MuiGrid-root:nth-child(3)": {
-        order: 1,
-      },
+    [theme.breakpoints.down('md')]: {
+      // "& .MuiGrid-root:first-child": {
+      //   order: 0,
+      // },
+      // "& .MuiGrid-root:nth-child(2)": {
+      //   order: 2,
+      //   flexBasis: "100%",
+      // },
+      // "& .MuiGrid-root:nth-child(3)": {
+      //   order: 1,
+      // },
     },
   },
 }));
@@ -88,7 +92,7 @@ const DynamicInputGroup = () => {
   //   { name: 'moshe 3' },
   // ];
   const classes = useStyles();
-  const query = useMediaQuery("(max-width:600px)");
+  const query = useMediaQuery('(max-width:600px)');
 
   useEffect(() => {
     ////////might not be ok
@@ -96,17 +100,17 @@ const DynamicInputGroup = () => {
       ? extraProofs
       : f_proofs.length
       ? []
-      : [{ fileName: "", id: Math.round(Math.random() * 10000) }];
+      : [{ fileName: '', id: Math.round(Math.random() * 10000) }];
     setFileState({ ...fileState, extraProofs: fineTunedExtraProofs });
   }, []);
 
   const handleAdd = () => {
-    console.log("adding dynamic nput");
+    console.log('adding dynamic nput');
     setFileState({
       ...fileState,
       extraProofs: [
         ...extraProofs,
-        { fileName: "", id: Math.round(Math.random() * 10000) },
+        { fileName: '', id: Math.round(Math.random() * 10000) },
       ],
     });
     // setInputIDs((prev) => [`PROOF-IDENTITY-ADDRESS-${prev.length}`, ...prev]);
@@ -152,7 +156,7 @@ const DynamicInputGroup = () => {
     >
       {[...f_proofs, ...extraProofs].map((supposedFile, i) => {
         const id =
-          typeof supposedFile === "string" ? supposedFile : supposedFile.id;
+          typeof supposedFile === 'string' ? supposedFile : supposedFile.id;
 
         return (
           <Grid item xs={12} className={classes.subDynamicContainer} key={id}>
@@ -170,7 +174,7 @@ const DynamicInputGroup = () => {
         disableTouchRipple
         focusRipple={false}
       >
-        <AddIcon style={{ marginRight: "20px" }} />
+        <AddIcon style={{ marginRight: '20px' }} />
       </IconButton>
     </Grid>
   );
