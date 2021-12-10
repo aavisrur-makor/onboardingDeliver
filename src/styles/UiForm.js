@@ -373,5 +373,8 @@ export const useStyles = makeStyles((theme) => ({
   dynamicPopoverButton: {
     flex: 1,
   },
-  dynamicTrashIcon: { flex: 1, textAlign: 'right' },
+  dynamicTrashIcon: { 
+    flex: 1, 
+    textAlign: 'right',
+ },
 }));

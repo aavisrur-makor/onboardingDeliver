@@ -82,11 +82,15 @@ const DynamicUploaderField = memo((props) => {
           console.log(err);
         });
     } else {
+      console.log("deleting file");
+      if(extraProofs.length>1){
       setFileState((prev) => ({
         ...prev,
         extraProofs: prev.extraProofs.filter((proof) => proof.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
       }));
     }
+  }
+  return;
   };
 
   return (
@@ -97,12 +101,12 @@ const DynamicUploaderField = memo((props) => {
     >
       <Grid item className={classes.dynamicFieldProofContainer}>
         <Grid container>
-          <Grid item className={classes.dynamicPopoverButton}>
+          <Grid item  className={classes.dynamicPopoverButton}>
             <Typography direction='row' className={classes.proofLabel}>
-              Proof of Identity {props.id}
+              Proof of Identity
             </Typography>
           </Grid>
-          <Grid item>
+          <Grid item >
             <InfoPopoverButton />
           </Grid>
         </Grid>
@@ -111,7 +115,7 @@ const DynamicUploaderField = memo((props) => {
         <Grid container>
           <Grid item>
             <Typography direction='row' className={classes.proofLabel}>
-              Proof of Address {props.id}
+              Proof of Address
             </Typography>
           </Grid>
           <Grid item className={classes.dynamicPopoverButton}>
@@ -145,11 +149,12 @@ const DynamicUploaderField = memo((props) => {
           }
         />
       </Grid>
+      {extraProofs.length>1?
       <Grid item className={classes.dynamicTrashIcon}>
         <IconButton>
           <TrashIcon onClick={() => handleDelete(props.id)} />
         </IconButton>
-      </Grid>
+      </Grid>:null}
     </Grid>
   );
 });

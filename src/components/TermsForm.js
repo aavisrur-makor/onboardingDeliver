@@ -18,7 +18,8 @@ const TermsForm = (props) => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  const handleApprove = () => {
+  const handleApprove = (e) => {
+    
     setAgreed(true);
   };
   const handleReject = () => {
