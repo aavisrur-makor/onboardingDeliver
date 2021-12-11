@@ -78,6 +78,9 @@ export const useStyles = makeStyles((theme) => ({
       backgroundPosition: 'center 0',
       color: 'white',
     },
+    [theme.breakpoints.down('md')]: {
+      '& .MuiButtonBase-root': { padding: '25px' },
+    },
   },
   titleText: {
     fontWeight: 'bold',
@@ -147,7 +150,7 @@ export const useStyles = makeStyles((theme) => ({
     // width: "calc(100vw - 1500px)",
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      padding: '2rem 0',
+      padding: '2rem 2px',
       gap: '1rem',
     },
   },
@@ -176,6 +179,7 @@ export const useStyles = makeStyles((theme) => ({
     color: '#8A8A8A',
     display: 'flex',
     alignItems: 'center',
+    padding: '0',
   },
   uploaderAttach: {
     borderTop: '1px solid #D6DFE4',
@@ -210,7 +214,11 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: { transform: 'scale(.9)' },
   },
   attachFileGrid: {
-    [theme.breakpoints.down('sm')]: { transform: 'translateX(-4px)' },
+    transform: 'translateX(5px)',
+
+    [theme.breakpoints.up('md')]: {
+      order: 1,
+    },
   },
   termButtons: {
     padding: '10px 50px',
@@ -236,6 +244,11 @@ export const useStyles = makeStyles((theme) => ({
     color: '#222246',
     opacity: '1',
     padding: '25px',
+  },
+  acceptAndSendStepperButtons: {
+    [theme.breakpoints.down('md')]: {
+      '& .MuiButtonBase-root': { padding: '25px' },
+    },
   },
   subAcceptLabel: {
     font: 'normal normal normal 16px/24px Work Sans',
@@ -362,14 +375,32 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   dynamicUploaderContainer: {
-    gap: '9px',
+    // gap:
   },
   dynamicFieldProofContainer: {
-   display:"flex"
+    display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexBasis: '100%',
+      '&:nth-child(2)': {
+        marginBottom: '6px',
+      },
+    },
+
+    '& .MuiGrid-item:last-child': {
+      [theme.breakpoints.down('sm')]: {
+        flex: 1,
+        textAlign: 'right',
+      },
+    },
+    '& .MuiButtonBase-root': { transform: 'translateY(7px)' },
   },
-  
-  dynamicTrashIcon: { 
-    flex: 1, 
+
+  dynamicTrashIcon: {
+    flex: 1,
     textAlign: 'right',
- },
+
+    [theme.breakpoints.up('md')]: {
+      order: 0,
+    },
+  },
 }));

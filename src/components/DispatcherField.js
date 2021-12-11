@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   textField: {
-    '& .MuiInputBase-root': {
-      // [theme.breakpoints.down('sm')]: { padding: '10px 8px' },
+    '& > .MuiInputLabel-root': {
+      [theme.breakpoints.down('sm')]: { fontSize: '13px' },
     },
   },
 }));

@@ -10,6 +10,7 @@ import { useEffect, useState, memo } from 'react';
 import { useStyles } from '../styles/UiForm';
 import UploaderField from './UploaderField';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
+import CheckIcon from '@material-ui/icons/Check';
 import axios from 'axios';
 import { useContext } from 'react';
 import FileContext from '../context/files';
@@ -23,7 +24,7 @@ const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
-  const query = useMediaQuery('(max-width:600px)');
+  const queryMatch = useMediaQuery('(max-width:600px)');
 
   const { f_proofs, extraProofs } = fileState;
 
@@ -82,35 +83,45 @@ const DynamicUploaderField = memo((props) => {
           console.log(err);
         });
     } else {
-      console.log("deleting file");
-      if(extraProofs.length>1){
-      setFileState((prev) => ({
-        ...prev,
-        extraProofs: prev.extraProofs.filter((proof) => proof.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
-      }));
+      console.log('deleting file');
+      if (extraProofs.length > 1) {
+        setFileState((prev) => ({
+          ...prev,
+          extraProofs: prev.extraProofs.filter((proof) => proof.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+        }));
+      }
     }
-  }
-  return;
+    return;
   };
 
   return (
     <Grid
       container
       className={classes.dynamicUploaderContainer}
+      spacing={!queryMatch ? 1 : 0}
       // alignItems="center"
     >
       <Grid item className={classes.dynamicFieldProofContainer}>
         <Grid container>
-          <Grid item  className={classes.dynamicPopoverButton}>
+          <Grid item className={classes.dynamicPopoverButton}>
             <Typography direction='row' className={classes.proofLabel}>
+              {true && !queryMatch && <CheckIcon />}
               Proof of Identity
             </Typography>
           </Grid>
-          <Grid item >
+          <Grid item>
             <InfoPopoverButton />
           </Grid>
         </Grid>
       </Grid>
+      {!queryMatch && (
+        <Grid item>
+          <Typography direction='row' className={classes.proofLabel}>
+            /
+          </Typography>
+        </Grid>
+      )}
+
       <Grid item className={classes.dynamicFieldProofContainer}>
         <Grid container>
           <Grid item>
@@ -124,7 +135,7 @@ const DynamicUploaderField = memo((props) => {
         </Grid>
       </Grid>
 
-      <Grid item className={classes.attachFileGrid}>
+      <Grid item className={classes.attachFileGrid} md={12}>
         <FormControlLabel
           style={{ color: 'white' }}
           label={
@@ -133,7 +144,7 @@ const DynamicUploaderField = memo((props) => {
             >
               <AttachFileIcon className={classes.attachFileIcon} />
               <Typography className={classes.attachFileLabel}>
-                Attach File
+                {/* {f_proos[id] ? 'filename whatever it si' : 'Attach File'} */}
               </Typography>
             </Box>
           }
@@ -149,12 +160,13 @@ const DynamicUploaderField = memo((props) => {
           }
         />
       </Grid>
-      {extraProofs.length>1?
-      <Grid item className={classes.dynamicTrashIcon}>
-        <IconButton>
-          <TrashIcon onClick={() => handleDelete(props.id)} />
-        </IconButton>
-      </Grid>:null}
+      {extraProofs.length > 1 ? (
+        <Grid item className={classes.dynamicTrashIcon}>
+          <IconButton>
+            <TrashIcon onClick={() => handleDelete(props.id)} />
+          </IconButton>
+        </Grid>
+      ) : null}
     </Grid>
   );
 });

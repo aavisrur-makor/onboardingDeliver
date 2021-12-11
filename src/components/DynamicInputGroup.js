@@ -42,32 +42,37 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addButton: {
-    transform: 'translate(60vh,-75px)',
     '& .MuiIconButton-label': {
       marginLeft: 'auto',
     },
     [theme.breakpoints.down('sm')]: {
       transform: 'translateY(15px)',
     },
+    [theme.breakpoints.up('md')]: {
+      position: 'relative',
+      left: '100%',
+      transform: 'translate(4px,-242%)',
+    },
   },
   subDynamicContainer: {
     border: '1px solid #B9C6CD',
     justifyContent: 'space-between',
     alignItems: 'center',
-
+    padding: '15px',
     '& .MuiBox-root': {
       display: 'flex',
-      justifyContent: 'space-between',
+      // justifyContent: 'space-between',
       alignItems: 'center',
-      padding: '10px',
+      // padding: '10px',
     },
     '& .MuiGrid-root:first-child': {
-      marginRight: '1rem',
+      // marginRight: '1rem',
     },
     '& .MuiGrid-root:nth-child(3)': {
       // flexGrow: 1,
     },
     [theme.breakpoints.down('md')]: {
+      padding: '.5rem',
       // "& .MuiGrid-root:first-child": {
       //   order: 0,
       // },
@@ -148,7 +153,7 @@ const DynamicInputGroup = () => {
     <Grid
       container
       xs={12}
-      md={9}
+      md={11}
       // justifyContent='space-between'
       // wrap
       className={classes.dynamicContainer}

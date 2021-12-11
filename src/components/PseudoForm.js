@@ -13,7 +13,7 @@ import FieldContext from '../context/fields';
 //   "Terms of Use",
 // ];
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     '& .MuiOutlinedInput-root': {
       borderRadius: 0,
@@ -36,6 +36,9 @@ const useStyles = makeStyles({
     padding: '1rem 0 0 1rem',
     '& .MuiAutocomplete-root': {
       padding: '15px 0 0 10px',
+      [theme.breakpoints.down('md')]: {
+        paddingBottom: '11px',
+      },
     },
     '& .MuiInputBase-root': {
       marginTop: '0',
@@ -45,12 +48,11 @@ const useStyles = makeStyles({
     '& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ': {
       content: 'none',
     },
-    '& .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiFormLabel-filled':
-      { display: 'none' },
+    '& .MuiFormLabel-root': { fontSize: '13px', paddingLeft: '4px' },
     '& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty':
       { display: 'none' },
   },
-});
+}));
 
 const PseudoForm = function (props) {
   const { fieldState } = useContext(FieldContext);
