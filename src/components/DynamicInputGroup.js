@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   addButton: {
-    transform: 'translate(60vh,-55px)',
+    transform: 'translate(60vh,-75px)',
     '& .MuiIconButton-label': {
       marginLeft: 'auto',
     },
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
   subDynamicContainer: {
     border: '1px solid #B9C6CD',
-    padding: '1rem',
     justifyContent: 'space-between',
     alignItems: 'center',
 

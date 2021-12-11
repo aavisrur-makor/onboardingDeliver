@@ -365,14 +365,9 @@ export const useStyles = makeStyles((theme) => ({
     gap: '9px',
   },
   dynamicFieldProofContainer: {
-    flexBasis: '100%',
-    '& .MuiGrid-root.MuiGrid-item"': {
-      transform: 'translateX(5px)',
-    },
+   display:"flex"
   },
-  dynamicPopoverButton: {
-    flex: 1,
-  },
+  
   dynamicTrashIcon: { 
     flex: 1, 
     textAlign: 'right',

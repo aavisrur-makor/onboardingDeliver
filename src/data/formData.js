@@ -1,7 +1,7 @@
 export default {
   form1: {
     grid1: [
-      { id: "legal_entity_name", label: "Company Name" },
+      { id: "legal_entity_name", label: "Company Legal Name" },
       { id: "registration_number", label: "Register Number" },
       { id: "registration_gapi_location", label: "Registered Office Address" },
       // {id: 'country', label: 'COUNTRY'},

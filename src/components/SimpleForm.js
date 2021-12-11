@@ -96,20 +96,19 @@ const SimpleForm = () => {
                     fullWidth
                     required
                     onChange={handleChange}
-                    id="client_name"
-                    label="Name"
+                    id="client_company"
+                    label="Company Legal Name"
                     className={classes.inputFields}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    type="email"
                     variant="outlined"
                     required
                     fullWidth
                     onChange={handleChange}
-                    id="client_email"
-                    label="Email"
+                    id="client_name"
+                    label="Name"
                     // multiline
                     // maxRows={9}
                     // rows='9'
@@ -118,12 +117,13 @@ const SimpleForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
+                  type="email"
                     variant="outlined"
                     required
                     fullWidth
                     onChange={handleChange}
-                    id="client_company"
-                    label="Company"
+                    id="client_email"
+                    label="Email"
                     className={classes.inputFields}
                   />
                 </Grid>
