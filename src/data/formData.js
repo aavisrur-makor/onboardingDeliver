@@ -50,7 +50,7 @@ export default {
       id: "financial_statement",
       label: "LATEST FINANCIAL STATEMENT (IF AVAILABLE)",
     },
-    { id: "PROOFS", label: "DIRECTOR'S NAME" },
+    { id: "directors_list", label: "DIRECTOR'S NAME" },
   ],
   // form3: {},
 };

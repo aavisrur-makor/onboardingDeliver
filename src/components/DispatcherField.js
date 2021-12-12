@@ -38,14 +38,11 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
-    console.log('handling change in dispatcher', e.target.value);
     const fieldToUpdate = {
       field: e.target.id,
       value: fieldState[e.target.id],
     };
-    console.log('FIELD TO UPDATE', fieldToUpdate);
-    console.log('about to putting in fields', authState);
-    console.log('putting in fields');
+   
     axios
       .put(
         `http://10.0.0.191:3030/api/onboarding/${authState.uuid}`,
@@ -73,7 +70,6 @@ const DispatcherField = (props) => {
       fullWidth
       onChange={(e) => {
         setFieldState((prev) => {
-          console.log('previous field state', e.target.value);
           return {
             ...prev,
             [props.id]: e.target.value,

@@ -12,5 +12,4 @@ export const initialState = {
   aml_policy: "",
   financial_statement: "",
   f_proofs: [],
-  extraProofs: [],
 };

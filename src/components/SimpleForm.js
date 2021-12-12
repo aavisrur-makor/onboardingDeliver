@@ -35,8 +35,7 @@ const SimpleForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.log('inside the submit');
+   
     const data = {
       name: name,
       email: [email],
@@ -49,7 +48,6 @@ const SimpleForm = () => {
     axios
       .post(`http://10.0.0.191:3030/api/onboarding`, data)
       .then((res) => {
-        console.log('login res', res);
         if (res.status === 200) {
           const isNewUser = res.data.isNewUser;
           if (isNewUser) setAuthState((prev) => ({ ...prev, isNewUser }));
@@ -63,8 +61,7 @@ const SimpleForm = () => {
 
   const handleChange = (e) => {
     const { value, id } = e.target;
-    console.log('id:', id);
-    console.log('value:', value);
+  
     switch (id) {
       case 'client_name':
         setName(value);

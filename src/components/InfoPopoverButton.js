@@ -35,43 +35,24 @@ const InfoPopoverButton = (props) => {
   const [anchor, setAnchor] = useState(null);
   const classes = useStyles();
 
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: InfoPopoverButton.js ~ line 10 ~ InfoPopoverButton ~ anchor',
-      anchor
-    );
-  }, [anchor]);
+
 
   const handleOpen = (e) => {
-    // setOpen(true);
+ 
 
-    // MuiButtonBase-root.MuiIconButton-root
-
-    console.log('opened', e.currentTarget);
     setAnchor(e.currentTarget);
   };
 
   const handleClose = () => {
-    // setOpen(false);
     setAnchor(null);
-    console.log('closed');
   };
 
-  // useEffect(() => {
-  //   console.log('truInfoRef', infoRef);
-  // }, [infoRef]);
-
-  // useEffect(() => {
-  //   console.log('reopeend');
-  // }, [isOpen]);
 
   return (
     <Box className={classes.popoverBox}>
       <IconButton
         style={{ padding: 0, marginLeft: '10px' }}
-        // ref={infoRef}
-        // aria-describedby={props.id}
-        // variant='contained'
+   
         onMouseEnter={handleOpen}
         onMouseLeave={handleClose}
         className={anchor ? classes.popover : ''} ///////////////CHECK FURTHER
@@ -80,7 +61,6 @@ const InfoPopoverButton = (props) => {
       </IconButton>
 
       <Popover
-        // id={'simple-popover'}
         className={classes.popOverContent}
         open={!!anchor}
         anchorEl={anchor}

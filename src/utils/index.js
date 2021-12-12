@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@material-ui/core';
 
 const isNotEmptyValue = (value) => {
-  console.log('TRIM', value);
   return value?.trim() !== '';
 };
 
