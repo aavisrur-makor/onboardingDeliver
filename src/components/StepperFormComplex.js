@@ -34,7 +34,7 @@ const StepperFormComplex = () => {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
-  const [f_proofs, setFProofs] = useState([]);
+  // const [f_proofs, setFProofs] = useState([]);
   const params = useParams();
   const theme = useTheme();
   const queryMatch = useMediaQuery('(max-width:800px)');
@@ -50,14 +50,14 @@ const StepperFormComplex = () => {
         );
 
       // const textFields = res1.data;
-      let fileFields = { f_proofs: [] };
+      let fileFields = { proof_of_identity_or_address: [] };
       // console.log('FILES ON STEPPER', fileFields);
 
       setInterval(() => {
         getFiles().forEach((file) => {
           console.log('FILE FIELDS', fileFields);
           if (file.document_type_name === 'proof_of_identity_or_address') {
-            fileFields.f_proofs.push({
+            fileFields.proof_of_identity_or_address.push({
               fileName: file.boarding_name,
               document_uuid: file.document_uuid,
               state: 'occupied',
