@@ -5,12 +5,17 @@ import {
   IconButton,
   Popover,
   makeStyles,
+  useTheme,
+  useMediaQuery,
+  Portal,
 } from '@material-ui/core';
 import { ReactComponent as InfoSvg } from '../assets/circleoutline.svg';
 
 const useStyles = makeStyles((theme) => ({
   popoverBox: {
-    position: 'relative',
+    [theme.breakpoints.up('sm')]: {
+      position: 'relative',
+    },
 
     // transform: "translateY(-2px)",
     [theme.breakpoints.down('md')]: {
@@ -20,6 +25,10 @@ const useStyles = makeStyles((theme) => ({
       opacity: '1',
       visibility: 'visible',
       transform: 'translate(100%, -100%)  rotateZ(.19deg)',
+      [theme.breakpoints.down('sm')]: {
+        position: 'relative',
+        transform: 'translate(10px, -10px)  rotateZ(.19deg)',
+      },
     },
   },
   popover: {
@@ -34,9 +43,17 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: '400',
     transform: 'translate(100%, -98%) rotateZ(.19deg)',
     backgroundColor: 'white',
-    padding: '.75rem',
+    padding: '.65rem .75rem',
     boxShadow: '0 5px 23px rgba(0,0,0,.1)',
     borderRadius: '3px',
+    fontSize: '15px',
+
+    [theme.breakpoints.down('sm')]: {
+      top: '0',
+      left: '0',
+      transform: 'translate(10px, 10px)',
+    },
+
     // zIndex: 1301,
   },
   popOverContent: {
@@ -56,6 +73,8 @@ const InfoPopoverButton = (props) => {
   const infoRef = useRef();
   const [anchor, setAnchor] = useState(null);
   const classes = useStyles();
+  const theme = useTheme();
+  const queryMatch = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleOpen = (e) => {
     setAnchor(e.currentTarget);
@@ -76,15 +95,16 @@ const InfoPopoverButton = (props) => {
     <Box className={classes.popoverBox}>
       <IconButton
         style={{ padding: 0, marginLeft: '10px' }}
-        onMouseEnter={handleClick}
-        onMouseLeave={handleClose}
+        // onMouseEnter={queryMatch ? null : handleClick}
+        // onMouseLeave={queryMatch ? null : handleClose}
+        onClick={queryMatch ? handleClick : null}
         // className={anchor ? classes.popover : ""} ///////////////CHECK FURTHER
       >
         <InfoSvg />
       </IconButton>
-
-      <Typography className={classes.popover}>{props.info}</Typography>
-
+      <Portal disablePortal={queryMatch ? false : true}>
+        <Typography className={queryMatch?:classes.popover}>{props.info}</Typography>
+      </Portal>
       {/* 
       <Popover
         id='mouse-over-popover'
