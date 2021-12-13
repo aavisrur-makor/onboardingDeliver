@@ -112,6 +112,12 @@ const TermsForm = (props) => {
             <Grid container className={classes.yesNoContainer}>
               <Grid item>
                 <StyledButton
+                  style={{
+                    background: authState.isAgreeElectronic
+                      ? "#222246"
+                      : "#ffffff",
+                    color: authState.isAgreeElectronic ? "#ffffff" : "#222246",
+                  }}
                   className={
                     authState.isAgreeElectronic && classes.frozenYesNoButton
                   }

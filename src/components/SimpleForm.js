@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import { styled } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import StyledButton from '../components/StyledButton';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from "react";
+import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import { styled } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import StyledButton from "../components/StyledButton";
+import axios from "axios";
 import {
   Modal,
   Typography,
   Snackbar,
   makeStyles,
   FormControl,
-} from '@material-ui/core';
-import AuthContext from '../context/auth';
-import { useStyles } from '../styles/SmallForm';
+} from "@material-ui/core";
+import AuthContext from "../context/auth";
+import { useStyles } from "../styles/SmallForm";
 // import { Autocomplete } from "@mui/material";
-import CountryAutoComplete from './CountryAutoComplete';
-import DialPhoneAutoComplete from './DialPhoneAutoComplete';
+import CountryAutoComplete from "./CountryAutoComplete";
+import DialPhoneAutoComplete from "./DialPhoneAutoComplete";
 
 const SimpleForm = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
+  const [dialCode, setDialCode] = useState();
   const [company, setCompany] = useState();
   const { authState, setAuthState } = useContext(AuthContext);
   const classes = useStyles();
@@ -35,15 +36,20 @@ const SimpleForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
     const data = {
       name: name,
       email: [email],
-      phone: [phone],
+      phone: [
+        {
+          dialing_code: dialCode,
+          number: phone,
+        },
+      ],
       company: company,
     };
 
-    console.log('data', data);
+    console.log("data", data);
     setSubmitted(true);
     axios
       .post(`http://10.0.0.191:3030/api/onboarding`, data)
@@ -61,18 +67,18 @@ const SimpleForm = () => {
 
   const handleChange = (e) => {
     const { value, id } = e.target;
-  
+
     switch (id) {
-      case 'client_name':
+      case "client_name":
         setName(value);
         break;
-      case 'client_email':
+      case "client_email":
         setEmail(value);
         break;
-      case 'client_phone':
+      case "client_phone":
         setPhone(value);
         break;
-      case 'client_company':
+      case "client_company":
         setCompany(value);
         break;
       default:
@@ -83,9 +89,16 @@ const SimpleForm = () => {
   const handleCloseSnackbar = () => {
     setSubmitted(false);
   };
+  const handleDialCode = (e) => {
+    console.log(
+      "🚀 ~ file: SimpleForm.js ~ line 95 ~ handleDialCode ~ e",
+      e.target.value
+    );
 
+    setDialCode(e.target.value);
+  };
   return (
-    <Box component='form' onSubmit={handleSubmit}>
+    <Box component="form" onSubmit={handleSubmit}>
       <Grid container className={classes.simpleForm}>
         <Grid item xs={12}>
           <Grid container>
@@ -95,26 +108,26 @@ const SimpleForm = () => {
               </Typography>
             </Grid>
             <Grid item xs={12}>
-              <Grid container style={{ marginTop: '20px' }} spacing={2}>
+              <Grid container style={{ marginTop: "20px" }} spacing={2}>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    variant='outlined'
+                    variant="outlined"
                     fullWidth
                     required
                     onChange={handleChange}
-                    id='client_company'
-                    label='Company Legal Name'
+                    id="client_company"
+                    label="Company Legal Name"
                     className={classes.inputFields}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    variant='outlined'
+                    variant="outlined"
                     required
                     fullWidth
                     onChange={handleChange}
-                    id='client_name'
-                    label='Name'
+                    id="client_name"
+                    label="Name"
                     // multiline
                     // maxRows={9}
                     // rows='9'
@@ -123,13 +136,13 @@ const SimpleForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    type='email'
-                    variant='outlined'
+                    type="email"
+                    variant="outlined"
                     required
                     fullWidth
                     onChange={handleChange}
-                    id='client_email'
-                    label='Email'
+                    id="client_email"
+                    label="Email"
                     className={classes.inputFields}
                   />
                 </Grid>
@@ -138,17 +151,18 @@ const SimpleForm = () => {
                   <Grid container className={classes.dialAutoCompleteContainer}>
                     <Grid className={classes.dialAutoComplete} item>
                       <DialPhoneAutoComplete
-                      // loggedUserCountry={userCountry}
+                        handleChange={handleDialCode}
+                        // loggedUserCountry={userCountry}
                       />
                     </Grid>
                     <Grid item className={classes.dialAutoCompleteNumber}>
                       <TextField
-                        variant='outlined'
+                        variant="outlined"
                         required
                         fullWidth
                         onChange={handleChange}
-                        id='client_phone'
-                        label='Phone'
+                        id="client_phone"
+                        label="Phone"
                         className={classes.inputFields}
                       />
                     </Grid>
@@ -158,7 +172,7 @@ const SimpleForm = () => {
                   <StyledButton
                     // type="submit"
                     className={classes.sendButton}
-                    type='submit'
+                    type="submit"
                   >
                     Send
                   </StyledButton>
@@ -169,11 +183,11 @@ const SimpleForm = () => {
         </Grid>
 
         <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
           open={isSubmitted}
           onClose={handleCloseSnackbar}
-          message='Please proceed via the link sent to your email address.'
-          key={'snackbarKey'}
+          message="Please proceed via the link sent to your email address."
+          key={"snackbarKey"}
           autoHideDuration={5000}
         />
 

@@ -1,18 +1,18 @@
-import React, { useEffect, useLayoutEffect, useContext } from 'react';
+import React, { useEffect, useLayoutEffect, useContext } from "react";
 import {
   Box,
   makeStyles,
   Typography,
   Grid,
   useMediaQuery,
-} from '@material-ui/core';
-import formData from '../data/formData';
-import UploaderField from './UploaderField';
-import FileContext from '../context/files';
-import DynamicInputGroup from './DynamicInputGroup';
-import { useStyles } from '../styles/UiForm';
-import { useStyles as useMixins } from '../styles/mixins';
-import { useTheme } from '@emotion/react';
+} from "@material-ui/core";
+import formData from "../data/formData";
+import UploaderField from "./UploaderField";
+import FileContext from "../context/files";
+import DynamicInputGroup from "./DynamicInputGroup";
+import { useStyles } from "../styles/UiForm";
+import { useStyles as useMixins } from "../styles/mixins";
+import { useTheme } from "@emotion/react";
 
 const FileForm = ({ query }) => {
   const classes = useStyles();
@@ -33,13 +33,14 @@ const FileForm = ({ query }) => {
       )}
       <Grid item>
         <Grid container>
-          {formData.form2.map(({ id, label }, i) => (
+          {formData.form2.map(({ id, label, info }, i) => (
             <Grid item xs={12}>
               <UploaderField
-                style={{ padding: '16px 0' }}
+                style={{ padding: "16px 0" }}
                 id={id}
                 label={label}
                 info={i !== 1 && i !== formData.form2.length - 1 ? true : false}
+                labelInfo={info}
               />
             </Grid>
           ))}

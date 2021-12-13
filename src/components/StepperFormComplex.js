@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Box } from "@material-ui/core";
 import { Stepper } from "@material-ui/core";
 import { Step } from "@material-ui/core";
@@ -33,6 +33,7 @@ const StepperFormComplex = () => {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
+  const [f_proofs, setFProofs] = useState([]);
   const params = useParams();
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
@@ -52,11 +53,25 @@ const StepperFormComplex = () => {
         .then(
           axios.spread((res1, res2) => {
             const textFields = res1.data;
-            const fileFields = res2.data;
+            let fileFields = {};
             console.log("FILES ON STEPPER", fileFields);
 
             res2.data.forEach((file) => {
-              fileFields[file.document_type_name] = file.boarding_name;
+              console.log("FILE FIELDS", fileFields);
+              if (file.document_field === "proof_of_identity_or_address") {
+                fileFields = {
+                  ...fileFields,
+                  proof_of_identity_or_address: [
+                    {
+                      fileName: file.document_name,
+                      document_uuid: file.document_uuid,
+                      state: "occupied",
+                    },
+                  ],
+                };
+              } else {
+                fileFields[file.document_field] = file.document_name;
+              }
             });
             const fullData = { ...textFields, ...fileFields };
             setFieldState((prev) => ({ ...prev, ...textFields }));
@@ -64,6 +79,8 @@ const StepperFormComplex = () => {
             setAuthState((prev) => ({
               ...prev,
               progress: res1.data.progress,
+              isAgreeElectronic: res1.data.api_requested,
+              isAgree: res1.data.agreed_ip,
             }));
           })
         )

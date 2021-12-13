@@ -1,33 +1,33 @@
-import { useContext } from 'react';
-import axios from 'axios';
-import { makeStyles, TextField } from '@material-ui/core';
-import FieldContext from '../context/fields';
-import AuthContext from '../context/auth';
+import { useContext } from "react";
+import axios from "axios";
+import { makeStyles, TextField } from "@material-ui/core";
+import FieldContext from "../context/fields";
+import AuthContext from "../context/auth";
 
-import { useDebouncedCallback } from 'use-debounce';
+import { useDebouncedCallback } from "use-debounce";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: '0px',
-    '& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl':
+    border: "0px",
+    "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
       {
-        border: '0px',
+        border: "0px",
       },
-    '& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl':
+    "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
       {
-        borderRadius: '0',
+        borderRadius: "0",
       },
-    '& .MuiInputLabel-outlined': {
-      textAlign: 'center',
+    "& .MuiInputLabel-outlined": {
+      textAlign: "center",
 
-      letterSpacing: '0px',
-      color: '#8A8A8A',
-      opacity: '1',
+      letterSpacing: "0px",
+      color: "#8A8A8A",
+      opacity: "1",
     },
   },
   textField: {
-    '& > .MuiInputLabel-root': {
-      [theme.breakpoints.down('sm')]: { fontSize: '13px' },
+    "& > .MuiInputLabel-root": {
+      [theme.breakpoints.down("sm")]: { fontSize: "13px" },
     },
   },
 }));
@@ -38,11 +38,12 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
+   
     const fieldToUpdate = {
       field: e.target.id,
       value: fieldState[e.target.id],
     };
-   
+
     axios
       .put(
         `http://10.0.0.191:3030/api/onboarding/${authState.uuid}`,
@@ -57,7 +58,7 @@ const DispatcherField = (props) => {
         }
       })
       .catch((err) => {
-        console.log('err', err);
+        console.log("err", err);
       });
   };
 
@@ -80,7 +81,7 @@ const DispatcherField = (props) => {
       inputProps={{ style: { padding: 2 } }}
       label={props.label}
       value={fieldState[props.id]}
-      variant='outlined'
+      variant="outlined"
       maxRows={props.maxRows}
       rows={props.rows}
       multiline

@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DynamicInputGroup = () => {
   const { fileState, setFileState } = useContext(FileContext);
-  const { f_proofs } = fileState;
+  const { proof_of_identity_or_address } = fileState;
   const { authState, setAuthState } = useContext(AuthContext);
   const [extraProofs, setExtraProofs] = useState([]);
   const classes = useStyles();
@@ -82,7 +82,7 @@ const DynamicInputGroup = () => {
 
   console.log("F_PROOFS", fileState);
   useEffect(() => {
-    const fineTunedExtraProofs = f_proofs.length
+    const fineTunedExtraProofs = proof_of_identity_or_address.length
       ? []
       : [
           {
@@ -116,7 +116,10 @@ const DynamicInputGroup = () => {
           ////////TAKE CARE OF DELETING LOCALLY
           setFileState((prev) => ({
             ...prev,
-            f_proofs: prev.f_proofs.filter((file) => file.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+            proof_of_identity_or_address:
+              prev.proof_of_identity_or_address.filter(
+                (file) => file.id !== id
+              ), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
           }));
         })
         .catch((err) => {
@@ -158,8 +161,8 @@ const DynamicInputGroup = () => {
               if (state === "empty") {
                 setFileState((prev) => ({
                   ...prev,
-                  f_proofs: [
-                    ...prev.f_proofs,
+                  proof_of_identity_or_address: [
+                    ...prev.proof_of_identity_or_address,
                     {
                       fileName: target.files[0].name,
                       document_uuid: res.data.document_uuid,
@@ -172,8 +175,10 @@ const DynamicInputGroup = () => {
                 console.log("RES INSIDE ELSE ", res);
                 setFileState((prev) => ({
                   ...prev,
-                  f_proofs: [
-                    ...prev.f_proofs.filter(() => id !== id),
+                  proof_of_identity_or_address: [
+                    ...prev.proof_of_identity_or_address.filter(
+                      () => id !== id
+                    ),
                     {
                       fileName: target.files[0].name,
                       document_uuid: res.data.document_uuid,
@@ -197,30 +202,34 @@ const DynamicInputGroup = () => {
 
   return (
     <Grid container xs={12} md={11} className={classes.dynamicContainer}>
-      {[...f_proofs, ...extraProofs].map((supposedFile, i) => {
-        // const id =
-        // typeof supposedFile === "string" ? supposedFile : supposedFile.id;
+      {[...proof_of_identity_or_address, ...extraProofs].map(
+        (supposedFile, i) => {
+          // const id =
+          // typeof supposedFile === "string" ? supposedFile : supposedFile.id;
 
-        const showTrash = extraProofs.length > 1 || i > 0;
+          const showTrash = extraProofs.length > 1 || i > 0;
 
-        return (
-          <Grid
-            item
-            xs={12}
-            className={classes.subDynamicContainer}
-            key={supposedFile.id}
-          >
-            <DynamicUploaderField
-              extraProofs={extraProofs}
-              id={supposedFile.id}
-              showTrash={showTrash}
-              onDelete={() => handleDelete(supposedFile.state, supposedFile.id)}
-              onUploadFile={(e) => handleUpload(e, supposedFile.state)}
-              proofItem={supposedFile}
-            />
-          </Grid>
-        );
-      })}
+          return (
+            <Grid
+              item
+              xs={12}
+              className={classes.subDynamicContainer}
+              key={supposedFile.id}
+            >
+              <DynamicUploaderField
+                extraProofs={extraProofs}
+                id={supposedFile.id}
+                showTrash={showTrash}
+                onDelete={() =>
+                  handleDelete(supposedFile.state, supposedFile.id)
+                }
+                onUploadFile={(e) => handleUpload(e, supposedFile.state)}
+                proofItem={supposedFile}
+              />
+            </Grid>
+          );
+        }
+      )}
       <IconButton
         className={classes.addButton}
         onClick={handleAdd}

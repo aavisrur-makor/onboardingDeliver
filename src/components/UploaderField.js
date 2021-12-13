@@ -89,7 +89,7 @@ const UploaderField = (props) => {
               setFileState({
                 ...fileState,
                 [target.id]: target.files[0].name,
-              }); 
+              });
             }
           })
           .catch((error) => {
@@ -122,7 +122,7 @@ const UploaderField = (props) => {
         }}
         item
       >
-        {props.info && <InfoPopoverButton info={props.info} />}
+        {props.info && <InfoPopoverButton info={props.labelInfo} />}
       </Grid>
       <Grid item md={12} className={classes.uploaderAttach}>
         <FormControlLabel
