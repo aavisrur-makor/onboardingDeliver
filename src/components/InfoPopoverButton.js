@@ -1,97 +1,136 @@
-import { useEffect, useState, useRef, memo } from 'react';
+import { useEffect, useState, useRef, memo } from "react";
 import {
   Typography,
   Box,
   IconButton,
   Popover,
   makeStyles,
-} from '@material-ui/core';
-import { ReactComponent as InfoSvg } from '../assets/circleoutline.svg';
+  useTheme,
+  useMediaQuery,
+  Portal,
+} from "@material-ui/core";
+import { ReactComponent as InfoSvg } from "../assets/circleoutline.svg";
 
 const useStyles = makeStyles((theme) => ({
   popoverBox: {
-    transform: 'translateY(-2px)',
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'end',
+    [theme.breakpoints.up("sm")]: {
+      position: "relative",
+    },
+
+    // transform: "translateY(-2px)",
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "end",
+    },
+    "&:hover > p": {
+      opacity: "1",
+      visibility: "visible",
+      transform: "translate(100%, -100%)  rotateZ(.19deg)",
+      [theme.breakpoints.down("sm")]: {
+        position: "relative",
+        transform: "translate(10px, -10px)  rotateZ(.19deg)",
+      },
     },
   },
   popover: {
-    zIndex: 1301,
+    position: "absolute",
+    top: "0",
+    right: "0",
+    transition: "opacity .2s, transform .6s ease-out",
+    opacity: "0",
+    visibility: "hidden",
+    pointerEvents: "none",
+    width: "20rem",
+    fontWeight: "400",
+    transform: "translate(100%, -98%) rotateZ(.19deg)",
+    backgroundColor: "white",
+    padding: ".65rem .75rem",
+    boxShadow: "0 5px 23px rgba(0,0,0,.1)",
+    borderRadius: "3px",
+    fontSize: "15px",
+
+    [theme.breakpoints.down("sm")]: {
+      top: "0",
+      left: "0",
+      transform: "translate(10px, 10px)",
+    },
+
+    // zIndex: 1301,
   },
   popOverContent: {
-    width: '60vw',
-
-    position: 'absolute',
-    willChange: 'transform',
-    top: '0px',
-    left: '0px',
-    transform: 'translate3d(-20px, 10px, 0px)',
+    width: "30rem",
+    // willChange: 'transform',
+    // top: '0px',
+    // left: '0px',
+    transform: "translate3d(-20px, 10px, 0px)",
+    "& .MuiPopover-paper": {
+      // top: "00px",
+      // left: "1000px",
+    },
   },
 }));
 
 const InfoPopoverButton = (props) => {
   const infoRef = useRef();
-  const [isOpen, setOpen] = useState(false);
   const [anchor, setAnchor] = useState(null);
   const classes = useStyles();
-
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: InfoPopoverButton.js ~ line 10 ~ InfoPopoverButton ~ anchor',
-      anchor
-    );
-  }, [anchor]);
+  const theme = useTheme();
+  const queryMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleOpen = (e) => {
-    // setOpen(true);
-
-    // MuiButtonBase-root.MuiIconButton-root
-
-    console.log('opened', e.currentTarget);
     setAnchor(e.currentTarget);
   };
 
-  const handleClose = () => {
-    // setOpen(false);
-    setAnchor(null);
-    console.log('closed');
+  const handleClick = () => {
+    setAnchor((prev) => !prev);
   };
 
-  // useEffect(() => {
-  //   console.log('truInfoRef', infoRef);
-  // }, [infoRef]);
+  const handleClose = () => {
+    setAnchor(null);
+  };
 
-  // useEffect(() => {
-  //   console.log('reopeend');
-  // }, [isOpen]);
+  const open = !!anchor;
+  const id = open ? "simple-popover" : undefined;
 
   return (
     <Box className={classes.popoverBox}>
       <IconButton
-        style={{ padding: 0, marginLeft: '10px' }}
-        // ref={infoRef}
-        // aria-describedby={props.id}
-        // variant='contained'
-        onMouseEnter={handleOpen}
-        onMouseLeave={handleClose}
-        className={anchor ? classes.popover : ''} ///////////////CHECK FURTHER
+        style={{ padding: 0, marginLeft: "10px" }}
+        // onMouseEnter={queryMatch ? null : handleClick}
+        // onMouseLeave={queryMatch ? null : handleClose}
+        onClick={queryMatch ? handleClick : null}
+        // className={anchor ? classes.popover : ""} ///////////////CHECK FURTHER
       >
         <InfoSvg />
       </IconButton>
 
+      <Portal disablePortal={queryMatch ? false : true}>
+        <Typography
+          className={queryMatch ? ["rami", "shalmi"] : classes.popover}
+        >
+          {props.info}
+        </Typography>
+      </Portal>
+      {/* 
       <Popover
-        // id={'simple-popover'}
+        id='mouse-over-popover'
+        sx={{
+          pointerEvents: 'none',
+        }}
         className={classes.popOverContent}
-        open={!!anchor}
+        open={open}
         anchorEl={anchor}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'center',
-          horizontal: 'right',
+          vertical: 'bottom',
+          horizontal: 'left',
         }}
-      >
-        <Typography sx={{ p: 2 }}>{props.info}</Typography>
-      </Popover>
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      > 
+        <Typography sx={{ pt: 2 }}>{props.info}</Typography>
+      </Popover>*/}
     </Box>
   );
 };
