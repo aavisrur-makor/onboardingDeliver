@@ -11,6 +11,8 @@
     "@material-ui/styles": "^4.11.4",
     "@material-ui/types": "^5.1.0",
     "@material-ui/utils": "^4.11.2",
+    "@mui/base": "^5.0.0-alpha.60",
+    "@mui/system": "^5.2.4",
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.15.1",
     "@testing-library/react": "^11.2.7",
