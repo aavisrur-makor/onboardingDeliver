@@ -90,12 +90,7 @@ const SimpleForm = () => {
     setSubmitted(false);
   };
   const handleDialCode = (e) => {
-    console.log(
-      "🚀 ~ file: SimpleForm.js ~ line 95 ~ handleDialCode ~ e",
-      e.target.value
-    );
-
-    setDialCode(e.target.value);
+    setDialCode(e.dialing_code);
   };
   return (
     <Box component="form" onSubmit={handleSubmit}>

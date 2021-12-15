@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+// {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
 
 const DispatcherField = (props) => {
   const { fieldState, setFieldState } = useContext(FieldContext);
@@ -38,11 +39,29 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
-   
-    const fieldToUpdate = {
-      field: e.target.id,
-      value: fieldState[e.target.id],
-    };
+    let fieldToUpdate = {};
+    console.log("BEFORE IG ID", e);
+    if (
+      e.target.id === "registration_gapi_location" ||
+      e.target.id === "business_gapi_location"
+    ) {
+      console.log("inside the gapi condition");
+      console.log("TARGET ID", e.target.id);
+      fieldToUpdate = {
+        field: e.target.id,
+        value: [
+          {
+            name: "11 Derech Menachem Begin",
+            location: { lat: 100.123456, lon: -90.987654 },
+          },
+        ],
+      };
+    } else {
+      fieldToUpdate = {
+        field: e.target.id,
+        value: fieldState[e.target.id],
+      };
+    }
 
     axios
       .put(
