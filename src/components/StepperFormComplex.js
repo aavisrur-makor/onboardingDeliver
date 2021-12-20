@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { Stepper } from '@material-ui/core';
 import { Step } from '@material-ui/core';
@@ -33,14 +33,12 @@ const StepperFormComplex = () => {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
+  const [f_proofs, setFProofs] = useState([]);
   const params = useParams();
   const theme = useTheme();
   const queryMatch = useMediaQuery('(max-width:800px)');
 
-  console.log('statetest', authState);
-
   useEffect(() => {
-    console.log('uuid useeffect', params.uuid);
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (params.uuid) {
       const fieldCall = axios.get(
@@ -54,24 +52,30 @@ const StepperFormComplex = () => {
         .all([fieldCall, fileCall])
         .then(
           axios.spread((res1, res2) => {
-            console.log('RES 1', res1);
-            console.log('RES2', res2);
             const textFields = res1.data;
-            const fileFields = res2.data;
+            let fileFields = {};
+            console.log('FILES ON STEPPER', fileFields);
 
             res2.data.forEach((file) => {
-              console.log('FILE INSIDE THE FOREA', file);
-
-              console.log('fileName', file.file_boarding_name);
-              fileFields[file.document_type_name] = file.boarding_name;
+              console.log('FILE FIELDS', fileFields);
+              if (file.document_type_name === 'proof_of_identity_or_address') {
+                fileFields.proof_of_identity_or_address.push({
+                  fileName: file.boarding_name,
+                  document_uuid: file.document_uuid,
+                  state: 'occupied',
+                });
+              } else {
+                fileFields[file.document_type_name] = file.boarding_name;
+              }
             });
-            console.log('FILE FIELDS AFTER INSERT', fileFields);
-            const fullData = { ...textFields, ...fileFields };
+            // const fullData = { ...textFields, ...fileFields };
             setFieldState((prev) => ({ ...prev, ...textFields }));
             setFileState((prev) => ({ ...prev, ...fileFields }));
             setAuthState((prev) => ({
               ...prev,
               progress: res1.data.progress,
+              isAgreeElectronic: res1.data.api_requested,
+              isAgree: res1.data.agreed_ip,
             }));
           })
         )
@@ -121,7 +125,6 @@ const StepperFormComplex = () => {
   const handleAccept = () => {
     if (authState.isAccepted) window.location.pathname = 'finale';
   };
-  console.log('FILE STATE', fileState);
   return (
     <Grid container className={classes.container} sm={12}>
       {queryMatch ? (

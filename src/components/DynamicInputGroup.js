@@ -4,173 +4,232 @@ import {
   makeStyles,
   Input,
   useMediaQuery,
-} from '@material-ui/core';
-import _ from 'lodash';
-import { useEffect, useContext } from 'react';
-import FileContext from '../context/files';
-import { ReactComponent as AddIcon } from './../assets/icons/Group46.svg';
-import { ReactComponent as TrashIcon } from './../assets/icons/trashIcon.svg';
+} from "@material-ui/core";
+import _ from "lodash";
+import { useEffect, useContext, useState } from "react";
+import FileContext from "../context/files";
+import AuthContext from "../context/auth";
+import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
+import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 
-import axios from 'axios';
-import DynamicUploaderField from './DynamicUploaderField';
-import { useTheme } from '@material-ui/core/styles';
+import axios from "axios";
+import DynamicUploaderField from "./DynamicUploaderField";
+import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   dynamicContainer: {
-    marginTop: '32px',
-    gap: '1.2rem',
-    [theme.breakpoints.down('sm')]: {
-      justifyContent: 'center',
-      gap: '1.05rem',
+    marginTop: "32px",
+    gap: "1.2rem",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "center",
+      gap: "1.05rem",
     },
-    '&.MuiBox-root': {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-      marginTop: '40px',
+    "&.MuiBox-root": {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      marginTop: "40px",
     },
-    '& .MuiTypography': {
-      color: 'red',
+    "& .MuiTypography": {
+      color: "red",
     },
-    '& .MuiIconButton-root': {
-      padding: '0',
-      marginLeft: '20px',
+    "& .MuiIconButton-root": {
+      padding: "0",
+      marginLeft: "20px",
     },
   },
   addButton: {
-    '& .MuiIconButton-label': {
-      marginLeft: 'auto',
+    "& .MuiIconButton-label": {
+      marginLeft: "auto",
     },
-    [theme.breakpoints.down('sm')]: {
-      transform: 'translateY(15px)',
+    [theme.breakpoints.down("sm")]: {
+      transform: "translateY(15px)",
     },
-    [theme.breakpoints.up('md')]: {
-      position: 'relative',
-      left: '100%',
-      transform: 'translate(4px,-242%)',
+    [theme.breakpoints.up("md")]: {
+      position: "relative",
+      left: "100%",
+      transform: "translate(4px,-242%)",
     },
   },
   subDynamicContainer: {
-    border: '1px solid #B9C6CD',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '15px',
-    '& .MuiBox-root': {
-      display: 'flex',
-      // justifyContent: 'space-between',
-      alignItems: 'center',
-      // padding: '10px',
+    border: "1px solid #B9C6CD",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "15px",
+    "& .MuiBox-root": {
+      display: "flex",
+      alignItems: "center",
     },
-    '& .MuiGrid-root:first-child': {
-      // marginRight: '1rem',
-    },
-    '& .MuiGrid-root:nth-child(3)': {
-      // flexGrow: 1,
-    },
-    [theme.breakpoints.down('md')]: {
-      padding: '.5rem',
-      // "& .MuiGrid-root:first-child": {
-      //   order: 0,
-      // },
-      // "& .MuiGrid-root:nth-child(2)": {
-      //   order: 2,
-      //   flexBasis: "100%",
-      // },
-      // "& .MuiGrid-root:nth-child(3)": {
-      //   order: 1,
-      // },
+    "& .MuiGrid-root:first-child": {},
+    "& .MuiGrid-root:nth-child(3)": {},
+    [theme.breakpoints.down("md")]: {
+      padding: ".5rem",
     },
   },
 }));
 
 const DynamicInputGroup = () => {
   const { fileState, setFileState } = useContext(FileContext);
-  const { f_proofs, extraProofs } = fileState;
-  // const proofFiles = [
-  //   { name: 'moshe' },
-  //   { name: 'moshe 2' },
-  //   { name: 'moshe 3' },
-  // ];
+  const { proof_of_identity_or_address } = fileState;
+  const { authState, setAuthState } = useContext(AuthContext);
+  const [extraProofs, setExtraProofs] = useState([]);
   const classes = useStyles();
-  const query = useMediaQuery('(max-width:600px)');
+  const query = useMediaQuery("(max-width:600px)");
 
+  console.log("F_PROOFS", fileState);
   useEffect(() => {
-    ////////might not be ok
-    const fineTunedExtraProofs = extraProofs.length
-      ? extraProofs
-      : f_proofs.length
+    const fineTunedExtraProofs = proof_of_identity_or_address.length
       ? []
-      : [{ fileName: '', id: Math.round(Math.random() * 10000) }];
-    setFileState({ ...fileState, extraProofs: fineTunedExtraProofs });
+      : [
+          {
+            fileName: "",
+            id: `custom-uuid-${Math.round(Math.random() * 10000)}`,
+            state: "empty",
+          },
+        ];
+    setExtraProofs(fineTunedExtraProofs);
   }, []);
 
   const handleAdd = () => {
-    console.log('adding dynamic nput');
-    setFileState({
-      ...fileState,
-      extraProofs: [
-        ...extraProofs,
-        { fileName: '', id: Math.round(Math.random() * 10000) },
-      ],
-    });
-    // setInputIDs((prev) => [`PROOF-IDENTITY-ADDRESS-${prev.length}`, ...prev]);
+    setExtraProofs([
+      ...extraProofs,
+      {
+        fileName: "",
+        id: `custom-uuid-${Math.round(Math.random() * 10000)}`,
+        state: "empty",
+      },
+    ]);
   };
 
-  // const deleteField = (id) => {
-  //   if (f_proofs.filter((proof) => proof === id).length !== 0) {
-  //     axios
-  //       .delete('url', {
-  //         fileId: id,
-  //       })
-  //       .then((res) => {
-  //         ////////TAKE CARE OF DELETING LOCALLY
-  //         setFileState((prev) => ({
-  //           ...prev,
-  //           f_proofs: prev.f_proofs.filter((proof) => proof !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
-  //         }));
-  //         console.log(res);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setFileState((prev) => ({
-  //       ...prev,
-  //       extraProofs: prev.extraProofs.filter((proof) => proof.id !== id), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
-  //     }));
-  //   }
-  // };
+  const handleDelete = (state, id) => {
+    console.log("inside the callback");
+    if (state === "occupied") {
+      axios
+        .delete("url", {
+          fileId: id,
+        })
+        .then((res) => {
+          ////////TAKE CARE OF DELETING LOCALLY
+          setFileState((prev) => ({
+            ...prev,
+            proof_of_identity_or_address:
+              prev.proof_of_identity_or_address.filter(
+                (file) => file.id !== id
+              ), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (state === "empty") {
+      console.log("Deleteing empty file ");
+      setExtraProofs((prev) => [...prev.filter((file) => file.id !== id)]);
+    }
+  };
 
-  // const handleAttachFile = () =>{
-  //   set
-  // }
+  const handleUpload = async (e, state, id) => {
+    const { target } = e;
+
+    if (target.files[0]) {
+      const formData = new FormData();
+      formData.append("field", "proof_of_identity_or_address");
+      formData.append("file", target.files[0]);
+
+      const fileType = target.files[0].type;
+
+      if (
+        fileType.includes("image") ||
+        fileType.includes("text") ||
+        fileType.includes("pdf")
+      ) {
+        await axios
+          .post(
+            `http://10.0.0.191:3030/api/document/${authState.uuid}`,
+            formData
+          )
+          .then((res) => {
+            if (res.status === 200) {
+              console.log("adding file to server");
+              setAuthState((prev) => ({
+                ...authState,
+                progress: res.data.progress,
+              }));
+              if (state === "empty") {
+                setFileState((prev) => ({
+                  ...prev,
+                  proof_of_identity_or_address: [
+                    ...prev.proof_of_identity_or_address,
+                    {
+                      fileName: target.files[0].name,
+                      document_uuid: res.data.document_uuid,
+                      state: "occupied",
+                    },
+                  ],
+                }));
+                setExtraProofs((prev) => [...prev.filter(() => id !== id)]);
+              } else if (state === "occupied") {
+                console.log("RES INSIDE ELSE ", res);
+                setFileState((prev) => ({
+                  ...prev,
+                  proof_of_identity_or_address: [
+                    ...prev.proof_of_identity_or_address.filter(
+                      () => id !== id
+                    ),
+                    {
+                      fileName: target.files[0].name,
+                      document_uuid: res.data.document_uuid,
+                      state: "occupied",
+                    },
+                  ],
+                }));
+
+                setExtraProofs((prev) => [
+                  ...prev.filter((file) => file.id !== id),
+                ]);
+              }
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    }
+  };
 
   return (
-    <Grid
-      container
-      xs={12}
-      md={11}
-      // justifyContent='space-between'
-      // wrap
-      className={classes.dynamicContainer}
-    >
-      {[...f_proofs, ...extraProofs].map((supposedFile, i) => {
-        const id =
-          typeof supposedFile === 'string' ? supposedFile : supposedFile.id;
+    <Grid container xs={12} md={11} className={classes.dynamicContainer}>
+      {[...proof_of_identity_or_address, ...extraProofs].map(
+        (supposedFile, i) => {
+          // const id =
+          // typeof supposedFile === "string" ? supposedFile : supposedFile.id;
 
-        return (
-          <Grid item xs={12} className={classes.subDynamicContainer} key={id}>
-            <DynamicUploaderField
-              id={id}
-              // onChange={handleAttachFile}
-            />
-          </Grid>
-        );
-      })}
+          const showTrash = extraProofs.length > 1 || i > 0;
+
+          return (
+            <Grid
+              item
+              xs={12}
+              className={classes.subDynamicContainer}
+              key={supposedFile.id}
+            >
+              <DynamicUploaderField
+                extraProofs={extraProofs}
+                id={supposedFile.id}
+                showTrash={showTrash}
+                onDelete={() =>
+                  handleDelete(supposedFile.state, supposedFile.id)
+                }
+                onUploadFile={(e) => handleUpload(e, supposedFile.state)}
+                proofItem={supposedFile}
+              />
+            </Grid>
+          );
+        }
+      )}
       <IconButton
         className={classes.addButton}
         onClick={handleAdd}
@@ -178,12 +237,10 @@ const DynamicInputGroup = () => {
         disableTouchRipple
         focusRipple={false}
       >
-        <AddIcon style={{ marginRight: '20px' }} />
+        <AddIcon style={{ marginRight: "20px" }} />
       </IconButton>
     </Grid>
   );
 };
 
 export default DynamicInputGroup;
-
-// pathname for file backend api /api/file/id/f_....

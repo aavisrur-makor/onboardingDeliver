@@ -9,7 +9,6 @@ const ProgressBar = () => {
   const classes = useStyles();
 
   useEffect(() => {
-    console.log("progress progresss", progress);
   }, []);
 
   return (

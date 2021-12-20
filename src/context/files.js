@@ -11,6 +11,5 @@ export const initialState = {
   chart_of_organisation: "",
   aml_policy: "",
   financial_statement: "",
-  f_proofs: [],
-  extraProofs: [],
+  proof_of_identity_or_address: [],
 };

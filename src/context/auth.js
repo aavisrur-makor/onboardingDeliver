@@ -4,5 +4,6 @@ export default createContext();
 export const initialState = {
   uuid: "",
   progress: 0,
+  isAgreeElectronic: false,
   isAgree: false,
 };
