@@ -93,11 +93,17 @@ const PseudoForm = function (props) {
       </Grid>
       <Grid item spacing={3}>
         <Grid container spacing={3}>
-          {formData.form1.grid2.map(({ label, id }) => (
-            <Grid item xs={12}>
-              <DispatcherField value={fieldState[id]} id={id} label={label} />
-            </Grid>
-          ))}
+          {formData.form1.grid2.map(({ label, id }) => {
+            console.log(
+              "🚀 ~ file: PseudoForm.js ~ line 89 ~ {formData.form1.grid1.map ~ id",
+              id
+            );
+            return (
+              <Grid item xs={12}>
+                <DispatcherField value={fieldState[id]} id={id} label={label} />
+              </Grid>
+            );
+          })}
         </Grid>
       </Grid>
 

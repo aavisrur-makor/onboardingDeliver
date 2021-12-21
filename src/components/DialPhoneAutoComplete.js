@@ -5,6 +5,7 @@ import { Autocomplete } from "@material-ui/lab";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
+import { END_POINT, BASE_URL } from "../constants";
 
 const DialPhoneAutoComplete = (props) => {
   const [dialCode, setDialCode] = useState([]);
@@ -21,7 +22,7 @@ const DialPhoneAutoComplete = (props) => {
   useEffect(() => {
     const fetchCountry = async () => {
       const countriesData = await axios.get(
-        "http://10.0.0.191:3030/api/onboarding/country"
+        `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
       );
       let sortDialingCode = await countriesData.data.sort(function (a, b) {
         return a.dialing_code - b.dialing_code;
@@ -62,6 +63,7 @@ const DialPhoneAutoComplete = (props) => {
       id="dialing_code"
       label={"Dial Code"}
       options={dialCode}
+      onBlur={props.handleBlur}
       autoHighlight
       fullWidth
       getOptionLabel={(option) =>

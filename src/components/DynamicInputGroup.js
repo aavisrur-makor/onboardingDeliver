@@ -1,12 +1,21 @@
-import { IconButton, Grid, makeStyles, useMediaQuery } from "@material-ui/core";
+import {
+  IconButton,
+  Grid,
+  makeStyles,
+  Input,
+  useMediaQuery,
+} from "@material-ui/core";
 import _ from "lodash";
 import { useEffect, useContext, useState } from "react";
 import FileContext from "../context/files";
 import AuthContext from "../context/auth";
 import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
+import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 
 import axios from "axios";
 import DynamicUploaderField from "./DynamicUploaderField";
+import { useTheme } from "@material-ui/core/styles";
+import { END_POINT, BASE_URL } from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,7 +80,6 @@ const DynamicInputGroup = () => {
   const [extraProofs, setExtraProofs] = useState([]);
   const classes = useStyles();
 
-  console.log("F_PROOFS", fileState);
   useEffect(() => {
     const fineTunedExtraProofs = proof_of_identity_or_address.length
       ? []
@@ -97,23 +105,18 @@ const DynamicInputGroup = () => {
   };
 
   const handleDelete = (state, id) => {
-    console.log(
-      "🚀 ~ file: DynamicInputGroup.js ~ line 100 ~ handleDelete ~ state, id",
-      state,
-      id
-    );
-    console.log("inside the callback");
     if (state === "occupied") {
       axios
-        .delete(`http://10.0.0.191:3030/api/document/${authState.uuid}`, id)
+        .delete(`${BASE_URL}${END_POINT.DOCUMENT}${id}`)
         .then((res) => {
           ////////TAKE CARE OF DELETING LOCALLY
           setFileState((prev) => ({
             ...prev,
             proof_of_identity_or_address:
-              prev.proof_of_identity_or_address.filter(
-                (file) => file.id !== id
-              ), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+              prev.proof_of_identity_or_address.filter((file) => {
+                console.log("THE FILE I WANT TO DELETE ", file);
+                return file.document_uuid !== id;
+              }), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
           }));
         })
         .catch((err) => {
@@ -141,13 +144,9 @@ const DynamicInputGroup = () => {
         fileType.includes("pdf")
       ) {
         await axios
-          .post(
-            `http://10.0.0.191:3030/api/document/${authState.uuid}`,
-            formData
-          )
+          .post(`${BASE_URL}${END_POINT.DOCUMENT}${authState.uuid}`, formData)
           .then((res) => {
             if (res.status === 200) {
-              console.log("adding file to server");
               setAuthState((prev) => ({
                 ...authState,
                 progress: res.data.progress,
@@ -198,6 +197,7 @@ const DynamicInputGroup = () => {
     <Grid container xs={12} md={11} className={classes.dynamicContainer}>
       {[...proof_of_identity_or_address, ...extraProofs].map(
         (supposedFile, i) => {
+          console.log("SUPPOSEDfILE", supposedFile);
           // console.log(
           //   "🚀 ~ file: DynamicInputGroup.js ~ line 201 ~ DynamicInputGroup ~ supposedFile",
           //   supposedFile
@@ -212,17 +212,23 @@ const DynamicInputGroup = () => {
               item
               xs={12}
               className={classes.subDynamicContainer}
-              key={supposedFile.id}
+              key={supposedFile.document_uuid}
             >
               <DynamicUploaderField
                 extraProofs={extraProofs}
-                id={supposedFile.id}
+                id={supposedFile.document_uuid}
                 showTrash={showTrash}
                 onDelete={() =>
-                  handleDelete(supposedFile.state, supposedFile.id)
+                  handleDelete(
+                    supposedFile.state,
+                    supposedFile.state === "empty"
+                      ? supposedFile.id
+                      : supposedFile.document_uuid
+                  )
                 }
                 onUploadFile={(e) => handleUpload(e, supposedFile.state)}
                 proofItem={supposedFile}
+                info={["affress", "identity"]}
               />
             </Grid>
           );

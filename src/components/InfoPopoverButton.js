@@ -57,6 +57,30 @@ const useStyles = makeStyles((theme) => ({
     //   position: "relative",
     //   transform: "translate(10px, -10px)  rotateZ(.19deg)",
     // },
+  },
+  popover: {
+    position: "absolute",
+    top: "0",
+    right: "0",
+    transition: "opacity .2s, transform .6s ease-out",
+    opacity: "0",
+    visibility: "hidden",
+    pointerEvents: "none",
+    width: "20rem",
+    color: "rgba(62,47,113, .8)",
+    fontWeight: "400",
+    transform: "translate(100%, -98%) rotateZ(.19deg)",
+    backgroundColor: "white",
+    padding: ".65rem .75rem",
+    boxShadow: "0 5px 23px rgba(0,0,0,.2)",
+    borderRadius: "4px",
+    fontSize: "15px",
+
+    [theme.breakpoints.down("sm")]: {
+      top: "0",
+      left: "0",
+      transform: "translate(10px, 10px)",
+    },
 
     // position: "absolute",
     // top: "0",
@@ -101,6 +125,12 @@ const InfoPopoverButton = (props) => {
   const theme = useTheme();
   const queryMatch = useMediaQuery(theme.breakpoints.down("md"));
 
+  useEffect(() => {
+    console.log(
+      "🚀 ~ file: InfoPopoverButton.js ~ line 51 ~ useEffect ~ effect"
+    );
+  }, []);
+
   const handleOpen = (e) => {
     setAnchor(e.currentTarget);
   };
@@ -116,8 +146,8 @@ const InfoPopoverButton = (props) => {
     setAnchor(null);
   };
 
-  const open = !!anchor;
-  const id = open ? "simple-popover" : undefined;
+  // const open = !!anchor;
+  // const id = open ? 'simple-popover' : undefined;
 
   return (
     <Box className={classes.popoverBox}>
@@ -130,12 +160,9 @@ const InfoPopoverButton = (props) => {
       >
         <InfoSvg />
       </IconButton>
-
-      <Portal disablePortal={queryMatch ? false : true}>
-        <Typography className={isOpen ? classes.mobilePopover : ""}>
-          {props.info}
-        </Typography>
-      </Portal>
+      {/* <Portal disablePortal={queryMatch ? false : true}> */}
+      <Typography className={classes.popover}>{props.info}</Typography>
+      {/* </Portal> */}
       {/* 
       <Popover
         id='mouse-over-popover'

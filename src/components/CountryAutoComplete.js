@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FormControl, InputLabel, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 // import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
 import FieldContext from "../context/fields";
-import { Email } from "@material-ui/icons";
+
+import { BASE_URL, END_POINT } from "../constants";
 
 const CountryAutoComplete = (props) => {
   const [countries, setCountries] = useState([]);
@@ -16,7 +17,7 @@ const CountryAutoComplete = (props) => {
 
   useEffect(async () => {
     const countriesData = await axios.get(
-      "http://10.0.0.191:3030/api/onboarding/country"
+      `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
     );
     console.log(
       "🚀 ~ file: CountryAutoComplete.js ~ line 21 ~ useEffect ~ countriesData",
@@ -30,13 +31,14 @@ const CountryAutoComplete = (props) => {
   const { uuid } = authState;
 
   const handleChange = (e) => {
+    console.log("COUNTRY VALUE", e);
     setCountryState(e);
     if (e) {
       const fieldToUpdate = {
-        country: e.name,
+        country: e.iso_code_2,
       };
       axios
-        .put(`http://10.0.0.191:3030/api/onboarding/${uuid}`, fieldToUpdate)
+        .put(`${BASE_URL}${END_POINT.ONBOARDING}${uuid}`, fieldToUpdate)
         .then((res) => {})
         .catch((error) => {
           console.log(error);

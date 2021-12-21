@@ -2,13 +2,15 @@ import { FormControlLabel, makeStyles, useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import { Box, Input, Typography, Grid } from "@material-ui/core";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import axios from "axios";
 import { withStyles } from "@material-ui/core";
 import CheckIcon from "@material-ui/icons/Check";
 import FileContext from "../context/files";
 import AuthContext from "../context/auth";
 import InfoPopoverButton from "./InfoPopoverButton";
+import InfoModal from "./InfoModal";
+import { END_POINT, BASE_URL } from "../constants";
 
 const useStyles = makeStyles((theme) => ({
   proofLabel: {
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploaderField = (props) => {
   const classes = useStyles();
-  const [file, setfile] = useState({});
+  
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
@@ -74,10 +76,7 @@ const UploaderField = (props) => {
         fileType.includes("pdf")
       ) {
         await axios
-          .post(
-            `http://10.0.0.191:3030/api/document/${authState.uuid}`,
-            formData
-          )
+          .post(`${BASE_URL}${END_POINT.DOCUMENT}${authState.uuid}`, formData)
           .then((res) => {
             if (res.status === 200) {
               console.log(res);
@@ -122,7 +121,13 @@ const UploaderField = (props) => {
         }}
         item
       >
-        {props.info && <InfoPopoverButton info={props.labelInfo} />}
+        {props.info ? (
+          queryMatch ? (
+            <InfoPopoverButton info={props.labelInfo} />
+          ) : (
+            <InfoModal info={props.labelInfo} />
+          )
+        ) : null}
       </Grid>
       <Grid item md={12} className={classes.uploaderAttach}>
         <FormControlLabel

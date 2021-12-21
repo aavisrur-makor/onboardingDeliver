@@ -2,21 +2,17 @@ import { createContext } from "react";
 
 export default createContext();
 export const initialState = {
-  legal_entity_name: "",
-
-  registration_number: "",
-
-  registration_gapi_location: "",
-
   country: "",
-
-  business_gapi_location: "",
-
+  use_electronic_trading_platform: "",
   website: "",
-
-  activity_description: "",
-
-  director_list: "",
-
-  shareholder_list: "",
+  registration_number: "",
+  description_of_activity: "",
+  agreed_ip: "",
+  registered_office_address_gapi: "",
+  shareholder_names: "",
+  principal_business_address_gapi: "",
+  directors_names: "",
+  company_assets: "",
+  company: "",
+  client_company_legal_name: "",
 };

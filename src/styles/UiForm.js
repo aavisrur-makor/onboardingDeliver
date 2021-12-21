@@ -1,5 +1,4 @@
-import { TextField, withStyles, makeStyles } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
+import { makeStyles } from "@material-ui/core";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -138,12 +137,10 @@ export const useStyles = makeStyles((theme) => ({
 
     justifyContent: "center",
     alignItems: "center",
-    background: "0% 0% no-repeat padding-box",
-    boxShadow: "0px 5px 15px #4E4E4E29",
+
     opacity: "1",
     background: "0% 0% no-repeat padding-box",
     boxShadow: "0px 5px 15px #4E4E4E29",
-    opacity: "1",
 
     // height: '1195px',
     padding: "50px 0px",
@@ -184,6 +181,7 @@ export const useStyles = makeStyles((theme) => ({
   uploaderAttach: {
     borderTop: "1px solid #D6DFE4",
     borderBottom: "1px solid #D6DFE4",
+    marginLeft: "auto",
   },
 
   filesParagraph: {
@@ -207,9 +205,6 @@ export const useStyles = makeStyles((theme) => ({
   //   },
   // },
 
-  uploaderAttach: {
-    marginLeft: "auto",
-  },
   attachFileIcon: {
     [theme.breakpoints.down("sm")]: { transform: "scale(.9)" },
   },
@@ -284,13 +279,7 @@ export const useStyles = makeStyles((theme) => ({
       borderBottom: "1px solid rgba(0,0,0,.1)",
     },
   },
-  acceptLabel: {
-    textAlign: "center",
-    // font: "normal normal normal 16px/24px Work Sans",
-    // letterSpacing: "0px",
-    // color: "#3E2F71",
-    // opacity: "1",
-  },
+
   termFormContainer: {
     gap: "1.5rem",
     [theme.breakpoints.down("sm")]: {
@@ -409,7 +398,11 @@ export const useStyles = makeStyles((theme) => ({
         textAlign: "right",
       },
     },
-    "& .MuiButtonBase-root": { transform: "translateY(7px)" },
+    "& .MuiButtonBase-root": {
+      [theme.breakpoints.up("sm")]: {
+        transform: "translateY(5px)",
+      },
+    },
   },
 
   dynamicTrashIcon: {

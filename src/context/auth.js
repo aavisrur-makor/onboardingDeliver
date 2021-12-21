@@ -5,5 +5,6 @@ export const initialState = {
   uuid: "",
   progress: 0,
   isAgreeElectronic: false,
-  isAgree: false,
+  AcceptAndSendAgree: false,
+  AcceptAndSendFinish: false,
 };

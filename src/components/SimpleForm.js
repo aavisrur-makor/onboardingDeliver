@@ -1,58 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import { styled } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+
+import validator from "validator";
 import StyledButton from "../components/StyledButton";
 import axios from "axios";
-import {
-  Modal,
-  Typography,
-  Snackbar,
-  makeStyles,
-  FormControl,
-} from "@material-ui/core";
+import { Typography, Snackbar } from "@material-ui/core";
 import AuthContext from "../context/auth";
 import { useStyles } from "../styles/SmallForm";
-// import { Autocomplete } from "@mui/material";
-import CountryAutoComplete from "./CountryAutoComplete";
 import DialPhoneAutoComplete from "./DialPhoneAutoComplete";
 
+import { END_POINT, BASE_URL } from "../constants";
+
 const SimpleForm = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [dialCode, setDialCode] = useState();
-  const [company, setCompany] = useState();
+  const [info, setInfo] = useState({
+    company: "",
+    name: "",
+    email: "",
+    phone: "",
+    dialCode: "",
+  });
+
+  const [errors, setErrors] = useState({
+    company: "",
+    name: "",
+    email: "",
+    phone: "",
+  });
+
   const { authState, setAuthState } = useContext(AuthContext);
   const classes = useStyles();
   const [isSubmitted, setSubmitted] = useState(false);
-
-  // useEffect(async () => {
-  //   console.log("SIMPLE FORM FIRST UPLOAD");
-  //   getUserCountry();
-  // }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
-      name: name,
-      email: [email],
+      name: info.name,
+      email: [info.email],
       phone: [
         {
-          dialing_code: dialCode,
-          number: phone,
+          dialing_code: info.dialCode,
+          number: info.phone,
         },
       ],
-      company: company,
+      client_company_legal_name: info.company,
     };
 
     console.log("data", data);
     setSubmitted(true);
     axios
-      .post(`http://10.0.0.191:3030/api/onboarding`, data)
+      .post(`${BASE_URL}${END_POINT.ONBOARDINGSIMPLEFORM}`, data)
       .then((res) => {
         if (res.status === 200) {
           const isNewUser = res.data.isNewUser;
@@ -68,35 +67,132 @@ const SimpleForm = () => {
   const handleChange = (e) => {
     const { value, id } = e.target;
 
-    switch (id) {
-      case "client_name":
-        setName(value);
+    const truncId = id.substr(7);
+
+    console.log(
+      "🚀 ~ file: SimpleForm.js ~ line 97 ~ handleBlur ~ truncId",
+      e.target.id
+    );
+    setInfo((prev) => ({
+      ...prev,
+      [truncId]: value,
+    }));
+
+    if (validator.isEmpty(info[truncId])) {
+      setErrors((prev) => ({
+        ...prev,
+        [truncId]: "Field is empty",
+      }));
+
+      return;
+    }
+
+    switch (truncId) {
+      case "name":
+        if (!validator.isAlpha(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Must contain only letters.",
+          }));
+
+          return;
+        }
         break;
-      case "client_email":
-        setEmail(value);
+      case "email":
+        if (!validator.isEmail(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Not a valid email address.",
+          }));
+
+          return;
+        }
         break;
-      case "client_phone":
-        setPhone(value);
-        break;
-      case "client_company":
-        setCompany(value);
+      case "phone":
+        if (validator.isAlpha(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Not a valid phone number.",
+          }));
+
+          return;
+        }
         break;
       default:
-        return null;
+        break;
     }
+    setErrors((prev) => ({
+      ...prev,
+      [truncId]: "",
+    }));
+  };
+
+  const handleBlur = (e) => {
+    const truncId = e.target.id.substr(7);
+    console.log(
+      "🚀 ~ file: SimpleForm.js ~ line 97 ~ handleBlur ~ truncId",
+      e.target.id
+    );
+
+    if (validator.isEmpty(info[truncId])) {
+      setErrors((prev) => ({
+        ...prev,
+        [truncId]: "Field is empty",
+      }));
+
+      return;
+    }
+
+    switch (truncId) {
+      case "name":
+        if (!validator.isAlpha(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Must contain only letters.",
+          }));
+
+          return;
+        }
+        break;
+      case "email":
+        if (!validator.isEmail(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Not a valid email address.",
+          }));
+
+          return;
+        }
+        break;
+      case "phone":
+        if (validator.isAlpha(info[truncId])) {
+          setErrors((prev) => ({
+            ...prev,
+            [truncId]: "Not a valid phone number.",
+          }));
+
+          return;
+        }
+        break;
+      default:
+        break;
+    }
+    setErrors((prev) => ({
+      ...prev,
+      [truncId]: "",
+    }));
   };
 
   const handleCloseSnackbar = () => {
     setSubmitted(false);
   };
   const handleDialCode = (e) => {
-    console.log(
-      "🚀 ~ file: SimpleForm.js ~ line 95 ~ handleDialCode ~ e",
-      e.target.value
-    );
-
-    setDialCode(e.target.value);
+    setInfo((prev) => ({
+      ...prev,
+      dialingCode: e.dialing_code,
+    }));
   };
+
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Grid container className={classes.simpleForm}>
@@ -111,6 +207,7 @@ const SimpleForm = () => {
               <Grid container style={{ marginTop: "20px" }} spacing={2}>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
+                    // onBlur={handleCh}
                     variant="outlined"
                     fullWidth
                     required
@@ -118,10 +215,13 @@ const SimpleForm = () => {
                     id="client_company"
                     label="Company Legal Name"
                     className={classes.inputFields}
+                    error={!!errors.company}
+                    helperText={errors.company}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
+                    // onBlur={handleCh}
                     variant="outlined"
                     required
                     fullWidth
@@ -132,10 +232,13 @@ const SimpleForm = () => {
                     // maxRows={9}
                     // rows='9'
                     className={classes.inputFields}
+                    error={!!errors.name}
+                    helperText={errors.name}
                   />
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
+                    // onBlur={handleCh}
                     type="email"
                     variant="outlined"
                     required
@@ -144,6 +247,8 @@ const SimpleForm = () => {
                     id="client_email"
                     label="Email"
                     className={classes.inputFields}
+                    error={!!errors.email}
+                    helperText={errors.email}
                   />
                 </Grid>
 
@@ -152,11 +257,13 @@ const SimpleForm = () => {
                     <Grid className={classes.dialAutoComplete} item>
                       <DialPhoneAutoComplete
                         handleChange={handleDialCode}
+                        // handleBlur={handleCh}
                         // loggedUserCountry={userCountry}
                       />
                     </Grid>
                     <Grid item className={classes.dialAutoCompleteNumber}>
                       <TextField
+                        // onBlur={handleCh}
                         variant="outlined"
                         required
                         fullWidth
@@ -164,6 +271,8 @@ const SimpleForm = () => {
                         id="client_phone"
                         label="Phone"
                         className={classes.inputFields}
+                        error={!!errors.phone}
+                        helperText={errors.phone}
                       />
                     </Grid>
                   </Grid>

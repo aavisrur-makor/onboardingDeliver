@@ -19,6 +19,7 @@ import { IconButton } from "@material-ui/core";
 import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 import { withStyles } from "@material-ui/styles";
 import InfoPopoverButton from "./InfoPopoverButton";
+import InfoModal from "./InfoModal";
 
 const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
@@ -43,7 +44,7 @@ const DynamicUploaderField = memo((props) => {
   //     ) {
   //       await axios
   //         .post(
-  //           `http://10.0.0.191:3030/api/document/${authState.uuid}`,
+  //           `http://${BASE_URL}/document/${authState.uuid}`,
   //           formData
   //         )
   //         .then((res) => {
@@ -78,14 +79,20 @@ const DynamicUploaderField = memo((props) => {
         <Grid container>
           <Grid item className={classes.dynamicPopoverButton}>
             <Typography direction="row" className={classes.proofLabel}>
-              {true && !queryMatch && (
+              {props.proofItem.state === "occupied" && !queryMatch && (
                 <CheckIcon style={{ color: "#3E2F71" }} />
               )}
               Proof of Identity
             </Typography>
           </Grid>
           <Grid item>
-            <InfoPopoverButton />
+            {props.info ? (
+              !queryMatch ? (
+                <InfoPopoverButton info={props.labelInfo} />
+              ) : (
+                <InfoModal info={props.labelInfo} />
+              )
+            ) : null}
           </Grid>
         </Grid>
       </Grid>
@@ -105,7 +112,13 @@ const DynamicUploaderField = memo((props) => {
             </Typography>
           </Grid>
           <Grid item className={classes.dynamicPopoverButton}>
-            <InfoPopoverButton />
+            {props.info ? (
+              !queryMatch ? (
+                <InfoPopoverButton info={props.labelInfo} />
+              ) : (
+                <InfoModal info={props.labelInfo} />
+              )
+            ) : null}
           </Grid>
         </Grid>
       </Grid>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { makeStyles, TextField } from "@material-ui/core";
 import FieldContext from "../context/fields";
 import AuthContext from "../context/auth";
+import { BASE_URL, END_POINT } from "../constants";
 
 import { useDebouncedCallback } from "use-debounce";
 
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+// {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
 
 const DispatcherField = (props) => {
   const { fieldState, setFieldState } = useContext(FieldContext);
@@ -38,16 +40,54 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
-    const fieldToUpdate = {
+    let fieldToUpdate = {
       [e.target.id]: fieldState[e.target.id],
     };
 
+    if (e.target.id.substr(-4) === "gapi") {
+      fieldToUpdate = {
+        [e.target.id]: {
+          name: fieldState[e.target.id],
+          address: fieldState[e.target.id],
+        },
+      };
+    }
+    console.log(
+      "🚀 ~ file: DispatcherField.js ~ line 90 ~ handleChange ~ fieldToUpdate",
+      fieldToUpdate
+    );
+
+    // let fieldToUpdate = {};
+    // console.log("BEFORE IG ID", e);
+    // if (
+    //   e.target.id === "registration_gapi_location" ||
+    //   e.target.id === "business_gapi_location"
+    // ) {
+    //   console.log("inside the gapi condition");
+    //   console.log("TARGET ID", e.target.id);
+    //   fieldToUpdate = {
+    //     field: e.target.id,
+    //     value: [
+    //       {
+    //         name: "11 Derech Menachem Begin",
+    //         location: { lat: 100.123456, lon: -90.987654 },
+    //       },
+    //     ],
+    //   };
+    // } else {
+    //   fieldToUpdate = {
+    //     field: e.target.id,
+    //     value: fieldState[e.target.id],
+    //   };
+    // }
+
     axios
-      .put(
-        `http://10.0.0.191:3030/api/onboarding/${authState.uuid}`,
-        fieldToUpdate
-      )
+      .put(`${BASE_URL}${END_POINT.ONBOARDING}${authState.uuid}`, fieldToUpdate)
       .then((res) => {
+        console.log(
+          "🚀 ~ file: DispatcherField.js ~ line 75 ~ .then ~ res",
+          res
+        );
         if (res.status === 200) {
           setAuthState((prev) => ({
             ...authState,
@@ -69,6 +109,12 @@ const DispatcherField = (props) => {
       fullWidth
       onChange={(e) => {
         setFieldState((prev) => {
+          console.log(
+            "🚀 ~ file: DispatcherField.js ~ line 114 ~ setFieldState ~ props.id",
+            props.id,
+            fieldState[props.id]
+          );
+
           return {
             ...prev,
             [props.id]: e.target.value,
