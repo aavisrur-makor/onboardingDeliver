@@ -1,20 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import React, { useContext, useEffect, useState } from 'react';
+import { TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 // import countries from "../data/countries";
-import { withStyles } from "@material-ui/core";
-import axios from "axios";
-import AuthContext from "../context/auth";
-import { END_POINT, BASE_URL } from "../constants";
+import { withStyles } from '@material-ui/core';
+import axios from 'axios';
+import AuthContext from '../context/auth';
+import { END_POINT, BASE_URL } from '../constants';
 
 const DialPhoneAutoComplete = (props) => {
   const [dialCode, setDialCode] = useState([]);
   const [userCountry, setUserCountry] = useState();
   const [countryDialCode, setCountryDialCode] = useState({});
-  const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
+  const [countryDialCodeInput, setCountryDialCodeInput] = useState('');
 
   const getUserCountry = async () => {
-    const userDetails = await axios.get("https://ip.nf/me.json");
+    const userDetails = await axios.get('https://ip.nf/me.json');
     const country = userDetails.data.ip.country;
     setUserCountry(country);
   };
@@ -34,53 +34,39 @@ const DialPhoneAutoComplete = (props) => {
     fetchCountry();
     setCountryDialCode(dialCode.filter((dial) => dial.name === userCountry)[0]);
   }, [userCountry]);
-  const { authState } = useContext(AuthContext);
-  const { uuid } = authState;
 
-  const handleChange = (e) => {
-    console.log("first lunch of handleChange", e);
+  const handleChange = (e, inputValue) => {
     setCountryDialCode(e);
-    // if (e) {
-    //   const fieldToUpdate = {
-    //     field: "code",
-    //     value: e.dialing_code,
-    //   };
-    //   axios
-    //     .put(
-    //       `${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`,
-    //       fieldToUpdate
-    //     )
-    //     .then((res) => {})
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
-    props.handleChange(e);
+  };
+
+  const handleInputChange = (e, inputValue) => {
+    setCountryDialCodeInput(inputValue);
+    // props.handleChange(e, inputValue);
   };
 
   return (
     <StyledAutoComplete
-      id="dialing_code"
-      label={"Dial Code"}
+      id='dialing_code'
+      label={'Dial Code'}
       options={dialCode}
-      onBlur={props.handleBlur}
+      // onBlur={props.handleBlur}
       autoHighlight
       fullWidth
       getOptionLabel={(option) =>
-        option.dialing_code ? option.dialing_code : ""
+        option.dialing_code ? option.dialing_code : ''
       }
       onChange={(e, value) => handleChange(value)}
       value={countryDialCode}
       inputValue={countryDialCodeInput}
-      onInputChange={(e, inputValue) => setCountryDialCodeInput(inputValue)}
+      onInputChange={(e, inputValue) => handleInputChange(e, inputValue)}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
-          placeholder={"Code"}
+          placeholder={'Code'}
           inputProps={{
             ...params.inputProps,
 
-            autoComplete: "new-password", // disable autocomplete and autofill
+            autoComplete: 'new-password', // disable autocomplete and autofill
           }}
         />
       )}
@@ -91,24 +77,24 @@ export default DialPhoneAutoComplete;
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {
-    color: "#6d6d6d",
-    border: "1px solid #B9C6CD",
+    color: '#6d6d6d',
+    border: '1px solid #B9C6CD',
 
-    opacity: "1",
+    opacity: '1',
 
-    "& .MuiFormControl-root ": {
-      "& .MuiInput-underline:before": {
+    '& .MuiFormControl-root ': {
+      '& .MuiInput-underline:before': {
         // Semi-transparent underline
 
-        borderBottomColor: "transparent",
+        borderBottomColor: 'transparent',
       },
 
-      "& .MuiInput-underline:hover:before": {
+      '& .MuiInput-underline:hover:before': {
         // Solid underline on hover
 
-        borderBottomColor: "transparent",
+        borderBottomColor: 'transparent',
       },
-      "& .MuiInput-underline:after": {
+      '& .MuiInput-underline:after': {
         // Solid underline on focus
 
         // borderBottomColor: theme.palette.input.placeholder // on admins step 3
@@ -116,51 +102,51 @@ export const StyledAutoComplete = withStyles((theme) => ({
         borderBottom: `1px solid transparent}`, // on step 1
       },
     },
-    "& .MuiInputLabel-formControl": {
-      top: "50%",
+    '& .MuiInputLabel-formControl': {
+      top: '50%',
 
-      transform: "translateY(calc(-65%))",
+      transform: 'translateY(calc(-65%))',
     },
-    "& .MuiAutocomplete-input:first-child": {
-      transform: "translateY(calc(-15%))",
+    '& .MuiAutocomplete-input:first-child': {
+      transform: 'translateY(calc(-15%))',
     },
 
-    "& .MuiButtonBase-root": {
-      transform: "translate(-15px,-7px)",
+    '& .MuiButtonBase-root': {
+      transform: 'translate(-15px,-7px)',
     },
-    "& .MuiTextField-root": {
-      padding: "3px",
+    '& .MuiTextField-root': {
+      padding: '3px',
     },
-    [theme.breakpoints.down("md")]: {
-      "& .MuiButtonBase-root": {
-        transform: "translate(-20px,-6px)",
+    [theme.breakpoints.down('md')]: {
+      '& .MuiButtonBase-root': {
+        transform: 'translate(-20px,-6px)',
       },
-      "& .MuiInputLabel-formControl": {
-        top: "50%",
+      '& .MuiInputLabel-formControl': {
+        top: '50%',
 
-        transform: "translateY(calc(-20%))",
+        transform: 'translateY(calc(-20%))',
       },
-      "& .MuiAutocomplete-input:first-child": {
-        transform: "translateY(calc(-15%))",
+      '& .MuiAutocomplete-input:first-child': {
+        transform: 'translateY(calc(-15%))',
       },
     },
   },
 
   inputRoot: {
-    color: "black",
+    color: 'black',
   },
 
   paper: {
-    color: "black",
+    color: 'black',
   },
 
   popper: {
-    color: "white",
+    color: 'white',
   },
 }))(Autocomplete);
 
 export const StyledTextFieldCountry = withStyles((theme) => ({
   root: {
-    color: "white",
+    color: 'white',
   },
 }))(TextField);

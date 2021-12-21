@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useContext } from "react";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
-import DispatcherField from "./DispatcherField";
-import formData from "../data/formData";
-import { TextField } from "@material-ui/core";
-import { withStyles } from "@material-ui/core";
-import CountryAutoComplete from "./CountryAutoComplete";
-import FieldContext from "../context/fields";
+import React, { useEffect, useLayoutEffect, useContext } from 'react';
+import { Grid, makeStyles, Typography } from '@material-ui/core';
+import DispatcherField from './DispatcherField';
+import formData from '../data/formData';
+import { TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+import CountryAutoComplete from './CountryAutoComplete';
+import FieldContext from '../context/fields';
 
 // const steps = [
 //   "Submit on-boarding documentation",
@@ -15,46 +15,46 @@ import FieldContext from "../context/fields";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    "& .MuiOutlinedInput-root": {
+    '& .MuiOutlinedInput-root': {
       borderRadius: 0,
     },
   },
   formControl: {
-    "& .MuiFormControl-root": {
-      background: "0% 0% no-repeat padding-box",
-      border: "none",
-      opacity: "1",
+    '& .MuiFormControl-root': {
+      background: '0% 0% no-repeat padding-box',
+      border: 'none',
+      opacity: '1',
     },
   },
   titleText: {
-    fontWeight: "bold",
-    font: "normal normal bold 24px/29px Cormorant Garamond",
+    fontWeight: 'bold',
+    font: 'normal normal bold 24px/29px Cormorant Garamond',
   },
   countryAutoComplete: {
-    display: "flex",
-    marginTop: "0 !important",
-    padding: "1rem 0 0 1rem",
+    display: 'flex',
+    marginTop: '0 !important',
+    padding: '1rem 0 0 1rem',
 
-    "& .MuiOutlinedInput-root": {
-      padding: "11px",
+    '& .MuiOutlinedInput-root': {
+      padding: '11px',
     },
-    "& .MuiAutocomplete-popupIndicator": {
-      transform: "translateX(-10px)",
+    '& .MuiAutocomplete-popupIndicator': {
+      transform: 'translateX(-10px)',
     },
-    "& .MuiInputBase-root": {
-      marginTop: "0",
+    '& .MuiInputBase-root': {
+      marginTop: '0',
 
       // boxShadow: "inset 0 0 0 1px #B9C6CD",
     },
-    "& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ": {
-      content: "none",
+    '& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ': {
+      content: 'none',
     },
-    "& .MuiFormLabel-root": {
-      fontSize: "16px",
-      paddingLeft: "4px",
+    '& .MuiFormLabel-root': {
+      fontSize: '16px',
+      paddingLeft: '4px',
     },
-    "& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty":
-      { display: "none" },
+    '& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty':
+      { display: 'none' },
   },
 }));
 
@@ -68,10 +68,10 @@ const PseudoForm = function (props) {
   }, []);
 
   return (
-    <Grid container direction="column" className={classes.root} spacing={3}>
+    <Grid container direction='column' className={classes.root} spacing={3}>
       <Grid item xs={11}>
         {!props.query && (
-          <Typography className={classes.titleText} variant="body1">
+          <Typography className={classes.titleText} variant='body1'>
             On-Boarding Documentation
           </Typography>
         )}
@@ -79,15 +79,20 @@ const PseudoForm = function (props) {
 
       <Grid item>
         <Grid container spacing={3}>
-          {formData.form1.grid1.map(({ label, id }) => {
+          {formData.form1.grid1.map(({ label, id, isRequired }) => {
             return (
               <Grid item xs={12} md={6}>
-                <DispatcherField value={fieldState[id]} id={id} label={label} />
+                <DispatcherField
+                  value={fieldState[id]}
+                  id={id}
+                  label={label}
+                  isRequired={isRequired}
+                />
               </Grid>
             );
           })}
           <Grid item xs={12} md={6} className={classes.countryAutoComplete}>
-            <CountryAutoComplete />
+            <CountryAutoComplete isRequired={true} />
           </Grid>
         </Grid>
       </Grid>
@@ -95,7 +100,7 @@ const PseudoForm = function (props) {
         <Grid container spacing={3}>
           {formData.form1.grid2.map(({ label, id }) => {
             console.log(
-              "🚀 ~ file: PseudoForm.js ~ line 89 ~ {formData.form1.grid1.map ~ id",
+              '🚀 ~ file: PseudoForm.js ~ line 89 ~ {formData.form1.grid1.map ~ id',
               id
             );
             return (
@@ -132,8 +137,8 @@ export default PseudoForm;
 export const StyledTextField = withStyles((theme) => ({
   root: {
     // border: "solid #3F3073",
-    color: "#6d6d6d",
+    color: '#6d6d6d',
     // marginTop: "20px",
-    textAlign: "center",
+    textAlign: 'center',
   },
 }))(TextField);

@@ -1,37 +1,41 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import React, { useContext, useEffect, useState } from 'react';
+import { TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 // import countries from "../data/countries";
-import { withStyles } from "@material-ui/core";
-import axios from "axios";
-import AuthContext from "../context/auth";
-import FieldContext from "../context/fields";
-
-import { BASE_URL, END_POINT } from "../constants";
+import { withStyles } from '@material-ui/core';
+import axios from 'axios';
+import AuthContext from '../context/auth';
+import FieldContext from '../context/fields';
+import validate from '../utils/validate';
+import { BASE_URL, END_POINT } from '../constants';
 
 const CountryAutoComplete = (props) => {
   const [countries, setCountries] = useState([]);
   const { fieldState } = useContext(FieldContext);
+  const [error, setError] = useState('');
   const [countryState, setCountryState] = useState({});
-  const [countryStateInput, setCountryStateInput] = useState("");
+  const [countryStateInput, setCountryStateInput] = useState('');
 
-  useEffect(async () => {
-    const countriesData = await axios.get(
-      `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
-    );
-    console.log(
-      "🚀 ~ file: CountryAutoComplete.js ~ line 21 ~ useEffect ~ countriesData",
-      countriesData
-    );
-    setCountries(countriesData.data);
-    setCountryState(fieldState.country);
-    setCountryStateInput(fieldState.country);
+  useEffect(() => {
+    const fetch = async () => {
+      const countriesData = await axios.get(
+        `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
+      );
+      console.log(
+        '🚀 ~ file: CountryAutoComplete.js ~ line 21 ~ useEffect ~ countriesData',
+        countriesData
+      );
+      setCountries(countriesData.data);
+      setCountryState(fieldState.country);
+      setCountryStateInput(fieldState.country);
+    };
+    fetch();
   }, [fieldState.country]);
   const { authState } = useContext(AuthContext);
   const { uuid } = authState;
 
   const handleChange = (e) => {
-    console.log("COUNTRY VALUE", e);
+    console.log('COUNTRY VALUE', e);
     setCountryState(e);
     if (e) {
       const fieldToUpdate = {
@@ -46,27 +50,34 @@ const CountryAutoComplete = (props) => {
     }
   };
 
+  const handleInputChange = (e, inputValue) => {
+    setCountryStateInput(inputValue);
+
+    validate(null, inputValue, setError);
+  };
   return (
     <StyledAutoComplete
-      id="country"
+      id='country'
       // autoComplete="off"
       fullWidth
       value={countryState}
       options={countries}
       autoHighlight
-      getOptionLabel={(option) => option.name || ""}
+      getOptionLabel={(option) => option.name || ''}
       onChange={(e, value) => handleChange(value)}
-      onInputChange={(e, inputValue) => setCountryStateInput(inputValue)}
-      inputValue={countryStateInput || ""}
+      onInputChange={(e, inputValue) => handleInputChange(e, inputValue)}
+      inputValue={countryStateInput || ''}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
+          error={!!error}
+          helperText={error && 'Field is empty.'}
           disableOutline
-          label="Country"
-          variant="outlined"
+          label='Country'
+          variant='outlined'
           inputProps={{
             ...params.inputProps,
-            autoComplete: "new-password", // disable autocomplete and autofill
+            autoComplete: 'new-password', // disable autocomplete and autofill
           }}
         />
       )}
@@ -111,6 +122,6 @@ export const StyledAutoComplete = withStyles((theme) => ({
 
 export const StyledTextFieldCountry = withStyles((theme) => ({
   root: {
-    color: "white",
+    color: 'white',
   },
 }))(TextField);
