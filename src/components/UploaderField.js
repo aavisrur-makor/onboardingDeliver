@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploaderField = (props) => {
   const classes = useStyles();
-  
+
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
@@ -70,16 +70,15 @@ const UploaderField = (props) => {
         file: formData,
       };
 
-      if (
-        fileType.includes("image") ||
-        fileType.includes("text") ||
-        fileType.includes("pdf")
-      ) {
+      if (fileType.includes("image") || fileType.includes("pdf")) {
         await axios
           .post(`${BASE_URL}${END_POINT.DOCUMENT}${authState.uuid}`, formData)
           .then((res) => {
             if (res.status === 200) {
-              console.log(res);
+              console.log(
+                "🚀 ~ file: UploaderField.js ~ line 78 ~ .then ~ res",
+                res
+              );
               setAuthState((prev) => ({
                 ...authState,
                 progress: res.data.progress,
@@ -128,6 +127,7 @@ const UploaderField = (props) => {
             <InfoModal info={props.labelInfo} />
           )
         ) : null}
+        <Typography>*</Typography>
       </Grid>
       <Grid item md={12} className={classes.uploaderAttach}>
         <FormControlLabel

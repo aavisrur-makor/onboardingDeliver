@@ -62,7 +62,9 @@ const StepperFormComplex = () => {
                   state: "occupied",
                 });
               } else {
-                fileFields[file.document_field] = file.document_name;
+                fileFields[
+                  file.document_field
+                ] = `${file.document_name}.${file.document_extension}`;
               }
             });
             // const fullData = { ...textFields, ...fileFields };
