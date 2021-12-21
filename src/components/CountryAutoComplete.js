@@ -18,6 +18,10 @@ const CountryAutoComplete = (props) => {
     const countriesData = await axios.get(
       "http://10.0.0.191:3030/api/onboarding/country"
     );
+    console.log(
+      "🚀 ~ file: CountryAutoComplete.js ~ line 21 ~ useEffect ~ countriesData",
+      countriesData
+    );
     setCountries(countriesData.data);
     setCountryState(fieldState.country);
     setCountryStateInput(fieldState.country);
@@ -29,8 +33,7 @@ const CountryAutoComplete = (props) => {
     setCountryState(e);
     if (e) {
       const fieldToUpdate = {
-        field: "country",
-        value: e.name,
+        country: e.name,
       };
       axios
         .put(`http://10.0.0.191:3030/api/onboarding/${uuid}`, fieldToUpdate)

@@ -1,20 +1,12 @@
-import {
-  IconButton,
-  Grid,
-  makeStyles,
-  Input,
-  useMediaQuery,
-} from "@material-ui/core";
+import { IconButton, Grid, makeStyles, useMediaQuery } from "@material-ui/core";
 import _ from "lodash";
 import { useEffect, useContext, useState } from "react";
 import FileContext from "../context/files";
 import AuthContext from "../context/auth";
 import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
-import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 
 import axios from "axios";
 import DynamicUploaderField from "./DynamicUploaderField";
-import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +70,6 @@ const DynamicInputGroup = () => {
   const { authState, setAuthState } = useContext(AuthContext);
   const [extraProofs, setExtraProofs] = useState([]);
   const classes = useStyles();
-  const query = useMediaQuery("(max-width:600px)");
 
   console.log("F_PROOFS", fileState);
   useEffect(() => {
@@ -106,12 +97,15 @@ const DynamicInputGroup = () => {
   };
 
   const handleDelete = (state, id) => {
+    console.log(
+      "🚀 ~ file: DynamicInputGroup.js ~ line 100 ~ handleDelete ~ state, id",
+      state,
+      id
+    );
     console.log("inside the callback");
     if (state === "occupied") {
       axios
-        .delete("url", {
-          fileId: id,
-        })
+        .delete(`http://10.0.0.191:3030/api/document/${authState.uuid}`, id)
         .then((res) => {
           ////////TAKE CARE OF DELETING LOCALLY
           setFileState((prev) => ({
@@ -204,8 +198,12 @@ const DynamicInputGroup = () => {
     <Grid container xs={12} md={11} className={classes.dynamicContainer}>
       {[...proof_of_identity_or_address, ...extraProofs].map(
         (supposedFile, i) => {
+          // console.log(
+          //   "🚀 ~ file: DynamicInputGroup.js ~ line 201 ~ DynamicInputGroup ~ supposedFile",
+          //   supposedFile
+          // );
           // const id =
-          // typeof supposedFile === "string" ? supposedFile : supposedFile.id;
+          //   typeof supposedFile === "string" ? supposedFile : supposedFile.id;
 
           const showTrash = extraProofs.length > 1 || i > 0;
 

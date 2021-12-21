@@ -38,10 +38,8 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
-   
     const fieldToUpdate = {
-      field: e.target.id,
-      value: fieldState[e.target.id],
+      [e.target.id]: fieldState[e.target.id],
     };
 
     axios
