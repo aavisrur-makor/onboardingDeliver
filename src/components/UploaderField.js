@@ -1,53 +1,53 @@
-import { FormControlLabel, makeStyles, useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import { Box, Input, Typography, Grid } from "@material-ui/core";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
-import { useContext } from "react";
-import axios from "axios";
-import { withStyles } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import FileContext from "../context/files";
-import AuthContext from "../context/auth";
-import InfoPopoverButton from "./InfoPopoverButton";
-import InfoModal from "./InfoModal";
-import { END_POINT, BASE_URL } from "../constants";
+import { FormControlLabel, makeStyles, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import { Box, Input, Typography, Grid } from '@material-ui/core';
+import AttachFileIcon from '@material-ui/icons/AttachFile';
+import { useContext } from 'react';
+import axios from 'axios';
+import { withStyles } from '@material-ui/core';
+import CheckIcon from '@material-ui/icons/Check';
+import FileContext from '../context/files';
+import AuthContext from '../context/auth';
+import InfoPopoverButton from './InfoPopoverButton';
+import InfoModal from './InfoModal';
+import { END_POINT, BASE_URL } from '../constants';
 
 const useStyles = makeStyles((theme) => ({
   proofLabel: {
-    color: "#8A8A8A",
-    display: "flex",
-    alignItems: "center",
+    color: '#8A8A8A',
+    display: 'flex',
+    alignItems: 'center',
 
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "13px",
-      flex: "2 0 0",
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '13px',
+      flex: '2 0 0',
     },
   },
   uploaderAttach: {
-    [theme.breakpoints.down("sm")]: { transform: "translateX(-5px) " },
+    [theme.breakpoints.down('sm')]: { transform: 'translateX(-5px) ' },
 
     // borderTop: '1px solid #D6DFE4',
     // borderBottom: '1px solid #D6DFE4',
     // [theme.breakpoints.down('sm')]: { flex: '1 0 0' },
   },
   uploader: {
-    [theme.breakpoints.down("sm")]: { rowGap: ".5rem", alignItems: "start" },
-    borderTop: "1px solid #D6DFE4",
-    "&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type": {
-      borderBottom: "1px solid #D6DFE4",
+    [theme.breakpoints.down('sm')]: { rowGap: '.5rem', alignItems: 'start' },
+    borderTop: '1px solid #D6DFE4',
+    '&.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-12:last-of-type': {
+      borderBottom: '1px solid #D6DFE4',
     },
-    "& .MuiFormControlLabel-root": {
-      marginLeft: "auto",
+    '& .MuiFormControlLabel-root': {
+      marginLeft: 'auto',
     },
-    "& .MuiGrid-root.MuiGrid-item:last-child": {
-      [theme.breakpoints.down("sm")]: { flexBasis: "100%" },
+    '& .MuiGrid-root.MuiGrid-item:last-child': {
+      [theme.breakpoints.down('sm')]: { flexBasis: '100%' },
     },
-    "& .MuiGrid-root.MuiGrid-item:first-child": {
-      [theme.breakpoints.down("sm")]: { flexBasis: "90%" },
+    '& .MuiGrid-root.MuiGrid-item:first-child': {
+      [theme.breakpoints.down('sm')]: { flexBasis: '90%' },
     },
   },
   attachFileIcon: {
-    [theme.breakpoints.down("sm")]: { transform: "scale(.9)" },
+    [theme.breakpoints.down('sm')]: { transform: 'scale(.9)' },
   },
 }));
 
@@ -57,20 +57,16 @@ const UploaderField = (props) => {
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
-  const queryMatch = useMediaQuery(theme.breakpoints.up("md"));
+  const queryMatch = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleChange = async ({ target }) => {
     if (target.files[0]) {
       const formData = new FormData();
       const fileType = target.files[0].type;
-      formData.append("field", target.id);
-      formData.append("file", target.files[0]);
+      formData.append('field', target.id);
+      formData.append('file', target.files[0]);
 
-      const data = {
-        file: formData,
-      };
-
-      if (fileType.includes("image") || fileType.includes("pdf")) {
+      if (fileType.includes('image') || fileType.includes('pdf')) {
         await axios
           .post(
             `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${authState.uuid}`,
@@ -79,7 +75,7 @@ const UploaderField = (props) => {
           .then((res) => {
             if (res.status === 200) {
               console.log(
-                "🚀 ~ file: UploaderField.js ~ line 78 ~ .then ~ res",
+                '🚀 ~ file: UploaderField.js ~ line 78 ~ .then ~ res',
                 res
               );
               setAuthState((prev) => ({
@@ -103,7 +99,7 @@ const UploaderField = (props) => {
   return (
     <Grid
       container
-      justifyContent="space-between"
+      justifyContent='space-between'
       className={classes.uploader}
       style={{ ...props.style }}
       key={props.id}
@@ -111,7 +107,7 @@ const UploaderField = (props) => {
       <Grid item>
         <Typography className={classes.proofLabel}>
           {queryMatch && fileState[props.id] && (
-            <CheckIcon style={{ color: "#3E2F71" }} />
+            <CheckIcon style={{ color: '#3E2F71' }} />
           )}
           {props.label}
         </Typography>
@@ -119,7 +115,7 @@ const UploaderField = (props) => {
 
       <Grid
         style={{
-          marginRight: "auto",
+          marginRight: 'auto',
         }}
         item
       >
@@ -133,14 +129,14 @@ const UploaderField = (props) => {
       </Grid>
       <Grid item md={12} className={classes.uploaderAttach}>
         <FormControlLabel
-          sx={{ color: "white" }}
+          sx={{ color: 'white' }}
           label={
             <Box
-              sx={{ display: "flex", flexDirection: "row", color: "#3E2F71" }}
+              sx={{ display: 'flex', flexDirection: 'row', color: '#3E2F71' }}
             >
               <AttachFileIcon className={classes.attachFileIcon} />
               <Typography
-                style={{ fontWeight: fileState[props.id] ? "bold" : "400" }}
+                style={{ fontWeight: fileState[props.id] ? 'bold' : '400' }}
               >
                 {console.log(
                   "FILE STATE",
@@ -154,10 +150,10 @@ const UploaderField = (props) => {
           }
           control={
             <StyledInput
-              type="file"
+              type='file'
               id={props.id}
               inputProps={{
-                accept: "application/pdf, application/doc, application/docx",
+                accept: 'application/pdf, application/doc, application/docx',
               }}
               onChange={handleChange}
             />
@@ -172,6 +168,6 @@ export default UploaderField;
 
 export const StyledInput = withStyles((theme) => ({
   root: {
-    display: "none",
+    display: 'none',
   },
 }))(Input);

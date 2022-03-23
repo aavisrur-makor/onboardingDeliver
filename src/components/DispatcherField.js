@@ -1,34 +1,35 @@
-import { useContext } from "react";
-import axios from "axios";
-import { makeStyles, TextField } from "@material-ui/core";
-import FieldContext from "../context/fields";
-import AuthContext from "../context/auth";
-import { BASE_URL, END_POINT } from "../constants";
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { makeStyles, TextField } from '@material-ui/core';
+import FieldContext from '../context/fields';
+import AuthContext from '../context/auth';
+import { BASE_URL, END_POINT } from '../constants';
+import validate from '../utils/validate';
 
-import { useDebouncedCallback } from "use-debounce";
+import { useDebouncedCallback } from 'use-debounce';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    border: "0px",
-    "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
+    border: '0px',
+    '& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl':
       {
-        border: "0px",
+        border: '0px',
       },
-    "& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl":
+    '& .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-fullWidth.MuiInputBase-formControl':
       {
-        borderRadius: "0",
+        borderRadius: '0',
       },
-    "& .MuiInputLabel-outlined": {
-      textAlign: "center",
+    '& .MuiInputLabel-outlined': {
+      textAlign: 'center',
 
-      letterSpacing: "0px",
-      color: "#8A8A8A",
-      opacity: "1",
+      letterSpacing: '0px',
+      color: '#8A8A8A',
+      opacity: '1',
     },
   },
   textField: {
-    "& > .MuiInputLabel-root": {
-      [theme.breakpoints.down("sm")]: { fontSize: "13px" },
+    '& > .MuiInputLabel-root': {
+      [theme.breakpoints.down('sm')]: { fontSize: '13px' },
     },
     "& .MuiOutlinedInput-root": {
       padding: "18.5px 14px",
@@ -51,14 +52,28 @@ const useStyles = makeStyles((theme) => ({
 const DispatcherField = (props) => {
   const { fieldState, setFieldState } = useContext(FieldContext);
   const { authState, setAuthState } = useContext(AuthContext);
+  const [error, setError] = useState('');
   const classes = useStyles();
 
   const handleChange = async (e) => {
+    console.log(
+      '🚀 ~ file: DispatcherField.js ~ line 65 ~ handleChange ~ props.isRequired',
+      props.isRequired
+    );
+    if (props.isRequired) {
+      console.log(
+        '🚀 ~ file: DispatcherField.js ~ line 65 ~ handleChange ~ props.isRequired',
+        props.isRequired
+      );
+
+      validate(null, fieldState[e.target.id], setError);
+    }
+
     let fieldToUpdate = {
       [e.target.id]: fieldState[e.target.id],
     };
 
-    if (e.target.id.substr(-4) === "gapi") {
+    if (e.target.id.substr(-4) === 'gapi') {
       fieldToUpdate = {
         [e.target.id]: {
           name: fieldState[e.target.id],
@@ -67,7 +82,7 @@ const DispatcherField = (props) => {
       };
     }
     console.log(
-      "🚀 ~ file: DispatcherField.js ~ line 90 ~ handleChange ~ fieldToUpdate",
+      '🚀 ~ file: DispatcherField.js ~ line 90 ~ handleChange ~ fieldToUpdate',
       fieldToUpdate
     );
 
@@ -78,7 +93,7 @@ const DispatcherField = (props) => {
       )
       .then((res) => {
         console.log(
-          "🚀 ~ file: DispatcherField.js ~ line 75 ~ .then ~ res",
+          '🚀 ~ file: DispatcherField.js ~ line 75 ~ .then ~ res',
           res
         );
         if (res.status === 200) {
@@ -89,7 +104,7 @@ const DispatcherField = (props) => {
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log('err', err);
       });
   };
 
@@ -106,7 +121,7 @@ const DispatcherField = (props) => {
       onChange={(e) => {
         setFieldState((prev) => {
           console.log(
-            "🚀 ~ file: DispatcherField.js ~ line 114 ~ setFieldState ~ props.id",
+            '🚀 ~ file: DispatcherField.js ~ line 114 ~ setFieldState ~ props.id',
             props.id,
             fieldState[props.id]
           );

@@ -46,7 +46,7 @@ const PseudoForm = function (props) {
     });
   };
   return (
-    <Grid container direction="column" className={classes.root} spacing={3}>
+    <Grid container direction='column' className={classes.root} spacing={3}>
       <Grid item xs={11}>
         {!props.query && (
           <Typography className={classes.titleText} variant="body1">
@@ -57,7 +57,7 @@ const PseudoForm = function (props) {
 
       <Grid item>
         <Grid container spacing={3}>
-          {formData.form1.grid1.map(({ label, id }) => {
+          {formData.form1.grid1.map(({ label, id, isRequired }) => {
             return (
               <Grid item xs={12} md={6}>
                 <DispatcherField
@@ -204,8 +204,8 @@ export default PseudoForm;
 export const StyledTextField = withStyles((theme) => ({
   root: {
     // border: "solid #3F3073",
-    color: "#6d6d6d",
+    color: '#6d6d6d',
     // marginTop: "20px",
-    textAlign: "center",
+    textAlign: 'center',
   },
 }))(TextField);
