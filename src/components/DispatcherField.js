@@ -30,6 +30,20 @@ const useStyles = makeStyles((theme) => ({
     "& > .MuiInputLabel-root": {
       [theme.breakpoints.down("sm")]: { fontSize: "13px" },
     },
+    "& .MuiOutlinedInput-root": {
+      padding: "18.5px 14px",
+    },
+    "& input[type=number]": {
+      "-moz-appearance": "textfield",
+    },
+    "& input[type=number]::-webkit-outer-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
+    "& input[type=number]::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none",
+      margin: 0,
+    },
   },
 }));
 // {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
@@ -57,32 +71,11 @@ const DispatcherField = (props) => {
       fieldToUpdate
     );
 
-    // let fieldToUpdate = {};
-    // console.log("BEFORE IG ID", e);
-    // if (
-    //   e.target.id === "registration_gapi_location" ||
-    //   e.target.id === "business_gapi_location"
-    // ) {
-    //   console.log("inside the gapi condition");
-    //   console.log("TARGET ID", e.target.id);
-    //   fieldToUpdate = {
-    //     field: e.target.id,
-    //     value: [
-    //       {
-    //         name: "11 Derech Menachem Begin",
-    //         location: { lat: 100.123456, lon: -90.987654 },
-    //       },
-    //     ],
-    //   };
-    // } else {
-    //   fieldToUpdate = {
-    //     field: e.target.id,
-    //     value: fieldState[e.target.id],
-    //   };
-    // }
-
     axios
-      .put(`${BASE_URL}${END_POINT.ONBOARDING}${authState.uuid}`, fieldToUpdate)
+      .put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
+        fieldToUpdate
+      )
       .then((res) => {
         console.log(
           "🚀 ~ file: DispatcherField.js ~ line 75 ~ .then ~ res",
@@ -106,7 +99,10 @@ const DispatcherField = (props) => {
     <TextField
       className={classes.textField}
       id={props.id}
+      size="medium"
+      type={props.type}
       fullWidth
+      required={props.required}
       onChange={(e) => {
         setFieldState((prev) => {
           console.log(
@@ -126,9 +122,8 @@ const DispatcherField = (props) => {
       label={props.label}
       value={fieldState[props.id]}
       variant="outlined"
-      maxRows={props.maxRows}
       rows={props.rows}
-      multiline
+      multiline={props.multiline && props.multiline}
     />
   );
 };

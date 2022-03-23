@@ -17,7 +17,7 @@ const CountryAutoComplete = (props) => {
 
   useEffect(async () => {
     const countriesData = await axios.get(
-      `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
+      `${BASE_URL}${END_POINT.UTILS}${END_POINT.COUNTRY}`
     );
     console.log(
       "🚀 ~ file: CountryAutoComplete.js ~ line 21 ~ useEffect ~ countriesData",
@@ -38,7 +38,10 @@ const CountryAutoComplete = (props) => {
         country: e.iso_code_2,
       };
       axios
-        .put(`${BASE_URL}${END_POINT.ONBOARDING}${uuid}`, fieldToUpdate)
+        .put(
+          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${uuid}`,
+          fieldToUpdate
+        )
         .then((res) => {})
         .catch((error) => {
           console.log(error);
@@ -62,7 +65,7 @@ const CountryAutoComplete = (props) => {
         <StyledTextFieldCountry
           {...params}
           disableOutline
-          label="Country"
+          label={props.label}
           variant="outlined"
           inputProps={{
             ...params.inputProps,

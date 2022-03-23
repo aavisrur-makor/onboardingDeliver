@@ -20,8 +20,14 @@ import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core";
 import MobileStepper from "./MobileStepper";
 import { END_POINT, BASE_URL } from "../constants";
+import TradingInfo from "./TradingInfo";
 
-const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
+const steps = [
+  "Company Info",
+  "Trading Info",
+  "Attach Documents",
+  "Terms of Use",
+];
 
 const StepperFormComplex = () => {
   const classes = useStyles();
@@ -39,9 +45,11 @@ const StepperFormComplex = () => {
     setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (params.uuid) {
       const fieldCall = axios.get(
-          `${BASE_URL}${END_POINT.ONBOARDING}${params.uuid}`
+          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${params.uuid}`
         ),
-        fileCall = axios.get(`${BASE_URL}${END_POINT.DOCUMENT}${params.uuid}`);
+        fileCall = axios.get(
+          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${params.uuid}`
+        );
 
       axios
         .all([fieldCall, fileCall])
@@ -50,23 +58,22 @@ const StepperFormComplex = () => {
             const textFields = res1.data;
             let fileFields = { proof_of_identity_or_address: [] };
 
-            console.log("FILES ON STEPPER", fileFields);
+            console.log("FILES ON STEPPER", res2.data);
 
             res2.data.forEach((file) => {
               console.log("FILE FIELDS", file);
 
-              if (file.document_field === "proof_of_identity_or_address") {
+              if (file.field === "proof_of_identity_or_address") {
                 fileFields.proof_of_identity_or_address.push({
-                  fileName: `${file.document_name}.${file.document_extension}`,
-                  document_uuid: file.document_uuid,
+                  fileName: `${file.name}.${file.extension}`,
+                  document_uuid: file.uuid,
                   state: "occupied",
                 });
               } else {
-                fileFields[
-                  file.document_field
-                ] = `${file.document_name}.${file.document_extension}`;
+                fileFields[file.field] = `${file.name}.${file.extension}`;
               }
             });
+            console.log("222", fileFields);
             // const fullData = { ...textFields, ...fileFields };
             setFieldState((prev) => ({ ...prev, ...textFields }));
             setFileState((prev) => ({ ...prev, ...fileFields }));
@@ -126,7 +133,10 @@ const StepperFormComplex = () => {
       accept_and_send: authState.AcceptAndSendAgree,
     };
     axios
-      .put(`${BASE_URL}${END_POINT.ONBOARDING}${authState.uuid}`, fieldToUpdate)
+      .put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
+        fieldToUpdate
+      )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
     setAuthState((prev) => ({
@@ -172,6 +182,8 @@ const StepperFormComplex = () => {
             {activeStep === 0 ? (
               <PseudoForm query={queryMatch} value={fieldState} />
             ) : activeStep === 1 ? (
+              <TradingInfo />
+            ) : activeStep === 2 ? (
               <FileForm query={queryMatch} />
             ) : (
               <TermsForm query={queryMatch} />

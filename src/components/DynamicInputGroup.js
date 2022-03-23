@@ -107,7 +107,7 @@ const DynamicInputGroup = () => {
   const handleDelete = (state, id) => {
     if (state === "occupied") {
       axios
-        .delete(`${BASE_URL}${END_POINT.DOCUMENT}${id}`)
+        .delete(`${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${id}`)
         .then((res) => {
           ////////TAKE CARE OF DELETING LOCALLY
           setFileState((prev) => ({
@@ -144,7 +144,10 @@ const DynamicInputGroup = () => {
         fileType.includes("pdf")
       ) {
         await axios
-          .post(`${BASE_URL}${END_POINT.DOCUMENT}${authState.uuid}`, formData)
+          .post(
+            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${authState.uuid}`,
+            formData
+          )
           .then((res) => {
             if (res.status === 200) {
               setAuthState((prev) => ({

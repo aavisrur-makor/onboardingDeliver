@@ -2,17 +2,27 @@ export default {
   form1: {
     grid1: [
       { id: "client_company_legal_name", label: "Company Legal Name" },
+      { id: "trading_name", label: "Trading Name" },
       { id: "registration_number", label: "Register Number" },
-      {
-        id: "registered_office_address_gapi",
-        label: "Registered Office Address",
-      },
+
       // {id: 'country', label: 'COUNTRY'},
     ],
     grid2: [
       {
+        id: "registered_office_address_gapi",
+        label: "Registered Office Address",
+      },
+      {
         id: "principal_business_address_gapi",
         label: "Principal Buisness Address(If different)",
+      },
+      {
+        id: "country",
+        label: "Country of Incorporation",
+      },
+      {
+        id: "type_of_activity",
+        label: "Type of Business & Activity",
       },
       { id: "website", label: "Website Url" },
       {

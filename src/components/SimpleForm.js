@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
@@ -10,17 +10,17 @@ import { Typography, Snackbar } from "@material-ui/core";
 import AuthContext from "../context/auth";
 import { useStyles } from "../styles/SmallForm";
 import DialPhoneAutoComplete from "./DialPhoneAutoComplete";
-
+import FormContext from "../context/form";
 import { END_POINT, BASE_URL } from "../constants";
 
 const SimpleForm = () => {
-  const [info, setInfo] = useState({
-    company: "",
-    name: "",
-    email: "",
-    phone: "",
-    dialCode: "",
-  });
+  // const [info, setInfo] = useState({
+  //   company: "",
+  //   name: "",
+  //   email: "",
+  //   phone: "",
+  //   dialCode: "",
+  // });
 
   const [errors, setErrors] = useState({
     company: "",
@@ -30,28 +30,33 @@ const SimpleForm = () => {
   });
 
   const { authState, setAuthState } = useContext(AuthContext);
+  const { formState, setFormState } = useContext(FormContext);
   const classes = useStyles();
   const [isSubmitted, setSubmitted] = useState(false);
 
+  useEffect(() => {}, [formState]);
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const data = {
-      name: info.name,
-      email: [info.email],
+      name: formState.name,
+      email: [formState.email],
       phone: [
         {
-          dialing_code: info.dialCode,
-          number: info.phone,
+          dialing_code: formState.dialCode,
+          number: formState.phone,
         },
       ],
-      client_company_legal_name: info.company,
+      client_company_legal_name: formState.company,
     };
 
     console.log("data", data);
     setSubmitted(true);
     axios
-      .post(`${BASE_URL}${END_POINT.ONBOARDINGSIMPLEFORM}`, data)
+      .post(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDINGSIMPLEFORM}`,
+        data
+      )
       .then((res) => {
         if (res.status === 200) {
           const isNewUser = res.data.isNewUser;
@@ -68,17 +73,17 @@ const SimpleForm = () => {
     const { value, id } = e.target;
 
     const truncId = id.substr(7);
-
+    console.log("FORM FIELD", formState, value, truncId);
     console.log(
       "🚀 ~ file: SimpleForm.js ~ line 97 ~ handleBlur ~ truncId",
       e.target.id
     );
-    setInfo((prev) => ({
+    setFormState((prev) => ({
       ...prev,
       [truncId]: value,
     }));
 
-    if (validator.isEmpty(info[truncId])) {
+    if (validator.isEmpty(value)) {
       setErrors((prev) => ({
         ...prev,
         [truncId]: "Field is empty",
@@ -89,7 +94,7 @@ const SimpleForm = () => {
 
     switch (truncId) {
       case "name":
-        if (!validator.isAlpha(info[truncId])) {
+        if (!validator.isAlpha(value)) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Must contain only letters.",
@@ -99,7 +104,7 @@ const SimpleForm = () => {
         }
         break;
       case "email":
-        if (!validator.isEmail(info[truncId])) {
+        if (!validator.isEmail(value)) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Not a valid email address.",
@@ -109,7 +114,7 @@ const SimpleForm = () => {
         }
         break;
       case "phone":
-        if (validator.isAlpha(info[truncId])) {
+        if (validator.isAlpha(value)) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Not a valid phone number.",
@@ -134,7 +139,7 @@ const SimpleForm = () => {
       e.target.id
     );
 
-    if (validator.isEmpty(info[truncId])) {
+    if (validator.isEmpty(formState && formState[truncId])) {
       setErrors((prev) => ({
         ...prev,
         [truncId]: "Field is empty",
@@ -145,7 +150,7 @@ const SimpleForm = () => {
 
     switch (truncId) {
       case "name":
-        if (!validator.isAlpha(info[truncId])) {
+        if (!validator.isAlpha(formState && formState[truncId])) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Must contain only letters.",
@@ -155,7 +160,7 @@ const SimpleForm = () => {
         }
         break;
       case "email":
-        if (!validator.isEmail(info[truncId])) {
+        if (!validator.isEmail(formState && formState[truncId])) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Not a valid email address.",
@@ -165,7 +170,7 @@ const SimpleForm = () => {
         }
         break;
       case "phone":
-        if (validator.isAlpha(info[truncId])) {
+        if (validator.isAlpha(formState && formState[truncId])) {
           setErrors((prev) => ({
             ...prev,
             [truncId]: "Not a valid phone number.",
@@ -187,12 +192,12 @@ const SimpleForm = () => {
     setSubmitted(false);
   };
   const handleDialCode = (e) => {
-    setInfo((prev) => ({
+    setFormState((prev) => ({
       ...prev,
       dialingCode: e.dialing_code,
     }));
   };
-
+  console.log("FORM STATE", formState);
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Grid container className={classes.simpleForm}>

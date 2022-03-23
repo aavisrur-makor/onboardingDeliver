@@ -15,4 +15,6 @@ export const initialState = {
   company_assets: "",
   company: "",
   client_company_legal_name: "",
+  contacts: [{ contact_name: "", dial_code: "", number: "", email: "" }],
+  assets: {},
 };

@@ -72,7 +72,10 @@ const UploaderField = (props) => {
 
       if (fileType.includes("image") || fileType.includes("pdf")) {
         await axios
-          .post(`${BASE_URL}${END_POINT.DOCUMENT}${authState.uuid}`, formData)
+          .post(
+            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${authState.uuid}`,
+            formData
+          )
           .then((res) => {
             if (res.status === 200) {
               console.log(
@@ -127,7 +130,6 @@ const UploaderField = (props) => {
             <InfoModal info={props.labelInfo} />
           )
         ) : null}
-        <Typography>*</Typography>
       </Grid>
       <Grid item md={12} className={classes.uploaderAttach}>
         <FormControlLabel
@@ -140,6 +142,12 @@ const UploaderField = (props) => {
               <Typography
                 style={{ fontWeight: fileState[props.id] ? "bold" : "400" }}
               >
+                {console.log(
+                  "FILE STATE",
+                  fileState,
+                  fileState[props.id],
+                  props.id
+                )}
                 {fileState[props.id] ? fileState[props.id] : "Attach File"}
               </Typography>
             </Box>

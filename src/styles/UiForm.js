@@ -38,9 +38,7 @@ export const useStyles = makeStyles((theme) => ({
       font: "normal normal normal 16px/22px Work Sans",
       fontSize: "0.5em",
     },
-    "& .MuiTypography-body1": {
-      color: "red",
-    },
+    
   },
   progressContainer: {
     display: "flex",
@@ -380,6 +378,11 @@ export const useStyles = makeStyles((theme) => ({
       color: "#3E2F71",
     },
   },
+  contactDialCode: {
+    "& .MuiInput-root": {
+      padding: "10.5px 14px",
+    },
+  },
   dynamicUploaderContainer: {
     // gap:
   },
@@ -412,5 +415,64 @@ export const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       order: 0,
     },
+  },
+  formControl: {
+    "& .MuiFormControl-root": {
+      background: "0% 0% no-repeat padding-box",
+      border: "none",
+      opacity: "1",
+    },
+  },
+  titleText: {
+    fontWeight: "bold",
+    font: "normal normal bold 24px/29px Cormorant Garamond",
+  },
+  countryAutoComplete: {
+    display: "flex",
+    marginTop: "0 !important",
+    padding: "1rem 0 0 1rem",
+
+    "& .MuiOutlinedInput-root": {
+      padding: "2px",
+    },
+    "& .MuiAutocomplete-popupIndicator": {
+      transform: "translateX(-10px)",
+    },
+    "& .MuiInputBase-root": {
+      marginTop: "0",
+
+      // boxShadow: "inset 0 0 0 1px #B9C6CD",
+    },
+    "& .MuiInputBase-root::before,& .MuiInputBase-root.Mui-focused::before ": {
+      content: "none",
+    },
+    "& .MuiFormLabel-root": {
+      fontSize: "16px",
+      paddingLeft: "4px",
+    },
+    "& .MuiButtonBase-root.MuiIconButton-root.MuiAutocomplete-clearIndicator.MuiAutocomplete-clearIndicatorDirty":
+      { display: "none" },
+  },
+  activitiesRequireBox: {
+    padding: "1rem 1rem",
+    border: "1px solid #B9C6CD ",
+    alignItems: "center",
+    rowGap: "1.5rem",
+    [theme.breakpoints.down("md")]: {
+      padding: "2rem 1rem",
+    },
+  },
+  addButton: {
+    // "& .MuiIconButton-label": {
+    //   marginLeft: "auto",
+    // },
+    [theme.breakpoints.down("sm")]: {
+      transform: "translateY(15px)",
+    },
+    // [theme.breakpoints.up("md")]: {
+    //   position: "relative",
+    //   left: "100%",
+    //   transform: "translate(4px,-242%)",
+    // },
   },
 }));

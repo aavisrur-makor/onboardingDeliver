@@ -4,8 +4,9 @@ export const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const END_POINT = {
   ONBOARDING: "/onboarding/",
   ONBOARDINGSIMPLEFORM: "/onboarding",
+  EXTERNAL: "/external",
   DOCUMENT: "/document/",
-  COUNTRY: "country",
+  COUNTRY: "/countries",
   UTILS: "/utils",
   USER: "/user",
 };

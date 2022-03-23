@@ -1,18 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
+import { TextField, useMediaQuery } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 // import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
 import { END_POINT, BASE_URL } from "../constants";
+import FormContext from "../context/form";
 
 const DialPhoneAutoComplete = (props) => {
   const [dialCode, setDialCode] = useState([]);
   const [userCountry, setUserCountry] = useState();
   const [countryDialCode, setCountryDialCode] = useState({});
   const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
-
+  const { formState, setFormState } = useContext(FormContext);
   const getUserCountry = async () => {
     const userDetails = await axios.get("https://ip.nf/me.json");
     const country = userDetails.data.ip.country;
@@ -22,7 +23,7 @@ const DialPhoneAutoComplete = (props) => {
   useEffect(() => {
     const fetchCountry = async () => {
       const countriesData = await axios.get(
-        `${BASE_URL}${END_POINT.ONBOARDING}${END_POINT.COUNTRY}`
+        `${BASE_URL}${END_POINT.UTILS}${END_POINT.COUNTRY}`
       );
       let sortDialingCode = await countriesData.data.sort(function (a, b) {
         return a.dialing_code - b.dialing_code;
@@ -33,37 +34,28 @@ const DialPhoneAutoComplete = (props) => {
     };
     fetchCountry();
     setCountryDialCode(dialCode.filter((dial) => dial.name === userCountry)[0]);
-  }, [userCountry]);
+    setFormState((prev) => {
+      return { ...prev, ["dialCode"]: countryDialCodeInput };
+    });
+  }, [userCountry, countryDialCodeInput]);
   const { authState } = useContext(AuthContext);
   const { uuid } = authState;
 
   const handleChange = (e) => {
     console.log("first lunch of handleChange", e);
     setCountryDialCode(e);
-    // if (e) {
-    //   const fieldToUpdate = {
-    //     field: "code",
-    //     value: e.dialing_code,
-    //   };
-    //   axios
-    //     .put(
-    //       `${process.env.REACT_APP_BASE_RUL}onboarding/${uuid}`,
-    //       fieldToUpdate
-    //     )
-    //     .then((res) => {})
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
-    props.handleChange(e);
-  };
 
+    props.handleChange(e ? e : countryDialCodeInput);
+  };
+  console.log("INPUT CODE", countryDialCodeInput);
   return (
     <StyledAutoComplete
       id="dialing_code"
       label={"Dial Code"}
       options={dialCode}
       onBlur={props.handleBlur}
+      disableClearable
+      className={props.className}
       autoHighlight
       fullWidth
       getOptionLabel={(option) =>
@@ -121,27 +113,25 @@ export const StyledAutoComplete = withStyles((theme) => ({
 
       transform: "translateY(calc(-65%))",
     },
-    "& .MuiAutocomplete-input:first-child": {
-      transform: "translateY(calc(-15%))",
-    },
+    // "& .MuiAutocomplete-input:first-child": {
+    //   transform: "translateY(calc(-5%))",
+    // },
 
     "& .MuiButtonBase-root": {
-      transform: "translate(-15px,-7px)",
+      transform: "translateX(-10px)",
     },
+
     "& .MuiTextField-root": {
       padding: "3px",
     },
     [theme.breakpoints.down("md")]: {
       "& .MuiButtonBase-root": {
-        transform: "translate(-20px,-6px)",
+        transform: "translateX(-5px)",
       },
       "& .MuiInputLabel-formControl": {
         top: "50%",
 
         transform: "translateY(calc(-20%))",
-      },
-      "& .MuiAutocomplete-input:first-child": {
-        transform: "translateY(calc(-15%))",
       },
     },
   },

@@ -38,7 +38,10 @@ const TermsForm = (props) => {
       data
     );
     axios
-      .put(`${BASE_URL}${END_POINT.ONBOARDING}${authState.uuid}`, data)
+      .put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
+        data
+      )
       .then((res) => {
         setAuthState((prev) => ({ ...prev, isAgreeElectronic: isAgree }));
       })
