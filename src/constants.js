@@ -9,6 +9,8 @@ export const END_POINT = {
   COUNTRY: "/countries",
   UTILS: "/utils",
   USER: "/user",
+  COMPANY_TYPE: "/company_types",
+  EXTERNAL_META_DATA: "/external_meta_data",
 };
 
 export function setAuthToken(token) {

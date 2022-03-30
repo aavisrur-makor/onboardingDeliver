@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { makeStyles, TextField } from "@material-ui/core";
 import FieldContext from "../context/fields";
@@ -8,12 +8,7 @@ import validate from "../utils/validate";
 
 import { useDebouncedCallback } from "use-debounce";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentOnboardingFields,
-  updateFieldOnboarding,
-  updateOnBoardingField,
-} from "../redux/slices/singleOnboardingSlice";
-import { setAuthField } from "../redux/slices/authSlice";
+import { setOnboardingContactField } from "../redux/slices/singleOnboardingSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       [theme.breakpoints.down("sm")]: { fontSize: "13px" },
     },
     "& .MuiOutlinedInput-root": {
-      padding: "18.5px 14px",
+      padding: "16.5px 14px",
     },
     "& input[type=number]": {
       "-moz-appearance": "textfield",
@@ -54,25 +49,33 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
 
-const DispatcherField = (props) => {
-  const value = useSelector((state) => state.onboarding.current[props.id]);
-  const dispatch = useDispatch();
-  const [error, setError] = useState("");
+const ContactsDispatcherField = (props) => {
+  const value = useSelector((state) =>
+    props.subIndex
+      ? state.onboarding.current.contacts[props.index][props.id][props.subIndex]
+      : state.onboarding.current.contacts[props.index][props.id]
+  );
+
   const classes = useStyles();
-
+  const dispatch = useDispatch();
   const handleChange = async (e) => {
-    if (props.isRequired) {
-      validate(null, value, setError);
-    }
-    let fieldToUpdate = {
-      [e.target.id]: value,
-    };
-    dispatch(updateFieldOnboarding(fieldToUpdate));
+    //Need to think how to send to the server.
+    console.log("VALUEEE!!!", e.target.value);
+    props.handleChange(e, props.index, props.objectField);
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
+  if (props.objectField) {
+    console.log(
+      "valuess",
+
+      value[0][props.objectField]
+    );
+  }
+  if (props.id === "contact_email") {
+    console.log("value", value[0], props.objectField, props.subIndex);
+  }
   return (
     <TextField
       className={classes.textField}
@@ -81,14 +84,26 @@ const DispatcherField = (props) => {
       fullWidth
       required={props.required}
       onChange={(e) => {
+        console.log("FACKING NOOB", props.index);
         dispatch(
-          setCurrentOnboardingFields({ id: props.id, value: e.target.value })
+          setOnboardingContactField({
+            id: props.id,
+            value: e.target.value,
+            contactIndex: props.index,
+            objectField: props.objectField,
+          })
         );
         debounced(e);
       }}
       inputProps={{ style: { padding: 2 } }}
       label={props.label}
-      value={value}
+      value={
+        props.objectField
+          ? value[0][props.objectField]
+          : props.id === "contact_email"
+          ? value[props.index]
+          : value
+      }
       variant="outlined"
       rows={props.rows}
       multiline={props.multiline && props.multiline}
@@ -96,4 +111,4 @@ const DispatcherField = (props) => {
   );
 };
 
-export default DispatcherField;
+export default ContactsDispatcherField;

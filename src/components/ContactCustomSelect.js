@@ -12,13 +12,22 @@ import { useStyles } from "../styles/UiForm";
 import numeral from "numeral";
 
 //!generic select with own state and validation.
-const CustomSelect = (props) => {
-  const value = useSelector((state) => state.onboarding.current[props.id]);
+const ContactCustomSelect = (props) => {
+  const value = useSelector(
+    (state) => state.onboarding.current.contacts[props.index][props.id]
+  );
   const stateData = useSelector((state) => state.meta[props.stateData]);
   const stateDataMap = useSelector((state) => state?.meta[props.stateDataMap]);
   const classes = useStyles();
-  if (props.id === "trades_per") {
-    console.log("CHECKING THE DATA", stateData, stateDataMap, value);
+
+  if (props.id === "contact_position_uuid") {
+    console.log(
+      "CHECKING THE DATA",
+      stateData,
+      stateDataMap,
+
+      stateDataMap[value]
+    );
   }
   return (
     <FormControl fullWidth={props.fullWidth ?? true} variant="outlined">
@@ -43,7 +52,7 @@ const CustomSelect = (props) => {
           }
           // defaultValue={stateDataMap ? stateDataMap[value] : value}
           onChange={(e, child) => {
-            props.handleChange(e, child);
+            props.handleChange(e, child, props.index);
           }}
           // error={isFormSubmitted && props.error}
           inputProps={{ id: props.id, readOnly: props.readOnly }}
@@ -63,29 +72,18 @@ const CustomSelect = (props) => {
             classes: { paper: classes.paperMenu },
           }}
         >
-          {stateData
-            ? stateData.map((option) => {
-                return (
-                  <MenuItem id={option.uuid} value={option.name}>
-                    {option.name}
-                  </MenuItem>
-                );
-              })
-            : props.selectData?.map((option, index) => {
-                return (
-                  <MenuItem
-                    style={{ textTransform: "capitalize" }}
-                    id={option}
-                    value={option}
-                  >
-                    {props.id === "trading_volume"
-                      ? index === props.selectData.length - 1
-                        ? `${numeral(option).format("$0,0")}+`
-                        : numeral(option).format("$0,0")
-                      : option}
-                  </MenuItem>
-                );
-              })}
+          {stateData &&
+            stateData.map((option) => {
+              return (
+                <MenuItem
+                  style={{ textTransform: "capitalize" }}
+                  id={option.uuid}
+                  value={option.name}
+                >
+                  {option.name}
+                </MenuItem>
+              );
+            })}
         </Select>
       ) : null}
       {/* {isFormSubmitted && props.error && (
@@ -97,4 +95,4 @@ const CustomSelect = (props) => {
   );
 };
 
-export default CustomSelect;
+export default memo(ContactCustomSelect);

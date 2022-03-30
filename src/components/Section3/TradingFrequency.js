@@ -2,7 +2,21 @@ import React from "react";
 import { Typography, Grid } from "@material-ui/core";
 import CustomSelect from "../CustomSelect";
 import DispatcherField from "../DispatcherField";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCurrentOnboardingFields,
+  updateFieldOnboarding,
+} from "../../redux/slices/singleOnboardingSlice";
 function TradingFrequency() {
+  const dispatch = useDispatch();
+  const trades_per = useSelector((state) => state.meta.trades_per);
+  const handleFreqChange = (e, child) => {
+    console.log("e.target.id", child);
+    dispatch(updateFieldOnboarding({ [e.target.name]: e.target.value }));
+    dispatch(
+      setCurrentOnboardingFields({ id: e.target.name, value: e.target.value })
+    );
+  };
   return (
     <Grid container alignItems="center">
       <Grid item xs={3}>
@@ -14,13 +28,13 @@ function TradingFrequency() {
             <Typography>From</Typography>
           </Grid>
           <Grid item xs={4}>
-            <DispatcherField type="number" />
+            <DispatcherField id="trading_frequency_from" type="number" />
           </Grid>
           <Grid item>
             <Typography>To</Typography>
           </Grid>
           <Grid item xs={4}>
-            <DispatcherField type="number" />
+            <DispatcherField id="trading_frequency_to" type="number" />
           </Grid>
         </Grid>
       </Grid>
@@ -31,8 +45,10 @@ function TradingFrequency() {
           </Grid>
           <Grid item xs={8}>
             <CustomSelect
-              selectData={["Daily", "Monthly", "Yearly"]}
+              selectData={trades_per}
               label="Select Period"
+              id={"trades_per"}
+              handleChange={handleFreqChange}
             />
           </Grid>
         </Grid>

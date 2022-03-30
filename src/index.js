@@ -1,9 +1,11 @@
-import { createTheme, ThemeProvider } from '@material-ui/core';
-import React, { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import ChiefProvider from './components/ChiefProvider';
-import './index.css';
+import { createTheme, ThemeProvider } from "@material-ui/core";
+import React, { StrictMode } from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import App from "./App";
+import ChiefProvider from "./components/ChiefProvider";
+import store from "./redux/store";
+import "./index.css";
 
 const theme = createTheme({
   typography: {
@@ -11,16 +13,16 @@ const theme = createTheme({
     htmlFontSize: 13,
     fontFamily: '"Work Sans", "Roboto"',
   },
-  palette: { error: { main: '#c000ff' } },
+  palette: { error: { main: "#c000ff" } },
 });
 
 ReactDOM.render(
-  <StrictMode>
+  <Provider store={store}>
     <ThemeProvider theme={theme}>
       <ChiefProvider>
         <App />
       </ChiefProvider>
     </ThemeProvider>
-  </StrictMode>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );

@@ -1,5 +1,6 @@
 import { Typography, Grid } from "@material-ui/core";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../styles/TradingInfoStyle";
 import CustomSelect from "./CustomSelect";
 import DispatcherField from "./DispatcherField";
@@ -9,6 +10,9 @@ import TradingVolume from "./Section3/TradingVolume";
 import WalletList from "./Section3/WalletList";
 const TradingInfo = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const changeSourceOfFunds = (e) => {};
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>
@@ -17,7 +21,7 @@ const TradingInfo = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <DispatcherField label="Source of Funds" />
+        <DispatcherField id={"source_of_funds"} label="Source of Funds" />
       </Grid>
       <Grid item xs={12}>
         <TradingFrequency />

@@ -38,7 +38,6 @@ export const useStyles = makeStyles((theme) => ({
       font: "normal normal normal 16px/22px Work Sans",
       fontSize: "0.5em",
     },
-    
   },
   progressContainer: {
     display: "flex",
@@ -380,7 +379,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   contactDialCode: {
     "& .MuiInput-root": {
-      padding: "10.5px 14px",
+      padding: "8.5px 14px",
     },
   },
   dynamicUploaderContainer: {
@@ -463,16 +462,18 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   addButton: {
-    // "& .MuiIconButton-label": {
-    //   marginLeft: "auto",
-    // },
     [theme.breakpoints.down("sm")]: {
-      transform: "translateY(15px)",
+      transform: "translate(10px,0px)",
     },
-    // [theme.breakpoints.up("md")]: {
-    //   position: "relative",
-    //   left: "100%",
-    //   transform: "translate(4px,-242%)",
-    // },
+  },
+  addButtonParent: {
+    display: "flex",
+    alignItems: "center",
+    "& .MuiIconButton-root:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+  paperMenu: {
+    maxHeight: 300,
   },
 }));
