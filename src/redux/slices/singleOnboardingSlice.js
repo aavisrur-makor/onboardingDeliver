@@ -13,9 +13,9 @@ const initialState = {
     description_of_activity: "",
     agreed_ip: "",
     source_of_funds: "",
-    registered_office_address_gapi: "",
+    registered_office_address_gapi: {},
     shareholder_names: "",
-    principal_business_address_gapi: "",
+    principal_business_address_gapi: {},
     directors_names: "",
     currency_wallet: [],
     company_uuid: "",
@@ -60,11 +60,19 @@ export const singleOnboardingSlice = createSlice({
   reducers: {
     setCurrentOnboardingFields: (state, action) => {
       const { id, value } = action.payload;
+      console.log("INSIDE THE REDUX FIELDS", id, value);
+
       if (id === "currency_wallet") {
         const { index, asset } = action.payload;
         state.current.currency_wallet[asset] = value;
       } else {
         state.current[id] = value;
+        //`${road} ${town} ${state} ${country}`;
+        if (id === "registered_office_address_gapi") {
+          state.current[
+            "registered_office_address_gapi"
+          ].fullAddress = `${value.road} ${value.town} ${value.state} ${value.country}`;
+        }
       }
     },
     setCurrentOnboarding: (state, action) => {
@@ -238,6 +246,20 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       dispatch(setCurrentOnboardingFiles(fileFields));
     })
   );
+};
+export const getGapiLocation = (lat, lon, id) => async (dispatch, getState) => {
+  console.log("HERE DISPATCHING THE GAPI LOCATION")
+  try {
+    const response = await axios.get(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+    );
+    console.log("Response", response);
+    const address = await response.data.address;
+    console.log("Response", address);
+    dispatch(setCurrentOnboardingFields({ id, value: address }));
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const {

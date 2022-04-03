@@ -26,6 +26,7 @@ import { setAuthField, setCurrentAuth } from "../redux/slices/authSlice";
 import {
   getOnboardingData,
   setCurrentOnboarding,
+  setCurrentOnboardingFields,
   setCurrentOnboardingFiles,
 } from "../redux/slices/singleOnboardingSlice";
 import {
@@ -36,7 +37,7 @@ import {
 const steps = [
   "Company Info",
   "Trading Info",
-  "Attach Documents",
+  "Ownership and Managment",
   "Terms of Use",
 ];
 
@@ -51,16 +52,13 @@ const StepperFormComplex = () => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
+  
   useEffect(() => {
-    
-
     if (params.uuid) {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
       dispatch(getOnboardingData());
     }
   }, []);
-
-  useEffect(() => {}, [authState]);
 
   const totalSteps = () => {
     return steps.length;

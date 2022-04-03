@@ -57,7 +57,12 @@ const useStyles = makeStyles((theme) => ({
 // {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
 
 const DispatcherField = (props) => {
-  const value = useSelector((state) => state.onboarding.current[props.id]);
+  const value = useSelector((state) =>
+    props.id === "registered_office_address_gapi" ||
+    props.id === "principal_business_address_gapi"
+      ? state.onboarding.current[props.id]?.fullAddress
+      : state.onboarding.current[props.id]
+  );
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const classes = useStyles();
@@ -87,7 +92,7 @@ const DispatcherField = (props) => {
         debounced(e);
       }}
       inputProps={{ style: { padding: 2 } }}
-      label={props.label}
+      label={value ? "" : props.label}
       value={value}
       variant="outlined"
       rows={props.rows}

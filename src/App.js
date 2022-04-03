@@ -7,6 +7,7 @@ import FinaleBox from "./components/FinaleBox";
 import useEventListener from "./hooks/useEventListener";
 import { useDispatch } from "react-redux";
 import { getMetaDataAsync } from "./redux/slices/metaDataSlice";
+import { getGapiLocation } from "./redux/slices/singleOnboardingSlice";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -26,6 +27,32 @@ const App = () => {
   const appRef = useEventListener("copy", (e) => {
     e.preventDefault();
   });
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+
+  function success(pos) {
+    var crd = pos.coords;
+
+    console.log("Your current position is:");
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+    dispatch(
+      getGapiLocation(
+        crd.latitude,
+        crd.longitude,
+        "registered_office_address_gapi"
+      )
+    );
+  }
+
+  function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  navigator.geolocation.getCurrentPosition(success, error, options);
   useEffect(() => {
     dispatch(getMetaDataAsync());
   }, []);
