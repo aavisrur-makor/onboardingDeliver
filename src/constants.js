@@ -11,6 +11,7 @@ export const END_POINT = {
   USER: "/user",
   COMPANY_TYPE: "/company_types",
   EXTERNAL_META_DATA: "/external_meta_data",
+  GEO_LOCATION: "geo_location",
 };
 
 export function setAuthToken(token) {

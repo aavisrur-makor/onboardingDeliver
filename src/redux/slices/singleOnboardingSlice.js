@@ -13,9 +13,9 @@ const initialState = {
     description_of_activity: "",
     agreed_ip: "",
     source_of_funds: "",
-    registered_office_address_gapi: {},
+    registered_office_address_gapi: "",
     shareholder_names: "",
-    principal_business_address_gapi: {},
+    principal_business_address_gapi: "",
     directors_names: "",
     currency_wallet: [],
     company_uuid: "",
@@ -68,16 +68,18 @@ export const singleOnboardingSlice = createSlice({
       } else {
         state.current[id] = value;
         //`${road} ${town} ${state} ${country}`;
-        if (id === "registered_office_address_gapi") {
-          state.current[
-            "registered_office_address_gapi"
-          ].fullAddress = `${value.road} ${value.town} ${value.state} ${value.country}`;
-        }
       }
     },
     setCurrentOnboarding: (state, action) => {
       console.log("action", action.payload);
       state.current = action.payload;
+      if (state.current.registered_office_address_gapi === null) {
+        state.current.registered_office_address_gapi = {};
+      }
+    },
+    setAutoGapiLocation: (state, action) => {
+      state.current.registered_office_address_gapi = action.payload;
+      state.current.principal_business_address_gapi = action.payload;
     },
     setCurrentOnboardingFiles: (state, action) => {
       state.files = action.payload;
@@ -236,6 +238,35 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         }
       });
       dispatch(setCurrentOnboarding(textFields));
+      if (
+        !textFields.registered_office_address_gapi ||
+        !textFields.principal_business_address_gapi
+      ) {
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0,
+        };
+
+        function success(pos) {
+          var crd = pos.coords;
+
+          console.log("Your current position is:");
+          console.log(`Latitude : ${crd.latitude}`);
+          console.log(`Longitude: ${crd.longitude}`);
+
+          dispatch(
+            sendGeoLocation(crd.latitude, crd.longitude, getState().auth.uuid)
+          );
+        }
+
+        function error(err) {
+          console.log("blabla2", err);
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+      }
       dispatch(
         setCurrentAuth({
           progress: res1.data.progress,
@@ -247,24 +278,25 @@ export const getOnboardingData = () => async (dispatch, getState) => {
     })
   );
 };
-export const getGapiLocation = (lat, lon, id) => async (dispatch, getState) => {
-  console.log("HERE DISPATCHING THE GAPI LOCATION")
+export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
+  console.log("HERE DISPATCHING THE GAPI LOCATION");
   try {
     const response = await axios.get(
-      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`
+      `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${END_POINT.GEO_LOCATION}/${id}`,
+      { params: { lat, lon } }
     );
-    console.log("Response", response);
-    const address = await response.data.address;
-    console.log("Response", address);
-    dispatch(setCurrentOnboardingFields({ id, value: address }));
+    if (response.data.status === 200) {
+      dispatch(setAutoGapiLocation(response.data.full_address));
+    }
   } catch (err) {
-    console.log(err);
+    console.log("Error1", err);
   }
 };
 
 export const {
   setCurrentOnboardingFields,
   setCurrentOnboarding,
+  setAutoGapiLocation,
   setCurrentOnboardingFiles,
   addOnboardingContact,
   removeOnboardingContact,

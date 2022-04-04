@@ -21,13 +21,15 @@ import { useTheme } from "@material-ui/core";
 import MobileStepper from "./MobileStepper";
 import { END_POINT, BASE_URL } from "../constants";
 import TradingInfo from "./TradingInfo";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, setCurrentAuth } from "../redux/slices/authSlice";
 import {
   getOnboardingData,
   setCurrentOnboarding,
   setCurrentOnboardingFields,
   setCurrentOnboardingFiles,
+  getGapiLocation,
+  sendGeoLocation,
 } from "../redux/slices/singleOnboardingSlice";
 import {
   getMetaDataAsync,
@@ -50,9 +52,17 @@ const StepperFormComplex = () => {
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
   const [activeStep, setActiveStep] = React.useState(0);
+  const registered_office_address_gapi = useSelector(
+    (state) => state.onboarding.current.registered_office_address_gapi
+  );
+  const principal_business_address_gapi = useSelector(
+    (state) => state.onboarding.current.principal_business_address_gapi
+  );
+
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
   
+
   useEffect(() => {
     if (params.uuid) {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
