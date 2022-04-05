@@ -4,53 +4,37 @@ import { Autocomplete } from "@material-ui/lab";
 // import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
-
 import { useDispatch, useSelector } from "react-redux";
-import { setFormFields } from "../redux/slices/smallFormSlice";
-import { setOnboardingContactField } from "../redux/slices/singleOnboardingSlice";
+import { setFormFields } from "../../redux/slices/smallFormSlice";
 
-const DialPhoneAutoComplete = (props) => {
+const SmallFormDialingCode = (props) => {
   const [userCountry, setUserCountry] = useState();
   const [countryDialCode, setCountryDialCode] = useState({});
   const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
   const countries = useSelector((state) => state.meta.countries);
-  const dial_code = useSelector(
-    (state) =>
-      state.onboarding.current.contacts[props.index][props.id][props.subIndex][
-        props.objectField
-      ]
-  );
+  const dial_code = useSelector((state) => state.form.dialing_code);
   const dialCodeMap = useSelector((state) => state.meta.dialCodesMap);
   const dispatch = useDispatch();
   const getUserCountry = async () => {
     const userDetails = await axios.get("https://ip.nf/me.json");
     const country = userDetails.data.ip.country;
-    if (dialCodeMap[dial_code]?.name) {
+    if (dial_code) {
       setUserCountry(dialCodeMap[dial_code]?.name);
     } else {
       setUserCountry(country);
     }
   };
 
-  const fetchCountry = () => {
+  useEffect(() => {
     getUserCountry();
 
-    // setDialCode(sortDialingCode);
-  };
-  useEffect(() => {
-    fetchCountry();
     setCountryDialCode(
       countries.filter((dial) => dial.name === userCountry)[0]
     );
 
-    // dispatch(
-    //   setOnboardingContactField({
-    //     id: "contact_phone",
-    //     value: countryDialCodeInput,
-    //     contactIndex: props.index >= 1 ? props.index : null,
-    //     objectField: "dialing_code",
-    //   })
-    // );
+    dispatch(
+      setFormFields({ id: "dialing_code", value: countryDialCodeInput })
+    );
   }, [userCountry]);
 
   const handleChange = (e, inputValue) => {
@@ -76,11 +60,9 @@ const DialPhoneAutoComplete = (props) => {
       inputValue={countryDialCodeInput}
       onInputChange={(e, inputValue) => {
         dispatch(
-          setOnboardingContactField({
-            id: "contact_phone",
+          setFormFields({
+            id: "dialing_code",
             value: inputValue,
-            contactIndex: props.index,
-            objectField: "dialing_code",
           })
         );
         setCountryDialCodeInput(inputValue);
@@ -100,7 +82,7 @@ const DialPhoneAutoComplete = (props) => {
     />
   );
 };
-export default DialPhoneAutoComplete;
+export default SmallFormDialingCode;
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {

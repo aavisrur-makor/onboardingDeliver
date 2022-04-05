@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useStyles } from "../styles/TradingInfoStyle";
 import CustomSelect from "./CustomSelect";
 import DispatcherField from "./DispatcherField";
-import AssetTable from "./Section3/AssetTable";
-import TradingFrequency from "./Section3/TradingFrequency";
-import TradingVolume from "./Section3/TradingVolume";
-import WalletList from "./Section3/WalletList";
+import AssetTable from "./Section2/AssetTable";
+import TradingFrequency from "./Section2/TradingFrequency";
+import TradingVolume from "./Section2/TradingVolume";
+import WalletList from "./Section2/WalletList";
 const TradingInfo = () => {
   const classes = useStyles();
   const dispatch = useDispatch();

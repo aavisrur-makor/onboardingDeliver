@@ -21,6 +21,7 @@ import {
   updateContactFieldOnboarding,
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
+import GoogleApiAutoComplete from "../utils/GoogleApiAutoComplete";
 
 const PseudoForm = function (props) {
   const has_regulation_required = useSelector(
@@ -147,6 +148,13 @@ const PseudoForm = function (props) {
       <Grid item spacing={3}>
         <Grid container spacing={3}>
           {formData.form1.grid2.map(({ label, id }) => {
+            return (
+              <Grid item xs={12} md={6}>
+                <GoogleApiAutoComplete id={id} label={label} />
+              </Grid>
+            );
+          })}
+          {formData.form1.grid4.map(({ label, id }) => {
             if (id === "country") {
               return (
                 <Grid item xs={12} md={6}>
@@ -260,8 +268,8 @@ const PseudoForm = function (props) {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2} direction="column" alignItems="center">
-          <Grid item md={12}>
+        <Grid container direction="column">
+          <Grid item>
             {contacts.map((contact, contactIndex) => {
               return (
                 <Contacts

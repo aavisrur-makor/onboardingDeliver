@@ -30,7 +30,7 @@ const ContactCustomSelect = (props) => {
     );
   }
   return (
-    <FormControl fullWidth={props.fullWidth ?? true} variant="outlined">
+    <FormControl fullWidth variant="outlined">
       <InputLabel id="demo-simple-select-outlined-label">
         {props.label}
       </InputLabel>

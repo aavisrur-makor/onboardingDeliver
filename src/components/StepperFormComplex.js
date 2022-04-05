@@ -35,6 +35,7 @@ import {
   getMetaDataAsync,
   getMetaDataByCategory,
 } from "../redux/slices/metaDataSlice";
+import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
 
 const steps = [
   "Company Info",
@@ -61,7 +62,6 @@ const StepperFormComplex = () => {
 
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
-  
 
   useEffect(() => {
     if (params.uuid) {
@@ -159,7 +159,7 @@ const StepperFormComplex = () => {
             ) : activeStep === 1 ? (
               <TradingInfo />
             ) : activeStep === 2 ? (
-              <FileForm query={queryMatch} />
+              <OwnershipAndManagment query={queryMatch} />
             ) : (
               <TermsForm query={queryMatch} />
             )}

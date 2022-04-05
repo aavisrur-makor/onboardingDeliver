@@ -17,6 +17,7 @@ import {
   sendContactAsync,
   setFormFields,
 } from "../redux/slices/smallFormSlice";
+import SmallFormDialingCode from "./SmallForm/SmallFormDialingCode";
 
 const SimpleForm = () => {
   // const [info, setInfo] = useState({
@@ -106,6 +107,8 @@ const SimpleForm = () => {
     setSubmitted(false);
   };
   const handleDialCode = (e, newValue) => {
+    console.log("CHECKING THE DIAL CODE", e, newValue);
+    // dispatch(setFormFields({id:"dialing_code",value:e.dialing_code}))
     setFormState((prev) => ({
       ...prev,
       dialCode: e.dialing_code,
@@ -188,7 +191,7 @@ const SimpleForm = () => {
                 <Grid item xs={12} md={6}>
                   <Grid container className={classes.dialAutoCompleteContainer}>
                     <Grid className={classes.dialAutoComplete} item>
-                      <DialPhoneAutoComplete
+                      <SmallFormDialingCode
                         handleChange={handleDialCode}
                         smallForm
                         // handleBlur={handleCh}

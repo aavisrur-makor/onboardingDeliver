@@ -87,8 +87,8 @@ const DispatcherField = (props) => {
         debounced(e);
       }}
       inputProps={{ style: { padding: 2 } }}
-      label={value ? "" : props.label}
-      value={value}
+      label={props.label}
+      value={value ? value : ""}
       variant="outlined"
       rows={props.rows}
       multiline={props.multiline && props.multiline}

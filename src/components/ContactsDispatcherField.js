@@ -61,21 +61,11 @@ const ContactsDispatcherField = (props) => {
   const dispatch = useDispatch();
   const handleChange = async (e) => {
     //Need to think how to send to the server.
-    console.log("VALUEEE!!!", e.target.value);
     props.handleChange(e, props.index, props.objectField);
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
-  if (props.objectField) {
-    console.log(
-      "valuess",
 
-      value[0][props.objectField]
-    );
-  }
-  if (props.id === "contact_email") {
-    console.log("value", value[0], props.objectField, props.subIndex);
-  }
   return (
     <TextField
       className={classes.textField}
@@ -103,6 +93,8 @@ const ContactsDispatcherField = (props) => {
           : props.id === "contact_email"
           ? value[props.index]
           : value
+          ? value
+          : ""
       }
       variant="outlined"
       rows={props.rows}

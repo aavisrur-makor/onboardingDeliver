@@ -16,7 +16,22 @@ const initialState = {
     registered_office_address_gapi: "",
     shareholder_names: "",
     principal_business_address_gapi: "",
-    directors_names: "",
+    directors_list: [
+      {
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+      },
+      {
+        first_name: "",
+        last_name: "",
+        dob: "",
+        address: "",
+        position_uuid: "",
+      },
+    ],
     currency_wallet: [],
     company_uuid: "",
     client_company_legal_name: "",
@@ -44,7 +59,7 @@ const initialState = {
     certificate_of_incorporation: "",
     articles_of_association: "",
     proof_of_business_address: "",
-    directors_list: "",
+
     shareholders_list: "",
     source_of_funds: "",
     chart_of_organisation: "",
@@ -87,7 +102,8 @@ export const singleOnboardingSlice = createSlice({
     addOnboardingContact: (state, action) => {
       state.current.contacts.push({
         contact_position_uuid: "",
-        contact_name: "",
+        contact_first_name: "",
+        contact_last_name: "",
         contact_email: [""],
         contact_phone: [{ number: "", dialing_code: "" }],
         contact_uuid: "",
@@ -143,39 +159,29 @@ export const updateFieldOnboarding =
           setAuthField({ id: "progress", value: response.data.progress })
         );
       }
-
-      //     if (res.status === 200) {
-      //       setAuthState((prev) => ({
-      //         ...authState,
-      //         progress: res.data.progress,
-      //       }));
-      //     }
-      //   })
     } catch (err) {
       console.log(err);
     }
   };
 export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
-    console.log(
-      "blbablabla",
-      getState().onboarding.current.contacts[contactIndex]
-    );
     if (
       getState().onboarding.current.contacts[contactIndex].contact_name ||
       getState().onboarding.current.contacts[contactIndex].contact_email[0] ||
       (getState().onboarding.current.contacts[contactIndex].contact_phone[0]
         .number &&
         getState().onboarding.current.contacts[contactIndex].contact_phone[0]
-          .dialing_code) ||
-      getState().onboarding.current.contacts[contactIndex].contact_uuid
+          .dialing_code)
     ) {
       try {
+        let onboardingToSend =
+          getState().onboarding.current.contacts[contactIndex];
+        !onboardingToSend.contact_uuid && delete onboardingToSend.contact_uuid;
         const response = await axios.put(
           `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
             getState().auth.uuid
           }`,
-          getState().onboarding.current.contacts[contactIndex]
+          onboardingToSend
         );
 
         if (response.status === 200) {
@@ -249,6 +255,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         };
 
         function success(pos) {
+          console.log("POS", pos);
           var crd = pos.coords;
 
           console.log("Your current position is:");
@@ -278,12 +285,14 @@ export const getOnboardingData = () => async (dispatch, getState) => {
     })
   );
 };
-export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
+export const sendGeoLocation = (location, id) => async (dispatch, getState) => {
   console.log("HERE DISPATCHING THE GAPI LOCATION");
   try {
     const response = await axios.get(
-      `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${END_POINT.GEO_LOCATION}/${id}`,
-      { params: { lat, lon } }
+      `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+        END_POINT.GEO_LOCATION
+      }/${getState().auth.uuid}`,
+      { params: { location } }
     );
     if (response.data.status === 200) {
       dispatch(setAutoGapiLocation(response.data.full_address));

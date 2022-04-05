@@ -8,7 +8,6 @@ import useEventListener from "./hooks/useEventListener";
 import { useDispatch } from "react-redux";
 import { getMetaDataAsync } from "./redux/slices/metaDataSlice";
 
-
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     "& Mui-error": {
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.error.main,
     },
     padding: "0",
-    [theme.breakpoints.down("md")]: { padding: "1rem" },
+    // [theme.breakpoints.down("md")]: { padding: "1rem" },
   },
 }));
 
@@ -33,7 +32,7 @@ const App = () => {
   }, []);
 
   return (
-    <Container maxWidth="md" className={classes.mainContainer} ref={appRef}>
+    <Container fixed className={classes.mainContainer} ref={appRef}>
       <Router>
         <Routes>
           <Route path="/" element={<SimpleForm />}></Route>
