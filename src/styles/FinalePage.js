@@ -13,7 +13,6 @@ export const useStyles = makeStyles((theme) => ({
     background: "#FCFCFC 0% 0% no-repeat padding-box",
     boxShadow: "0px 5px 15px #4E4E4E29",
     opacity: "1",
-    width: "541px",
     height: "247px",
     display: "flex",
     flexDirection: "column",

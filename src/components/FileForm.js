@@ -17,6 +17,7 @@ import { useTheme } from "@emotion/react";
 const FileForm = ({ query }) => {
   const classes = useStyles();
   const mixins = useMixins();
+  const { fileState, setFileState } = useContext(FileContext);
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
@@ -39,6 +40,7 @@ const FileForm = ({ query }) => {
                 style={{ padding: "16px 0" }}
                 id={id}
                 label={label}
+                key={id}
                 info={i !== 1 && i !== formData.form2.length - 1 ? true : false}
                 labelInfo={info}
               />

@@ -1,25 +1,40 @@
 export default {
   form1: {
     grid1: [
-      { id: "legal_entity_name", label: "Company Legal Name" },
+      { id: "client_company_legal_name", label: "Company Legal Name" },
+      { id: "trading_name", label: "Trading Name" },
       { id: "registration_number", label: "Register Number" },
-      { id: "registration_gapi_location", label: "Registered Office Address" },
+
       // {id: 'country', label: 'COUNTRY'},
     ],
     grid2: [
       {
-        id: "business_gapi_location",
+        id: "registered_office_address_gapi",
+        label: "Registered Office Address",
+      },
+      {
+        id: "principal_business_address_gapi",
         label: "Principal Buisness Address(If different)",
+      },
+    ],
+    grid4: [
+      {
+        id: "country",
+        label: "Country of Incorporation",
+      },
+      {
+        id: "type_of_business_uuid",
+        label: "Type of Business & Activity",
       },
       { id: "website", label: "Website Url" },
       {
-        id: "activity_description",
+        id: "description_of_activity",
         label: "Describe the type of Business & Activity",
       },
     ],
     grid3: [
-      { id: "director_list", label: "Director Names" },
-      { id: "shareholder_list", label: "Major Shareholder's Names" },
+      { id: "directors_names", label: "Director Names" },
+      { id: "shareholder_names", label: "Major Shareholder's Names" },
     ],
   },
   form2: [

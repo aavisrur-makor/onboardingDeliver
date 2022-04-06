@@ -1,39 +1,39 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FormControl, InputLabel, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 // import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
 import axios from "axios";
 import AuthContext from "../context/auth";
 import FieldContext from "../context/fields";
-import { Email } from "@material-ui/icons";
+import validate from "../utils/validate";
+import { BASE_URL, END_POINT } from "../constants";
+import { useSelector } from "react-redux";
 
 const CountryAutoComplete = (props) => {
-  const [countries, setCountries] = useState([]);
-  const { fieldState } = useContext(FieldContext);
+  const [error, setError] = useState("");
   const [countryState, setCountryState] = useState({});
   const [countryStateInput, setCountryStateInput] = useState("");
+  const countries = useSelector((state) => state.meta.countries);
+  const countriesMap = useSelector((state) => state.meta.countriesMap);
+  const country = useSelector((state) => state.onboarding.current.country_id);
+  const uuid = useSelector((state) => state.auth.uuid);
+  useEffect(() => {
+    setCountryState(countriesMap[country]);
+    setCountryStateInput(countriesMap[country]?.name);
+  }, [countriesMap, country]);
 
-  useEffect(async () => {
-    const countriesData = await axios.get(
-      "http://10.0.0.191:3030/api/onboarding/country"
-    );
-    setCountries(countriesData.data);
-    setCountryState(fieldState.country);
-    setCountryStateInput(fieldState.country);
-  }, [fieldState.country]);
-  const { authState } = useContext(AuthContext);
-  const { uuid } = authState;
-
-  const handleChange = (e) => {
+  const handleChange = (e, value) => {
     setCountryState(e);
     if (e) {
       const fieldToUpdate = {
-        field: "country",
-        value: e.name,
+        country: e.iso_code_2,
       };
       axios
-        .put(`http://10.0.0.191:3030/api/onboarding/${uuid}`, fieldToUpdate)
+        .put(
+          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${uuid}`,
+          fieldToUpdate
+        )
         .then((res) => {})
         .catch((error) => {
           console.log(error);
@@ -41,6 +41,12 @@ const CountryAutoComplete = (props) => {
     }
   };
 
+  const handleInputChange = (e, inputValue) => {
+    console.log("INPUT COUNTRY", inputValue);
+    setCountryStateInput(inputValue);
+
+    validate(null, inputValue, setError);
+  };
   return (
     <StyledAutoComplete
       id="country"
@@ -51,13 +57,15 @@ const CountryAutoComplete = (props) => {
       autoHighlight
       getOptionLabel={(option) => option.name || ""}
       onChange={(e, value) => handleChange(value)}
-      onInputChange={(e, inputValue) => setCountryStateInput(inputValue)}
+      onInputChange={(e, inputValue) => handleInputChange(e, inputValue)}
       inputValue={countryStateInput || ""}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
+          error={!!error}
+          helperText={error && "Field is empty."}
           disableOutline
-          label="Country"
+          label={props.label}
           variant="outlined"
           inputProps={{
             ...params.inputProps,

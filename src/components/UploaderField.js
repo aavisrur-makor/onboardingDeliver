@@ -2,7 +2,7 @@ import { FormControlLabel, makeStyles, useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/core/styles';
 import { Box, Input, Typography, Grid } from '@material-ui/core';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { withStyles } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
@@ -10,6 +10,7 @@ import FileContext from '../context/files';
 import AuthContext from '../context/auth';
 import InfoPopoverButton from './InfoPopoverButton';
 import InfoModal from './InfoModal';
+import { END_POINT, BASE_URL } from '../constants';
 
 const useStyles = makeStyles((theme) => ({
   proofLabel: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 const UploaderField = (props) => {
   const classes = useStyles();
-  const [file, setfile] = useState({});
+
   const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
   const theme = useTheme();
@@ -65,23 +66,18 @@ const UploaderField = (props) => {
       formData.append('field', target.id);
       formData.append('file', target.files[0]);
 
-      const data = {
-        file: formData,
-      };
-
-      if (
-        fileType.includes('image') ||
-        fileType.includes('text') ||
-        fileType.includes('pdf')
-      ) {
+      if (fileType.includes('image') || fileType.includes('pdf')) {
         await axios
           .post(
-            `http://10.0.0.191:3030/api/document/${authState.uuid}`,
+            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${authState.uuid}`,
             formData
           )
           .then((res) => {
             if (res.status === 200) {
-              console.log(res);
+              console.log(
+                '🚀 ~ file: UploaderField.js ~ line 78 ~ .then ~ res',
+                res
+              );
               setAuthState((prev) => ({
                 ...authState,
                 progress: res.data.progress,
@@ -142,7 +138,13 @@ const UploaderField = (props) => {
               <Typography
                 style={{ fontWeight: fileState[props.id] ? 'bold' : '400' }}
               >
-                {fileState[props.id] ? fileState[props.id] : 'Attach File'}
+                {console.log(
+                  "FILE STATE",
+                  fileState,
+                  fileState[props.id],
+                  props.id
+                )}
+                {fileState[props.id] ? fileState[props.id] : "Attach File"}
               </Typography>
             </Box>
           }

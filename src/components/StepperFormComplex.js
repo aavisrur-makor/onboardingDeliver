@@ -1,10 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Box } from "@material-ui/core";
 import { Stepper } from "@material-ui/core";
 import { Step } from "@material-ui/core";
 import { StepButton, Grid } from "@material-ui/core";
-import { Button } from "@material-ui/core";
-import { Typography, makeStyles } from "@material-ui/core";
 import PseudoForm from "./PseudoForm";
 import FileForm from "./FileForm";
 import TermsForm from "./TermsForm";
@@ -18,79 +15,60 @@ import { useParams } from "react-router";
 import StyledButton from "./StyledButton";
 import { useStyles as useMixins } from "../styles/mixins";
 import { useStyles } from "../styles/UiForm";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core";
 import MobileStepper from "./MobileStepper";
+import { END_POINT, BASE_URL } from "../constants";
+import TradingInfo from "./TradingInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthField, setCurrentAuth } from "../redux/slices/authSlice";
+import {
+  getOnboardingData,
+  setCurrentOnboarding,
+  setCurrentOnboardingFields,
+  setCurrentOnboardingFiles,
+  getGapiLocation,
+  sendGeoLocation,
+} from "../redux/slices/singleOnboardingSlice";
+import {
+  getMetaDataAsync,
+  getMetaDataByCategory,
+} from "../redux/slices/metaDataSlice";
+import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
 
-const steps = ["Submit Documentation", "Attach Documents", "Terms of Use"];
+const steps = [
+  "Company Info",
+  "Trading Info",
+  "Ownership and Managment",
+  "Terms of Use",
+];
 
 const StepperFormComplex = () => {
   const classes = useStyles();
   const mixins = useMixins();
 
-  const { fieldState, setFieldState } = useContext(FieldContext);
-  const { fileState, setFileState } = useContext(FileContext);
   const { authState, setAuthState } = useContext(AuthContext);
-  const [f_proofs, setFProofs] = useState([]);
   const params = useParams();
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
+  const [activeStep, setActiveStep] = React.useState(0);
+  const registered_office_address_gapi = useSelector(
+    (state) => state.onboarding.current.registered_office_address_gapi
+  );
+  const principal_business_address_gapi = useSelector(
+    (state) => state.onboarding.current.principal_business_address_gapi
+  );
+
+  const [completed, setCompleted] = React.useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setAuthState((prev) => ({ ...prev, uuid: params.uuid }));
     if (params.uuid) {
-      const fieldCall = axios.get(
-          `http://10.0.0.191:3030/api/onboarding/${params.uuid}`
-        ),
-        fileCall = axios.get(
-          `http://10.0.0.191:3030/api/document/${params.uuid}`
-        );
-
-      axios
-        .all([fieldCall, fileCall])
-        .then(
-          axios.spread((res1, res2) => {
-            const textFields = res1.data;
-            let fileFields = { proof_of_identity_or_address: [] };
-
-            console.log("FILES ON STEPPER", fileFields);
-
-            res2.data.forEach((file) => {
-              console.log("FILE FIELDS", file);
-
-              if (file.document_field === "proof_of_identity_or_address") {
-                fileFields.proof_of_identity_or_address.push({
-                  fileName: file.document_name,
-                  document_uuid: file.document_uuid,
-                  state: "occupied",
-                });
-              } else {
-                fileFields[file.document_field] = file.document_name;
-              }
-            });
-            // const fullData = { ...textFields, ...fileFields };
-            setFieldState((prev) => ({ ...prev, ...textFields }));
-            setFileState((prev) => ({ ...prev, ...fileFields }));
-            setAuthState((prev) => ({
-              ...prev,
-              progress: res1.data.progress,
-              isAgreeElectronic: res1.data.api_requested,
-              isAgree: res1.data.agreed_ip,
-            }));
-          })
-        )
-        .catch((err) => {
-          console.log("inside the error", err);
-        });
+      dispatch(setAuthField({ id: "uuid", value: params.uuid }));
+      dispatch(getOnboardingData());
     }
   }, []);
-
-  useEffect(() => {}, [authState]);
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
 
   const totalSteps = () => {
     return steps.length;
@@ -125,8 +103,22 @@ const StepperFormComplex = () => {
   };
 
   const handleAccept = () => {
-    if (authState.isAccepted) window.location.pathname = "finale";
+    const fieldToUpdate = {
+      accept_and_send: authState.AcceptAndSendAgree,
+    };
+    axios
+      .put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
+        fieldToUpdate
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+    setAuthState((prev) => ({
+      ...prev,
+      AcceptAndSendFinish: true,
+    }));
   };
+  console.log("STEPPER FORM RENDER");
   return (
     <Grid container className={classes.container} sm={12}>
       {queryMatch ? (
@@ -163,9 +155,11 @@ const StepperFormComplex = () => {
           <Grid item>{!queryMatch && <ProgressBar />}</Grid>
           <Grid item className={mixins.formBody}>
             {activeStep === 0 ? (
-              <PseudoForm query={queryMatch} value={fieldState} />
+              <PseudoForm query={queryMatch} />
             ) : activeStep === 1 ? (
-              <FileForm query={queryMatch} />
+              <TradingInfo />
+            ) : activeStep === 2 ? (
+              <OwnershipAndManagment query={queryMatch} />
             ) : (
               <TermsForm query={queryMatch} />
             )}
@@ -188,7 +182,7 @@ const StepperFormComplex = () => {
                 </Grid>
               )}
               <Grid item className={classes.navButtonRight}>
-                {activeStep !== 2 ? (
+                {activeStep !== 3 ? (
                   <StyledButton
                     onClick={handleNext}
                     sx={{ mr: 1 }}
@@ -203,6 +197,7 @@ const StepperFormComplex = () => {
                     onClick={handleAccept}
                     sx={{ mr: 1 }}
                     variant="outlined"
+                    disabled={!authState.AcceptAndSendAgree}
                   >
                     Accept and Send
                   </StyledButton>

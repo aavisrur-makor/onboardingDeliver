@@ -16,11 +16,14 @@ import { terms, appendix } from "../data/content";
 import { createTermsAppendixContent, createTermsContent } from "../utils";
 import { useTheme } from "@material-ui/styles";
 import axios from "axios";
+import FieldContext from "../context/fields";
+import { END_POINT, BASE_URL } from "../constants";
 
 const TermsForm = (props) => {
   const classes = useStyles();
   const [checkBox, setCheckBox] = useState(false);
   const { authState, setAuthState } = useContext(AuthContext);
+  const { fieldState } = useContext(FieldContext);
   const theme = useTheme();
   const queryMatch = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -28,53 +31,47 @@ const TermsForm = (props) => {
     window.scrollTo({ top: 0 });
   }, []);
 
-  const handleApprove = () => {
+  const toggleUseETP = (isAgree) => {
+    const data = { use_electronic_trading_platform: isAgree };
+    console.log(
+      "🚀 ~ file: TermsForm.js ~ line 46 ~ toggleUseETP ~ isAgree",
+      data
+    );
     axios
-      .put(`http://10.0.0.191:3030/api/onboarding/${authState.uuid}`, {
-        field: "api_requested",
-        value: true,
-      })
+      .put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
+        data
+      )
       .then((res) => {
-        setAuthState((prev) => ({ ...prev, isAgreeElectronic: true }));
-        console.log(res);
+        setAuthState((prev) => ({ ...prev, isAgreeElectronic: isAgree }));
       })
-      .catch((err) => console.log(err));
-  };
-  const handleReject = () => {
-    axios
-      .put(`http://10.0.0.191:3030/api/onboarding/${authState.uuid}`, {
-        field: "api_requested",
-        value: false,
-      })
-      .then((res) => {
-        setAuthState((prev) => ({ ...prev, isAgreeElectronic: false }));
-
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(
+          "🚀 ~ file: TermsForm.js ~ line 40 ~ toggleUseETP ~ err",
+          err
+        );
+      });
   };
 
   const toggleAgree = (e) => {
-    const checked = e.target.checked;
-    console.log(
-      "🚀 ~ file: TermsForm.js ~ line 59 ~ toggleAgree ~ checked",
-      checked
-    );
-
-    axios
-      .put(`http://10.0.0.191:3030/api/onboarding/${authState.uuid}`, {
-        field: "agreed_at",
-        value: checked,
-      })
-      .then((res) => {
-        setAuthState((prev) => ({ ...prev, isAgree: checked }));
-
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-
+    setAuthState((prev) => ({
+      ...prev,
+      AcceptAndSendAgree: e.target.checked,
+    }));
+    // const data = { accept_and_send: e.target.checked };
+    // axios;
+    // .put(`http://${BASE_URL}/onboarding/${authState.uuid}`, {
+    //   field: "agreed_at",
+    //   value: checked,
+    // })
+    // .then((res) => {
+    //   setAuthState((prev) => ({ ...prev, isAgree: checked }));
+    //   console.log(res);
+    // })
+    // .catch((err) => console.log(err));
     //////////////////PROBABLY NEEDS TO CALL THE SERVER NOW
   };
+
   return (
     <Grid container className={classes.termFormContainer}>
       <Grid item>
@@ -118,20 +115,20 @@ const TermsForm = (props) => {
                       : "#ffffff",
                     color: authState.isAgreeElectronic ? "#ffffff" : "#222246",
                   }}
-                  className={
-                    authState.isAgreeElectronic && classes.frozenYesNoButton
-                  }
-                  onClick={handleApprove}
+                  onClick={() => toggleUseETP(true)}
                 >
                   Yes
                 </StyledButton>
               </Grid>
               <Grid item>
                 <StyledButton
-                  className={
-                    !authState.isAgreeElectronic && classes.frozenYesNoButton
-                  }
-                  onClick={handleReject}
+                  style={{
+                    background: !authState.isAgreeElectronic
+                      ? "#222246"
+                      : "#ffffff",
+                    color: !authState.isAgreeElectronic ? "#ffffff" : "#222246",
+                  }}
+                  onClick={() => toggleUseETP(false)}
                 >
                   No
                 </StyledButton>
@@ -154,7 +151,7 @@ const TermsForm = (props) => {
               // defaultChecked={false}
               onClick={toggleAgree}
               icon={<CheckBoxOutlineBlankSharpIcon />}
-              checked={authState.isAgree}
+              checked={authState.AcceptAndSendAgree}
             />
           }
           label={

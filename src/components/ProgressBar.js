@@ -2,14 +2,13 @@ import React, { useContext, useEffect } from "react";
 import AuthContext from "../context/auth";
 import { Box, Typography, LinearProgress } from "@material-ui/core";
 import { useStyles } from "../styles/UiForm";
+import { useSelector } from "react-redux";
 
 const ProgressBar = () => {
-  const { authState } = useContext(AuthContext);
-  const { progress } = authState;
+  const progress = useSelector((state) => state.auth.progress);
   const classes = useStyles();
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Box className={classes.progressContainer}>
