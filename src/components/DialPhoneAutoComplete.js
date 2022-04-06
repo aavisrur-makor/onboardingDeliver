@@ -57,6 +57,7 @@ const DialPhoneAutoComplete = (props) => {
     setCountryDialCode(inputValue);
     props.handleChange(e, "", props.index);
   };
+  console.log("DIAL CODE", dial_code);
   return (
     <StyledAutoComplete
       id="contact_phone"

@@ -53,7 +53,9 @@ const useStyles = makeStyles((theme) => ({
 const ContactsDispatcherField = (props) => {
   const value = useSelector((state) =>
     props.subIndex
-      ? state.onboarding.current.contacts[props.index][props.id][props.subIndex]
+      ? state.onboarding.current.contacts[props.index][props.id][
+          props.subIndex
+        ][props.objectField]
       : state.onboarding.current.contacts[props.index][props.id]
   );
 
@@ -65,7 +67,7 @@ const ContactsDispatcherField = (props) => {
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
-
+  console.log("VALUE", value);
   return (
     <TextField
       className={classes.textField}
@@ -74,7 +76,6 @@ const ContactsDispatcherField = (props) => {
       fullWidth
       required={props.required}
       onChange={(e) => {
-        console.log("FACKING NOOB", props.index);
         dispatch(
           setOnboardingContactField({
             id: props.id,
@@ -90,7 +91,7 @@ const ContactsDispatcherField = (props) => {
       value={
         props.objectField
           ? value[0][props.objectField]
-          : props.id === "contact_email"
+          : props.id === "email"
           ? value[props.index]
           : value
           ? value

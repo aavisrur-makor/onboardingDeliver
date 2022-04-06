@@ -17,71 +17,7 @@ const initialState = {
     registered_office_address_gapi: "",
     shareholder_names: "",
     principal_business_address_gapi: "",
-    managment_list: [
-      {
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-        company_name: "",
-        company_number: "",
-        country: "",
-      },
-    ],
-    directors_list: [
-      {
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-      },
-      {
-        first_name: "",
-        last_name: "",
-        dob: "",
-        address: "",
-        position_uuid: "",
-      },
-    ],
-    trustee_list: [
-      {
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-      },
-    ],
-    individual_list: [
-      {
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-      },
-      {
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-      },
-    ],
-    entity_list: [
-      {
-        company_name: "",
-        company_number: "",
-        country: "",
-      },
-      {
-        company_name: "",
-        company_number: "",
-        country: "",
-      },
-    ],
+    managment_list: [],
     currency_wallet: [],
     company_uuid: "",
     client_company_legal_name: "",
@@ -90,11 +26,19 @@ const initialState = {
     type_of_business_uuid: "",
     contacts: [
       {
-        contact_name: "",
-        contact_phone: [{ number: "", dialing_code: "" }],
-        contact_email: [""],
-        contact_position_uuid: "",
-        contact_uuid: "",
+        first_name: "",
+        last_name: "",
+        address: "",
+        birthday_at: "",
+        partner_type: "",
+        phone: [{ number: "", dialing_code: "" }],
+        email: [""],
+        position_uuid: "",
+        company_name: "",
+        company_number: "",
+        contact_type: "contact",
+        uuid: "",
+        country: "",
       },
     ],
     source_of_funds: "",
@@ -148,29 +92,75 @@ export const singleOnboardingSlice = createSlice({
     setCurrentOnboardingFiles: (state, action) => {
       state.files = action.payload;
     },
+    addManagmentContant: (state, action) => {
+      state.current.managment_list.push({
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+        company_name: "",
+        company_number: "",
+        country: "",
+      });
+    },
+    deleteManagmentContact: (state, action) => {
+      const managmentIndex = action.payload;
+      console.log("MANAGMENT INDEX", managmentIndex);
+      if (state.current.managment_list.length > 1) {
+        state.current.managment_list = state.current.managment_list.filter(
+          (contact, index) => index !== managmentIndex
+        );
+      }
+    },
     setManagmentList: (state, action) => {
       if (
-        action.payload === "Publicly Listed Company" ||
+        action.payload === "Company Limited by Shares" ||
         action.payload === "Partnership" ||
-        action.payload === "Limited Partnership"
+        action.payload === "Limited Liability Partnership"
       ) {
+        // check count in the array
+        // if less than 2, complete to 2 with the function
+
+        // function contract_add(contact_type) { return { contact_type: contact_type, first_name:'', last_name:'',};}
+
         state.current.managment_list = [
           {
-            first_name: "",
+            contact_type: "",
+            first_name: "blabla",
             last_name: "",
             birthday_at: "",
             address: "",
             position_uuid: "",
+            partner_type: "",
+            company_name: "",
+            company_number: "",
+            country: "",
+            email: [],
+            phone: [],
+          },
+          {
+            contact_type: "",
+            first_name: "blabla",
+            last_name: "",
+            birthday_at: "",
+            address: "",
+            position_uuid: "",
+            partner_type: "",
             company_name: "",
             company_number: "",
             country: "",
           },
+        ];
+      } else {
+        state.current.managment_list = [
           {
-            first_name: "",
+            first_name: "blabla",
             last_name: "",
             birthday_at: "",
             address: "",
             position_uuid: "",
+            contact_type: "",
             company_name: "",
             company_number: "",
             country: "",
@@ -197,11 +187,11 @@ export const singleOnboardingSlice = createSlice({
     setOnboardingContactField: (state, action) => {
       const { id, value, contactIndex, objectField } = action.payload;
       console.log("FYI", action.payload);
-      if (id === "contact_phone") {
+      if (id === "phone") {
         if (objectField) {
           state.current.contacts[contactIndex][id][0][objectField] = value;
         }
-      } else if (id === "contact_email") {
+      } else if (id === "email") {
         console.log("inside the contact email if");
         state.current.contacts[contactIndex][id][0] = value;
       } else {
@@ -274,7 +264,7 @@ export const updateContactFieldOnboarding =
           if (response.data.contact_uuid) {
             dispatch(
               setOnboardingContactField({
-                id: "contact_uuid",
+                id: "uuid",
                 value: response.data.contact_uuid,
                 contactIndex,
               })
@@ -329,6 +319,18 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       dispatch(setCurrentOnboarding(textFields));
       if (textFields.roles) {
         dispatch(setRolesData(textFields.roles));
+      }
+      if (textFields.company_type_uuid) {
+        console.log(
+          "COMPANY TYPE UUID",
+          getState().meta.company_typesMap,
+          textFields.company_type_uuid
+        );
+        dispatch(
+          setManagmentList(
+            getState().meta.company_typesMap[textFields.company_type_uuid]
+          )
+        );
       }
       if (
         !textFields.registered_office_address_gapi ||
@@ -392,6 +394,8 @@ export const {
   setCurrentOnboardingFields,
   setCurrentOnboarding,
   setAutoGapiLocation,
+  addManagmentContant,
+  deleteManagmentContact,
   setManagmentList,
   setCurrentOnboardingFiles,
   addOnboardingContact,

@@ -12,7 +12,6 @@ export const END_POINT = {
   COMPANY_TYPE: "/company_types",
   EXTERNAL_META_DATA: "/external_meta_data",
   GEO_LOCATION: "geo_location",
-  API_KEY: "AIzaSyCIUAWPh7gQNZwSg6FnzmyobRzEZyRbLoA",
 };
 
 export function setAuthToken(token) {

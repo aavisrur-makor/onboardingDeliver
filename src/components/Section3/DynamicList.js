@@ -2,11 +2,16 @@ import React from "react";
 import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
 import DispatcherField from "../DispatcherField";
 import DynamicTextField from "./DynamicTextField";
-import { Grid } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import RoleSelectBox from "./RoleSelectBox";
-import CustomToggleButton from "../../utils/CustomToggleButton";
+import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 
+import CustomToggleButton from "../../utils/CustomToggleButton";
+import { useDispatch } from "react-redux";
+import { deleteManagmentContact } from "../../redux/slices/singleOnboardingSlice";
 function DynamicList(props) {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Grid item md={2}>
@@ -24,7 +29,13 @@ function DynamicList(props) {
       <Grid item md={2}>
         <RoleSelectBox label="Role" data={props.data ? props.data : null} />
       </Grid>
-      <Grid item md={2}></Grid>
+      <Grid item md={2}>
+        <IconButton
+          onClick={(e) => dispatch(deleteManagmentContact(props.index))}
+        >
+          {<TrashIcon />}
+        </IconButton>
+      </Grid>
     </>
   );
 }

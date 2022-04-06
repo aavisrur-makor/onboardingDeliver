@@ -20,15 +20,6 @@ const ContactCustomSelect = (props) => {
   const stateDataMap = useSelector((state) => state?.meta[props.stateDataMap]);
   const classes = useStyles();
 
-  if (props.id === "contact_position_uuid") {
-    console.log(
-      "CHECKING THE DATA",
-      stateData,
-      stateDataMap,
-
-      stateDataMap[value]
-    );
-  }
   return (
     <FormControl fullWidth variant="outlined">
       <InputLabel id="demo-simple-select-outlined-label">

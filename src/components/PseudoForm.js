@@ -273,15 +273,15 @@ const PseudoForm = function (props) {
         <Grid container direction="column">
           <Grid item>
             {contacts.map((contact, contactIndex) => {
-              return (
+              return contact.contact_type === "contact" ? (
                 <Contacts
                   handleChange={handleContactChange}
                   handlePositionChange={handleContactPositionChange}
                   handleDialCodeChange={handleContactDialCodeChange}
                   handleDeleteContact={handleDeleteContact}
-                  index={contactIndex}
+                  index={contact?.contact_type === "contact" && contactIndex}
                 />
-              );
+              ) : null;
             })}
           </Grid>
           <Grid item>

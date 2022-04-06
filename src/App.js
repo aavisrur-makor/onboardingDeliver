@@ -28,6 +28,7 @@ const App = () => {
   });
 
   useEffect(() => {
+    console.log("Running the App");
     dispatch(getMetaDataAsync());
   }, []);
 

@@ -16,7 +16,7 @@ const Contacts = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
-
+  console.log("CONTACT INDEX", props.index);
   return (
     <>
       {querySelector && (
@@ -33,7 +33,7 @@ const Contacts = (props) => {
             stateDataMap={"positionsMap"}
             label={"Position"}
             handleChange={props.handlePositionChange}
-            id={"contact_position_uuid"}
+            id={"position_uuid"}
             index={props.index}
           />
         </Grid>
@@ -42,17 +42,18 @@ const Contacts = (props) => {
             <DialPhoneAutoComplete
               handleChange={props.handleDialCodeChange}
               index={props.index}
-              id="contact_phone"
+              id="phone"
               objectField="dialing_code"
               className={classes.contactDialCode}
               subIndex={0}
+              type={props.type}
             />
           </Grid>
           <Grid item xs={6} md={7}>
             <ContactsDispatcherField
               handleChange={props.handleChange}
               index={props.index}
-              id="contact_phone"
+              id="phone"
               objectField="number"
               label="Phone Number"
               subIndex={0}
@@ -63,7 +64,7 @@ const Contacts = (props) => {
           <Grid item xs={6} md={6}>
             <ContactsDispatcherField
               handleChange={props.handleChange}
-              id="contact_first_name"
+              id="first_name"
               label="First Name"
               index={props.index}
               required
@@ -72,7 +73,7 @@ const Contacts = (props) => {
           <Grid item xs={6} md={6}>
             <ContactsDispatcherField
               handleChange={props.handleChange}
-              id="contact_last_name"
+              id="last_name"
               label="Last Name"
               index={props.index}
               required
@@ -83,7 +84,7 @@ const Contacts = (props) => {
           <ContactsDispatcherField
             handleChange={props.handleChange}
             index={props.index}
-            id="contact_email"
+            id="email"
             label="Email"
             subIndex={0}
           />
