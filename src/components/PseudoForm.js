@@ -17,6 +17,7 @@ import {
   addOnboardingContact,
   removeOnboardingContact,
   setCurrentOnboardingFields,
+  setManagmentList,
   setOnboardingContactField,
   updateContactFieldOnboarding,
   updateFieldOnboarding,
@@ -109,6 +110,7 @@ const PseudoForm = function (props) {
   };
 
   const handleCompanyTypeChange = (e, child) => {
+    dispatch(setManagmentList(child.props.value));
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );

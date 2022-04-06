@@ -3,6 +3,7 @@ import axios from "axios";
 import { object } from "yup";
 import { BASE_URL, END_POINT } from "../../constants";
 import { setAuthField, setCurrentAuth } from "./authSlice";
+import { setRolesData } from "./metaDataSlice";
 
 const initialState = {
   current: {
@@ -16,6 +17,18 @@ const initialState = {
     registered_office_address_gapi: "",
     shareholder_names: "",
     principal_business_address_gapi: "",
+    managment_list: [
+      {
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+        company_name: "",
+        company_number: "",
+        country: "",
+      },
+    ],
     directors_list: [
       {
         first_name: "",
@@ -30,6 +43,43 @@ const initialState = {
         dob: "",
         address: "",
         position_uuid: "",
+      },
+    ],
+    trustee_list: [
+      {
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+      },
+    ],
+    individual_list: [
+      {
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+      },
+      {
+        first_name: "",
+        last_name: "",
+        birthday_at: "",
+        address: "",
+        position_uuid: "",
+      },
+    ],
+    entity_list: [
+      {
+        company_name: "",
+        company_number: "",
+        country: "",
+      },
+      {
+        company_name: "",
+        company_number: "",
+        country: "",
       },
     ],
     currency_wallet: [],
@@ -76,7 +126,6 @@ export const singleOnboardingSlice = createSlice({
     setCurrentOnboardingFields: (state, action) => {
       const { id, value } = action.payload;
       console.log("INSIDE THE REDUX FIELDS", id, value);
-
       if (id === "currency_wallet") {
         const { index, asset } = action.payload;
         state.current.currency_wallet[asset] = value;
@@ -98,6 +147,36 @@ export const singleOnboardingSlice = createSlice({
     },
     setCurrentOnboardingFiles: (state, action) => {
       state.files = action.payload;
+    },
+    setManagmentList: (state, action) => {
+      if (
+        action.payload === "Publicly Listed Company" ||
+        action.payload === "Partnership" ||
+        action.payload === "Limited Partnership"
+      ) {
+        state.current.managment_list = [
+          {
+            first_name: "",
+            last_name: "",
+            birthday_at: "",
+            address: "",
+            position_uuid: "",
+            company_name: "",
+            company_number: "",
+            country: "",
+          },
+          {
+            first_name: "",
+            last_name: "",
+            birthday_at: "",
+            address: "",
+            position_uuid: "",
+            company_name: "",
+            company_number: "",
+            country: "",
+          },
+        ];
+      }
     },
     addOnboardingContact: (state, action) => {
       state.current.contacts.push({
@@ -158,6 +237,10 @@ export const updateFieldOnboarding =
         dispatch(
           setAuthField({ id: "progress", value: response.data.progress })
         );
+        if (response.data.roles) {
+          console.log("response.data", response.data);
+          dispatch(setRolesData(response.data.roles));
+        }
       }
     } catch (err) {
       console.log(err);
@@ -244,6 +327,9 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         }
       });
       dispatch(setCurrentOnboarding(textFields));
+      if (textFields.roles) {
+        dispatch(setRolesData(textFields.roles));
+      }
       if (
         !textFields.registered_office_address_gapi ||
         !textFields.principal_business_address_gapi
@@ -306,6 +392,7 @@ export const {
   setCurrentOnboardingFields,
   setCurrentOnboarding,
   setAutoGapiLocation,
+  setManagmentList,
   setCurrentOnboardingFiles,
   addOnboardingContact,
   removeOnboardingContact,

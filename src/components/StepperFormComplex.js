@@ -182,7 +182,7 @@ const StepperFormComplex = () => {
                 </Grid>
               )}
               <Grid item className={classes.navButtonRight}>
-                {activeStep !== 2 ? (
+                {activeStep !== 3 ? (
                   <StyledButton
                     onClick={handleNext}
                     sx={{ mr: 1 }}

@@ -20,6 +20,7 @@ const initialState = {
   type_of_business: [],
   TypeOfBusinessMap: {},
   volume_per: [],
+  roles: [],
 };
 
 export const metaDataSlice = createSlice({
@@ -69,6 +70,9 @@ export const metaDataSlice = createSlice({
         state.TypeOfBusinessMap[tob.uuid] = tob.name;
       }
     },
+    setRolesData: (state, action) => {
+      state.roles = action.payload;
+    },
   },
 });
 
@@ -84,5 +88,5 @@ export const getMetaDataAsync = () => async (dispatch, getState) => {
   }
 };
 
-export const { setMetaData } = metaDataSlice.actions;
+export const { setMetaData, setRolesData } = metaDataSlice.actions;
 export default metaDataSlice.reducer;

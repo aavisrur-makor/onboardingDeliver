@@ -5,15 +5,16 @@ import { Provider } from "react-redux";
 import App from "./App";
 import ChiefProvider from "./components/ChiefProvider";
 import store from "./redux/store";
+import {mainPaletteColors} from './utils/Themes/mainPalette'
 import "./index.css";
 
 const theme = createTheme({
+  palette: mainPaletteColors,
   typography: {
     fontSize: 12,
     htmlFontSize: 13,
     fontFamily: '"Work Sans", "Roboto"',
   },
-  palette: { error: { main: "#c000ff" } },
 });
 
 ReactDOM.render(

@@ -3,8 +3,10 @@ import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
 import DispatcherField from "../DispatcherField";
 import DynamicTextField from "./DynamicTextField";
 import { Grid } from "@material-ui/core";
+import RoleSelectBox from "./RoleSelectBox";
+import CustomToggleButton from "../../utils/CustomToggleButton";
 
-function DynamicList() {
+function DynamicList(props) {
   return (
     <>
       <Grid item md={2}>
@@ -20,7 +22,7 @@ function DynamicList() {
         <GoogleApiAutoComplete label="Address" />
       </Grid>
       <Grid item md={2}>
-        <DynamicTextField label="Role" />
+        <RoleSelectBox label="Role" data={props.data ? props.data : null} />
       </Grid>
       <Grid item md={2}></Grid>
     </>
