@@ -168,17 +168,25 @@ export const singleOnboardingSlice = createSlice({
         ];
       }
     },
-    addOnboardingContact: (state, action) => {
+    addContact: (state, action) => {
+      const { type } = action.payload;
       state.current.contacts.push({
-        contact_position_uuid: "",
-        contact_first_name: "",
-        contact_last_name: "",
-        contact_email: [""],
-        contact_phone: [{ number: "", dialing_code: "" }],
-        contact_uuid: "",
+        first_name: "",
+        last_name: "",
+        address: "",
+        birthday_at: "",
+        partner_type: "",
+        phone: [{ number: "", dialing_code: "" }],
+        email: [""],
+        position_uuid: "",
+        company_name: "",
+        company_number: "",
+        contact_type: type,
+        uuid: "",
+        country: "",
       });
     },
-    removeOnboardingContact: (state, action) => {
+    removeContact: (state, action) => {
       const contactIndex = action.payload;
       state.current.contacts = state.current.contacts.filter(
         (contact, index) => index !== contactIndex
@@ -239,11 +247,11 @@ export const updateFieldOnboarding =
 export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
     if (
-      getState().onboarding.current.contacts[contactIndex].contact_name ||
-      getState().onboarding.current.contacts[contactIndex].contact_email[0] ||
-      (getState().onboarding.current.contacts[contactIndex].contact_phone[0]
-        .number &&
-        getState().onboarding.current.contacts[contactIndex].contact_phone[0]
+      getState().onboarding.current.contacts[contactIndex].first_name ||
+      getState().onboarding.current.contacts[contactIndex].last_name ||
+      getState().onboarding.current.contacts[contactIndex].email[0] ||
+      (getState().onboarding.current.contacts[contactIndex].phone[0].number &&
+        getState().onboarding.current.contacts[contactIndex].phone[0]
           .dialing_code)
     ) {
       try {
@@ -398,8 +406,8 @@ export const {
   deleteManagmentContact,
   setManagmentList,
   setCurrentOnboardingFiles,
-  addOnboardingContact,
-  removeOnboardingContact,
+  addContact,
+  removeContact,
   setOnboardingContactField,
   setOnboardingAssets,
 } = singleOnboardingSlice.actions;

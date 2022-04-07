@@ -14,7 +14,9 @@ import Contacts from "./Contacts";
 import { useStyles } from "../styles/UiForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  addContact,
   addOnboardingContact,
+  removeContact,
   removeOnboardingContact,
   setCurrentOnboardingFields,
   setManagmentList,
@@ -39,7 +41,7 @@ const PseudoForm = function (props) {
   }, []);
 
   const handleAdd = () => {
-    dispatch(addOnboardingContact());
+    dispatch(addContact({ type: "contact" }));
   };
   const handleActivitiesYes = (e) => {
     dispatch(
@@ -57,14 +59,13 @@ const PseudoForm = function (props) {
     dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
   };
   const handleAddField = (e, child) => {
-    console.log("HANDLEADD", e.target.value);
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );
     dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
   };
   const handleDeleteContact = (e, index) => {
-    dispatch(removeOnboardingContact(index));
+    dispatch(removeContact(index));
   };
   const handleContactChange = (e, contactIndex, objectField) => {
     const fieldName = e.target.id.split("-")[0];
@@ -280,6 +281,7 @@ const PseudoForm = function (props) {
                   handleDialCodeChange={handleContactDialCodeChange}
                   handleDeleteContact={handleDeleteContact}
                   index={contact?.contact_type === "contact" && contactIndex}
+                  arrayLength={contacts.length}
                 />
               ) : null;
             })}

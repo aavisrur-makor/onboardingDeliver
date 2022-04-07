@@ -89,7 +89,7 @@ const Contacts = (props) => {
             subIndex={0}
           />
         </Grid>
-        {props.index > 0 && (
+        {props.arrayLength > 1 && (
           <Grid
             item
             container
@@ -101,7 +101,7 @@ const Contacts = (props) => {
             <IconButton
               onClick={(e) => props.handleDeleteContact(e, props.index)}
             >
-              {props.index ? <TrashIcon /> : null}
+              {props.arrayLength ? <TrashIcon /> : null}
             </IconButton>
           </Grid>
         )}

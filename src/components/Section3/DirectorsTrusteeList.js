@@ -12,7 +12,7 @@ const DirectorsTrusteeList = (props) => {
   const dispatch = useDispatch();
 
   const stateList = useSelector(
-    (state) => state.onboarding.current.managment_list
+    (state) => state.onboarding.current.contacts
   );
   const companyType = useSelector(
     (state) => state.onboarding.current.company_type_uuid
