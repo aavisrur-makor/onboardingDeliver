@@ -29,7 +29,7 @@ const initialState = {
         first_name: "",
         last_name: "",
         address: "",
-        birthday_at: "",
+        birthday_at: {},
         partner_type: "",
         phone: [{ number: "", dialing_code: "" }],
         email: [""],
@@ -61,6 +61,21 @@ const initialState = {
     financial_statement: "",
     proof_of_identity_or_address: [],
   },
+};
+const newContact = {
+  first_name: "",
+  last_name: "",
+  address: "",
+  birthday_at: "",
+  partner_type: "",
+  phone: [{ number: "", dialing_code: "" }],
+  email: [""],
+  position_uuid: "",
+  company_name: "",
+  company_number: "",
+  contact_type: "ownership",
+  uuid: "",
+  country: "",
 };
 
 export const singleOnboardingSlice = createSlice({
@@ -114,69 +129,65 @@ export const singleOnboardingSlice = createSlice({
       }
     },
     setManagmentList: (state, action) => {
+      console.log("action.payload", action.payload);
+      const { name, minFields } = action.payload;
+
+      let countedArray = [];
+
       if (
-        action.payload === "Company Limited by Shares" ||
-        action.payload === "Partnership" ||
-        action.payload === "Limited Liability Partnership"
+        name === "Company Limited by Shares" ||
+        name === "Partnership" ||
+        name === "Limited Liability Partnership"
       ) {
+        countedArray = state.current.contacts.filter(
+          (contact) => contact.contact_type === "ownership"
+        );
+        console.log("COUNTED ARRAY", countedArray);
+        if (countedArray.length < 2) {
+          console.log("counted array", countedArray.length);
+          if (
+            name === "Partnership" ||
+            name === "Limited Liability Partnership"
+          ) {
+            for (let i = 0; i < minFields - countedArray.length; i++) {
+              let partnerContact = { ...newContact };
+              partnerContact.partner_type = "individual";
+              state.current.contacts.push(partnerContact);
+            }
+          } else {
+            for (let i = 0; i < minFields - countedArray.length; i++) {}
+            state.current.contacts.push(newContact);
+          }
+        }
         // check count in the array
         // if less than 2, complete to 2 with the function
-
         // function contract_add(contact_type) { return { contact_type: contact_type, first_name:'', last_name:'',};}
-
-        state.current.managment_list = [
-          {
-            contact_type: "",
-            first_name: "blabla",
-            last_name: "",
-            birthday_at: "",
-            address: "",
-            position_uuid: "",
-            partner_type: "",
-            company_name: "",
-            company_number: "",
-            country: "",
-            email: [],
-            phone: [],
-          },
-          {
-            contact_type: "",
-            first_name: "blabla",
-            last_name: "",
-            birthday_at: "",
-            address: "",
-            position_uuid: "",
-            partner_type: "",
-            company_name: "",
-            company_number: "",
-            country: "",
-          },
-        ];
-      } else {
-        state.current.managment_list = [
-          {
-            first_name: "blabla",
-            last_name: "",
-            birthday_at: "",
-            address: "",
-            position_uuid: "",
-            contact_type: "",
-            company_name: "",
-            company_number: "",
-            country: "",
-          },
-        ];
+      } else if (
+        name === "Charity" ||
+        name === "Trust" ||
+        name === "Non profit / Foundation"
+      ) {
+        countedArray = state.current.contacts.filter(
+          (contact) => contact.contact_type === "ownership"
+        );
+        if (countedArray.length < 1) {
+          for (let i = 0; i < minFields - countedArray.length; i++) {
+            console.log("checking the for loop");
+            state.current.contacts.push(newContact);
+          }
+        }
       }
     },
     addOnboardingContact: (state, action) => {
-      state.current.contacts.push({
-        contact_position_uuid: "",
-        contact_first_name: "",
-        contact_last_name: "",
-        contact_email: [""],
-        contact_phone: [{ number: "", dialing_code: "" }],
-        contact_uuid: "",
-      });
+      if (action.payload === "contact") {
+        state.current.contacts.push({ ...newContact, contact_type: "contact" });
+      }
+      if (action.payload === "ownership") {
+        state.current.contacts.push({
+          ...newContact,
+          contact_type: "ownership",
+        });
+      }
     },
     removeOnboardingContact: (state, action) => {
       const contactIndex = action.payload;
@@ -187,12 +198,12 @@ export const singleOnboardingSlice = createSlice({
     setOnboardingContactField: (state, action) => {
       const { id, value, contactIndex, objectField } = action.payload;
       console.log("FYI", action.payload);
+
       if (id === "phone") {
         if (objectField) {
           state.current.contacts[contactIndex][id][0][objectField] = value;
         }
       } else if (id === "email") {
-        console.log("inside the contact email if");
         state.current.contacts[contactIndex][id][0] = value;
       } else {
         state.current.contacts[contactIndex][id] = value;
@@ -239,24 +250,76 @@ export const updateFieldOnboarding =
 export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
     if (
-      getState().onboarding.current.contacts[contactIndex].contact_name ||
-      getState().onboarding.current.contacts[contactIndex].contact_email[0] ||
-      (getState().onboarding.current.contacts[contactIndex].contact_phone[0]
-        .number &&
-        getState().onboarding.current.contacts[contactIndex].contact_phone[0]
-          .dialing_code)
+      getState().onboarding.current.contacts[contactIndex].contact_type ===
+      "contact"
     ) {
+      if (
+        getState().onboarding.current.contacts[contactIndex].first_name ||
+        getState().onboarding.current.contacts[contactIndex].last_name ||
+        getState().onboarding.current.contacts[contactIndex].email[0] ||
+        (getState().onboarding.current.contacts[contactIndex].phone[0].number &&
+          getState().onboarding.current.contacts[contactIndex].phone[0]
+            .dialing_code)
+      ) {
+        try {
+          let onboardingToSend =
+            getState().onboarding.current.contacts[contactIndex];
+          !onboardingToSend.uuid && delete onboardingToSend.uuid;
+          const response = await axios.put(
+            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+              getState().auth.uuid
+            }`,
+            onboardingToSend
+          );
+
+          if (response.status === 200) {
+            dispatch(
+              setAuthField({ id: "progress", value: response.data.progress })
+            );
+            if (response.data.contact_uuid) {
+              dispatch(
+                setOnboardingContactField({
+                  id: "uuid",
+                  value: response.data.contact_uuid,
+                  contactIndex,
+                })
+              );
+            }
+          }
+
+          //     if (res.status === 200) {
+          //       setAuthState((prev) => ({
+          //         ...authState,
+          //         progress: res.data.progress,
+          //       }));
+          //     }
+          //   })
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    } else {
       try {
-        let onboardingToSend =
-          getState().onboarding.current.contacts[contactIndex];
-        !onboardingToSend.contact_uuid && delete onboardingToSend.contact_uuid;
+        let contact = {
+          contact: JSON.parse(
+            JSON.stringify(getState().onboarding.current.contacts[contactIndex])
+          ),
+        };
+        if (!contact.contact.uuid) {
+          delete contact.contact.uuid;
+        }
+        if (!contact.contact.position_uuid) {
+          delete contact.contact.position_uuid;
+        }
+        if (!contact.contact.birthday_at) {
+          delete contact.contact.birthday_at;
+        }
         const response = await axios.put(
           `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
             getState().auth.uuid
           }`,
-          onboardingToSend
+          contact
         );
-
         if (response.status === 200) {
           dispatch(
             setAuthField({ id: "progress", value: response.data.progress })
@@ -327,9 +390,15 @@ export const getOnboardingData = () => async (dispatch, getState) => {
           textFields.company_type_uuid
         );
         dispatch(
-          setManagmentList(
-            getState().meta.company_typesMap[textFields.company_type_uuid]
-          )
+          setManagmentList({
+            name: getState().meta.company_typesMap[
+              textFields.company_type_uuid
+            ],
+            minFields:
+              getState().meta.companyMinIndividual[
+                textFields.company_type_uuid
+              ],
+          })
         );
       }
       if (

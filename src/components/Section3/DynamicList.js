@@ -8,26 +8,80 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 
 import CustomToggleButton from "../../utils/CustomToggleButton";
 import { useDispatch } from "react-redux";
-import { deleteManagmentContact } from "../../redux/slices/singleOnboardingSlice";
+import {
+  deleteManagmentContact,
+  setOnboardingContactField,
+  updateContactFieldOnboarding,
+  updateFieldOnboarding,
+} from "../../redux/slices/singleOnboardingSlice";
+import { useDebouncedCallback } from "use-debounce/lib";
+import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
+
 function DynamicList(props) {
   const dispatch = useDispatch();
-
+  const handleDynamicListChange = (e) => {
+    dispatch(updateContactFieldOnboarding(props.index));
+  };
+  const debounce = useDebouncedCallback(handleDynamicListChange, 400);
   return (
     <>
       <Grid item md={2}>
-        <DynamicTextField label="First Name" />
+        <DynamicTextField
+          onChange={(e) => {
+            dispatch(
+              setOnboardingContactField({
+                id: e.target.id,
+                value: e.target.value,
+                contactIndex: props.index,
+              })
+            );
+            debounce(e);
+          }}
+          id="first_name"
+          label="First Name"
+          index={props.index}
+        />
       </Grid>
       <Grid item md={2}>
-        <DynamicTextField label="Last Name" />
+        <DynamicTextField
+          onChange={(e) => {
+            dispatch(
+              setOnboardingContactField({
+                id: e.target.id,
+                value: e.target.value,
+                contactIndex: props.index,
+              })
+            );
+            debounce(e);
+          }}
+          id="last_name"
+          label="Last Name"
+          index={props.index}
+        />
       </Grid>
       <Grid item md={2}>
-        <DynamicTextField label="Date of Birth" />
+        <CustomKeyBoardDatePicker
+          id="birthday_at"
+          index={props.index}
+          handleDynamicListChange={handleDynamicListChange}
+        />
       </Grid>
       <Grid item md={2}>
-        <GoogleApiAutoComplete label="Address" />
+        <GoogleApiAutoComplete
+          index={props.index}
+          handleSelect={handleDynamicListChange}
+          id="address"
+          label="Address"
+        />
       </Grid>
       <Grid item md={2}>
-        <RoleSelectBox label="Role" data={props.data ? props.data : null} />
+        <RoleSelectBox
+          index={props.index}
+          id={"position_uuid"}
+          label="Role"
+          data={props.data ? props.data : null}
+          handleSelect={handleDynamicListChange}
+        />
       </Grid>
       <Grid item md={2}>
         <IconButton

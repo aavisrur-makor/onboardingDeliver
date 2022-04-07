@@ -23,12 +23,10 @@ import { END_POINT, BASE_URL } from "../constants";
 import TradingInfo from "./TradingInfo";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, setCurrentAuth } from "../redux/slices/authSlice";
-import {
-  getOnboardingData,
- 
-} from "../redux/slices/singleOnboardingSlice";
+import { getOnboardingData } from "../redux/slices/singleOnboardingSlice";
 
 import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
+import { getMetaDataAsync } from "../redux/slices/metaDataSlice";
 
 const steps = [
   "Company Info",
@@ -46,7 +44,6 @@ const StepperFormComplex = () => {
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
   const [activeStep, setActiveStep] = React.useState(0);
-  
 
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
@@ -55,6 +52,8 @@ const StepperFormComplex = () => {
     console.log("running THE STEPPER");
     if (params.uuid) {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
+      dispatch(getMetaDataAsync());
+
       dispatch(getOnboardingData());
     }
   }, []);
@@ -107,7 +106,6 @@ const StepperFormComplex = () => {
       AcceptAndSendFinish: true,
     }));
   };
-  console.log("STEPPER FORM RENDER");
   return (
     <Grid container className={classes.container} sm={12}>
       {queryMatch ? (

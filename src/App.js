@@ -7,6 +7,8 @@ import FinaleBox from "./components/FinaleBox";
 import useEventListener from "./hooks/useEventListener";
 import { useDispatch } from "react-redux";
 import { getMetaDataAsync } from "./redux/slices/metaDataSlice";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
 
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
@@ -28,21 +30,22 @@ const App = () => {
   });
 
   useEffect(() => {
-    console.log("Running the App");
     dispatch(getMetaDataAsync());
   }, []);
 
   return (
-    <Container fixed className={classes.mainContainer} ref={appRef}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<SimpleForm />}></Route>
-          <Route path="/:uuid" element={<StepperFormComplex />}></Route>
-          <Route path="/finale" element={<FinaleBox />}></Route>
-        </Routes>
-      </Router>
-      <FinaleBox />
-    </Container>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Container fixed className={classes.mainContainer} ref={appRef}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<SimpleForm />}></Route>
+            <Route path="/:uuid" element={<StepperFormComplex />}></Route>
+            <Route path="/finale" element={<FinaleBox />}></Route>
+          </Routes>
+        </Router>
+        <FinaleBox />
+      </Container>
+    </MuiPickersUtilsProvider>
   );
 };
 

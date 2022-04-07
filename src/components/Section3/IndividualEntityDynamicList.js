@@ -8,11 +8,16 @@ import CountryAutoComplete from "../CountryAutoComplete";
 import CustomToggleButton from "../../utils/CustomToggleButton";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import { useDispatch } from "react-redux";
-import { deleteManagmentContact } from "../../redux/slices/singleOnboardingSlice";
+import { deleteManagmentContact, updateContactFieldOnboarding } from "../../redux/slices/singleOnboardingSlice";
+import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 
 const IndividualEntityDynamicList = (props) => {
   const [alignment, setAlignment] = React.useState("individual");
   const dispatch = useDispatch();
+
+  const handleDynamicListChange = (e) => {
+    dispatch(updateContactFieldOnboarding(props.index));
+  };
   return (
     <>
       {alignment === "individual" ? (
@@ -25,19 +30,41 @@ const IndividualEntityDynamicList = (props) => {
             />
           </Grid>
           <Grid item md={2}>
-            <DynamicTextField label="First Name" />
+            <DynamicTextField
+              id="first_name"
+              index={props.index}
+              label="First Name"
+            />
           </Grid>
           <Grid item md={2}>
-            <DynamicTextField label="Last Name" />
+            <DynamicTextField
+              id="last_name"
+              index={props.index}
+              label="Last Name"
+            />
           </Grid>
           <Grid item md={2}>
-            <DynamicTextField label="Date of Birth" />
+            <CustomKeyBoardDatePicker
+              id="birthday_at"
+              index={props.index}
+              label="Date of Birth"
+              handleDynamicListChange={handleDynamicListChange}
+            />
           </Grid>
           <Grid item md={2}>
-            <GoogleApiAutoComplete label="Address" />
+            <GoogleApiAutoComplete
+              id="address"
+              index={props.index}
+              label="Address"
+            />
           </Grid>
           <Grid item md={1}>
-            <RoleSelectBox label="Role" data="roles" />
+            <RoleSelectBox
+              index={props.index}
+              id={"position_uuid"}
+              label="Role"
+              data="roles"
+            />
           </Grid>
           <Grid item md={1}>
             <IconButton

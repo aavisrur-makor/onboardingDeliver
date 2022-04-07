@@ -4,16 +4,17 @@ import { useSelector } from "react-redux";
 import { useStyles } from "../../styles/UiForm";
 import DynamicList from "./DynamicList";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
-import { addManagmentContant } from "../../redux/slices/singleOnboardingSlice";
+import {
+  addManagmentContant,
+  addOnboardingContact,
+} from "../../redux/slices/singleOnboardingSlice";
 import { useDispatch } from "react-redux";
 
 const DirectorsTrusteeList = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const stateList = useSelector(
-    (state) => state.onboarding.current.managment_list
-  );
+  const stateList = useSelector((state) => state.onboarding.current.contacts);
   const companyType = useSelector(
     (state) => state.onboarding.current.company_type_uuid
   );
@@ -21,7 +22,7 @@ const DirectorsTrusteeList = (props) => {
   return (
     <>
       {stateList?.map((director, index) => {
-        return (
+        return director.contact_type === "ownership" ? (
           <Grid item container alignContent="center" spacing={3}>
             <DynamicList
               index={index}
@@ -34,13 +35,13 @@ const DirectorsTrusteeList = (props) => {
               }
             />
           </Grid>
-        );
+        ) : null;
       })}
       <Grid container justifyContent="center" alignItems="center">
         <Grid item className={classes.addButtonParent}>
           <IconButton
             className={classes.addButton}
-            onClick={() => dispatch(addManagmentContant())}
+            onClick={() => dispatch(addOnboardingContact("ownership"))}
             disableRipple
             disableTouchRipple
             focusRipple={false}
@@ -52,7 +53,7 @@ const DirectorsTrusteeList = (props) => {
           <Typography
             style={{ cursor: "pointer" }}
             onClick={() => {
-              dispatch(addManagmentContant());
+              dispatch(addOnboardingContact("ownership"));
             }}
           >
             {companyTypeMap[companyType] === "Company Limited by Shares"

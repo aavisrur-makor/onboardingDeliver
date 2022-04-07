@@ -1,16 +1,13 @@
 import React, { useEffect, useLayoutEffect, useContext } from "react";
-import { Grid, makeStyles, Typography, IconButton } from "@material-ui/core";
+import { Grid, makeStyles, Typography } from "@material-ui/core";
 import DispatcherField from "./DispatcherField";
 import formData from "../data/formData";
 import { TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 import CountryAutoComplete from "./CountryAutoComplete";
 import FieldContext from "../context/fields";
-import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
 
 import CustomSelect from "./CustomSelect";
-import StyledButton from "./StyledButton";
-import Contacts from "./Contacts";
 import { useStyles } from "../styles/UiForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,39 +20,19 @@ import {
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import GoogleApiAutoComplete from "../utils/GoogleApiAutoComplete";
+import ContactsForm from "./ContactsForm";
+import OnRegulationRequired from "./OnRegulationRequired";
 
 const PseudoForm = function (props) {
-  const has_regulation_required = useSelector(
-    (state) => state.onboarding.current.has_regulation_required
+  const companyMinIndividual = useSelector(
+    (state) => state.meta.companyMinIndividual
   );
-
-  const contacts = useSelector((state) => state.onboarding.current.contacts);
-  const { steps } = props;
+  const companyType = useSelector(
+    (state) => state.onboarding.current.company_type_uuid
+  );
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
-    window.scrollTo({ top: 0 });
-  }, []);
-
-  const handleAdd = () => {
-    dispatch(addOnboardingContact());
-  };
-  const handleActivitiesYes = (e) => {
-    dispatch(
-      setCurrentOnboardingFields({ id: "has_regulation_required", value: true })
-    );
-    dispatch(updateFieldOnboarding({ ["has_regulation_required"]: true }));
-  };
-  const handleActivitiesNo = (e) => {
-    dispatch(
-      setCurrentOnboardingFields({
-        id: "has_regulation_required",
-        value: false,
-      })
-    );
-    dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
-  };
   const handleAddField = (e, child) => {
     console.log("HANDLEADD", e.target.value);
     dispatch(
@@ -63,59 +40,20 @@ const PseudoForm = function (props) {
     );
     dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
   };
-  const handleDeleteContact = (e, index) => {
-    dispatch(removeOnboardingContact(index));
-  };
-  const handleContactChange = (e, contactIndex, objectField) => {
-    const fieldName = e.target.id.split("-")[0];
-    console.log("CONTACT INDEX IS", contactIndex, e.target.value, fieldName);
-    // dispatch(
-    //   setOnboardingContactField({
-    //     id: fieldName,
-    //     value: e.target.value,
-    //     contactIndex,
-    //     objectField,
-    //   })
-    // );
-
-    dispatch(updateContactFieldOnboarding(contactIndex));
-  };
-  const handleContactDialCodeChange = (
-    e,
-    countryDialCodeInput,
-    contactIndex,
-    objectField
-  ) => {
-    const fieldName = e.target.id.split("-")[0];
-    dispatch(
-      setOnboardingContactField({
-        id: fieldName,
-        value: countryDialCodeInput || e.target.value,
-        contactIndex,
-        objectField,
-      })
-    );
-    dispatch(updateContactFieldOnboarding(contactIndex));
-  };
-
-  const handleContactPositionChange = (e, child, contactIndex) => {
-    dispatch(
-      setOnboardingContactField({
-        id: e.target.name,
-        value: child.props.id,
-        contactIndex,
-      })
-    );
-    dispatch(updateContactFieldOnboarding(contactIndex));
-  };
 
   const handleCompanyTypeChange = (e, child) => {
-    dispatch(setManagmentList(child.props.value));
+    dispatch(
+      setManagmentList({
+        name: child.props.value,
+        minFields: companyMinIndividual[companyType],
+      })
+    );
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );
     dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
   };
+  console.log("PSEUDO FORM");
 
   return (
     <Grid container direction="column" className={classes.root} spacing={3}>
@@ -200,15 +138,6 @@ const PseudoForm = function (props) {
         </Grid>
       </Grid>
 
-      {/* <Grid item xs={12}>
-        <Grid container spacing={3}>
-          {formData.form1.grid3.map(({ label, id }) => (
-            <Grid item xs={12} md={6}>
-              <DispatcherField multiline rows={6} id={id} label={label} />
-            </Grid>
-          ))}
-        </Grid>
-      </Grid> */}
       <Grid item>
         <Grid
           container
@@ -216,50 +145,7 @@ const PseudoForm = function (props) {
           justifyContent="space-between"
           className={classes.activitiesRequireBox}
         >
-          <Grid item>
-            <Typography>
-              Do your activities require you to be regulated/hold a licence?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Grid container spacing={4}>
-              <Grid item>
-                <StyledButton
-                  style={{
-                    backgroundColor: has_regulation_required && "#3E2F72",
-                    color: has_regulation_required && "#FFFF",
-                  }}
-                  id="Yes"
-                  onClick={handleActivitiesYes}
-                >
-                  Yes
-                </StyledButton>
-              </Grid>
-              <Grid item>
-                <StyledButton
-                  style={{
-                    backgroundColor: !has_regulation_required && "#3E2F72",
-                    color: !has_regulation_required && "#FFFF",
-                  }}
-                  onClick={handleActivitiesNo}
-                  id="No"
-                >
-                  No
-                </StyledButton>
-              </Grid>
-            </Grid>
-          </Grid>
-          {has_regulation_required && (
-            <Grid item md={12} xs={12}>
-              <CustomSelect
-                id="regulator_uuid"
-                label="Name of Regulator/authority"
-                stateData={"regulators"}
-                stateDataMap={"regulatorsMap"}
-                handleChange={handleAddField}
-              />
-            </Grid>
-          )}
+          <OnRegulationRequired />
         </Grid>
       </Grid>
       <Grid item spacing={2} xs={12}>
@@ -271,39 +157,8 @@ const PseudoForm = function (props) {
           </Grid>
         </Grid>
         <Grid container direction="column">
-          <Grid item>
-            {contacts.map((contact, contactIndex) => {
-              return contact.contact_type === "contact" ? (
-                <Contacts
-                  handleChange={handleContactChange}
-                  handlePositionChange={handleContactPositionChange}
-                  handleDialCodeChange={handleContactDialCodeChange}
-                  handleDeleteContact={handleDeleteContact}
-                  index={contact?.contact_type === "contact" && contactIndex}
-                />
-              ) : null;
-            })}
-          </Grid>
-          <Grid item>
-            <Grid container justifyContent="center" alignItems="center">
-              <Grid item className={classes.addButtonParent}>
-                <IconButton
-                  className={classes.addButton}
-                  onClick={handleAdd}
-                  disableRipple
-                  disableTouchRipple
-                  focusRipple={false}
-                >
-                  <AddIcon style={{ marginRight: "20px" }} />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <Typography style={{ cursor: "pointer" }} onClick={handleAdd}>
-                  Add Contact
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <ContactsForm />
+          <Grid item></Grid>
         </Grid>
       </Grid>
     </Grid>

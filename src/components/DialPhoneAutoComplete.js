@@ -54,14 +54,16 @@ const DialPhoneAutoComplete = (props) => {
   }, [userCountry]);
 
   const handleChange = (e, inputValue) => {
+    console.log("DIAL CODE", inputValue, e.target.id);
     setCountryDialCode(inputValue);
-    props.handleChange(e, "", props.index);
+    props.handleChange(e, e.dialing_code, props.index, props.objectField);
   };
-  console.log("DIAL CODE", dial_code);
+  console.log("CONTACT PROPS", props);
+
   return (
     <StyledAutoComplete
-      id="contact_phone"
-      name="contact_phone"
+      id="phone"
+      name="phone"
       label={"Dial Code"}
       options={countries}
       onBlur={props.handleBlur}
@@ -72,13 +74,21 @@ const DialPhoneAutoComplete = (props) => {
       getOptionLabel={(option) =>
         option.dialing_code ? option.dialing_code : ""
       }
-      onChange={(e, value) => handleChange(e, value)}
+      onChange={(e, value) => {
+        // setCountryDialCode(value);
+        props.handleContactDialCodeChange(
+          e,
+          value.dialing_code,
+          props.index,
+          props.objectField
+        );
+      }}
       value={countryDialCode}
       inputValue={countryDialCodeInput}
       onInputChange={(e, inputValue) => {
         dispatch(
           setOnboardingContactField({
-            id: "contact_phone",
+            id: "phone",
             value: inputValue,
             contactIndex: props.index,
             objectField: "dialing_code",

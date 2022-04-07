@@ -7,6 +7,7 @@ const initialState = {
   countriesMap: {},
   company_types: [],
   company_typesMap: {},
+  companyMinIndividual: {},
   currencies: [],
   currenciesMap: {},
   dialCodes: [],
@@ -58,6 +59,8 @@ export const metaDataSlice = createSlice({
       }
       for (const companyType of company_types) {
         state.company_typesMap[companyType.uuid] = companyType.name;
+        state.companyMinIndividual[companyType.uuid] =
+          companyType.individual_min_count;
       }
       for (const position of positions) {
         state.positionsMap[position.uuid] = position.name;

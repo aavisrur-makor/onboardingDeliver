@@ -21,15 +21,12 @@ const OwnershipAndManagment = () => {
           Ownership&Managment
         </Typography>
       </Grid>
-      {companyTypeMap[companyType] === "Company Limited by Shares" ? (
+      {companyTypeMap[companyType] === "Company Limited by Shares" ||
+      companyTypeMap[companyType] === "Non profit / Foundation" ||
+      companyTypeMap[companyType] === "Charity" ||
+      companyTypeMap[companyType] === "Trust" ? (
         <Grid item md={12}>
-          <DirectorsTrusteeList id="directors_list" />
-        </Grid>
-      ) : companyTypeMap[companyType] === "Non profit / Foundation" ||
-        companyTypeMap[companyType] === "Charity" ||
-        companyTypeMap[companyType] === "Trust" ? (
-        <Grid item md={12}>
-          <DirectorsTrusteeList id="trustee_list" />
+          <DirectorsTrusteeList id="ownership" />
         </Grid>
       ) : companyTypeMap[companyType] === "Partnership" ||
         companyTypeMap[companyType] === "Limited Liability Partnership" ? (

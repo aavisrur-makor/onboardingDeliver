@@ -1,4 +1,5 @@
 import { Box, Paper, TextField, Typography } from "@material-ui/core";
+import { isObject } from "lodash";
 import { useState } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -8,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   sendGeoLocation,
   setCurrentOnboardingFields,
+  setOnboardingContactField,
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 
@@ -18,13 +20,21 @@ const GoogleApiAutoComplete = (props) => {
     lng: null,
   });
   const dispatch = useDispatch();
-  const value = useSelector((state) => state.onboarding.current[props.id]);
+  const value = useSelector((state) =>
+    props.id === "address"
+      ? state.onboarding.current.contacts[props.index][props.id]
+      : state.onboarding.current[props.id]
+  );
   const handleSelect = async (value) => {
     const results = await geocodeByAddress(value);
     const latlng = await getLatLng(results[0]);
     let fieldToUpdate = { [props.id]: value };
-    dispatch(setCurrentOnboardingFields({ id: props.id, value }));
-    dispatch(updateFieldOnboarding(fieldToUpdate));
+    if (props.id === "address") {
+      props.handleSelect(props.index);
+    } else {
+      dispatch(setCurrentOnboardingFields({ id: props.id, value }));
+      dispatch(updateFieldOnboarding(fieldToUpdate));
+    }
     setAddress(value);
     setCoordinates(latlng);
   };
@@ -33,7 +43,15 @@ const GoogleApiAutoComplete = (props) => {
       <PlacesAutocomplete
         value={value ? value : ""}
         onChange={(e) => {
-          dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
+          props.id === "address"
+            ? dispatch(
+                setOnboardingContactField({
+                  id: props.id,
+                  value: e,
+                  contactIndex: props.index,
+                })
+              )
+            : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
         }}
         onSelect={handleSelect}
       >

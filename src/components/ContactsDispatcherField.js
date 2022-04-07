@@ -62,12 +62,10 @@ const ContactsDispatcherField = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleChange = async (e) => {
-    //Need to think how to send to the server.
     props.handleChange(e, props.index, props.objectField);
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
-  console.log("VALUE", value);
   return (
     <TextField
       className={classes.textField}
