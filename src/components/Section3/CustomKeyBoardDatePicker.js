@@ -4,8 +4,18 @@ import { setOnboardingContactField } from "../../redux/slices/singleOnboardingSl
 import moment from "moment";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { useDebouncedCallback } from "use-debounce/lib";
+import { makeStyles } from "@material-ui/core";
+
+// export const useStyles = makeStyles((theme) => ({
+//   root: {
+//     "& .MuiOutlinedInput-notchedOutline": {
+//       borderColor: "red",
+//     },
+//   },
+// }));
 
 const CustomKeyBoardDatePicker = (props) => {
+  //   const classes = useStyles();
   const dispatch = useDispatch();
   const value = useSelector(
     (state) => state.onboarding.current.contacts[props.index][props.id]
@@ -15,8 +25,11 @@ const CustomKeyBoardDatePicker = (props) => {
   return (
     <KeyboardDatePicker
       id={props.id}
+      //   className={classes.root}
+      fullWidth
       disableToolbar
       index={props.index}
+      label="Date of Birth"
       inputVariant="outlined"
       format="dd MMMM yyyy"
       value={value ? value : ""}
@@ -24,12 +37,14 @@ const CustomKeyBoardDatePicker = (props) => {
         dispatch(
           setOnboardingContactField({
             id: "birthday_at",
-            value: moment(date),
+            value: moment(date).isValid() ? moment(date) : "",
             contactIndex: props.index,
           })
         );
         debounce();
       }}
+      error={!moment(value).isValid}
+      helperText={!moment(value).isValid ? "Invalid date" : null}
       KeyboardButtonProps={{
         "aria-label": "change date",
       }}

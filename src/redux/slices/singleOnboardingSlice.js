@@ -20,6 +20,7 @@ const initialState = {
     managment_list: [],
     currency_wallet: [],
     company_uuid: "",
+    risk_category: "",
     client_company_legal_name: "",
     trading_name: "",
     company_type_uuid: "",
@@ -73,7 +74,7 @@ const newContact = {
   position_uuid: "",
   company_name: "",
   company_number: "",
-  contact_type: "ownership",
+  contact_type: "",
   uuid: "",
   country: "",
 };
@@ -133,7 +134,7 @@ export const singleOnboardingSlice = createSlice({
       const { name, minFields } = action.payload;
 
       let countedArray = [];
-
+      let shareHolderArray = [];
       if (
         name === "Company Limited by Shares" ||
         name === "Partnership" ||
@@ -142,9 +143,10 @@ export const singleOnboardingSlice = createSlice({
         countedArray = state.current.contacts.filter(
           (contact) => contact.contact_type === "ownership"
         );
-        console.log("COUNTED ARRAY", countedArray);
+        shareHolderArray = state.current.contacts.filter(
+          (contact) => contact.contact_type === "shareholder"
+        );
         if (countedArray.length < 2) {
-          console.log("counted array", countedArray.length);
           if (
             name === "Partnership" ||
             name === "Limited Liability Partnership"
@@ -154,9 +156,15 @@ export const singleOnboardingSlice = createSlice({
               partnerContact.partner_type = "individual";
               state.current.contacts.push(partnerContact);
             }
-          } else {
-            for (let i = 0; i < minFields - countedArray.length; i++) {}
-            state.current.contacts.push(newContact);
+          }
+        }
+        if (shareHolderArray < 1) {
+          for (let i = 0; i < 1 - shareHolderArray; i++) {
+            let partnerContact = { ...newContact };
+            partnerContact.contact_type = "shareholder";
+            partnerContact.partner_type = "individual";
+
+            state.current.contacts.push(partnerContact);
           }
         }
         // check count in the array
@@ -170,10 +178,22 @@ export const singleOnboardingSlice = createSlice({
         countedArray = state.current.contacts.filter(
           (contact) => contact.contact_type === "ownership"
         );
+        shareHolderArray = state.current.contacts.filter(
+          (contact) => contact.contact_type === "shareholder"
+        );
         if (countedArray.length < 1) {
           for (let i = 0; i < minFields - countedArray.length; i++) {
             console.log("checking the for loop");
             state.current.contacts.push(newContact);
+          }
+        }
+        if (shareHolderArray < 1) {
+          for (let i = 0; i < 1 - shareHolderArray; i++) {
+            let partnerContact = { ...newContact };
+            partnerContact.contact_type = "shareholder";
+            partnerContact.partner_type = "individual";
+
+            state.current.contacts.push(partnerContact);
           }
         }
       }
@@ -186,6 +206,14 @@ export const singleOnboardingSlice = createSlice({
         state.current.contacts.push({
           ...newContact,
           contact_type: "ownership",
+          partner_type: "individual",
+        });
+      }
+      if (action.payload === "shareholder") {
+        state.current.contacts.push({
+          ...newContact,
+          contact_type: "shareholder",
+          partner_type: "individual",
         });
       }
     },
@@ -313,6 +341,12 @@ export const updateContactFieldOnboarding =
         }
         if (!contact.contact.birthday_at) {
           delete contact.contact.birthday_at;
+        }
+        if(!contact.contact.email){
+          delete contact.contact.email
+        }
+        if(!contact.contact.phone){
+          delete contact.contact.phone
         }
         const response = await axios.put(
           `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${

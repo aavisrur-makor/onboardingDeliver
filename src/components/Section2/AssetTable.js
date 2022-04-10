@@ -1,4 +1,11 @@
-import { Grid, Tooltip, FormControlLabel, Checkbox } from "@material-ui/core";
+import {
+  Grid,
+  Tooltip,
+  FormControlLabel,
+  Checkbox,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import React, { useContext } from "react";
 import { checkBoxArray } from "../../data/termsFromSite";
 import FieldContext from "../../context/fields";
@@ -13,6 +20,9 @@ function AssetTable() {
   const currency_wallet = useSelector(
     (state) => state.onboarding.current.currency_wallet
   );
+  const theme = useTheme();
+  const querySelector = useMediaQuery(theme.breakpoints.down("md"));
+
   const currencies = useSelector((state) => state.meta.currencies);
   const dispatch = useDispatch();
   const handleAssetChange = (e, checkedAsset) => {
@@ -35,10 +45,10 @@ function AssetTable() {
     );
   };
   return (
-    <Grid container>
+    <Grid container spacing={querySelector ? 3 : null}>
       {currencies.map((checkBox, index) => {
         return (
-          <Grid item xs={2}>
+          <Grid item xs={3} md={2}>
             <Tooltip title={checkBox.name}>
               <FormControlLabel
                 control={

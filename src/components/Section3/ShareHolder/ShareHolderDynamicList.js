@@ -1,22 +1,22 @@
 import React from "react";
-import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
-import DispatcherField from "../DispatcherField";
-import DynamicTextField from "./DynamicTextField";
+import GoogleApiAutoComplete from "../../../utils/GoogleApiAutoComplete";
+import DispatcherField from "../../DispatcherField";
+import DynamicTextField from "../DynamicTextField";
 import { Grid, IconButton } from "@material-ui/core";
-import RoleSelectBox from "./RoleSelectBox";
-import CountryAutoComplete from "../CountryAutoComplete";
-import CustomToggleButton from "../../utils/CustomToggleButton";
-import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
+import RoleSelectBox from "../RoleSelectBox";
+import CountryAutoComplete from "../../CountryAutoComplete";
+import CustomToggleButton from "../../../utils/CustomToggleButton";
+import { ReactComponent as TrashIcon } from "../../../assets/icons/trashIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
-} from "../../redux/slices/singleOnboardingSlice";
-import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
+} from "../../../redux/slices/singleOnboardingSlice";
+import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 
-const IndividualEntityDynamicList = (props) => {
+const ShareHolderDynamicList = (props) => {
   // const [alignment, setAlignment] = React.useState("individual");
   const dispatch = useDispatch();
   const alignment = useSelector(
@@ -52,7 +52,7 @@ const IndividualEntityDynamicList = (props) => {
               index={props.index}
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item xs={12} md={2}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -69,7 +69,7 @@ const IndividualEntityDynamicList = (props) => {
               label="First Name"
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item xs={12} md={2}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -86,7 +86,7 @@ const IndividualEntityDynamicList = (props) => {
               label="Last Name"
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item xs={12} md={2}>
             <CustomKeyBoardDatePicker
               id="birthday_at"
               index={props.index}
@@ -94,7 +94,7 @@ const IndividualEntityDynamicList = (props) => {
               handleDynamicListChange={handleDynamicListChange}
             />
           </Grid>
-          <Grid item md={2} xs={12}>
+          <Grid item xs={12} md={3}>
             <GoogleApiAutoComplete
               handleSelect={handleDynamicListChange}
               id="address"
@@ -102,15 +102,7 @@ const IndividualEntityDynamicList = (props) => {
               label="Address"
             />
           </Grid>
-          <Grid item md={1} xs={12}>
-            <RoleSelectBox
-              handleSelect={handleDynamicListChange}
-              index={props.index}
-              id={"position_uuid"}
-              label="Role"
-              data="roles"
-            />
-          </Grid>
+
           <Grid item md={1}>
             <IconButton
               onClick={(e) => dispatch(deleteManagmentContact(props.index))}
@@ -121,14 +113,14 @@ const IndividualEntityDynamicList = (props) => {
         </>
       ) : (
         <>
-          <Grid item md={2} xs={12}>
+          <Grid item xs={12} md={2}>
             <CustomToggleButton
               value={alignment}
               index={props.index}
               id="partner_type"
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item xs={12} md={3}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -145,7 +137,7 @@ const IndividualEntityDynamicList = (props) => {
               label="Company Name"
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item xs={12} md={3}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -162,7 +154,7 @@ const IndividualEntityDynamicList = (props) => {
               label="Company Number"
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item xs={12} md={3}>
             <CountryAutoComplete
               id="country"
               index={props.index}
@@ -183,4 +175,4 @@ const IndividualEntityDynamicList = (props) => {
   );
 };
 
-export default IndividualEntityDynamicList;
+export default ShareHolderDynamicList;

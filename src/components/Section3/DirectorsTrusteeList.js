@@ -23,7 +23,7 @@ const DirectorsTrusteeList = (props) => {
     <>
       {stateList?.map((director, index) => {
         return director.contact_type === "ownership" ? (
-          <Grid item container alignContent="center" spacing={3}>
+          <Grid item container alignContent="center" xs={12} spacing={3}>
             <DynamicList
               index={index}
               data={

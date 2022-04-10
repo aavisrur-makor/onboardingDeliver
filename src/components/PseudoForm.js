@@ -35,9 +35,8 @@ const PseudoForm = function (props) {
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
     console.log("AUTOCOMPLERTE", id, value);
-    dispatch(setCurrentOnboardingFields({id,value:value.iso_code_2}))
-    dispatch(updateFieldOnboarding({ [id]: value.iso_code_2}));
-
+    dispatch(setCurrentOnboardingFields({ id, value: value.iso_code_2 }));
+    dispatch(updateFieldOnboarding({ [id]: value.iso_code_2 }));
   };
   const handleAddField = (e, child) => {
     console.log("HANDLEADD", e);
@@ -107,7 +106,7 @@ const PseudoForm = function (props) {
                   <CountryAutoComplete
                     handleChange={handleAddAutoComplete}
                     label={label}
-                    id={"country_id"}
+                    id={"country"}
                   />
                 </Grid>
               );

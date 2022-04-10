@@ -2,7 +2,7 @@ import React from "react";
 import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
 import DispatcherField from "../DispatcherField";
 import DynamicTextField from "./DynamicTextField";
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton, useMediaQuery, useTheme } from "@material-ui/core";
 import RoleSelectBox from "./RoleSelectBox";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 
@@ -22,10 +22,13 @@ function DynamicList(props) {
   const handleDynamicListChange = (e) => {
     dispatch(updateContactFieldOnboarding(props.index));
   };
+  const theme = useTheme();
+  const querySelector = useMediaQuery(theme.breakpoints.down("md"));
+
   const debounce = useDebouncedCallback(handleDynamicListChange, 400);
   return (
     <>
-      <Grid item md={2}>
+      <Grid item md={2} xs={12}>
         <DynamicTextField
           onChange={(e) => {
             dispatch(
@@ -42,7 +45,7 @@ function DynamicList(props) {
           index={props.index}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} xs={12}>
         <DynamicTextField
           onChange={(e) => {
             dispatch(
@@ -59,14 +62,14 @@ function DynamicList(props) {
           index={props.index}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} xs={12}>
         <CustomKeyBoardDatePicker
           id="birthday_at"
           index={props.index}
           handleDynamicListChange={handleDynamicListChange}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} xs={12}>
         <GoogleApiAutoComplete
           index={props.index}
           handleSelect={handleDynamicListChange}
@@ -74,7 +77,7 @@ function DynamicList(props) {
           label="Address"
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item md={2} xs={12}>
         <RoleSelectBox
           index={props.index}
           id={"position_uuid"}
@@ -83,7 +86,7 @@ function DynamicList(props) {
           handleSelect={handleDynamicListChange}
         />
       </Grid>
-      <Grid item md={2}>
+      <Grid item  md={2} xs={12}>
         <IconButton
           onClick={(e) => dispatch(deleteManagmentContact(props.index))}
         >

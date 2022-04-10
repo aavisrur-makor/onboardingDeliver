@@ -16,7 +16,11 @@ const CountryAutoComplete = (props) => {
   const [countryStateInput, setCountryStateInput] = useState("");
   const countries = useSelector((state) => state.meta.countries);
   const countriesMap = useSelector((state) => state.meta.countriesMap);
-  const country = useSelector((state) => state.onboarding.current.country_id);
+  const country = useSelector((state) =>
+    props.index
+      ? state.onboarding.current.contacts[props.index][props.id]
+      : state.onboarding.current[props.id]
+  );
   const uuid = useSelector((state) => state.auth.uuid);
   useEffect(() => {
     setCountryState(countriesMap[country]);

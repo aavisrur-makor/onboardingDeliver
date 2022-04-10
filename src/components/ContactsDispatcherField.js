@@ -87,9 +87,9 @@ const ContactsDispatcherField = (props) => {
       inputProps={{ style: { padding: 2 } }}
       label={props.label}
       value={
-        props.objectField
+        props.objectField && value
           ? value[0][props.objectField]
-          : props.id === "email"
+          : props.id === "email" && value
           ? value[props.index]
           : value
           ? value

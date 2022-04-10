@@ -9,6 +9,7 @@ function DynamicTextField(props) {
   console.log("PROPS INDEX", props.index);
   return (
     <TextField
+      fullWidth
       onChange={props.onChange}
       value={value ? value : ""}
       label={props.label}
