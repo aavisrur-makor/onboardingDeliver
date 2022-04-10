@@ -38,7 +38,12 @@ const ShareHolderList = () => {
             spacing={2}
             xs={12}
           >
-            <ShareHolderDynamicList index={lineIndex} />
+            <ShareHolderDynamicList
+              arrLength={data.filter(
+                (contactLine) => contactLine.contact_type === line.contact_type
+              )}
+              index={lineIndex}
+            />
           </Grid>
         ) : null;
       })}

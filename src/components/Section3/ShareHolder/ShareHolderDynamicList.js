@@ -9,6 +9,8 @@ import CustomToggleButton from "../../../utils/CustomToggleButton";
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trashIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteContact,
+  deleteContactAsync,
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
@@ -102,14 +104,15 @@ const ShareHolderDynamicList = (props) => {
               label="Address"
             />
           </Grid>
-
-          <Grid item md={1}>
-            <IconButton
-              onClick={(e) => dispatch(deleteManagmentContact(props.index))}
-            >
-              {<TrashIcon />}
-            </IconButton>
-          </Grid>
+          {props.arrLength > 2 && (
+            <Grid item md={1}>
+              <IconButton
+                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+              >
+                {<TrashIcon />}
+              </IconButton>
+            </Grid>
+          )}
         </>
       ) : (
         <>
@@ -162,13 +165,15 @@ const ShareHolderDynamicList = (props) => {
               handleChange={handleAddAutoComplete}
             />
           </Grid>
-          <Grid item md={1}>
-            <IconButton
-              onClick={(e) => dispatch(deleteManagmentContact(props.index))}
-            >
-              {<TrashIcon />}
-            </IconButton>
-          </Grid>
+          {props.arrLength > 2 && (
+            <Grid item md={1}>
+              <IconButton
+                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+              >
+                {<TrashIcon />}
+              </IconButton>
+            </Grid>
+          )}
         </>
       )}
     </>

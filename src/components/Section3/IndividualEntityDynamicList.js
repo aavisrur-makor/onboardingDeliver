@@ -9,6 +9,7 @@ import CustomToggleButton from "../../utils/CustomToggleButton";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteContactAsync,
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
@@ -40,6 +41,7 @@ const IndividualEntityDynamicList = (props) => {
     dispatch(updateContactFieldOnboarding(props.index));
   };
   const debounce = useDebouncedCallback(handleDynamicListChange, 400);
+  console.log("arrlength", props.arrLength);
   return (
     <>
       {alignment === "individual" ? (
@@ -111,13 +113,15 @@ const IndividualEntityDynamicList = (props) => {
               data="roles"
             />
           </Grid>
-          <Grid item md={1}>
-            <IconButton
-              onClick={(e) => dispatch(deleteManagmentContact(props.index))}
-            >
-              {<TrashIcon />}
-            </IconButton>
-          </Grid>
+          {props.arrLength > 1 && (
+            <Grid item md={1}>
+              <IconButton
+                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+              >
+                {<TrashIcon />}
+              </IconButton>
+            </Grid>
+          )}
         </>
       ) : (
         <>
@@ -170,13 +174,15 @@ const IndividualEntityDynamicList = (props) => {
               handleChange={handleAddAutoComplete}
             />
           </Grid>
-          <Grid item md={1}>
-            <IconButton
-              onClick={(e) => dispatch(deleteManagmentContact(props.index))}
-            >
-              {<TrashIcon />}
-            </IconButton>
-          </Grid>
+          {props.arrLength > 1 && (
+            <Grid item md={1}>
+              <IconButton
+                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+              >
+                {<TrashIcon />}
+              </IconButton>
+            </Grid>
+          )}
         </>
       )}
     </>

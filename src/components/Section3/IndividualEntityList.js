@@ -32,7 +32,14 @@ const IndividualEntityList = () => {
             md={12}
             xs={12}
           >
-            <IndividualEntityDynamicList index={lineIndex} />
+            <IndividualEntityDynamicList
+              arrLength={
+                data.filter(
+                  (ownerLine) => ownerLine.contact_type === line.contact_type
+                ).length
+              }
+              index={lineIndex}
+            />
           </Grid>
         ) : null;
       })}

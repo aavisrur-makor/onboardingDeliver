@@ -25,6 +25,11 @@ const DirectorsTrusteeList = (props) => {
         return director.contact_type === "ownership" ? (
           <Grid item container alignContent="center" xs={12} spacing={3}>
             <DynamicList
+              arrLength={
+                stateList.filter(
+                  (line) => line.contact_type === director.contact_type
+                ).length
+              }
               index={index}
               data={
                 companyTypeMap[companyType] === "Non profit / Foundation" ||

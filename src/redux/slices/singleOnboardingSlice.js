@@ -102,6 +102,7 @@ export const singleOnboardingSlice = createSlice({
       }
     },
     setAutoGapiLocation: (state, action) => {
+      console.log("ACTION,PAYLOAD", action.payload);
       state.current.registered_office_address_gapi = action.payload;
       state.current.principal_business_address_gapi = action.payload;
     },
@@ -120,11 +121,11 @@ export const singleOnboardingSlice = createSlice({
         country: "",
       });
     },
-    deleteManagmentContact: (state, action) => {
+    deleteContact: (state, action) => {
       const managmentIndex = action.payload;
       console.log("MANAGMENT INDEX", managmentIndex);
-      if (state.current.managment_list.length > 1) {
-        state.current.managment_list = state.current.managment_list.filter(
+      if (state.current.contacts.length > 1) {
+        state.current.contacts = state.current.contacts.filter(
           (contact, index) => index !== managmentIndex
         );
       }
@@ -149,11 +150,14 @@ export const singleOnboardingSlice = createSlice({
         if (countedArray.length < 2) {
           if (
             name === "Partnership" ||
-            name === "Limited Liability Partnership"
+            name === "Limited Liability Partnership" ||
+            name === "Company Limited by Shares"
           ) {
             for (let i = 0; i < minFields - countedArray.length; i++) {
               let partnerContact = { ...newContact };
               partnerContact.partner_type = "individual";
+              partnerContact.contact_type = "ownership";
+
               state.current.contacts.push(partnerContact);
             }
           }
@@ -184,6 +188,9 @@ export const singleOnboardingSlice = createSlice({
         if (countedArray.length < 1) {
           for (let i = 0; i < minFields - countedArray.length; i++) {
             console.log("checking the for loop");
+            let partnerContact = { ...newContact };
+            partnerContact.contact_type = "shareholder";
+            partnerContact.partner_type = "individual";
             state.current.contacts.push(newContact);
           }
         }
@@ -342,11 +349,11 @@ export const updateContactFieldOnboarding =
         if (!contact.contact.birthday_at) {
           delete contact.contact.birthday_at;
         }
-        if(!contact.contact.email){
-          delete contact.contact.email
+        if (!contact.contact.email) {
+          delete contact.contact.email;
         }
-        if(!contact.contact.phone){
-          delete contact.contact.phone
+        if (!contact.contact.phone) {
+          delete contact.contact.phone;
         }
         const response = await axios.put(
           `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
@@ -452,7 +459,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
           console.log("Your current position is:");
           console.log(`Latitude : ${crd.latitude}`);
           console.log(`Longitude: ${crd.longitude}`);
-
           dispatch(
             sendGeoLocation(crd.latitude, crd.longitude, getState().auth.uuid)
           );
@@ -476,29 +482,48 @@ export const getOnboardingData = () => async (dispatch, getState) => {
     })
   );
 };
-export const sendGeoLocation = (location, id) => async (dispatch, getState) => {
+export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
   console.log("HERE DISPATCHING THE GAPI LOCATION");
   try {
     const response = await axios.get(
       `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
         END_POINT.GEO_LOCATION
       }/${getState().auth.uuid}`,
-      { params: { location } }
+      { params: { lat, lon } }
     );
-    if (response.data.status === 200) {
+    console.log("RESPONES", response.status);
+    if (response.status === 200) {
+      console.log("STATUS");
       dispatch(setAutoGapiLocation(response.data.full_address));
     }
   } catch (err) {
     console.log("Error1", err);
   }
 };
-
+export const deleteContactAsync = (index) => async (dispatch, getState) => {
+  try {
+    if (getState().onboarding.current.contacts[index].uuid) {
+      const response = await axios.put(
+        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+          getState().auth.uuid
+        }`,
+        {
+          ["delete_contact"]:
+            getState().onboarding.current.contacts[index].uuid,
+        }
+      );
+    }
+    dispatch(deleteContact(index));
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const {
   setCurrentOnboardingFields,
   setCurrentOnboarding,
   setAutoGapiLocation,
   addManagmentContant,
-  deleteManagmentContact,
+  deleteContact,
   setManagmentList,
   setCurrentOnboardingFiles,
   addOnboardingContact,

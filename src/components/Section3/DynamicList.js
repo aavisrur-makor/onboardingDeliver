@@ -9,6 +9,8 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import CustomToggleButton from "../../utils/CustomToggleButton";
 import { useDispatch } from "react-redux";
 import {
+  deleteContact,
+  deleteContactAsync,
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
@@ -86,13 +88,15 @@ function DynamicList(props) {
           handleSelect={handleDynamicListChange}
         />
       </Grid>
-      <Grid item  md={2} xs={12}>
-        <IconButton
-          onClick={(e) => dispatch(deleteManagmentContact(props.index))}
-        >
-          {<TrashIcon />}
-        </IconButton>
-      </Grid>
+      {props.arrLength > 2 && (
+        <Grid item md={2} xs={12}>
+          <IconButton
+            onClick={(e) => dispatch(deleteContactAsync(props.index))}
+          >
+            {<TrashIcon />}
+          </IconButton>
+        </Grid>
+      )}
     </>
   );
 }

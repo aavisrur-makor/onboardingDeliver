@@ -27,20 +27,18 @@ function TradingFrequency() {
       </Grid>
       <Grid item xs={12} md={4}>
         <Grid container spacing={2} alignItems="center">
-          <Grid item xs={3}>
+          <Grid item xs={3} md={3}>
             <Typography style={{ textAlign: querySelector ? "center" : "" }}>
               From
             </Typography>
           </Grid>
-          <Grid item xs={3} md={4}>
+          <Grid item xs={3} md={3}>
             <DispatcherField id="trading_frequency_from" type="number" />
           </Grid>
-          <Grid item xs={3}>
-            <Typography style={{ textAlign: querySelector ? "center" : "" }}>
-              To
-            </Typography>
+          <Grid item xs={3} md={3}>
+            <Typography style={{ textAlign: "center" }}>To</Typography>
           </Grid>
-          <Grid item xs={3} md={4}>
+          <Grid item xs={3} md={3}>
             <DispatcherField id="trading_frequency_to" type="number" />
           </Grid>
         </Grid>
