@@ -10,7 +10,6 @@ import { addManagmentContant } from "../../redux/slices/singleOnboardingSlice";
 
 const IndividualEntityList = () => {
   const classes = useStyles();
-  const [alignment, setAlignment] = React.useState("individual");
   const data = useSelector((state) => state.onboarding.current.contacts);
   const dispatch = useDispatch();
   const handleAdd = (e) => {
@@ -22,10 +21,7 @@ const IndividualEntityList = () => {
       {data?.map((line, lineIndex) => {
         return line.contact_type === "ownership" ? (
           <Grid item container alignItems="center" spacing={2} xs={12}>
-            <IndividualEntityDynamicList
-              index={lineIndex}
-              setAlignmentToRender={setAlignment}
-            />
+            <IndividualEntityDynamicList index={lineIndex} />
           </Grid>
         ) : null;
       })}

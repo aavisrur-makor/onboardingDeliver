@@ -32,9 +32,15 @@ const PseudoForm = function (props) {
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+  const handleAddAutoComplete = (e, value) => {
+    const id = e.target.id.split("-")[0];
+    console.log("AUTOCOMPLERTE", id, value);
+    dispatch(setCurrentOnboardingFields({id,value:value.iso_code_2}))
+    dispatch(updateFieldOnboarding({ [id]: value.iso_code_2}));
 
+  };
   const handleAddField = (e, child) => {
-    console.log("HANDLEADD", e.target.value);
+    console.log("HANDLEADD", e);
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );
@@ -98,7 +104,11 @@ const PseudoForm = function (props) {
             if (id === "country") {
               return (
                 <Grid item xs={12} md={6}>
-                  <CountryAutoComplete label={label} />
+                  <CountryAutoComplete
+                    handleChange={handleAddAutoComplete}
+                    label={label}
+                    id={"country_id"}
+                  />
                 </Grid>
               );
             } else if (id === "type_of_business_uuid") {

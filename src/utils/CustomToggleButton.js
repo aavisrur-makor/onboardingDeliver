@@ -1,12 +1,23 @@
 import { ToggleButtonGroup, ToggleButton } from "@material-ui/lab";
 import React from "react";
+import { useDispatch } from "react-redux";
+import {
+  setOnboardingContactField,
+  updateContactFieldOnboarding,
+} from "../redux/slices/singleOnboardingSlice";
 
 const CustomToggleButton = (props) => {
+  const dispatch = useDispatch();
   const handleAlignment = (event, newAlignment) => {
-    console.log("NEW ALIGNMENT", newAlignment);
-    console.log("PROPS", props);
-    props.setAlignment(newAlignment);
-    props.setAlignmentToRender(newAlignment);
+    console.log("NEW ALIGNMENT", newAlignment, props.id, props.index);
+    dispatch(
+      setOnboardingContactField({
+        id: props.id,
+        value: newAlignment,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateContactFieldOnboarding(props.index));
   };
   return (
     <>

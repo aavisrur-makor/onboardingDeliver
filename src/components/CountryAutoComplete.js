@@ -23,23 +23,23 @@ const CountryAutoComplete = (props) => {
     setCountryStateInput(countriesMap[country]?.name);
   }, [countriesMap, country]);
 
-  const handleChange = (e, value) => {
-    setCountryState(e);
-    if (e) {
-      const fieldToUpdate = {
-        country: e.iso_code_2,
-      };
-      axios
-        .put(
-          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${uuid}`,
-          fieldToUpdate
-        )
-        .then((res) => {})
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
+  // const handleChange = (e, value) => {
+  //   setCountryState(e);
+  //   if (e) {
+  //     const fieldToUpdate = {
+  //       country: e.iso_code_2,
+  //     };
+  //     axios
+  //       .put(
+  //         `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${uuid}`,
+  //         fieldToUpdate
+  //       )
+  //       .then((res) => {})
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
 
   const handleInputChange = (e, inputValue) => {
     console.log("INPUT COUNTRY", inputValue);
@@ -49,14 +49,14 @@ const CountryAutoComplete = (props) => {
   };
   return (
     <StyledAutoComplete
-      id="country"
+      id={props.id}
       // autoComplete="off"
       fullWidth
       value={countryState}
       options={countries}
       autoHighlight
       getOptionLabel={(option) => option.name || ""}
-      onChange={(e, value) => handleChange(value)}
+      onChange={(e, value) => props.handleChange(e, value)}
       onInputChange={(e, inputValue) => handleInputChange(e, inputValue)}
       inputValue={countryStateInput || ""}
       renderInput={(params) => (
