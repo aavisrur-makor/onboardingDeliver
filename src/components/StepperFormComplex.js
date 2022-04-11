@@ -192,12 +192,14 @@ const StepperFormComplex = () => {
         height: "100vh",
       }}
     >
-      <Grid item>
+      <Grid item xs={12}>
         <CircularProgress />
       </Grid>
-      <Typography>
-        {loadingErrorMessage ? loadingErrorMessage : "Getting data..."}
-      </Typography>
+      <Grid item style={{ textAlign: "center" }} xs={12}>
+        <Typography>
+          {loadingErrorMessage ? loadingErrorMessage : "Getting data..."}
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

@@ -477,7 +477,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       dispatch(
         setAuthField({
           id: "loadingErrorMessage",
-          value: "Somethin went wrong Please contact Enigma admin",
+          value: "Somethin went wrong...",
         })
       );
       window.location.href = "https://enigma-securities.io/";
