@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Stepper } from "@material-ui/core";
+import { CircularProgress, Stepper, Typography } from "@material-ui/core";
 import { Step } from "@material-ui/core";
 import { StepButton, Grid } from "@material-ui/core";
 import PseudoForm from "./PseudoForm";
@@ -33,9 +33,14 @@ const StepperFormComplex = () => {
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
   const [activeStep, setActiveStep] = React.useState(0);
+  const uuidIsValid = useSelector((state) => state.auth.uuidIsValid);
+  const loadingErrorMessage = useSelector(
+    (state) => state.auth.loadingErrorMessage
+  );
   const AcceptAndSendAgree = useSelector(
     (state) => state.auth.AcceptAndSendAgree
   );
+  let unvalid = false;
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
 
@@ -87,7 +92,7 @@ const StepperFormComplex = () => {
     dispatch(updateTermsAsync("AcceptAndSendAgree", fieldToUpdate));
     dispatch(setAuthField({ id: "AcceptAndSendFinish", value: true }));
   };
-  return (
+  return uuidIsValid ? (
     <Grid container className={classes.container} sm={12}>
       {queryMatch ? (
         <Grid item xs={10}>
@@ -175,6 +180,24 @@ const StepperFormComplex = () => {
           </Grid>
         </Grid>
       </Grid>
+    </Grid>
+  ) : (
+    <Grid
+      container
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <Grid item>
+        <CircularProgress />
+      </Grid>
+      <Typography>
+        {loadingErrorMessage ? loadingErrorMessage : "Getting data..."}
+      </Typography>
     </Grid>
   );
 };

@@ -8,6 +8,8 @@ const initialState = {
   isAgreeElectronic: false,
   AcceptAndSendAgree: false,
   AcceptAndSendFinish: false,
+  uuidIsValid: false,
+  loadingErrorMessage: "",
 };
 
 export const authSlice = createSlice({

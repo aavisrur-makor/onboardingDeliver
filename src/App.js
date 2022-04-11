@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const uuid = useSelector((state) => state.auth.uuid);
   const appRef = useEventListener("copy", (e) => {
     e.preventDefault();
   });

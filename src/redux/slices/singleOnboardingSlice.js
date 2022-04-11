@@ -408,6 +408,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
     );
     console.log("RES", res.status);
     if (res.status === 200) {
+      dispatch(setAuthField({ id: "uuidIsValid", value: true }));
       const textFields = await res.data;
       dispatch(setCurrentOnboarding(textFields));
       if (textFields.roles) {
@@ -471,6 +472,14 @@ export const getOnboardingData = () => async (dispatch, getState) => {
     }
   } catch (err) {
     if (err.response.status === 400) {
+      dispatch(setAuthField({ id: "uuidIsValid", value: false }));
+      console.log("ERR", err.response.data);
+      dispatch(
+        setAuthField({
+          id: "loadingErrorMessage",
+          value: "Somethin went wrong Please contact Enigma admin",
+        })
+      );
       window.location.href = "https://enigma-securities.io/";
     }
   }
