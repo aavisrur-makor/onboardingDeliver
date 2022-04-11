@@ -1,30 +1,21 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect } from "react";
 import { Stepper } from "@material-ui/core";
 import { Step } from "@material-ui/core";
 import { StepButton, Grid } from "@material-ui/core";
 import PseudoForm from "./PseudoForm";
-import FileForm from "./FileForm";
 import TermsForm from "./TermsForm";
 import ProgressBar from "./ProgressBar";
-import axios from "axios";
-import FieldContext from "../context/fields";
-import FileContext from "../context/files";
-import AuthContext from "../context/auth";
-
 import { useParams } from "react-router";
 import StyledButton from "./StyledButton";
 import { useStyles as useMixins } from "../styles/mixins";
 import { useStyles } from "../styles/UiForm";
-
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core";
 import MobileStepper from "./MobileStepper";
-import { END_POINT, BASE_URL } from "../constants";
 import TradingInfo from "./TradingInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { setAuthField, setCurrentAuth } from "../redux/slices/authSlice";
+import { setAuthField, updateTermsAsync } from "../redux/slices/authSlice";
 import { getOnboardingData } from "../redux/slices/singleOnboardingSlice";
-
 import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
 import { getMetaDataAsync } from "../redux/slices/metaDataSlice";
 
@@ -38,23 +29,22 @@ const steps = [
 const StepperFormComplex = () => {
   const classes = useStyles();
   const mixins = useMixins();
-
-  const { authState, setAuthState } = useContext(AuthContext);
   const params = useParams();
   const theme = useTheme();
   const queryMatch = useMediaQuery("(max-width:800px)");
   const [activeStep, setActiveStep] = React.useState(0);
-
+  const AcceptAndSendAgree = useSelector(
+    (state) => state.auth.AcceptAndSendAgree
+  );
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("running THE STEPPER");
     if (params.uuid) {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
+      const status = dispatch(getOnboardingData());
+      console.log("STATUS", status);
       dispatch(getMetaDataAsync());
-
-      dispatch(getOnboardingData());
     }
   }, []);
 
@@ -92,19 +82,10 @@ const StepperFormComplex = () => {
 
   const handleAccept = () => {
     const fieldToUpdate = {
-      accept_and_send: authState.AcceptAndSendAgree,
+      accept_and_send: true,
     };
-    axios
-      .put(
-        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
-        fieldToUpdate
-      )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-    setAuthState((prev) => ({
-      ...prev,
-      AcceptAndSendFinish: true,
-    }));
+    dispatch(updateTermsAsync("AcceptAndSendAgree", fieldToUpdate));
+    dispatch(setAuthField({ id: "AcceptAndSendFinish", value: true }));
   };
   return (
     <Grid container className={classes.container} sm={12}>
@@ -184,7 +165,7 @@ const StepperFormComplex = () => {
                     onClick={handleAccept}
                     sx={{ mr: 1 }}
                     variant="outlined"
-                    disabled={!authState.AcceptAndSendAgree}
+                    disabled={!AcceptAndSendAgree}
                   >
                     Accept and Send
                   </StyledButton>

@@ -113,7 +113,7 @@ const IndividualEntityDynamicList = (props) => {
               data="roles"
             />
           </Grid>
-          {props.arrLength > 1 && (
+          {props.arrLength > 2 && (
             <Grid item md={1}>
               <IconButton
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}
@@ -174,7 +174,7 @@ const IndividualEntityDynamicList = (props) => {
               handleChange={handleAddAutoComplete}
             />
           </Grid>
-          {props.arrLength > 1 && (
+          {props.arrLength > 2 && (
             <Grid item md={1}>
               <IconButton
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}

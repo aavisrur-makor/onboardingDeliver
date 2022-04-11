@@ -63,12 +63,19 @@ const DispatcherField = (props) => {
   const classes = useStyles();
 
   const handleChange = async (e) => {
+    let fieldToUpdate = {};
     if (props.isRequired) {
       validate(null, value, setError);
     }
-    let fieldToUpdate = {
-      [e.target.id]: value,
-    };
+    if (props.type === "number") {
+      fieldToUpdate = {
+        [e.target.id]: +value,
+      };
+    } else {
+      fieldToUpdate = {
+        [e.target.id]: value,
+      };
+    }
     dispatch(updateFieldOnboarding(fieldToUpdate));
   };
 
@@ -81,6 +88,7 @@ const DispatcherField = (props) => {
       fullWidth
       required={props.required}
       onChange={(e) => {
+        console.log("e.target value", e.target.value);
         dispatch(
           setCurrentOnboardingFields({ id: props.id, value: e.target.value })
         );

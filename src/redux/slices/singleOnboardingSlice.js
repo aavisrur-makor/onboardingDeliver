@@ -7,48 +7,48 @@ import { setRolesData } from "./metaDataSlice";
 
 const initialState = {
   current: {
-    country: "",
-    use_electronic_trading_platform: "",
-    website: "",
-    registration_number: "",
-    description_of_activity: "",
-    agreed_ip: "",
-    source_of_funds: "",
-    registered_office_address_gapi: "",
+    country: null,
+    use_electronic_trading_platform: null,
+    website: null,
+    registration_number: null,
+    description_of_activity: null,
+    agreed_ip: null,
+    source_of_funds: null,
+    registered_office_address_gapi: null,
     shareholder_names: "",
-    principal_business_address_gapi: "",
+    principal_business_address_gapi: null,
     managment_list: [],
     currency_wallet: [],
-    company_uuid: "",
-    risk_category: "",
-    client_company_legal_name: "",
-    trading_name: "",
-    company_type_uuid: "",
-    type_of_business_uuid: "",
+    company_uuid: null,
+    risk_category: null,
+    client_company_legal_name: null,
+    trading_name: null,
+    company_type_uuid: null,
+    type_of_business_uuid: null,
     contacts: [
       {
-        first_name: "",
-        last_name: "",
-        address: "",
+        first_name: null,
+        last_name: null,
+        address: null,
         birthday_at: {},
-        partner_type: "",
+        partner_type: null,
         phone: [{ number: "", dialing_code: "" }],
         email: [""],
-        position_uuid: "",
-        company_name: "",
-        company_number: "",
+        position_uuid: null,
+        company_name: null,
+        company_number: null,
         contact_type: "contact",
-        uuid: "",
-        country: "",
+        uuid: null,
+        country: null,
       },
     ],
-    source_of_funds: "",
+    source_of_funds: null,
     has_regulation_required: false,
-    regulator_uuid: "",
+    regulator_uuid: null,
     trading_frequency_from: 0,
     trading_frequency_to: 0,
-    trades_per: "",
-    trading_volume_up_to: "",
+    trades_per: null,
+    trading_volume_up_to: null,
   },
   files: {
     certificate_of_incorporation: "",
@@ -64,19 +64,19 @@ const initialState = {
   },
 };
 const newContact = {
-  first_name: "",
-  last_name: "",
-  address: "",
-  birthday_at: "",
-  partner_type: "",
+  first_name: null,
+  last_name: null,
+  address: null,
+  birthday_at: null,
+  partner_type: null,
   phone: [{ number: "", dialing_code: "" }],
   email: [""],
-  position_uuid: "",
-  company_name: "",
-  company_number: "",
-  contact_type: "",
-  uuid: "",
-  country: "",
+  position_uuid: null,
+  company_name: null,
+  company_number: null,
+  contact_type: null,
+  uuid: null,
+  country: null,
 };
 
 export const singleOnboardingSlice = createSlice({
@@ -111,14 +111,14 @@ export const singleOnboardingSlice = createSlice({
     },
     addManagmentContant: (state, action) => {
       state.current.managment_list.push({
-        first_name: "",
-        last_name: "",
-        birthday_at: "",
-        address: "",
-        position_uuid: "",
-        company_name: "",
-        company_number: "",
-        country: "",
+        first_name: null,
+        last_name: null,
+        birthday_at: null,
+        address: null,
+        position_uuid: null,
+        company_name: null,
+        company_number: null,
+        country: null,
       });
     },
     deleteContact: (state, action) => {
@@ -153,6 +153,7 @@ export const singleOnboardingSlice = createSlice({
             name === "Limited Liability Partnership" ||
             name === "Company Limited by Shares"
           ) {
+            console.log("COUNTED ARRAY", countedArray.length);
             for (let i = 0; i < minFields - countedArray.length; i++) {
               let partnerContact = { ...newContact };
               partnerContact.partner_type = "individual";
@@ -162,7 +163,7 @@ export const singleOnboardingSlice = createSlice({
             }
           }
         }
-        if (shareHolderArray < 1) {
+        if (shareHolderArray.length < 1) {
           for (let i = 0; i < 1 - shareHolderArray; i++) {
             let partnerContact = { ...newContact };
             partnerContact.contact_type = "shareholder";
@@ -185,16 +186,17 @@ export const singleOnboardingSlice = createSlice({
         shareHolderArray = state.current.contacts.filter(
           (contact) => contact.contact_type === "shareholder"
         );
+        console.log("ShareHolderArray", shareHolderArray.length);
         if (countedArray.length < 1) {
           for (let i = 0; i < minFields - countedArray.length; i++) {
             console.log("checking the for loop");
-            let partnerContact = { ...newContact };
-            partnerContact.contact_type = "shareholder";
+            let partnerContact = newContact;
+            partnerContact.contact_type = "ownership";
             partnerContact.partner_type = "individual";
             state.current.contacts.push(newContact);
           }
         }
-        if (shareHolderArray < 1) {
+        if (shareHolderArray.length < 1) {
           for (let i = 0; i < 1 - shareHolderArray; i++) {
             let partnerContact = { ...newContact };
             partnerContact.contact_type = "shareholder";
@@ -236,7 +238,8 @@ export const singleOnboardingSlice = createSlice({
 
       if (id === "phone") {
         if (objectField) {
-          state.current.contacts[contactIndex][id][0][objectField] = value;
+          console.log("OBJECT FIELD");
+          state.current.contacts[contactIndex].phone[0][objectField] = value;
         }
       } else if (id === "email") {
         state.current.contacts[contactIndex][id][0] = value;
@@ -288,50 +291,58 @@ export const updateContactFieldOnboarding =
       getState().onboarding.current.contacts[contactIndex].contact_type ===
       "contact"
     ) {
-      if (
-        getState().onboarding.current.contacts[contactIndex].first_name ||
-        getState().onboarding.current.contacts[contactIndex].last_name ||
-        getState().onboarding.current.contacts[contactIndex].email[0] ||
-        (getState().onboarding.current.contacts[contactIndex].phone[0].number &&
-          getState().onboarding.current.contacts[contactIndex].phone[0]
-            .dialing_code)
-      ) {
-        try {
-          let onboardingToSend =
-            getState().onboarding.current.contacts[contactIndex];
-          !onboardingToSend.uuid && delete onboardingToSend.uuid;
-          const response = await axios.put(
-            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
-              getState().auth.uuid
-            }`,
-            onboardingToSend
-          );
-
-          if (response.status === 200) {
-            dispatch(
-              setAuthField({ id: "progress", value: response.data.progress })
-            );
-            if (response.data.contact_uuid) {
-              dispatch(
-                setOnboardingContactField({
-                  id: "uuid",
-                  value: response.data.contact_uuid,
-                  contactIndex,
-                })
-              );
-            }
-          }
-
-          //     if (res.status === 200) {
-          //       setAuthState((prev) => ({
-          //         ...authState,
-          //         progress: res.data.progress,
-          //       }));
-          //     }
-          //   })
-        } catch (err) {
-          console.log(err);
+      try {
+        let contact = {
+          contact: JSON.parse(
+            JSON.stringify(getState().onboarding.current.contacts[contactIndex])
+          ),
+        };
+        if (!contact.contact.uuid) {
+          delete contact.contact.uuid;
         }
+        if (
+          !contact.contact.phone[0].dialing_code ||
+          !contact.contact.phone[0].number
+        ) {
+          delete contact.contact.phone;
+        }
+        if (!contact.contact.email[0]) {
+          delete contact.contact.email;
+        }
+        if (!contact.contact.position_uuid) {
+          delete contact.contact.position_uuid;
+        }
+        const response = await axios.put(
+          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+            getState().auth.uuid
+          }`,
+          contact
+        );
+
+        if (response.status === 200) {
+          dispatch(
+            setAuthField({ id: "progress", value: response.data.progress })
+          );
+          if (response.data.contact_uuid) {
+            dispatch(
+              setOnboardingContactField({
+                id: "uuid",
+                value: response.data.contact_uuid,
+                contactIndex,
+              })
+            );
+          }
+        }
+
+        //     if (res.status === 200) {
+        //       setAuthState((prev) => ({
+        //         ...authState,
+        //         progress: res.data.progress,
+        //       }));
+        //     }
+        //   })
+      } catch (err) {
+        console.log(err);
       }
     } else {
       try {
@@ -389,37 +400,15 @@ export const updateContactFieldOnboarding =
     }
   };
 export const getOnboardingData = () => async (dispatch, getState) => {
-  const fieldCall = axios.get(
+  try {
+    const res = await axios.get(
       `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
         getState().auth.uuid
       }`
-    ),
-    fileCall = axios.get(
-      `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${
-        getState().auth.uuid
-      }`
     );
-
-  axios.all([fieldCall, fileCall]).then(
-    axios.spread((res1, res2) => {
-      const textFields = res1.data;
-      let fileFields = { proof_of_identity_or_address: [] };
-
-      console.log("FILES ON STEPPER", res2.data);
-
-      res2.data.forEach((file) => {
-        console.log("FILE FIELDS", file);
-
-        if (file.field === "proof_of_identity_or_address") {
-          fileFields.proof_of_identity_or_address.push({
-            fileName: `${file.name}.${file.extension}`,
-            document_uuid: file.uuid,
-            state: "occupied",
-          });
-        } else {
-          fileFields[file.field] = `${file.name}.${file.extension}`;
-        }
-      });
+    console.log("RES", res.status);
+    if (res.status === 200) {
+      const textFields = await res.data;
       dispatch(setCurrentOnboarding(textFields));
       if (textFields.roles) {
         dispatch(setRolesData(textFields.roles));
@@ -473,14 +462,18 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       }
       dispatch(
         setCurrentAuth({
-          progress: res1.data.progress,
-          isAgreeElectronic: res1.data.use_electronic_trading_platform,
-          AcceptAndSendAgree: res1.data.accept_and_send,
+          progress: res.data.progress,
+          isAgreeElectronic: res.data.use_electronic_trading_platform,
+          AcceptAndSendAgree: res.data.accept_and_send,
+          AcceptAndSendFinish: false,
         })
       );
-      dispatch(setCurrentOnboardingFiles(fileFields));
-    })
-  );
+    }
+  } catch (err) {
+    if (err.response.status === 400) {
+      window.location.href = "https://enigma-securities.io/";
+    }
+  }
 };
 export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
   console.log("HERE DISPATCHING THE GAPI LOCATION");

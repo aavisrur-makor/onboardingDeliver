@@ -17,7 +17,7 @@ import {
   sendContactAsync,
   setFormFields,
 } from "../redux/slices/smallFormSlice";
-import SmallFormDialingCode from "./SmallForm/SmallFormDialingCode";
+import SmallFormDialngCode from "./SmallForm/SmallFormDialingCode";
 
 const SimpleForm = () => {
   // const [info, setInfo] = useState({
@@ -36,12 +36,9 @@ const SimpleForm = () => {
     dialCode: "",
   });
 
-  const { authState, setAuthState } = useContext(AuthContext);
-  const { formState, setFormState } = useContext(FormContext);
   const classes = useStyles();
   const [isSubmitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {}, [formState]);
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -107,12 +104,6 @@ const SimpleForm = () => {
     setSubmitted(false);
   };
   const handleDialCode = (e, newValue) => {
-    console.log("CHECKING THE DIAL CODE", e, newValue);
-    // dispatch(setFormFields({id:"dialing_code",value:e.dialing_code}))
-    setFormState((prev) => ({
-      ...prev,
-      dialCode: e.dialing_code,
-    }));
     if (validator.isAlpha(newValue)) {
       setErrors({
         dialCode: "Is not a valid number.",
@@ -128,7 +119,6 @@ const SimpleForm = () => {
       dialCode: "",
     });
   };
-  console.log("FORM STATE", formState);
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <Grid container className={classes.simpleForm}>
@@ -191,7 +181,7 @@ const SimpleForm = () => {
                 <Grid item xs={12} md={6}>
                   <Grid container className={classes.dialAutoCompleteContainer}>
                     <Grid className={classes.dialAutoComplete} item>
-                      <SmallFormDialingCode
+                      <SmallFormDialngCode
                         handleChange={handleDialCode}
                         smallForm
                         // handleBlur={handleCh}

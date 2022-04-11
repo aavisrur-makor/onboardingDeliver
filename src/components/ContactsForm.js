@@ -21,9 +21,7 @@ const ContactsForm = () => {
       <Grid item>
         {contacts.map((contact, contactIndex) => {
           return contact.contact_type === "contact" ? (
-            <Contacts
-              index={contact?.contact_type === "contact" && contactIndex}
-            />
+            <Contacts index={contactIndex} />
           ) : null;
         })}
       </Grid>

@@ -71,7 +71,7 @@ const Contacts = (props) => {
     );
     dispatch(updateContactFieldOnboarding(contactIndex));
   };
-  console.log("contactForm father");
+  console.log("contactForm father", props.index);
   return (
     <>
       {querySelector && (
@@ -93,7 +93,7 @@ const Contacts = (props) => {
           />
         </Grid>
         <Grid item container md={3} justifyContent="center">
-          {/* <Grid item xs={6} md={4}>
+          <Grid item xs={6} md={4}>
             <DialPhoneAutoComplete
               handleContactDialCodeChange={handleContactDialCodeChange}
               index={props.index}
@@ -103,7 +103,7 @@ const Contacts = (props) => {
               subIndex={0}
               type={props.type}
             />
-          </Grid> */}
+          </Grid>
           <Grid item xs={6} md={7}>
             <ContactsDispatcherField
               handleChange={handleContactChange}

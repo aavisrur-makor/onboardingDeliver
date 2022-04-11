@@ -66,6 +66,9 @@ const ContactsDispatcherField = (props) => {
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
+  if (props.id === "email") {
+    console.log("PROPS INDEX", props.index, value);
+  }
   return (
     <TextField
       className={classes.textField}
@@ -90,7 +93,7 @@ const ContactsDispatcherField = (props) => {
         props.objectField && value
           ? value[0][props.objectField]
           : props.id === "email" && value
-          ? value[props.index]
+          ? value[0]
           : value
           ? value
           : ""

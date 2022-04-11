@@ -88,7 +88,8 @@ function DynamicList(props) {
           handleSelect={handleDynamicListChange}
         />
       </Grid>
-      {props.arrLength > 2 && (
+      {props.companyType !== "Company Limited by Shares" &&
+      props.arrLength > 1 ? (
         <Grid item md={2} xs={12}>
           <IconButton
             onClick={(e) => dispatch(deleteContactAsync(props.index))}
@@ -96,6 +97,16 @@ function DynamicList(props) {
             {<TrashIcon />}
           </IconButton>
         </Grid>
+      ) : (
+        props.arrLength > 2 && (
+          <Grid item md={2} xs={12}>
+            <IconButton
+              onClick={(e) => dispatch(deleteContactAsync(props.index))}
+            >
+              {<TrashIcon />}
+            </IconButton>
+          </Grid>
+        )
       )}
     </>
   );

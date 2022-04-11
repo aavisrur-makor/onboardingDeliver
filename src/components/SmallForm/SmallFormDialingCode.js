@@ -8,39 +8,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFormFields } from "../../redux/slices/smallFormSlice";
 
 const SmallFormDialingCode = (props) => {
-  const [userCountry, setUserCountry] = useState();
   const [countryDialCode, setCountryDialCode] = useState({});
   const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
   const countries = useSelector((state) => state.meta.countries);
-  const dial_code = useSelector((state) => state.form.dialing_code);
-  const dialCodeMap = useSelector((state) => state.meta.dialCodesMap);
+  const countriesMap = useSelector((state) => state.meta.countriesMap);
   const dispatch = useDispatch();
-  const getUserCountry = async () => {
-    const userDetails = await axios.get("https://ip.nf/me.json");
-    const country = userDetails.data.ip.country;
-    if (dial_code) {
-      setUserCountry(dialCodeMap[dial_code]?.name);
-    } else {
-      setUserCountry(country);
-    }
-  };
+  useEffect(async () => {
+    const userDetails = await axios.get("https://geolocation-db.com/json/");
 
-  useEffect(() => {
-    getUserCountry();
-
-    setCountryDialCode(
-      countries.filter((dial) => dial.name === userCountry)[0]
+    setCountryDialCodeInput(
+      countriesMap[userDetails.data.country_code]?.dialing_code
     );
 
     dispatch(
       setFormFields({ id: "dialing_code", value: countryDialCodeInput })
     );
-  }, [userCountry]);
+  }, [countryDialCodeInput]);
 
   const handleChange = (e, inputValue) => {
     setCountryDialCode(inputValue);
     props.handleChange(e, "", props.index);
   };
+  console.log("country", countryDialCodeInput);
   return (
     <StyledAutoComplete
       id="contact_phone"

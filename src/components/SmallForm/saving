@@ -1,0 +1,12 @@
+ const userDetails = await axios.get("https://geolocation-db.com/json/");
+    console.log("inside getuserCountry", userDetails);
+    const country = userDetails.data.ip.country;
+    if (dial_code) {
+      console.log("inside getuserCountry1");
+
+      setUserCountry(dialCodeMap[dial_code]?.name);
+    } else {
+      console.log("inside getuserCountry2");
+
+      setUserCountry(country);
+    }

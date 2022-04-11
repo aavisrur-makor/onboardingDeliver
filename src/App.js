@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SimpleForm from "./components/SimpleForm";
 import FinaleBox from "./components/FinaleBox";
 import useEventListener from "./hooks/useEventListener";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getMetaDataAsync } from "./redux/slices/metaDataSlice";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 const App = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const uuid = useSelector((state) => state.auth.uuid);
   const appRef = useEventListener("copy", (e) => {
     e.preventDefault();
   });
@@ -39,7 +39,9 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<SimpleForm />}></Route>
+
             <Route path="/:uuid" element={<StepperFormComplex />}></Route>
+
             <Route path="/finale" element={<FinaleBox />}></Route>
           </Routes>
         </Router>

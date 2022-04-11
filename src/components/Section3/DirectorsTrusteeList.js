@@ -38,6 +38,7 @@ const DirectorsTrusteeList = (props) => {
                   ? "roles"
                   : ""
               }
+              companyType={companyTypeMap[companyType]}
             />
           </Grid>
         ) : null;

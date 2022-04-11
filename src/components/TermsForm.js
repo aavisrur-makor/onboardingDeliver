@@ -7,25 +7,29 @@ import {
 } from "@material-ui/core";
 import { Grid, Typography, Paper, List } from "@material-ui/core";
 import { Button } from "@material-ui/core";
-import { useState, useLayoutEffect, useContext, useEffect } from "react";
-import AuthContext from "../context/auth";
+import { useLayoutEffect, useContext, useEffect } from "react";
 import CheckBoxOutlineBlankSharpIcon from "@material-ui/icons/CheckBoxOutlineBlankSharp";
 import StyledButton from "../components/StyledButton";
 import { useStyles } from "../styles/UiForm";
 import { terms, appendix } from "../data/content";
 import { createTermsAppendixContent, createTermsContent } from "../utils";
 import { useTheme } from "@material-ui/styles";
-import axios from "axios";
 import FieldContext from "../context/fields";
-import { END_POINT, BASE_URL } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuthField, updateTermsAsync } from "../redux/slices/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const TermsForm = (props) => {
   const classes = useStyles();
-  const [checkBox, setCheckBox] = useState(false);
-  const { authState, setAuthState } = useContext(AuthContext);
-  const { fieldState } = useContext(FieldContext);
+  const isAgreeElectronic = useSelector(
+    (state) => state.auth.isAgreeElectronic
+  );
+  const AcceptAndSendAgree = useSelector(
+    (state) => state.auth.AcceptAndSendAgree
+  );
   const theme = useTheme();
   const queryMatch = useMediaQuery(theme.breakpoints.down("md"));
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
@@ -33,43 +37,13 @@ const TermsForm = (props) => {
 
   const toggleUseETP = (isAgree) => {
     const data = { use_electronic_trading_platform: isAgree };
-    console.log(
-      "🚀 ~ file: TermsForm.js ~ line 46 ~ toggleUseETP ~ isAgree",
-      data
-    );
-    axios
-      .put(
-        `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${authState.uuid}`,
-        data
-      )
-      .then((res) => {
-        setAuthState((prev) => ({ ...prev, isAgreeElectronic: isAgree }));
-      })
-      .catch((err) => {
-        console.log(
-          "🚀 ~ file: TermsForm.js ~ line 40 ~ toggleUseETP ~ err",
-          err
-        );
-      });
+    dispatch(updateTermsAsync("isAgreeElectronic", data));
   };
 
   const toggleAgree = (e) => {
-    setAuthState((prev) => ({
-      ...prev,
-      AcceptAndSendAgree: e.target.checked,
-    }));
-    // const data = { accept_and_send: e.target.checked };
-    // axios;
-    // .put(`http://${BASE_URL}/onboarding/${authState.uuid}`, {
-    //   field: "agreed_at",
-    //   value: checked,
-    // })
-    // .then((res) => {
-    //   setAuthState((prev) => ({ ...prev, isAgree: checked }));
-    //   console.log(res);
-    // })
-    // .catch((err) => console.log(err));
-    //////////////////PROBABLY NEEDS TO CALL THE SERVER NOW
+    dispatch(
+      setAuthField({ id: "AcceptAndSendAgree", value: e.target.checked })
+    );
   };
 
   return (
@@ -109,11 +83,10 @@ const TermsForm = (props) => {
             <Grid container className={classes.yesNoContainer}>
               <Grid item>
                 <StyledButton
+                  id="isAgreeElectronic"
                   style={{
-                    background: authState.isAgreeElectronic
-                      ? "#222246"
-                      : "#ffffff",
-                    color: authState.isAgreeElectronic ? "#ffffff" : "#222246",
+                    background: isAgreeElectronic ? "#222246" : "#ffffff",
+                    color: isAgreeElectronic ? "#ffffff" : "#222246",
                   }}
                   onClick={() => toggleUseETP(true)}
                 >
@@ -123,10 +96,8 @@ const TermsForm = (props) => {
               <Grid item>
                 <StyledButton
                   style={{
-                    background: !authState.isAgreeElectronic
-                      ? "#222246"
-                      : "#ffffff",
-                    color: !authState.isAgreeElectronic ? "#ffffff" : "#222246",
+                    background: !isAgreeElectronic ? "#222246" : "#ffffff",
+                    color: !isAgreeElectronic ? "#ffffff" : "#222246",
                   }}
                   onClick={() => toggleUseETP(false)}
                 >
@@ -135,7 +106,7 @@ const TermsForm = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item hidden={!authState.isAgreeElectronic}>
+          <Grid item hidden={!isAgreeElectronic}>
             <Grid className={classes.termOfUseContainer} container spacing={3}>
               {createTermsAppendixContent(appendix, classes)}
             </Grid>
@@ -151,7 +122,7 @@ const TermsForm = (props) => {
               // defaultChecked={false}
               onClick={toggleAgree}
               icon={<CheckBoxOutlineBlankSharpIcon />}
-              checked={authState.AcceptAndSendAgree}
+              checked={AcceptAndSendAgree}
             />
           }
           label={

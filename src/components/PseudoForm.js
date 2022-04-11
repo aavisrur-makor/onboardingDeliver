@@ -47,10 +47,15 @@ const PseudoForm = function (props) {
   };
 
   const handleCompanyTypeChange = (e, child) => {
+    console.log(
+      "PROPS OF COMPANYTYPE",
+      companyMinIndividual[child.props.id],
+      companyType
+    );
     dispatch(
       setManagmentList({
         name: child.props.value,
-        minFields: companyMinIndividual[companyType],
+        minFields: companyMinIndividual[child.props.id],
       })
     );
     dispatch(
