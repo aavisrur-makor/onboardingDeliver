@@ -145,22 +145,47 @@ const SimpleForm = () => {
                     helperText={errors.company}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} className={classes.gridItemContainer}>
-                  <TextField
-                    // onBlur={handleCh}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    onChange={handleChange}
-                    id="name"
-                    label="Name"
-                    // multiline
-                    // maxRows={9}
-                    // rows='9'
-                    className={classes.inputFields}
-                    error={!!errors.name}
-                    helperText={errors.name}
-                  />
+                <Grid
+                  item
+                  container
+                  xs={12}
+                  md={6}
+                  className={classes.gridItemContainer}
+                >
+                  <Grid item md={6} xs={6}>
+                    <TextField
+                      // onBlur={handleCh}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      onChange={handleChange}
+                      id="first_name"
+                      label="First Name"
+                      // multiline
+                      // maxRows={9}
+                      // rows='9'
+                      className={classes.inputFields}
+                      error={!!errors.name}
+                      helperText={errors.name}
+                    />
+                  </Grid>
+                  <Grid item md={6} xs={6}>
+                    <TextField
+                      // onBlur={handleCh}
+                      variant="outlined"
+                      required
+                      fullWidth
+                      onChange={handleChange}
+                      id="last_name"
+                      label="Last Name"
+                      // multiline
+                      // maxRows={9}
+                      // rows='9'
+                      className={classes.inputFields}
+                      error={!!errors.name}
+                      helperText={errors.name}
+                    />
+                  </Grid>
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField

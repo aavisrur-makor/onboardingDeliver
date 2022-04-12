@@ -37,6 +37,8 @@ const TermsForm = (props) => {
 
   const toggleUseETP = (isAgree) => {
     const data = { use_electronic_trading_platform: isAgree };
+    dispatch(setAuthField({ id: "isAgreeElectronic", value: isAgree }));
+
     dispatch(updateTermsAsync("isAgreeElectronic", data));
   };
 

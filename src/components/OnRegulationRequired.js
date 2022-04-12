@@ -1,6 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Grid, makeStyles, Typography, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  IconButton,
+  useMediaQuery,
+  useTheme,
+} from "@material-ui/core";
 import StyledButton from "./StyledButton";
 import {
   addOnboardingContact,
@@ -12,11 +19,14 @@ import {
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import CustomSelect from "./CustomSelect";
+import { useStyles } from "../styles/UiForm";
 
 const OnRegulationRequired = () => {
   const has_regulation_required = useSelector(
     (state) => state.onboarding.current.has_regulation_required
   );
+  const theme = useTheme();
+  const querySelector = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();
 
   const handleActivitiesYes = (e) => {
@@ -48,8 +58,8 @@ const OnRegulationRequired = () => {
           Do your activities require you to be regulated/hold a licence?
         </Typography>
       </Grid>
-      <Grid item>
-        <Grid container spacing={4}>
+      <Grid item xs={querySelector ? 12 : null}>
+        <Grid container direction="row" justifyContent="center" spacing={4}>
           <Grid item>
             <StyledButton
               style={{

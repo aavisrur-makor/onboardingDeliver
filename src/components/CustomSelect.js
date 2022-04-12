@@ -13,7 +13,11 @@ import numeral from "numeral";
 
 //!generic select with own state and validation.
 const CustomSelect = (props) => {
-  const value = useSelector((state) => state.onboarding.current[props.id]);
+  const value = useSelector((state) =>
+    props.contactIndex
+      ? state.onboarding.current.contacts[props.contactIndex][props.id]
+      : state.onboarding.current[props.id]
+  );
   const stateData = useSelector((state) => state.meta[props.stateData]);
   const stateDataMap = useSelector((state) => state?.meta[props.stateDataMap]);
   const classes = useStyles();

@@ -16,6 +16,7 @@ import {
 } from "../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
+import CustomSelect from "../CustomSelect";
 
 const IndividualEntityDynamicList = (props) => {
   // const [alignment, setAlignment] = React.useState("individual");
@@ -35,6 +36,16 @@ const IndividualEntityDynamicList = (props) => {
       setOnboardingContactField({
         id,
         value: value.iso_code_2,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateContactFieldOnboarding(props.index));
+  };
+  const handleAddCompanyType = (e, child) => {
+    dispatch(
+      setOnboardingContactField({
+        id: "company_type_uuid",
+        value: child.props.id,
         contactIndex: props.index,
       })
     );
@@ -132,7 +143,7 @@ const IndividualEntityDynamicList = (props) => {
               id="partner_type"
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item md={2} xs={12}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -149,7 +160,7 @@ const IndividualEntityDynamicList = (props) => {
               label="Company Name"
             />
           </Grid>
-          <Grid item md={3} xs={12}>
+          <Grid item md={2} xs={12}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -164,6 +175,16 @@ const IndividualEntityDynamicList = (props) => {
               index={props.index}
               id="company_number"
               label="Company Number"
+            />
+          </Grid>
+          <Grid item md={2} xs={12}>
+            <CustomSelect
+              stateData={"company_types"}
+              stateDataMap={"company_typesMap"}
+              id={"company_type_uuid"}
+              contactIndex={props.index}
+              label={"Company Type"}
+              handleChange={handleAddCompanyType}
             />
           </Grid>
           <Grid item md={3} xs={12}>

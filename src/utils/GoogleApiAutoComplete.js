@@ -39,8 +39,9 @@ const GoogleApiAutoComplete = (props) => {
     setCoordinates(latlng);
   };
   return (
-    <div className="App">
+    <div>
       <PlacesAutocomplete
+        style={{ zIndex: 10000 }}
         value={value ? value : ""}
         onChange={(e) => {
           props.id === "address"
@@ -57,14 +58,14 @@ const GoogleApiAutoComplete = (props) => {
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
-            <Box>
+            <Box style={{ position: "relative" }}>
               <TextField
                 fullWidth
                 label={props.label}
                 variant="outlined"
                 {...getInputProps()}
               />
-              <Paper>
+              <Paper style={{ position: "absolute", zIndex: 300 }}>
                 {loading ? <Box>Loading...</Box> : null}
                 {suggestions.map((suggestion) => {
                   const style = {

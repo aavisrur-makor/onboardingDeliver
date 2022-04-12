@@ -12,18 +12,13 @@ const SmallFormDialingCode = (props) => {
   const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
   const countries = useSelector((state) => state.meta.countries);
   const countriesMap = useSelector((state) => state.meta.countriesMap);
+
   const dispatch = useDispatch();
-  useEffect(async () => {
-    const userDetails = await axios.get("https://geolocation-db.com/json/");
-
-    setCountryDialCodeInput(
-      countriesMap[userDetails.data.country_code]?.dialing_code
-    );
-
-    dispatch(
-      setFormFields({ id: "dialing_code", value: countryDialCodeInput })
-    );
-  }, [countryDialCodeInput]);
+  // useEffect(() => {
+  //   dispatch(
+  //     setFormFields({ id: "dialing_code", value: countryDialCodeInput })
+  //   );
+  // }, [countryDialCodeInput]);
 
   const handleChange = (e, inputValue) => {
     setCountryDialCode(inputValue);

@@ -39,9 +39,12 @@ const ShareHolderList = () => {
             xs={12}
           >
             <ShareHolderDynamicList
-              arrLength={data.filter(
-                (contactLine) => contactLine.contact_type === line.contact_type
-              )}
+              arrLength={
+                data.filter(
+                  (contactLine) =>
+                    contactLine.contact_type === line.contact_type
+                ).length
+              }
               index={lineIndex}
             />
           </Grid>

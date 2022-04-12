@@ -29,7 +29,7 @@ const CustomKeyBoardDatePicker = (props) => {
       fullWidth
       disableToolbar
       index={props.index}
-      label="Date of Birth"
+      label={!value ? "Date of Birth" : ""}
       inputVariant="outlined"
       format="dd MMMM yyyy"
       value={value ? value : ""}

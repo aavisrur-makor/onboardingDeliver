@@ -3,6 +3,7 @@ import axios from "axios";
 import { BASE_URL, END_POINT } from "../../constants";
 
 const initialState = {
+  metaDataloader: false,
   countries: [],
   countriesMap: {},
   company_types: [],
@@ -73,6 +74,9 @@ export const metaDataSlice = createSlice({
         state.TypeOfBusinessMap[tob.uuid] = tob.name;
       }
     },
+    setMetaDataLoader: (state, action) => {
+      state.metaDataloader = action.payload;
+    },
     setRolesData: (state, action) => {
       state.roles = action.payload;
     },
@@ -86,10 +90,13 @@ export const getMetaDataAsync = () => async (dispatch, getState) => {
     );
 
     dispatch(setMetaData(response.data));
+    dispatch(setMetaDataLoader(true));
   } catch (err) {
     console.log(err);
+    dispatch(setMetaDataLoader(false));
   }
 };
 
-export const { setMetaData, setRolesData } = metaDataSlice.actions;
+export const { setMetaData, setRolesData, setMetaDataLoader } =
+  metaDataSlice.actions;
 export default metaDataSlice.reducer;

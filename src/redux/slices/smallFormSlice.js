@@ -4,7 +4,8 @@ import { BASE_URL, END_POINT } from "../../constants";
 
 const initialState = {
   client_company_legal_name: "",
-  name: "",
+  first_name: "",
+  last_name: "",
   email: "",
   phone: "",
   dialing_code: "",
@@ -22,14 +23,17 @@ export const smallFormSlice = createSlice({
 });
 export const sendContactAsync = () => (dispatch, getState) => {
   const data = {
-    name: getState().form.name,
-    email: [getState().form.email],
-    phone: [
-      {
-        dialing_code: getState().form.dialing_code,
-        number: getState().form.phone,
-      },
-    ],
+    contact: {
+      first_name: getState().form.first_name,
+      last_name: getState().form.last_name,
+      email: [getState().form.email],
+      phone: [
+        {
+          dialing_code: getState().form.dialing_code,
+          number: getState().form.phone,
+        },
+      ],
+    },
     client_company_legal_name: getState().form.client_company_legal_name,
   };
   axios.post(

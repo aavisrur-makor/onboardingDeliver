@@ -1,9 +1,10 @@
+import { NightsStay } from "@material-ui/icons";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { object } from "yup";
 import { BASE_URL, END_POINT } from "../../constants";
 import { setAuthField, setCurrentAuth } from "./authSlice";
-import { setRolesData } from "./metaDataSlice";
+import { getMetaDataAsync, setRolesData } from "./metaDataSlice";
 
 const initialState = {
   current: {
@@ -77,6 +78,7 @@ const newContact = {
   contact_type: null,
   uuid: null,
   country: null,
+  company_type_uuid: null,
 };
 
 export const singleOnboardingSlice = createSlice({
@@ -312,35 +314,45 @@ export const updateContactFieldOnboarding =
         if (!contact.contact.position_uuid) {
           delete contact.contact.position_uuid;
         }
-        const response = await axios.put(
-          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
-            getState().auth.uuid
-          }`,
-          contact
-        );
-
-        if (response.status === 200) {
-          dispatch(
-            setAuthField({ id: "progress", value: response.data.progress })
+        if (
+          getState().onboarding.current.contacts[contactIndex].first_name ||
+          getState().onboarding.current.contacts[contactIndex].last_name ||
+          (getState().onboarding.current.contacts[contactIndex].phone[0]
+            .dialing_code &&
+            getState().onboarding.current.contacts[contactIndex].phone[0]
+              .number) ||
+          getState().onboarding.current.contacts[contactIndex].email[0]
+        ) {
+          const response = await axios.put(
+            `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+              getState().auth.uuid
+            }`,
+            contact
           );
-          if (response.data.contact_uuid) {
-            dispatch(
-              setOnboardingContactField({
-                id: "uuid",
-                value: response.data.contact_uuid,
-                contactIndex,
-              })
-            );
-          }
-        }
 
-        //     if (res.status === 200) {
-        //       setAuthState((prev) => ({
-        //         ...authState,
-        //         progress: res.data.progress,
-        //       }));
-        //     }
-        //   })
+          if (response.status === 200) {
+            dispatch(
+              setAuthField({ id: "progress", value: response.data.progress })
+            );
+            if (response.data.contact_uuid) {
+              dispatch(
+                setOnboardingContactField({
+                  id: "uuid",
+                  value: response.data.contact_uuid,
+                  contactIndex,
+                })
+              );
+            }
+          }
+
+          //     if (res.status === 200) {
+          //       setAuthState((prev) => ({
+          //         ...authState,
+          //         progress: res.data.progress,
+          //       }));
+          //     }
+          //   })
+        }
       } catch (err) {
         console.log(err);
       }
@@ -420,6 +432,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
           getState().meta.company_typesMap,
           textFields.company_type_uuid
         );
+
         dispatch(
           setManagmentList({
             name: getState().meta.company_typesMap[

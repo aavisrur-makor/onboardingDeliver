@@ -11,6 +11,7 @@ import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 import ContactsDispatcherField from "./ContactsDispatcherField";
 import {
   addOnboardingContact,
+  deleteContactAsync,
   removeOnboardingContact,
   setCurrentOnboardingFields,
   setManagmentList,
@@ -28,7 +29,7 @@ const Contacts = (props) => {
   const dispatch = useDispatch();
 
   const handleDeleteContact = (e, index) => {
-    dispatch(removeOnboardingContact(index));
+    dispatch(deleteContactAsync(index));
   };
   const handleContactChange = (e, contactIndex, objectField) => {
     const fieldName = e.target.id.split("-")[0];
@@ -144,7 +145,7 @@ const Contacts = (props) => {
             subIndex={0}
           />
         </Grid>
-        {props.index > 0 && (
+        {props.arrLength > 1 && (
           <Grid
             item
             container
@@ -154,7 +155,7 @@ const Contacts = (props) => {
             alignItems="center"
           >
             <IconButton onClick={(e) => handleDeleteContact(e, props.index)}>
-              {props.index ? <TrashIcon /> : null}
+              {props.arrLength > 1 ? <TrashIcon /> : null}
             </IconButton>
           </Grid>
         )}

@@ -34,24 +34,24 @@ const StepperFormComplex = () => {
   const queryMatch = useMediaQuery("(max-width:800px)");
   const [activeStep, setActiveStep] = React.useState(0);
   const uuidIsValid = useSelector((state) => state.auth.uuidIsValid);
+  const metaDataloader = useSelector((state) => state.meta.metaDataloader);
   const loadingErrorMessage = useSelector(
     (state) => state.auth.loadingErrorMessage
   );
   const AcceptAndSendAgree = useSelector(
     (state) => state.auth.AcceptAndSendAgree
   );
-  let unvalid = false;
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (params.uuid) {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
-      const status = dispatch(getOnboardingData());
-      console.log("STATUS", status);
-      dispatch(getMetaDataAsync());
+      if (metaDataloader) {
+        dispatch(getOnboardingData());
+      }
     }
-  }, []);
+  }, [metaDataloader]);
 
   const totalSteps = () => {
     return steps.length;
@@ -192,10 +192,10 @@ const StepperFormComplex = () => {
         height: "100vh",
       }}
     >
-      <Grid item xs={12}>
+      <Grid item>
         <CircularProgress />
       </Grid>
-      <Grid item style={{ textAlign: "center" }} xs={12}>
+      <Grid item style={{ textAlign: "center" }}>
         <Typography>
           {loadingErrorMessage ? loadingErrorMessage : "Getting data..."}
         </Typography>

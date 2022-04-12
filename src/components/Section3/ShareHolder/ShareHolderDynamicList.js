@@ -17,6 +17,7 @@ import {
 } from "../../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
+import CustomSelect from "../../CustomSelect";
 
 const ShareHolderDynamicList = (props) => {
   // const [alignment, setAlignment] = React.useState("individual");
@@ -36,6 +37,16 @@ const ShareHolderDynamicList = (props) => {
       setOnboardingContactField({
         id,
         value: value.iso_code_2,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateContactFieldOnboarding(props.index));
+  };
+  const handleAddCompanyType = (e, child) => {
+    dispatch(
+      setOnboardingContactField({
+        id: "company_type_uuid",
+        value: child.props.id,
         contactIndex: props.index,
       })
     );
@@ -104,7 +115,7 @@ const ShareHolderDynamicList = (props) => {
               label="Address"
             />
           </Grid>
-          {props.arrLength > 2 && (
+          {props.arrLength > 1 && (
             <Grid item md={1}>
               <IconButton
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}
@@ -123,7 +134,7 @@ const ShareHolderDynamicList = (props) => {
               id="partner_type"
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={2}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -140,7 +151,7 @@ const ShareHolderDynamicList = (props) => {
               label="Company Name"
             />
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={2}>
             <DynamicTextField
               onChange={(e) => {
                 dispatch(
@@ -157,6 +168,16 @@ const ShareHolderDynamicList = (props) => {
               label="Company Number"
             />
           </Grid>
+          <Grid item md={2} xs={12}>
+            <CustomSelect
+              stateData={"company_types"}
+              stateDataMap={"company_typesMap"}
+              id={"company_type_uuid"}
+              contactIndex={props.index}
+              label={"Company Type"}
+              handleChange={handleAddCompanyType}
+            />
+          </Grid>
           <Grid item xs={12} md={3}>
             <CountryAutoComplete
               id="country"
@@ -165,7 +186,7 @@ const ShareHolderDynamicList = (props) => {
               handleChange={handleAddAutoComplete}
             />
           </Grid>
-          {props.arrLength > 2 && (
+          {props.arrLength > 1 && (
             <Grid item md={1}>
               <IconButton
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}
