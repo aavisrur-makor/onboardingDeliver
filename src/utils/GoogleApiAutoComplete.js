@@ -11,6 +11,7 @@ import {
   setCurrentOnboardingFields,
   setOnboardingContactField,
   updateFieldOnboarding,
+  updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
 
 const GoogleApiAutoComplete = (props) => {
@@ -38,6 +39,17 @@ const GoogleApiAutoComplete = (props) => {
     setAddress(value);
     setCoordinates(latlng);
   };
+  const handleSection3Select = async (value) => {
+    console.log("value", value);
+    dispatch(
+      setOnboardingContactField({
+        id: props.id,
+        value,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateSection3Contact(props.index));
+  };
   return (
     <div>
       <PlacesAutocomplete
@@ -54,9 +66,7 @@ const GoogleApiAutoComplete = (props) => {
               )
             : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
         }}
-        onSelect={
-          props.handleSelect ? props.handleSelect(props.index) : handleSelect
-        }
+        onSelect={props.id === "address" ? handleSection3Select : handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (

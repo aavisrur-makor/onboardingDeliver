@@ -14,7 +14,6 @@ const OwnershipAndManagment = () => {
     (state) => state.onboarding.current.company_type_uuid
   );
   const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
-  console.log("COMAPNY TYPE", companyType, companyTypeMap);
   return (
     <Grid container spacing={3}>
       <Grid item>

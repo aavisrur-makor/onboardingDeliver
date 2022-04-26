@@ -30,7 +30,6 @@ export const metaDataSlice = createSlice({
   initialState,
   reducers: {
     setMetaData: (state, action) => {
-      console.log("action", action.payload);
       const {
         company_types,
         countries,
@@ -70,7 +69,6 @@ export const metaDataSlice = createSlice({
         state.regulatorsMap[regulator.uuid] = regulator.name;
       }
       for (const tob of type_of_business) {
-        console.log("TYPE", tob, type_of_business);
         state.TypeOfBusinessMap[tob.uuid] = tob.name;
       }
     },

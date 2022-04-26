@@ -15,6 +15,7 @@ import {
   setOnboardingContactField,
   updateContactFieldOnboarding,
   updateFieldOnboarding,
+  updateSection3Contact,
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
@@ -22,12 +23,12 @@ import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 function DynamicList(props) {
   const dispatch = useDispatch();
   const handleDynamicListChange = (e) => {
-    dispatch(updateContactFieldOnboarding(props.index));
+    console.log("HERE DYNAMIC");
+    dispatch(updateSection3Contact(props.index));
   };
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
 
-  const debounce = useDebouncedCallback(handleDynamicListChange, 400);
   return (
     <>
       <Grid item md={2} xs={12}>
@@ -40,7 +41,7 @@ function DynamicList(props) {
                 contactIndex: props.index,
               })
             );
-            debounce(e);
+            handleDynamicListChange();
           }}
           id="first_name"
           label="First Name"
@@ -57,7 +58,7 @@ function DynamicList(props) {
                 contactIndex: props.index,
               })
             );
-            debounce(e);
+            handleDynamicListChange();
           }}
           id="last_name"
           label="Last Name"

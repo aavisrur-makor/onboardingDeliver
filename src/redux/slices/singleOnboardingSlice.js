@@ -286,11 +286,12 @@ export const updateFieldOnboarding =
   };
 export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
-    if (
-      getState().onboarding.current.contacts[contactIndex].contact_type ===
-      "contact"
-    ) {
-      try {
+    console.log("SENDING TO THE SERVER");
+    try {
+      if (
+        getState().onboarding.current.contacts[contactIndex].contact_type ===
+        "contact"
+      ) {
         let contact = {
           contact: JSON.parse(
             JSON.stringify(getState().onboarding.current.contacts[contactIndex])
@@ -350,63 +351,59 @@ export const updateContactFieldOnboarding =
           //     }
           //   })
         }
-      } catch (err) {
-        console.log(err);
       }
-    } else {
-      try {
-        let contact = {
-          contact: JSON.parse(
-            JSON.stringify(getState().onboarding.current.contacts[contactIndex])
-          ),
-        };
-        if (!contact.contact.uuid) {
-          delete contact.contact.uuid;
-        }
-        if (!contact.contact.position_uuid) {
-          delete contact.contact.position_uuid;
-        }
-        if (!contact.contact.birthday_at) {
-          delete contact.contact.birthday_at;
-        }
-        if (!contact.contact.email) {
-          delete contact.contact.email;
-        }
-        if (!contact.contact.phone) {
-          delete contact.contact.phone;
-        }
-        const response = await axios.put(
-          `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
-            getState().auth.uuid
-          }`,
-          contact
+    } catch (err) {
+      console.log(err);
+    }
+  };
+export const updateSection3Contact =
+  (contactIndex) => async (dispatch, getState) => {
+    let contact = {
+      contact: JSON.parse(
+        JSON.stringify(getState().onboarding.current.contacts[contactIndex])
+      ),
+    };
+    if (!contact.contact.uuid) {
+      delete contact.contact.uuid;
+    }
+    if (!contact.contact.position_uuid) {
+      delete contact.contact.position_uuid;
+    }
+    if (!contact.contact.birthday_at) {
+      delete contact.contact.birthday_at;
+    }
+    if (!contact.contact.email) {
+      delete contact.contact.email;
+    }
+    if (!contact.contact.phone) {
+      delete contact.contact.phone;
+    }
+    const response = await axios.put(
+      `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
+        getState().auth.uuid
+      }`,
+      contact
+    );
+    if (response.status === 200) {
+      dispatch(setAuthField({ id: "progress", value: response.data.progress }));
+      if (response.data.contact_uuid) {
+        dispatch(
+          setOnboardingContactField({
+            id: "uuid",
+            value: response.data.contact_uuid,
+            contactIndex,
+          })
         );
-        if (response.status === 200) {
-          dispatch(
-            setAuthField({ id: "progress", value: response.data.progress })
-          );
-          if (response.data.contact_uuid) {
-            dispatch(
-              setOnboardingContactField({
-                id: "uuid",
-                value: response.data.contact_uuid,
-                contactIndex,
-              })
-            );
-          }
-        }
-
-        //     if (res.status === 200) {
-        //       setAuthState((prev) => ({
-        //         ...authState,
-        //         progress: res.data.progress,
-        //       }));
-        //     }
-        //   })
-      } catch (err) {
-        console.log(err);
       }
     }
+
+    //     if (res.status === 200) {
+    //       setAuthState((prev) => ({
+    //         ...authState,
+    //         progress: res.data.progress,
+    //       }));
+    //     }
+    //   })
   };
 export const getOnboardingData = () => async (dispatch, getState) => {
   try {

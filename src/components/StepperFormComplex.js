@@ -38,6 +38,10 @@ const StepperFormComplex = () => {
   const loadingErrorMessage = useSelector(
     (state) => state.auth.loadingErrorMessage
   );
+  const companyType = useSelector(
+    (state) => state.onboarding.current.company_type_uuid
+  );
+  const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
   const AcceptAndSendAgree = useSelector(
     (state) => state.auth.AcceptAndSendAgree
   );
@@ -111,7 +115,15 @@ const StepperFormComplex = () => {
             activeStep={activeStep}
           >
             {steps.map((label, i) => (
-              <Step key={label} completed={completed[i]}>
+              <Step
+                disabled={
+                  i === 2 &&
+                  (companyTypeMap[companyType] === "Publicly Listed Company" ||
+                    companyTypeMap[companyType] === "State Owned Enterprise")
+                }
+                key={label}
+                completed={completed[i]}
+              >
                 <StepButton
                   className={classes.Label}
                   color="inherit"

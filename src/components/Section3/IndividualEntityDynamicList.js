@@ -13,6 +13,7 @@ import {
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
+  updateSection3Contact,
 } from "../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
@@ -26,7 +27,8 @@ const IndividualEntityDynamicList = (props) => {
   );
 
   const handleDynamicListChange = (e) => {
-    dispatch(updateContactFieldOnboarding(props.index));
+    console.log("HERE INDIVIDUAL");
+    dispatch(updateSection3Contact(props.index));
   };
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
@@ -39,7 +41,7 @@ const IndividualEntityDynamicList = (props) => {
         contactIndex: props.index,
       })
     );
-    dispatch(updateContactFieldOnboarding(props.index));
+    dispatch(updateSection3Contact(props.index));
   };
   const handleAddCompanyType = (e, child) => {
     dispatch(
@@ -49,10 +51,9 @@ const IndividualEntityDynamicList = (props) => {
         contactIndex: props.index,
       })
     );
-    dispatch(updateContactFieldOnboarding(props.index));
+    console.log("BEFORE SENDING TO SERVER");
+    dispatch(updateSection3Contact(props.index));
   };
-  const debounce = useDebouncedCallback(handleDynamicListChange, 400);
-  console.log("arrlength", props.arrLength);
   return (
     <>
       {alignment === "individual" ? (
@@ -75,7 +76,7 @@ const IndividualEntityDynamicList = (props) => {
                     contactIndex: props.index,
                   })
                 );
-                debounce(e);
+                handleDynamicListChange();
               }}
               id="first_name"
               index={props.index}
@@ -92,7 +93,7 @@ const IndividualEntityDynamicList = (props) => {
                     contactIndex: props.index,
                   })
                 );
-                debounce(e);
+                handleDynamicListChange();
               }}
               id="last_name"
               index={props.index}
@@ -100,7 +101,7 @@ const IndividualEntityDynamicList = (props) => {
             />
           </Grid>
           <Grid item md={2} xs={12}>
-            <CustomKeyBoardDatePicker
+          <CustomKeyBoardDatePicker
               id="birthday_at"
               index={props.index}
               label="Date of Birth"
@@ -153,7 +154,7 @@ const IndividualEntityDynamicList = (props) => {
                     contactIndex: props.index,
                   })
                 );
-                debounce(e);
+                handleDynamicListChange();
               }}
               id="company_name"
               index={props.index}
@@ -170,7 +171,7 @@ const IndividualEntityDynamicList = (props) => {
                     contactIndex: props.index,
                   })
                 );
-                debounce(e);
+                handleDynamicListChange();
               }}
               index={props.index}
               id="company_number"

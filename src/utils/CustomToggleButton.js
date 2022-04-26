@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import {
   setOnboardingContactField,
   updateContactFieldOnboarding,
+  updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
 
 const CustomToggleButton = (props) => {
@@ -17,7 +18,7 @@ const CustomToggleButton = (props) => {
         contactIndex: props.index,
       })
     );
-    dispatch(updateContactFieldOnboarding(props.index));
+    dispatch(updateSection3Contact(props.index));
   };
   return (
     <>

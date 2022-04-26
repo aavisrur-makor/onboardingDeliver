@@ -23,7 +23,6 @@ const CustomKeyBoardDatePicker = (props) => {
   const value = useSelector(
     (state) => state.onboarding.current.contacts[props.index][props.id]
   );
-  const debounce = useDebouncedCallback(props.handleDynamicListChange, 400);
 
   return (
     <DatePicker
@@ -44,7 +43,6 @@ const CustomKeyBoardDatePicker = (props) => {
             contactIndex: props.index,
           })
         );
-        debounce();
       }}
       renderInput={(params) => (
         <TextField fullWidth error={false} {...params} />

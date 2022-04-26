@@ -14,6 +14,7 @@ import {
   deleteManagmentContact,
   setOnboardingContactField,
   updateContactFieldOnboarding,
+  updateSection3Contact,
 } from "../../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
@@ -27,7 +28,9 @@ const ShareHolderDynamicList = (props) => {
   );
 
   const handleDynamicListChange = (e) => {
-    dispatch(updateContactFieldOnboarding(props.index));
+    console.log("HERE ShareHolder");
+
+    dispatch(updateSection3Contact(props.index));
   };
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
@@ -40,7 +43,7 @@ const ShareHolderDynamicList = (props) => {
         contactIndex: props.index,
       })
     );
-    dispatch(updateContactFieldOnboarding(props.index));
+    dispatch(updateSection3Contact(props.index));
   };
   const handleAddCompanyType = (e, child) => {
     dispatch(
@@ -50,7 +53,7 @@ const ShareHolderDynamicList = (props) => {
         contactIndex: props.index,
       })
     );
-    dispatch(updateContactFieldOnboarding(props.index));
+    dispatch(updateSection3Contact(props.index));
   };
   const debounce = useDebouncedCallback(handleDynamicListChange, 400);
   return (
@@ -109,7 +112,6 @@ const ShareHolderDynamicList = (props) => {
           </Grid>
           <Grid item xs={12} md={3}>
             <GoogleApiAutoComplete
-              handleSelect={handleDynamicListChange}
               id="address"
               index={props.index}
               label="Address"

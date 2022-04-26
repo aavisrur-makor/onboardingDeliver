@@ -6,7 +6,6 @@ function DynamicTextField(props) {
   const value = useSelector(
     (state) => state.onboarding.current?.contacts[props.index][props.id]
   );
-  console.log("PROPS INDEX", props.index);
   return (
     <TextField
       fullWidth
