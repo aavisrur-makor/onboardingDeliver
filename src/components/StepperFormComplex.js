@@ -41,6 +41,7 @@ const StepperFormComplex = () => {
   const AcceptAndSendAgree = useSelector(
     (state) => state.auth.AcceptAndSendAgree
   );
+  const progress = useSelector((state) => state.auth.progress);
   const [completed, setCompleted] = React.useState({});
   const dispatch = useDispatch();
 
@@ -170,7 +171,7 @@ const StepperFormComplex = () => {
                     onClick={handleAccept}
                     sx={{ mr: 1 }}
                     variant="outlined"
-                    disabled={!AcceptAndSendAgree}
+                    disabled={!AcceptAndSendAgree || progress !== 100}
                   >
                     Accept and Send
                   </StyledButton>

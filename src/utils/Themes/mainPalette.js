@@ -17,7 +17,7 @@ export const mainPaletteColors = {
   //   settlementHeader: "#F9F9F9",
   // },
   secondary: {
-    main: "#e4e4e4",
+    main: "#3E2F72",
     disabled: "#C9C9C9",
     // border: "#CBD6D9",
     borderDisabled: "#eeeeee",
