@@ -9,7 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMetaDataAsync } from "./redux/slices/metaDataSlice";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 const useStyles = makeStyles((theme) => ({
   mainContainer: {
     "& Mui-error": {
@@ -33,7 +34,7 @@ const App = () => {
   }, []);
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Container fixed className={classes.mainContainer} ref={appRef}>
         <Router>
           <Routes>
@@ -46,7 +47,7 @@ const App = () => {
         </Router>
         <FinaleBox />
       </Container>
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 };
 

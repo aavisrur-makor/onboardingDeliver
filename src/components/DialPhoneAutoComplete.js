@@ -61,6 +61,7 @@ const DialPhoneAutoComplete = (props) => {
       id="phone"
       name="phone"
       label={"Dial Code"}
+      variant="outlined"
       options={countries}
       onBlur={props.handleBlur}
       disableClearable
@@ -98,8 +99,10 @@ const DialPhoneAutoComplete = (props) => {
       }}
       renderInput={(params) => (
         <StyledTextFieldCountry
+          required={props.required}
           {...params}
-          placeholder={"Code"}
+          label={props.label}
+          variant="outlined"
           id={"contact_phone"}
           inputProps={{
             ...params.inputProps,
@@ -115,47 +118,47 @@ export default DialPhoneAutoComplete;
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {
-    color: "#6d6d6d",
-    border: "1px solid #B9C6CD",
-    borderRadius: "4px 0 0 4px",
-    opacity: "1",
-    "& .MuiFormControl-root ": {
-      "& .MuiInput-underline:before": {
-        // Semi-transparent underline
-        borderBottomColor: "transparent",
-      },
-      "& .MuiInput-underline:hover:before": {
-        // Solid underline on hover
-        borderBottomColor: "transparent",
-      },
-      "& .MuiInput-underline:after": {
-        // Solid underline on focus
-        // borderBottomColor: theme.palette.input.placeholder // on admins step 3
-        borderBottom: `1px solid transparent}`, // on step 1
-      },
-    },
-    "& .MuiInputLabel-formControl": {
-      top: "50%",
-      transform: "translateY(calc(-65%))",
-    },
+    // color: "#6d6d6d",
+    // border: "1px solid #B9C6CD",
+    // borderRadius: "4px 0 0 4px",
+    // opacity: "1",
+    // "& .MuiFormControl-root ": {
+    //   "& .MuiInput-underline:before": {
+    //     // Semi-transparent underline
+    //     borderBottomColor: "transparent",
+    //   },
+    //   "& .MuiInput-underline:hover:before": {
+    //     // Solid underline on hover
+    //     borderBottomColor: "transparent",
+    //   },
+      // "& .MuiInput-underline:after": {
+      //   // Solid underline on focus
+      //   // borderBottomColor: theme.palette.input.placeholder // on admins step 3
+      //   borderBottom: `1px solid transparent}`, // on step 1
+      // },
+    // },
+    // "& .MuiInputLabel-formControl": {
+    //   top: "50%",
+    //   transform: "translateY(calc(-65%))",
+    // },
     // "& .MuiAutocomplete-input:first-child": {
     //   transform: "translateY(calc(-5%))",
     // },
-    "& .MuiButtonBase-root": {
-      transform: "translateX(-10px)",
-    },
-    "& .MuiTextField-root": {
-      padding: "3px",
-    },
-    [theme.breakpoints.down("md")]: {
-      "& .MuiButtonBase-root": {
-        transform: "translateX(-5px)",
-      },
-      "& .MuiInputLabel-formControl": {
-        top: "50%",
-        transform: "translateY(calc(-20%))",
-      },
-    },
+    // "& .MuiButtonBase-root": {
+    //   transform: "translateX(-10px)",
+    // },
+    // "& .MuiTextField-root": {
+    //   padding: "3px",
+    // },
+    // [theme.breakpoints.down("md")]: {
+    //   "& .MuiButtonBase-root": {
+    //     transform: "translateX(-5px)",
+    //   },
+      // "& .MuiInputLabel-formControl": {
+      //   top: "50%",
+      //   transform: "translateY(calc(-20%))",
+      // },
+    // },
   },
   inputRoot: {
     color: "black",

@@ -2,9 +2,12 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOnboardingContactField } from "../../redux/slices/singleOnboardingSlice";
 import moment from "moment";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
 import { useDebouncedCallback } from "use-debounce/lib";
 import { makeStyles } from "@material-ui/core";
+import TextField from "@mui/material/TextField";
 
 // export const useStyles = makeStyles((theme) => ({
 //   root: {
@@ -23,16 +26,16 @@ const CustomKeyBoardDatePicker = (props) => {
   const debounce = useDebouncedCallback(props.handleDynamicListChange, 400);
 
   return (
-    <KeyboardDatePicker
+    <DatePicker
       id={props.id}
+      disableFuture
+      openTo="year"
       //   className={classes.root}
-      fullWidth
-      disableToolbar
-      index={props.index}
       label={!value ? "Date of Birth" : ""}
+      views={["year", "month", "day"]}
       inputVariant="outlined"
-      format="dd MMMM yyyy"
-      value={value ? value : ""}
+      inputFormat="dd MMMM yyyy"
+      value={value ? value : null}
       onChange={(date, value) => {
         dispatch(
           setOnboardingContactField({
@@ -43,11 +46,9 @@ const CustomKeyBoardDatePicker = (props) => {
         );
         debounce();
       }}
-      error={!moment(value).isValid}
-      helperText={!moment(value).isValid ? "Invalid date" : null}
-      KeyboardButtonProps={{
-        "aria-label": "change date",
-      }}
+      renderInput={(params) => (
+        <TextField fullWidth error={false} {...params} />
+      )}
     />
   );
 };

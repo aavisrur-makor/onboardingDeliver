@@ -99,14 +99,11 @@ export const singleOnboardingSlice = createSlice({
     setCurrentOnboarding: (state, action) => {
       console.log("action", action.payload);
       state.current = action.payload;
-      if (state.current.registered_office_address_gapi === null) {
-        state.current.registered_office_address_gapi = {};
-      }
     },
     setAutoGapiLocation: (state, action) => {
-      console.log("ACTION,PAYLOAD", action.payload);
-      state.current.registered_office_address_gapi = action.payload;
-      state.current.principal_business_address_gapi = action.payload;
+      state.current.registered_office_address_gapi =
+        action.payload.full_address;
+      state.current.country = action.payload.iso_code_2;
     },
     setCurrentOnboardingFiles: (state, action) => {
       state.files = action.payload;
@@ -445,10 +442,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
           })
         );
       }
-      if (
-        !textFields.registered_office_address_gapi ||
-        !textFields.principal_business_address_gapi
-      ) {
+      if (!textFields.registered_office_address_gapi || !textFields.country) {
         var options = {
           enableHighAccuracy: true,
           timeout: 5000,
@@ -509,7 +503,7 @@ export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
     console.log("RESPONES", response.status);
     if (response.status === 200) {
       console.log("STATUS");
-      dispatch(setAutoGapiLocation(response.data.full_address));
+      dispatch(setAutoGapiLocation(response.data));
     }
   } catch (err) {
     console.log("Error1", err);

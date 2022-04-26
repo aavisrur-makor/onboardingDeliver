@@ -63,8 +63,20 @@ const PseudoForm = function (props) {
     );
     dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
   };
-  console.log("PSEUDO FORM");
 
+  const isMandatory = (id) => {
+    switch (id) {
+      case "client_company_legal_name":
+      case "registration_number":
+      case "registered_office_address_gapi":
+      case "country":
+      case "type_of_business_uuid":
+      case "description_of_activity":
+        return true;
+      default:
+        return false;
+    }
+  };
   return (
     <Grid container direction="column" className={classes.root} spacing={3}>
       <Grid item xs={11}>
@@ -80,7 +92,12 @@ const PseudoForm = function (props) {
           {formData.form1.grid1.map(({ label, id, isRequired }) => {
             return (
               <Grid item xs={12} md={6}>
-                <DispatcherField type="text" id={id} label={label} />
+                <DispatcherField
+                  required={isMandatory(id)}
+                  type="text"
+                  id={id}
+                  label={label}
+                />
               </Grid>
             );
           })}
@@ -88,6 +105,7 @@ const PseudoForm = function (props) {
             <CustomSelect
               stateData={"company_types"}
               stateDataMap={"company_typesMap"}
+              required
               id={"company_type_uuid"}
               label={"Company Type"}
               handleChange={handleCompanyTypeChange}
@@ -100,7 +118,11 @@ const PseudoForm = function (props) {
           {formData.form1.grid2.map(({ label, id }) => {
             return (
               <Grid item xs={12} md={6}>
-                <GoogleApiAutoComplete id={id} label={label} />
+                <GoogleApiAutoComplete
+                  required={isMandatory(id)}
+                  id={id}
+                  label={label}
+                />
               </Grid>
             );
           })}
@@ -109,6 +131,7 @@ const PseudoForm = function (props) {
               return (
                 <Grid item xs={12} md={6}>
                   <CountryAutoComplete
+                    required={isMandatory(id)}
                     handleChange={handleAddAutoComplete}
                     label={label}
                     id={"country"}
@@ -119,6 +142,7 @@ const PseudoForm = function (props) {
               return (
                 <Grid item xs={12} md={6}>
                   <CustomSelect
+                    required={isMandatory(id)}
                     handleChange={handleAddField}
                     stateData={"type_of_business"}
                     stateDataMap={"TypeOfBusinessMap"}
@@ -131,6 +155,7 @@ const PseudoForm = function (props) {
               return (
                 <Grid item xs={12}>
                   <DispatcherField
+                    required={isMandatory(id)}
                     rows={id === "description_of_activity" && 6}
                     id={id}
                     label={label}
@@ -142,6 +167,7 @@ const PseudoForm = function (props) {
             return (
               <Grid item xs={12}>
                 <DispatcherField
+                  required={isMandatory(id)}
                   rows={id === "description_of_activity" && 6}
                   id={id}
                   label={label}

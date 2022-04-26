@@ -58,7 +58,7 @@ const MobileStepper = (props) => {
         <CircularProgress
           className={classes.circularMain}
           variant="determinate"
-          value={(props.activeStep + 1) * 33.3}
+          value={(props.activeStep + 1) * 25}
           size="70px"
         />
         <Box

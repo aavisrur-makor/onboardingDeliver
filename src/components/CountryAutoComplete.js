@@ -67,6 +67,7 @@ const CountryAutoComplete = (props) => {
         <StyledTextFieldCountry
           {...params}
           error={!!error}
+          required={props.required}
           helperText={error && "Field is empty."}
           disableOutline
           label={props.label}

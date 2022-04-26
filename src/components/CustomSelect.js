@@ -26,7 +26,10 @@ const CustomSelect = (props) => {
   }
   return (
     <FormControl fullWidth={props.fullWidth ?? true} variant="outlined">
-      <InputLabel id="demo-simple-select-outlined-label">
+      <InputLabel
+        required={props.required}
+        id="demo-simple-select-outlined-label"
+      >
         {props.label}
       </InputLabel>
       {(stateDataMap && stateDataMap[value]) ||

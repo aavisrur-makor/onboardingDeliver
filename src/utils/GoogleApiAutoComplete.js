@@ -54,12 +54,15 @@ const GoogleApiAutoComplete = (props) => {
               )
             : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
         }}
-        onSelect={handleSelect}
+        onSelect={
+          props.handleSelect ? props.handleSelect(props.index) : handleSelect
+        }
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
           return (
             <Box style={{ position: "relative" }}>
               <TextField
+                required={props.required}
                 fullWidth
                 label={props.label}
                 variant="outlined"

@@ -22,7 +22,10 @@ const ContactCustomSelect = (props) => {
 
   return (
     <FormControl fullWidth variant="outlined">
-      <InputLabel id="demo-simple-select-outlined-label">
+      <InputLabel
+        required={props.required}
+        id="demo-simple-select-outlined-label"
+      >
         {props.label}
       </InputLabel>
       {(stateDataMap && stateDataMap[value]) ||
@@ -41,6 +44,7 @@ const ContactCustomSelect = (props) => {
               ? stateDataMap[value]
               : ""
           }
+          required={props.required}
           // defaultValue={stateDataMap ? stateDataMap[value] : value}
           onChange={(e, child) => {
             props.handleChange(e, child, props.index);

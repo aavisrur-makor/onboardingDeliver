@@ -91,11 +91,14 @@ const Contacts = (props) => {
             handleChange={handleContactPositionChange}
             id={"position_uuid"}
             index={props.index}
+            required
           />
         </Grid>
         <Grid item container md={3} justifyContent="center">
           <Grid item xs={6} md={4}>
             <DialPhoneAutoComplete
+              required
+              label={"Code"}
               handleContactDialCodeChange={handleContactDialCodeChange}
               index={props.index}
               id="phone"
@@ -113,6 +116,7 @@ const Contacts = (props) => {
               objectField="number"
               label="Phone Number"
               subIndex={0}
+              required
             />
           </Grid>
         </Grid>
@@ -143,6 +147,7 @@ const Contacts = (props) => {
             id="email"
             label="Email"
             subIndex={0}
+            required
           />
         </Grid>
         {props.arrLength > 1 && (

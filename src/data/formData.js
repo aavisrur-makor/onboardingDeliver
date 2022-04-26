@@ -32,10 +32,6 @@ export default {
         label: "Describe the type of Business & Activity",
       },
     ],
-    grid3: [
-      { id: "directors_names", label: "Director Names" },
-      { id: "shareholder_names", label: "Major Shareholder's Names" },
-    ],
   },
   form2: [
     {
