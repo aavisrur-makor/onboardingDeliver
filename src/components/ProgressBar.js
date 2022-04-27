@@ -8,7 +8,6 @@ const ProgressBar = () => {
   const progress = useSelector((state) => state.auth.progress);
   const classes = useStyles();
 
-  useEffect(() => {}, []);
 
   return (
     <Box className={classes.progressContainer}>

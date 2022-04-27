@@ -1,17 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 
 import validator from "validator";
 import StyledButton from "../components/StyledButton";
-import axios from "axios";
 import { Typography, Snackbar } from "@material-ui/core";
-import AuthContext from "../context/auth";
 import { useStyles } from "../styles/SmallForm";
-import DialPhoneAutoComplete from "./DialPhoneAutoComplete";
-import FormContext from "../context/form";
-import { END_POINT, BASE_URL } from "../constants";
 import { useDispatch } from "react-redux";
 import {
   sendContactAsync,
@@ -20,13 +15,7 @@ import {
 import SmallFormDialngCode from "./SmallForm/SmallFormDialingCode";
 
 const SimpleForm = () => {
-  // const [info, setInfo] = useState({
-  //   company: "",
-  //   name: "",
-  //   email: "",
-  //   phone: "",
-  //   dialCode: "",
-  // });
+  
 
   const [errors, setErrors] = useState({
     company: "",
@@ -133,7 +122,6 @@ const SimpleForm = () => {
               <Grid container style={{ marginTop: "20px" }} spacing={2}>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    // onBlur={handleCh}
                     variant="outlined"
                     fullWidth
                     required
@@ -154,16 +142,13 @@ const SimpleForm = () => {
                 >
                   <Grid item md={6} xs={6}>
                     <TextField
-                      // onBlur={handleCh}
                       variant="outlined"
                       required
                       fullWidth
                       onChange={handleChange}
                       id="first_name"
                       label="First Name"
-                      // multiline
-                      // maxRows={9}
-                      // rows='9'
+                      
                       className={classes.inputFields}
                       error={!!errors.name}
                       helperText={errors.name}
@@ -171,16 +156,13 @@ const SimpleForm = () => {
                   </Grid>
                   <Grid item md={6} xs={6}>
                     <TextField
-                      // onBlur={handleCh}
                       variant="outlined"
                       required
                       fullWidth
                       onChange={handleChange}
                       id="last_name"
                       label="Last Name"
-                      // multiline
-                      // maxRows={9}
-                      // rows='9'
+                     
                       className={classes.inputFields}
                       error={!!errors.name}
                       helperText={errors.name}
@@ -189,7 +171,6 @@ const SimpleForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.gridItemContainer}>
                   <TextField
-                    // onBlur={handleCh}
                     type="email"
                     variant="outlined"
                     required
@@ -209,13 +190,11 @@ const SimpleForm = () => {
                       <SmallFormDialngCode
                         handleChange={handleDialCode}
                         smallForm
-                        // handleBlur={handleCh}
-                        // loggedUserCountry={userCountry}
+                      
                       />
                     </Grid>
                     <Grid item className={classes.dialAutoCompleteNumber}>
                       <TextField
-                        // onBlur={handleCh}
                         variant="outlined"
                         required
                         fullWidth
@@ -231,7 +210,6 @@ const SimpleForm = () => {
                 </Grid>
                 <Grid item xs={12} className={classes.gridItemButtonContainer}>
                   <StyledButton
-                    // type="submit"
                     className={classes.sendButton}
                     type="submit"
                   >
@@ -251,36 +229,6 @@ const SimpleForm = () => {
           key={"snackbarKey"}
           autoHideDuration={5000}
         />
-
-        {/* <Modal className={classes.ModalContainer} open={isLogged}>
-          <Box className={classes.ModalBoxContainer}>
-            <Typography
-              className={classes.modalTextFontTitle}
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-            >
-              Success!
-            </Typography>
-
-            <Typography
-              className={classes.modalTextFont}
-              id="modal-modal-description"
-              sx={{ mt: 2 }}
-            >
-              You can now proceed to the link sent to you the phone number you
-              provided
-            </Typography>
-            <StyledButton
-              onClick={() => {
-                setLogged(false);
-              }}
-              className={classes.modalButton}
-            >
-              Close
-            </StyledButton>
-          </Box>
-        </Modal> */}
       </Grid>
     </Box>
   );

@@ -14,7 +14,6 @@ function TradingFrequency() {
   const dispatch = useDispatch();
   const trades_per = useSelector((state) => state.meta.trades_per);
   const handleFreqChange = (e, child) => {
-    console.log("e.target.id", child);
     dispatch(updateFieldOnboarding({ [e.target.name]: e.target.value }));
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: e.target.value })

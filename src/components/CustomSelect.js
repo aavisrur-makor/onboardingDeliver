@@ -1,6 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React from "react";
 import {
-  Box,
+
   MenuItem,
   FormControl,
   Select,
@@ -11,7 +11,6 @@ import { useSelector } from "react-redux";
 import { useStyles } from "../styles/UiForm";
 import numeral from "numeral";
 
-//!generic select with own state and validation.
 const CustomSelect = (props) => {
   const value = useSelector((state) =>
     props.contactIndex
@@ -21,9 +20,7 @@ const CustomSelect = (props) => {
   const stateData = useSelector((state) => state.meta[props.stateData]);
   const stateDataMap = useSelector((state) => state?.meta[props.stateDataMap]);
   const classes = useStyles();
-  if (props.id === "trades_per") {
-    console.log("CHECKING THE DATA", stateData, stateDataMap, value);
-  }
+
   return (
     <FormControl fullWidth={props.fullWidth ?? true} variant="outlined">
       <InputLabel
@@ -40,7 +37,6 @@ const CustomSelect = (props) => {
           name={props.id}
           id={props.id}
           style={{ textTransform: "capitalize" }}
-          // defaultValue={props.selected}
           value={
             props.selectData
               ? value
@@ -48,15 +44,12 @@ const CustomSelect = (props) => {
               ? stateDataMap[value]
               : ""
           }
-          // defaultValue={stateDataMap ? stateDataMap[value] : value}
           onChange={(e, child) => {
             props.handleChange(e, child);
           }}
-          // error={isFormSubmitted && props.error}
           inputProps={{ id: props.id, readOnly: props.readOnly }}
           variant={props.variant && props.variant}
           label={props.label && props.label}
-          // inputProps={props.readOnly} check if somethin changed
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
@@ -95,11 +88,7 @@ const CustomSelect = (props) => {
               })}
         </Select>
       ) : null}
-      {/* {isFormSubmitted && props.error && (
-          <FormHelperText style={{ color: "#f44336" }}>
-          This field is required
-          </FormHelperText>
-        )} */}
+   
     </FormControl>
   );
 };

@@ -1,6 +1,5 @@
 import React from "react";
 import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
-import DispatcherField from "../DispatcherField";
 import DynamicTextField from "./DynamicTextField";
 import { Grid, IconButton } from "@material-ui/core";
 import RoleSelectBox from "./RoleSelectBox";
@@ -10,9 +9,7 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteContactAsync,
-  deleteManagmentContact,
   setOnboardingContactField,
-  updateContactFieldOnboarding,
   updateSection3Contact,
 } from "../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
@@ -20,19 +17,16 @@ import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../CustomSelect";
 
 const IndividualEntityDynamicList = (props) => {
-  // const [alignment, setAlignment] = React.useState("individual");
   const dispatch = useDispatch();
   const alignment = useSelector(
     (state) => state.onboarding.current.contacts[props.index].partner_type
   );
 
   const handleDynamicListChange = (e) => {
-    console.log("HERE INDIVIDUAL");
     dispatch(updateSection3Contact(props.index));
   };
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
-    console.log("AUTOCOMPLERTE", id, value);
 
     dispatch(
       setOnboardingContactField({
@@ -51,7 +45,6 @@ const IndividualEntityDynamicList = (props) => {
         contactIndex: props.index,
       })
     );
-    console.log("BEFORE SENDING TO SERVER");
     dispatch(updateSection3Contact(props.index));
   };
   return (

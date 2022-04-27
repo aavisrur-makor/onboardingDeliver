@@ -1,9 +1,5 @@
-import { useState, useContext } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { makeStyles, TextField } from "@material-ui/core";
-import FieldContext from "../context/fields";
-import AuthContext from "../context/auth";
-import { BASE_URL, END_POINT } from "../constants";
 import validate from "../utils/validate";
 
 import { useDebouncedCallback } from "use-debounce";
@@ -11,9 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentOnboardingFields,
   updateFieldOnboarding,
-  updateOnBoardingField,
 } from "../redux/slices/singleOnboardingSlice";
-import { setAuthField } from "../redux/slices/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-// {"name":"11 Derech Menachem Begin","location":{"lat":100.123456,"lon":-90.987654}}
 
 const DispatcherField = (props) => {
   const value = useSelector((state) => state.onboarding.current[props.id]);
@@ -88,7 +81,6 @@ const DispatcherField = (props) => {
       fullWidth
       required={props.required}
       onChange={(e) => {
-        console.log("e.target value", e.target.value);
 
         dispatch(
           setCurrentOnboardingFields({ id: props.id, value: e.target.value })

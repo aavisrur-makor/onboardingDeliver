@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, IconButton, Typography } from "@material-ui/core";
 import Contacts from "./Contacts";
@@ -14,7 +14,7 @@ const ContactsForm = () => {
   };
   const dispatch = useDispatch();
 
-  console.log("CONTACT FORM");
+ 
 
   return (
     <>

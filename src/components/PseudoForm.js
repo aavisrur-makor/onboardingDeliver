@@ -1,22 +1,19 @@
-import React, { useEffect, useLayoutEffect, useContext } from "react";
-import { Grid, makeStyles, Typography } from "@material-ui/core";
+import React from "react";
+import { Grid,  Typography } from "@material-ui/core";
 import DispatcherField from "./DispatcherField";
 import formData from "../data/formData";
 import { TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core";
 import CountryAutoComplete from "./CountryAutoComplete";
-import FieldContext from "../context/fields";
 
 import CustomSelect from "./CustomSelect";
 import { useStyles } from "../styles/UiForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addOnboardingContact,
-  removeOnboardingContact,
+ 
   setCurrentOnboardingFields,
   setManagmentList,
-  setOnboardingContactField,
-  updateContactFieldOnboarding,
+
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import GoogleApiAutoComplete from "../utils/GoogleApiAutoComplete";
@@ -34,7 +31,6 @@ const PseudoForm = function (props) {
   const dispatch = useDispatch();
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
-    console.log("AUTOCOMPLERTE", id, value);
 
     dispatch(
       setCurrentOnboardingFields({ id, value: value ? value.iso_code_2 : "" })
@@ -42,7 +38,6 @@ const PseudoForm = function (props) {
     dispatch(updateFieldOnboarding({ [id]: value ? value.iso_code_2 : "" }));
   };
   const handleAddField = (e, child) => {
-    console.log("HANDLEADD", e);
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );
@@ -50,11 +45,7 @@ const PseudoForm = function (props) {
   };
 
   const handleCompanyTypeChange = (e, child) => {
-    console.log(
-      "PROPS OF COMPANYTYPE",
-      companyMinIndividual[child.props.id],
-      companyType
-    );
+    
     dispatch(
       setManagmentList({
         name: child.props.value,

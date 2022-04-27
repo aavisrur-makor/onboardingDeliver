@@ -1,10 +1,7 @@
-import { makeStyles, Box, Button, Typography, Modal } from "@material-ui/core";
-import { useContext } from "react";
+import { Box, Button, Typography, Modal } from "@material-ui/core";
 import { useStyles } from "../styles/FinalePage";
-import AuthContext from "../context/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthField } from "../redux/slices/authSlice";
-import { useNavigate } from "react-router-dom";
 
 const FinaleBox = () => {
   const classes = useStyles();

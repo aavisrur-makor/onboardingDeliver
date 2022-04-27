@@ -2,22 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setOnboardingContactField } from "../../redux/slices/singleOnboardingSlice";
 import moment from "moment";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ReactComponent as CalenderIcon } from "../../assets/icons/calender.svg";
 
-import { useDebouncedCallback } from "use-debounce/lib";
-import { makeStyles } from "@material-ui/core";
 import TextField from "@mui/material/TextField";
-import { IconButton, SvgIcon } from "@mui/material";
+import {  SvgIcon } from "@mui/material";
 import { useStyles } from "../../styles/UiForm";
-// export const useStyles = makeStyles((theme) => ({
-//   root: {
-//     "& .MuiOutlinedInput-notchedOutline": {
-//       borderColor: "red",
-//     },
-//   },
-// }));
+
 
 const CustomKeyBoardDatePicker = (props) => {
   const classes = useStyles();

@@ -1,13 +1,10 @@
 import { Box, Paper, TextField, Typography } from "@material-ui/core";
-import { isObject } from "lodash";
 import { useState } from "react";
 import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng,
+
 } from "react-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  sendGeoLocation,
   setCurrentOnboardingFields,
   setOnboardingContactField,
   updateFieldOnboarding,
@@ -15,11 +12,6 @@ import {
 } from "../redux/slices/singleOnboardingSlice";
 
 const GoogleApiAutoComplete = (props) => {
-  const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null,
-  });
   const dispatch = useDispatch();
   const value = useSelector((state) =>
     props.id === "address"
@@ -27,8 +19,6 @@ const GoogleApiAutoComplete = (props) => {
       : state.onboarding.current[props.id]
   );
   const handleSelect = async (value) => {
-    const results = await geocodeByAddress(value);
-    const latlng = await getLatLng(results[0]);
     let fieldToUpdate = { [props.id]: value };
     if (props.id === "address") {
       props.handleSelect(props.index);
@@ -36,11 +26,8 @@ const GoogleApiAutoComplete = (props) => {
       dispatch(setCurrentOnboardingFields({ id: props.id, value }));
       dispatch(updateFieldOnboarding(fieldToUpdate));
     }
-    setAddress(value);
-    setCoordinates(latlng);
   };
   const handleSection3Select = async (value) => {
-    console.log("value", value);
     dispatch(
       setOnboardingContactField({
         id: props.id,

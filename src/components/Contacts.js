@@ -10,17 +10,13 @@ import { useStyles } from "../styles/UiForm";
 import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 import ContactsDispatcherField from "./ContactsDispatcherField";
 import {
-  addOnboardingContact,
   deleteContactAsync,
-  removeOnboardingContact,
-  setCurrentOnboardingFields,
-  setManagmentList,
+  
   setOnboardingContactField,
   updateContactFieldOnboarding,
-  updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import ContactCustomSelect from "./ContactCustomSelect";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Contacts = (props) => {
   const classes = useStyles();
@@ -72,7 +68,6 @@ const Contacts = (props) => {
     );
     dispatch(updateContactFieldOnboarding(contactIndex));
   };
-  console.log("contactForm father", props.index);
   return (
     <>
       {querySelector && (

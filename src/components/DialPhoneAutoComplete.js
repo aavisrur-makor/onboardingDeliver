@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { TextField, useMediaQuery } from "@material-ui/core";
+import React, {useState } from "react";
+import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-// import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
-import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setFormFields } from "../redux/slices/smallFormSlice";
-import { setOnboardingContactField } from "../redux/slices/singleOnboardingSlice";
 
 const DialPhoneAutoComplete = (props) => {
   const countries = useSelector((state) => state.meta.countries);
@@ -27,29 +23,7 @@ const DialPhoneAutoComplete = (props) => {
   );
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const aysncFunction = async () => {
-  //     if (!dial_code) {
-  //       console.log("INSIDE THE IF IN EFFECT");
-  //       const userDetails = await axios.get("https://geolocation-db.com/json/");
-  //       setCountryDialCodeInput(
-  //         countriesMap[userDetails.data.country_code]?.dialing_code
-  //       );
-  //       dispatch(
-  //         setOnboardingContactField({
-  //           id: "phone",
-  //           value: countriesMap[userDetails.data.country_code]?.dialing_code,
-  //           contactIndex: props.index,
-  //           objectField: "dialing_code",
-  //         })
-  //       );
-  //       setCountryDialCode(countriesMap[userDetails.data.country_code]);
-  //     }
-  //   }
-  //   aysncFunction();
-  // }, [dial_code]);
-
-  console.log("countryDialCode", countryDialCode);
+ 
 
   const handleChange = (e, inputValue) => {
     setCountryDialCode(inputValue);
@@ -86,15 +60,7 @@ const DialPhoneAutoComplete = (props) => {
         dial_code ? dial_code : countryDialCodeInput ? countryDialCodeInput : ""
       }
       onInputChange={(e, inputValue) => {
-        console.log("INPUT VALUE", inputValue);
-        // dispatch(
-        //   setOnboardingContactField({
-        //     id: "phone",
-        //     value: inputValue,
-        //     contactIndex: props.index,
-        //     objectField: "dialing_code",
-        //   })
-        // );
+       
         setCountryDialCodeInput(inputValue);
       }}
       renderInput={(params) => (
@@ -107,7 +73,7 @@ const DialPhoneAutoComplete = (props) => {
           inputProps={{
             ...params.inputProps,
 
-            autoComplete: "new-password", // disable autocomplete and autofill
+            autoComplete: "new-password",
           }}
         />
       )}
@@ -121,47 +87,6 @@ export const StyledAutoComplete = withStyles((theme) => ({
     "& .MuiIconButton-root": {
       color: "#3E2F71",
     },
-    // color: "#6d6d6d",
-    // border: "1px solid #B9C6CD",
-    // borderRadius: "4px 0 0 4px",
-    // opacity: "1",
-    // "& .MuiFormControl-root ": {
-    //   "& .MuiInput-underline:before": {
-    //     // Semi-transparent underline
-    //     borderBottomColor: "transparent",
-    //   },
-    //   "& .MuiInput-underline:hover:before": {
-    //     // Solid underline on hover
-    //     borderBottomColor: "transparent",
-    //   },
-    // "& .MuiInput-underline:after": {
-    //   // Solid underline on focus
-    //   // borderBottomColor: theme.palette.input.placeholder // on admins step 3
-    //   borderBottom: `1px solid transparent}`, // on step 1
-    // },
-    // },
-    // "& .MuiInputLabel-formControl": {
-    //   top: "50%",
-    //   transform: "translateY(calc(-65%))",
-    // },
-    // "& .MuiAutocomplete-input:first-child": {
-    //   transform: "translateY(calc(-5%))",
-    // },
-    // "& .MuiButtonBase-root": {
-    //   transform: "translateX(-10px)",
-    // },
-    // "& .MuiTextField-root": {
-    //   padding: "3px",
-    // },
-    // [theme.breakpoints.down("md")]: {
-    //   "& .MuiButtonBase-root": {
-    //     transform: "translateX(-5px)",
-    //   },
-    // "& .MuiInputLabel-formControl": {
-    //   top: "50%",
-    //   transform: "translateY(calc(-20%))",
-    // },
-    // },
   },
   inputRoot: {
     color: "black",

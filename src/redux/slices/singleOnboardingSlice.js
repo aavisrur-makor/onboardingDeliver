@@ -89,17 +89,14 @@ export const singleOnboardingSlice = createSlice({
   reducers: {
     setCurrentOnboardingFields: (state, action) => {
       const { id, value } = action.payload;
-      console.log("INSIDE THE REDUX FIELDS", id, value);
       if (id === "currency_wallet") {
         const { index, asset } = action.payload;
         state.current.currency_wallet[asset] = value;
       } else {
         state.current[id] = value;
-        //`${road} ${town} ${state} ${country}`;
       }
     },
     setCurrentOnboarding: (state, action) => {
-      console.log("action", action.payload);
       state.current = action.payload;
     },
     setAutoGapiLocation: (state, action) => {
@@ -124,7 +121,6 @@ export const singleOnboardingSlice = createSlice({
     },
     deleteContact: (state, action) => {
       const managmentIndex = action.payload;
-      console.log("MANAGMENT INDEX", managmentIndex);
       if (state.current.contacts.length > 1) {
         state.current.contacts = state.current.contacts.filter(
           (contact, index) => index !== managmentIndex
@@ -132,7 +128,6 @@ export const singleOnboardingSlice = createSlice({
       }
     },
     setManagmentList: (state, action) => {
-      console.log("action.payload", action.payload);
       const { name, minFields } = action.payload;
 
       let countedArray = [];
@@ -173,9 +168,7 @@ export const singleOnboardingSlice = createSlice({
             state.current.contacts.push(partnerContact);
           }
         }
-        // check count in the array
-        // if less than 2, complete to 2 with the function
-        // function contract_add(contact_type) { return { contact_type: contact_type, first_name:'', last_name:'',};}
+       
       } else if (
         name === "Charity" ||
         name === "Trust" ||
@@ -187,10 +180,8 @@ export const singleOnboardingSlice = createSlice({
         shareHolderArray = state.current.contacts.filter(
           (contact) => contact.contact_type === "shareholder"
         );
-        console.log("ShareHolderArray", shareHolderArray.length);
         if (countedArray.length < 1) {
           for (let i = 0; i < minFields - countedArray.length; i++) {
-            console.log("checking the for loop");
             let partnerContact = newContact;
             partnerContact.contact_type = "ownership";
             partnerContact.partner_type = "individual";
@@ -235,11 +226,9 @@ export const singleOnboardingSlice = createSlice({
     },
     setOnboardingContactField: (state, action) => {
       const { id, value, contactIndex, objectField } = action.payload;
-      console.log("FYI", action.payload);
 
       if (id === "phone") {
         if (objectField) {
-          console.log("OBJECT FIELD");
           state.current.contacts[contactIndex].phone[0][objectField] = value;
         }
       } else if (id === "email") {
@@ -297,7 +286,6 @@ export const updateFieldOnboarding =
   };
 export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
-    console.log("SENDING TO THE SERVER");
     try {
       if (
         getState().onboarding.current.contacts[contactIndex].contact_type ===
@@ -354,13 +342,6 @@ export const updateContactFieldOnboarding =
             }
           }
 
-          //     if (res.status === 200) {
-          //       setAuthState((prev) => ({
-          //         ...authState,
-          //         progress: res.data.progress,
-          //       }));
-          //     }
-          //   })
         }
       }
     } catch (err) {
@@ -408,13 +389,7 @@ export const updateSection3Contact =
       }
     }
 
-    //     if (res.status === 200) {
-    //       setAuthState((prev) => ({
-    //         ...authState,
-    //         progress: res.data.progress,
-    //       }));
-    //     }
-    //   })
+    
   };
 export const getOnboardingData = () => async (dispatch, getState) => {
   try {
@@ -423,7 +398,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         getState().auth.uuid
       }`
     );
-    console.log("RES", res.status);
     if (res.status === 200) {
       dispatch(setAuthField({ id: "uuidIsValid", value: true }));
       const textFields = await res.data;
@@ -432,11 +406,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         dispatch(setRolesData(textFields.roles));
       }
       if (textFields.company_type_uuid) {
-        console.log(
-          "COMPANY TYPE UUID",
-          getState().meta.company_typesMap,
-          textFields.company_type_uuid
-        );
+        
 
         dispatch(
           setManagmentList({
@@ -458,12 +428,9 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         };
 
         function success(pos) {
-          console.log("POS", pos);
           var crd = pos.coords;
 
-          console.log("Your current position is:");
-          console.log(`Latitude : ${crd.latitude}`);
-          console.log(`Longitude: ${crd.longitude}`);
+        
           dispatch(
             sendGeoLocation(crd.latitude, crd.longitude, getState().auth.uuid)
           );
@@ -488,7 +455,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
   } catch (err) {
     if (err.response.status === 400) {
       dispatch(setAuthField({ id: "uuidIsValid", value: false }));
-      console.log("ERR", err.response.data);
       dispatch(
         setAuthField({
           id: "loadingErrorMessage",
@@ -500,7 +466,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
   }
 };
 export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
-  console.log("HERE DISPATCHING THE GAPI LOCATION");
   try {
     const response = await axios.get(
       `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
@@ -508,9 +473,7 @@ export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
       }/${getState().auth.uuid}`,
       { params: { lat, lon } }
     );
-    console.log("RESPONES", response.status);
     if (response.status === 200) {
-      console.log("STATUS");
       dispatch(setAutoGapiLocation(response.data));
     }
   } catch (err) {

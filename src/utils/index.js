@@ -72,8 +72,7 @@ const handleEntireSection = (sectionNum, section, classes) => {
               {handleSubSection(sectionNum, key, section[key], classes)}
             </Grid>
           </Grid>
-          // <Typography><Grid>
-          // </Typography>
+          
         );
     }
   });

@@ -1,7 +1,6 @@
 import { Grid, TextField, Typography } from "@material-ui/core";
-import React, { useContext } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import FieldContext from "../../context/fields";
 import {
   setCurrentOnboardingFields,
   updateFieldOnboarding,
@@ -13,7 +12,6 @@ function WalletList() {
   );
   const dispatch = useDispatch();
   const handleWallet = (e, index, asset) => {
-    console.log("wallet value", e.target.id, e.target.value, index);
     dispatch(
       setCurrentOnboardingFields({
         id: e.target.id,

@@ -26,9 +26,7 @@ const useStyles = makeStyles((theme) => ({
   uploaderAttach: {
     [theme.breakpoints.down('sm')]: { transform: 'translateX(-5px) ' },
 
-    // borderTop: '1px solid #D6DFE4',
-    // borderBottom: '1px solid #D6DFE4',
-    // [theme.breakpoints.down('sm')]: { flex: '1 0 0' },
+    
   },
   uploader: {
     [theme.breakpoints.down('sm')]: { rowGap: '.5rem', alignItems: 'start' },
@@ -74,10 +72,7 @@ const UploaderField = (props) => {
           )
           .then((res) => {
             if (res.status === 200) {
-              console.log(
-                '🚀 ~ file: UploaderField.js ~ line 78 ~ .then ~ res',
-                res
-              );
+              
               setAuthState((prev) => ({
                 ...authState,
                 progress: res.data.progress,
@@ -138,12 +133,6 @@ const UploaderField = (props) => {
               <Typography
                 style={{ fontWeight: fileState[props.id] ? 'bold' : '400' }}
               >
-                {console.log(
-                  "FILE STATE",
-                  fileState,
-                  fileState[props.id],
-                  props.id
-                )}
                 {fileState[props.id] ? fileState[props.id] : "Attach File"}
               </Typography>
             </Box>

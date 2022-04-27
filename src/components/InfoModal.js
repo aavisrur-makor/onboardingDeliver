@@ -47,18 +47,14 @@ const InfoModal = (props) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  useEffect(() => {
-    console.log('🚀 ~ file: InfoModal.js ~ line 51 ~ useEffect ~ effect');
-  }, []);
+ 
 
   return (
     <div>
       <IconButton
         style={{ padding: 0, marginLeft: '10px' }}
-        // onMouseEnter={queryMatch ? null : handleClick}
-        // onMouseLeave={queryMatch ? null : handleClose}
+       
         onClick={handleOpen}
-        // className={anchor ? classes.popover : ""} ///////////////CHECK FURTHER
       >
         <InfoSvg />
       </IconButton>

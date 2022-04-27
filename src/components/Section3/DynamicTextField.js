@@ -27,7 +27,6 @@ function DynamicTextField(props) {
   const value = useSelector(
     (state) => state.onboarding.current?.contacts[props.index][props.id]
   );
-  console.log("Value", value, props.index, props.id);
   return (
     <TextField
       required={props.required}

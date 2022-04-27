@@ -1,6 +1,5 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import {
-  Box,
   MenuItem,
   FormControl,
   Select,
@@ -9,9 +8,7 @@ import {
 
 import { useSelector } from "react-redux";
 import { useStyles } from "../styles/UiForm";
-import numeral from "numeral";
 
-//!generic select with own state and validation.
 const ContactCustomSelect = (props) => {
   const value = useSelector(
     (state) => state.onboarding.current.contacts[props.index][props.id]
@@ -36,7 +33,6 @@ const ContactCustomSelect = (props) => {
           name={props.id}
           id={props.id}
           style={{ textTransform: "capitalize" }}
-          // defaultValue={props.selected}
           value={
             props.selectData
               ? value
@@ -45,15 +41,12 @@ const ContactCustomSelect = (props) => {
               : ""
           }
           required={props.required}
-          // defaultValue={stateDataMap ? stateDataMap[value] : value}
           onChange={(e, child) => {
             props.handleChange(e, child, props.index);
           }}
-          // error={isFormSubmitted && props.error}
           inputProps={{ id: props.id, readOnly: props.readOnly }}
           variant={props.variant && props.variant}
           label={props.label && props.label}
-          // inputProps={props.readOnly} check if somethin changed
           MenuProps={{
             anchorOrigin: {
               vertical: "bottom",
@@ -81,11 +74,6 @@ const ContactCustomSelect = (props) => {
             })}
         </Select>
       ) : null}
-      {/* {isFormSubmitted && props.error && (
-          <FormHelperText style={{ color: "#f44336" }}>
-          This field is required
-          </FormHelperText>
-        )} */}
     </FormControl>
   );
 };

@@ -109,21 +109,18 @@ const DynamicInputGroup = () => {
       axios
         .delete(`${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.DOCUMENT}${id}`)
         .then((res) => {
-          ////////TAKE CARE OF DELETING LOCALLY
           setFileState((prev) => ({
             ...prev,
             proof_of_identity_or_address:
               prev.proof_of_identity_or_address.filter((file) => {
-                console.log("THE FILE I WANT TO DELETE ", file);
                 return file.document_uuid !== id;
-              }), ///////////////////////   ~~~~~~~this is where the fix comes!!~~~~~
+              }),
           }));
         })
         .catch((err) => {
           console.log(err);
         });
     } else if (state === "empty") {
-      console.log("Deleteing empty file ");
       setExtraProofs((prev) => [...prev.filter((file) => file.id !== id)]);
     }
   };
@@ -168,7 +165,6 @@ const DynamicInputGroup = () => {
                 }));
                 setExtraProofs((prev) => [...prev.filter(() => id !== id)]);
               } else if (state === "occupied") {
-                console.log("RES INSIDE ELSE ", res);
                 setFileState((prev) => ({
                   ...prev,
                   proof_of_identity_or_address: [
@@ -200,13 +196,7 @@ const DynamicInputGroup = () => {
     <Grid container xs={12} md={11} className={classes.dynamicContainer}>
       {[...proof_of_identity_or_address, ...extraProofs].map(
         (supposedFile, i) => {
-          console.log("SUPPOSEDfILE", supposedFile);
-          // console.log(
-          //   "🚀 ~ file: DynamicInputGroup.js ~ line 201 ~ DynamicInputGroup ~ supposedFile",
-          //   supposedFile
-          // );
-          // const id =
-          //   typeof supposedFile === "string" ? supposedFile : supposedFile.id;
+       
 
           const showTrash = extraProofs.length > 1 || i > 0;
 

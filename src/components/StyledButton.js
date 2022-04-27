@@ -3,7 +3,6 @@ import { withStyles } from "@material-ui/styles";
 
 export default withStyles((theme) => ({
   root: {
-    // boxSizing: "border-box",
     padding: ".15rem 1.5rem",
     borderRadius: "0",
     backgroundSize: "100% 205%",

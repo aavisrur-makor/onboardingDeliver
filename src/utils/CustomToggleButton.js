@@ -4,7 +4,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import {
   setOnboardingContactField,
-  updateContactFieldOnboarding,
   updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
 import { useStyles } from "../styles/UiForm";
@@ -12,7 +11,6 @@ const CustomToggleButton = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleAlignment = (event, newAlignment) => {
-    console.log("alignment", props.value, newAlignment);
     if (newAlignment) {
       dispatch(
         setOnboardingContactField({

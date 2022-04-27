@@ -1,19 +1,16 @@
 import React from "react";
 import GoogleApiAutoComplete from "../../../utils/GoogleApiAutoComplete";
-import DispatcherField from "../../DispatcherField";
 import DynamicTextField from "../DynamicTextField";
 import { Grid, IconButton } from "@material-ui/core";
-import RoleSelectBox from "../RoleSelectBox";
 import CountryAutoComplete from "../../CountryAutoComplete";
 import CustomToggleButton from "../../../utils/CustomToggleButton";
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trashIcon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteContact,
   deleteContactAsync,
-  deleteManagmentContact,
+
   setOnboardingContactField,
-  updateContactFieldOnboarding,
+ 
   updateSection3Contact,
 } from "../../../redux/slices/singleOnboardingSlice";
 import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
@@ -23,20 +20,17 @@ import { useStyles } from "../../../styles/UiForm";
 import { Typography } from "@mui/material";
 
 const ShareHolderDynamicList = (props) => {
-  // const [alignment, setAlignment] = React.useState("individual");
   const dispatch = useDispatch();
   const alignment = useSelector(
     (state) => state.onboarding.current.contacts[props.index].partner_type
   );
   const classes = useStyles();
   const handleDynamicListChange = (e) => {
-    console.log("HERE ShareHolder");
 
     dispatch(updateSection3Contact(props.index));
   };
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
-    console.log("AUTOCOMPLERTE", id, value);
 
     dispatch(
       setOnboardingContactField({

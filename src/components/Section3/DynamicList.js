@@ -1,20 +1,16 @@
 import React from "react";
 import GoogleApiAutoComplete from "../../utils/GoogleApiAutoComplete";
-import DispatcherField from "../DispatcherField";
 import DynamicTextField from "./DynamicTextField";
 import { Grid, IconButton, useMediaQuery, useTheme } from "@material-ui/core";
 import RoleSelectBox from "./RoleSelectBox";
 import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 
-import CustomToggleButton from "../../utils/CustomToggleButton";
 import { useDispatch } from "react-redux";
 import {
-  deleteContact,
+  
   deleteContactAsync,
-  deleteManagmentContact,
   setOnboardingContactField,
-  updateContactFieldOnboarding,
-  updateFieldOnboarding,
+  
   updateSection3Contact,
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDebouncedCallback } from "use-debounce/lib";
@@ -23,7 +19,6 @@ import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 function DynamicList(props) {
   const dispatch = useDispatch();
   const handleDynamicListChange = (e) => {
-    console.log("HERE DYNAMIC");
     dispatch(updateSection3Contact(props.index));
   };
   const theme = useTheme();

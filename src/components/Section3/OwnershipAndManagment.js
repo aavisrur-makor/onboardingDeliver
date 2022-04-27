@@ -1,7 +1,6 @@
-import { Grid, Typography, IconButton } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
-import DynamicList from "./DynamicList";
 import { useStyles } from "../../styles/UiForm";
 import DirectorsTrusteeList from "./DirectorsTrusteeList";
 import IndividualEntityList from "./IndividualEntityList";

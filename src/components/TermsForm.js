@@ -121,7 +121,6 @@ const TermsForm = (props) => {
           sx={{ color: "white" }}
           control={
             <Checkbox
-              // defaultChecked={false}
               onClick={toggleAgree}
               icon={<CheckBoxOutlineBlankSharpIcon />}
               checked={AcceptAndSendAgree}

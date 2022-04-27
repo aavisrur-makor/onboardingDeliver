@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 // import countries from "../data/countries";
 import { withStyles } from "@material-ui/core";
-import axios from "axios";
-import AuthContext from "../context/auth";
-import FieldContext from "../context/fields";
 import validate from "../utils/validate";
-import { BASE_URL, END_POINT } from "../constants";
 import { useSelector } from "react-redux";
 
 const CountryAutoComplete = (props) => {
@@ -27,26 +23,9 @@ const CountryAutoComplete = (props) => {
     setCountryStateInput(countriesMap[country]?.name);
   }, [countriesMap, country]);
 
-  // const handleChange = (e, value) => {
-  //   setCountryState(e);
-  //   if (e) {
-  //     const fieldToUpdate = {
-  //       country: e.iso_code_2,
-  //     };
-  //     axios
-  //       .put(
-  //         `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${uuid}`,
-  //         fieldToUpdate
-  //       )
-  //       .then((res) => {})
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // };
+  
 
   const handleInputChange = (e, inputValue) => {
-    console.log("INPUT COUNTRY", inputValue);
     setCountryStateInput(inputValue);
 
     validate(null, inputValue, setError);
@@ -54,7 +33,6 @@ const CountryAutoComplete = (props) => {
   return (
     <StyledAutoComplete
       id={props.id}
-      // autoComplete="off"
       fullWidth
       value={countryState}
       options={countries}

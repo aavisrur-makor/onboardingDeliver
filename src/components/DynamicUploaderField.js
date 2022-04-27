@@ -6,12 +6,10 @@ import {
   Input,
   useMediaQuery,
 } from "@material-ui/core";
-import { useEffect, useState, memo } from "react";
+import {  memo } from "react";
 import { useStyles } from "../styles/UiForm";
-import UploaderField from "./UploaderField";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
 import CheckIcon from "@material-ui/icons/Check";
-import axios from "axios";
 import { useContext } from "react";
 import FileContext from "../context/files";
 import AuthContext from "../context/auth";
@@ -23,57 +21,14 @@ import InfoModal from "./InfoModal";
 
 const DynamicUploaderField = memo((props) => {
   const classes = useStyles();
-  const { fileState, setFileState } = useContext(FileContext);
-  const { authState, setAuthState } = useContext(AuthContext);
   const queryMatch = useMediaQuery("(max-width:600px)");
 
-  const { f_proofs, extraProofs } = fileState;
-
-  // const handleChange = async ({ target }) => {
-  //   if (target.files[0]) {
-  //     const formData = new FormData();
-  //     formData.append("field", "proof_of_identity_or_address");
-  //     formData.append("file", target.files[0]);
-
-  //     const fileType = target.files[0].type;
-
-  //     if (
-  //       fileType.includes("image") ||
-  //       fileType.includes("text") ||
-  //       fileType.includes("pdf")
-  //     ) {
-  //       await axios
-  //         .post(
-  //           `http://${BASE_URL}/document/${authState.uuid}`,
-  //           formData
-  //         )
-  //         .then((res) => {
-  //           if (res.status === 200) {
-  //             console.log(res);
-  //             setAuthState((prev) => ({
-  //               ...authState,
-  //               progress: res.data.progress,
-  //             }));
-
-  //             setFileState({
-  //               ...fileState,
-  //               [res.data.uuid]: target.files[0].name,
-  //             });
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.log(error);
-  //         });
-  //     }
-  //   }
-  // };
 
   return (
     <Grid
       container
       className={classes.dynamicUploaderContainer}
       spacing={!queryMatch ? 1 : 0}
-      // alignItems="center"
     >
       <Grid item className={classes.dynamicFieldProofContainer}>
         <Grid container>

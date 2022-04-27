@@ -5,7 +5,6 @@ import { ReactComponent as AddIcon } from "../../../assets/icons/Group46.svg";
 import { useStyles } from "../../../styles/UiForm";
 import { useDispatch } from "react-redux";
 import {
-  addManagmentContant,
   addOnboardingContact,
 } from "../../../redux/slices/singleOnboardingSlice";
 import ShareHolderDynamicList from "./ShareHolderDynamicList";

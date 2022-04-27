@@ -37,7 +37,6 @@ export const authSlice = createSlice({
 });
 export const updateTermsAsync = (id, data) => async (dispatch, getState) => {
   try {
-    console.log("INSIDE HERE", data);
     const response = axios.put(
       `${BASE_URL}${END_POINT.EXTERNAL}${END_POINT.ONBOARDING}${
         getState().auth.uuid

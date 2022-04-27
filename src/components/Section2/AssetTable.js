@@ -7,11 +7,9 @@ import {
   useTheme,
 } from "@material-ui/core";
 import React, { useContext } from "react";
-import { checkBoxArray } from "../../data/termsFromSite";
-import FieldContext from "../../context/fields";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setCurrentOnboardingFields,
   setOnboardingAssets,
   updateFieldOnboarding,
 } from "../../redux/slices/singleOnboardingSlice";

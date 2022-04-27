@@ -11,7 +11,6 @@ function TradingVolume() {
   const dispatch = useDispatch();
   const trading_volume = useSelector((state) => state.meta.trading_volume);
   const handleFreqChange = (e, child) => {
-    console.log("e.target.id", child);
 
     dispatch(updateFieldOnboarding({ [e.target.name]: e.target.value }));
     dispatch(

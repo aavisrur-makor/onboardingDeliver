@@ -1,13 +1,11 @@
 import { Grid, Typography, IconButton } from "@material-ui/core";
 import React from "react";
-import ToggleButton from "../../utils/CustomToggleButton";
 import IndividualEntityDynamicList from "./IndividualEntityDynamicList";
 import { useSelector } from "react-redux";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
 import { useStyles } from "../../styles/UiForm";
 import { useDispatch } from "react-redux";
 import {
-  addManagmentContant,
   addOnboardingContact,
 } from "../../redux/slices/singleOnboardingSlice";
 
@@ -26,7 +24,6 @@ const IndividualEntityList = () => {
           <Grid
             item
             container
-            // justifyContent="center"
             alignItems="center"
             style={{ marginBottom: "3rem" }}
             spacing={2}

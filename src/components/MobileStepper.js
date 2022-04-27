@@ -31,11 +31,7 @@ const useStyles = makeStyles((theme) => ({
   mobilePageLabel: { fontWeight: 500 },
   nextPageLabel: {
     fontWeight: 300,
-    // '&.customPatch': {
-    //   [theme.breakpoints.down('sm')]: {
-    //     visibility: 'hidden',
-    //   },
-    // },
+  
   },
 }));
 
@@ -101,19 +97,3 @@ const MobileStepper = (props) => {
 
 export default MobileStepper;
 
-// export default function CircularStatic() {
-//   const [progress, setProgress] = React.useState(10);
-
-//   React.useEffect(() => {
-//     const timer = setInterval(() => {
-//       setProgress((prevProgress) =>
-//         prevProgress >= 100 ? 0 : prevProgress + 10
-//       );
-//     }, 800);
-//     return () => {
-//       clearInterval(timer);
-//     };
-//   }, []);
-
-//   return <CircularProgressWithLabel value={progress} />;
-// }

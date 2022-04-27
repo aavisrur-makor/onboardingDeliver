@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.error.main,
     },
     padding: "0",
-    // [theme.breakpoints.down("md")]: { padding: "1rem" },
   },
 }));
 

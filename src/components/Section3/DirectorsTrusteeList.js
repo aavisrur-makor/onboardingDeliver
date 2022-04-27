@@ -5,12 +5,11 @@ import { useStyles } from "../../styles/UiForm";
 import DynamicList from "./DynamicList";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
 import {
-  addManagmentContant,
   addOnboardingContact,
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDispatch } from "react-redux";
 
-const DirectorsTrusteeList = (props) => {
+const DirectorsTrusteeList = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 

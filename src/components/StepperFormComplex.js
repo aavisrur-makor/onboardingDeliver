@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, updateTermsAsync } from "../redux/slices/authSlice";
 import { getOnboardingData } from "../redux/slices/singleOnboardingSlice";
 import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
-import { getMetaDataAsync } from "../redux/slices/metaDataSlice";
 
 const steps = [
   "Company Info",
