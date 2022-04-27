@@ -15,7 +15,7 @@ const RoleSelectBox = (props) => {
 
   return (
     <FormControl variant="outlined" fullWidth>
-      <InputLabel>Roles</InputLabel>
+      <InputLabel required={props.required}>Roles</InputLabel>
       <Select
         label="Roles"
         onChange={(e, child) => {

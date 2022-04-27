@@ -89,6 +89,7 @@ const DispatcherField = (props) => {
       required={props.required}
       onChange={(e) => {
         console.log("e.target value", e.target.value);
+
         dispatch(
           setCurrentOnboardingFields({ id: props.id, value: e.target.value })
         );

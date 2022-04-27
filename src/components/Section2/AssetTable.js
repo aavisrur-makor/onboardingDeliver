@@ -66,12 +66,12 @@ function AssetTable() {
           </Grid>
         );
       })}
-      <Grid item>
+      {/* <Grid item>
         <FormControlLabel
           control={<Checkbox checked={false} />}
           label={"Other"}
         />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }

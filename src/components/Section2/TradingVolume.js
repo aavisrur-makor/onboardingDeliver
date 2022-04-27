@@ -21,7 +21,7 @@ function TradingVolume() {
   return (
     <Grid container alignItems="center">
       <Grid item xs={12} md={3}>
-        <Typography>Trading Volume</Typography>
+        <Typography>Trading Volume *</Typography>
       </Grid>
       <Grid item xs={12} md={4}>
         <Grid container alignItems="center">
@@ -30,6 +30,7 @@ function TradingVolume() {
           </Grid>
           <Grid item xs={12} md={8}>
             <CustomSelect
+              required
               label="Select Amount"
               id={"trading_volume"}
               selectData={trading_volume}

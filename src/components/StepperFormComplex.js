@@ -119,7 +119,8 @@ const StepperFormComplex = () => {
                 disabled={
                   i === 2 &&
                   (companyTypeMap[companyType] === "Publicly Listed Company" ||
-                    companyTypeMap[companyType] === "State Owned Enterprise")
+                    companyTypeMap[companyType] === "State Owned Enterprise" ||
+                    !companyTypeMap[companyType])
                 }
                 key={label}
                 completed={completed[i]}

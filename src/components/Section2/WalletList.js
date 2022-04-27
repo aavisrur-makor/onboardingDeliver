@@ -35,6 +35,7 @@ function WalletList() {
         return (
           <Grid item md={12} xs={12}>
             <TextField
+              required
               variant="outlined"
               id={"currency_wallet"}
               value={value || ""}

@@ -12,19 +12,22 @@ const CustomToggleButton = (props) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleAlignment = (event, newAlignment) => {
-    dispatch(
-      setOnboardingContactField({
-        id: props.id,
-        value: newAlignment,
-        contactIndex: props.index,
-      })
-    );
-    dispatch(updateSection3Contact(props.index));
+    console.log("alignment", props.value, newAlignment);
+    if (newAlignment) {
+      dispatch(
+        setOnboardingContactField({
+          id: props.id,
+          value: newAlignment,
+          contactIndex: props.index,
+        })
+      );
+      dispatch(updateSection3Contact(props.index));
+    }
   };
   return (
     <>
       <ToggleButtonGroup
-      className={classes.toggleButtonColor}
+        className={classes.toggleButtonColor}
         value={props.value}
         exclusive
         onChange={handleAlignment}

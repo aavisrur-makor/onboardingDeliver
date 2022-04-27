@@ -70,6 +70,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={5} xs={12}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -87,6 +88,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={5} xs={12}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -106,6 +108,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item container md={12} spacing={3}>
               <Grid item md={4} xs={12}>
                 <CustomKeyBoardDatePicker
+                  required
                   id="birthday_at"
                   index={props.index}
                   label="Date of Birth"
@@ -114,6 +117,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={4} xs={12}>
                 <GoogleApiAutoComplete
+                  required
                   handleSelect={handleDynamicListChange}
                   id="address"
                   index={props.index}
@@ -122,6 +126,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={4} xs={12}>
                 <RoleSelectBox
+                  required
                   handleSelect={handleDynamicListChange}
                   index={props.index}
                   id={"position_uuid"}
@@ -155,6 +160,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={5} xs={12}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -172,6 +178,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={5} xs={12}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -191,6 +198,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item container md={12} spacing={3}>
               <Grid item md={6} xs={12}>
                 <CustomSelect
+                  required
                   stateData={"company_types"}
                   stateDataMap={"company_typesMap"}
                   id={"company_type_uuid"}
@@ -201,6 +209,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
               <Grid item md={6} xs={12}>
                 <CountryAutoComplete
+                  required
                   id="country"
                   index={props.index}
                   label="Country of incorporation"

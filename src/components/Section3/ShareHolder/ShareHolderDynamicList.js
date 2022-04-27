@@ -20,6 +20,7 @@ import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../../CustomSelect";
 import { useStyles } from "../../../styles/UiForm";
+import { Typography } from "@mui/material";
 
 const ShareHolderDynamicList = (props) => {
   // const [alignment, setAlignment] = React.useState("individual");
@@ -73,6 +74,7 @@ const ShareHolderDynamicList = (props) => {
               </Grid>
               <Grid item xs={12} md={5}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -90,6 +92,7 @@ const ShareHolderDynamicList = (props) => {
               </Grid>
               <Grid item xs={12} md={5}>
                 <DynamicTextField
+                  required
                   onChange={(e) => {
                     dispatch(
                       setOnboardingContactField({
@@ -109,18 +112,45 @@ const ShareHolderDynamicList = (props) => {
             <Grid item container md={12} spacing={3}>
               <Grid item xs={12} md={4}>
                 <CustomKeyBoardDatePicker
+                  required
                   id="birthday_at"
                   index={props.index}
                   label="Date of Birth"
                   handleDynamicListChange={handleDynamicListChange}
                 />
               </Grid>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} md={4}>
                 <GoogleApiAutoComplete
+                  required
                   id="address"
                   index={props.index}
                   label="Address"
                 />
+              </Grid>
+              <Grid item alignItems="center" xs={4} container>
+                <Grid item xs={11}>
+                  <DynamicTextField
+                    required
+                    onChange={(e) => {
+                      // console.log("INSIDE PRECENTAGE");
+                      dispatch(
+                        setOnboardingContactField({
+                          id: e.target.id,
+                          value: +e.target.value,
+                          contactIndex: props.index,
+                        })
+                      );
+                      debounce(e);
+                    }}
+                    type="number"
+                    label={"Percentage Ownership"}
+                    id="percentage_ownership"
+                    index={props.index}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography style={{ textAlign: "center" }}>%</Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
@@ -166,6 +196,7 @@ const ShareHolderDynamicList = (props) => {
               <Grid item xs={12} md={5}>
                 <DynamicTextField
                   onChange={(e) => {
+                    console.log(typeof e.target.value);
                     dispatch(
                       setOnboardingContactField({
                         id: e.target.id,
@@ -182,7 +213,7 @@ const ShareHolderDynamicList = (props) => {
               </Grid>
             </Grid>
             <Grid item container md={12} spacing={3}>
-              <Grid item md={6} xs={12}>
+              <Grid item md={4} xs={12}>
                 <CustomSelect
                   stateData={"company_types"}
                   stateDataMap={"company_typesMap"}
@@ -192,13 +223,37 @@ const ShareHolderDynamicList = (props) => {
                   handleChange={handleAddCompanyType}
                 />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={4}>
                 <CountryAutoComplete
                   id="country"
                   index={props.index}
                   label="Country of incorporation"
                   handleChange={handleAddAutoComplete}
                 />
+              </Grid>
+              <Grid item alignItems="center" xs={4} container>
+                <Grid item xs={11}>
+                  <DynamicTextField
+                    onChange={(e) => {
+                      // console.log("INSIDE PRECENTAGE");
+                      dispatch(
+                        setOnboardingContactField({
+                          id: e.target.id,
+                          value: +e.target.value,
+                          contactIndex: props.index,
+                        })
+                      );
+                      debounce(e);
+                    }}
+                    type="number"
+                    label={"Percentage Ownership"}
+                    id="percentage_ownership"
+                    index={props.index}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Typography style={{ textAlign: "center" }}>%</Typography>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

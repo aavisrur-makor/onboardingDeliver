@@ -57,6 +57,7 @@ const CustomKeyBoardDatePicker = (props) => {
       onChange={(date, value) => {}}
       renderInput={(params) => (
         <TextField
+          required={props.required}
           className={classes.calenderIcon}
           fullWidth
           error={false}

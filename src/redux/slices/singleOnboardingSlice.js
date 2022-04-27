@@ -40,6 +40,7 @@ const initialState = {
         company_number: null,
         contact_type: "contact",
         uuid: null,
+        percentage_ownership: null,
         country: null,
       },
     ],
@@ -79,6 +80,7 @@ const newContact = {
   uuid: null,
   country: null,
   company_type_uuid: null,
+  percentage_ownership: null,
 };
 
 export const singleOnboardingSlice = createSlice({
@@ -275,6 +277,15 @@ export const updateFieldOnboarding =
         dispatch(
           setAuthField({ id: "progress", value: response.data.progress })
         );
+        if (response.data.risk_category) {
+          dispatch(
+            setCurrentOnboardingFields({
+              id: "risk_category",
+              value: response.data.risk_category,
+            })
+          );
+        }
+
         if (response.data.roles) {
           console.log("response.data", response.data);
           dispatch(setRolesData(response.data.roles));
