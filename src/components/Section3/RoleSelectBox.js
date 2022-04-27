@@ -17,6 +17,7 @@ const RoleSelectBox = (props) => {
     <FormControl variant="outlined" fullWidth>
       <InputLabel>Roles</InputLabel>
       <Select
+        label="Roles"
         onChange={(e, child) => {
           dispatch(
             setOnboardingContactField({

@@ -22,8 +22,8 @@ const ShareHolderList = () => {
   };
 
   return (
-    <Grid container spacing={2}>
-      <Grid item>
+    <>
+      <Grid item xs={12} container style={{ marginBottom: "2rem" }}>
         <Typography>{`Name of shareholders/beneficial owners over ${
           riskCategory === "medium" ? "25%" : "10%"
         }`}</Typography>
@@ -33,10 +33,12 @@ const ShareHolderList = () => {
           <Grid
             item
             container
-            justifyContent="center"
+            // justifyContent="center"
             alignItems="center"
-            spacing={2}
+            style={{ marginBottom: "3rem" }}
+            spacing={3}
             xs={12}
+            md={12}
           >
             <ShareHolderDynamicList
               arrLength={
@@ -68,7 +70,7 @@ const ShareHolderList = () => {
           </Typography>
         </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

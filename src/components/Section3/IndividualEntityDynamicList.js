@@ -58,76 +58,83 @@ const IndividualEntityDynamicList = (props) => {
     <>
       {alignment === "individual" ? (
         <>
-          <Grid item md={2} xs={12}>
-            <CustomToggleButton
-              id="partner_type"
-              // setAlignment={setAlignment}
-              value={alignment}
-              index={props.index}
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <DynamicTextField
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
-              id="first_name"
-              index={props.index}
-              label="First Name"
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <DynamicTextField
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
-              id="last_name"
-              index={props.index}
-              label="Last Name"
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-          <CustomKeyBoardDatePicker
-              id="birthday_at"
-              index={props.index}
-              label="Date of Birth"
-              handleDynamicListChange={handleDynamicListChange}
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <GoogleApiAutoComplete
-              handleSelect={handleDynamicListChange}
-              id="address"
-              index={props.index}
-              label="Address"
-            />
-          </Grid>
-          <Grid item md={1} xs={12}>
-            <RoleSelectBox
-              handleSelect={handleDynamicListChange}
-              index={props.index}
-              id={"position_uuid"}
-              label="Role"
-              data="roles"
-            />
+          <Grid item container xs={11} spacing={3}>
+            <Grid item container md={12} spacing={3}>
+              <Grid item md={2} xs={12}>
+                <CustomToggleButton
+                  id="partner_type"
+                  // setAlignment={setAlignment}
+                  value={alignment}
+                  index={props.index}
+                />
+              </Grid>
+              <Grid item md={5} xs={12}>
+                <DynamicTextField
+                  onChange={(e) => {
+                    dispatch(
+                      setOnboardingContactField({
+                        id: e.target.id,
+                        value: e.target.value,
+                        contactIndex: props.index,
+                      })
+                    );
+                    handleDynamicListChange();
+                  }}
+                  id="first_name"
+                  index={props.index}
+                  label="First Name"
+                />
+              </Grid>
+              <Grid item md={5} xs={12}>
+                <DynamicTextField
+                  onChange={(e) => {
+                    dispatch(
+                      setOnboardingContactField({
+                        id: e.target.id,
+                        value: e.target.value,
+                        contactIndex: props.index,
+                      })
+                    );
+                    handleDynamicListChange();
+                  }}
+                  id="last_name"
+                  index={props.index}
+                  label="Last Name"
+                />
+              </Grid>
+            </Grid>
+            <Grid item container md={12} spacing={3}>
+              <Grid item md={4} xs={12}>
+                <CustomKeyBoardDatePicker
+                  id="birthday_at"
+                  index={props.index}
+                  label="Date of Birth"
+                  handleDynamicListChange={handleDynamicListChange}
+                />
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <GoogleApiAutoComplete
+                  handleSelect={handleDynamicListChange}
+                  id="address"
+                  index={props.index}
+                  label="Address"
+                />
+              </Grid>
+              <Grid item md={4} xs={12}>
+                <RoleSelectBox
+                  handleSelect={handleDynamicListChange}
+                  index={props.index}
+                  id={"position_uuid"}
+                  label="Role"
+                  data="roles"
+                />
+              </Grid>
+            </Grid>
           </Grid>
           {props.arrLength > 2 && (
             <Grid item md={1}>
               <IconButton
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}
               >
                 {<TrashIcon />}
@@ -137,68 +144,75 @@ const IndividualEntityDynamicList = (props) => {
         </>
       ) : (
         <>
-          <Grid item md={2} xs={12}>
-            <CustomToggleButton
-              value={alignment}
-              index={props.index}
-              id="partner_type"
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <DynamicTextField
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
-              id="company_name"
-              index={props.index}
-              label="Company Name"
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <DynamicTextField
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
-              index={props.index}
-              id="company_number"
-              label="Company Number"
-            />
-          </Grid>
-          <Grid item md={2} xs={12}>
-            <CustomSelect
-              stateData={"company_types"}
-              stateDataMap={"company_typesMap"}
-              id={"company_type_uuid"}
-              contactIndex={props.index}
-              label={"Company Type"}
-              handleChange={handleAddCompanyType}
-            />
-          </Grid>
-          <Grid item md={3} xs={12}>
-            <CountryAutoComplete
-              id="country"
-              index={props.index}
-              label="Country of incorporation"
-              handleChange={handleAddAutoComplete}
-            />
+          <Grid item container md={11} spacing={3}>
+            <Grid item container md={12} spacing={3}>
+              <Grid item md={2} xs={12}>
+                <CustomToggleButton
+                  value={alignment}
+                  index={props.index}
+                  id="partner_type"
+                />
+              </Grid>
+              <Grid item md={5} xs={12}>
+                <DynamicTextField
+                  onChange={(e) => {
+                    dispatch(
+                      setOnboardingContactField({
+                        id: e.target.id,
+                        value: e.target.value,
+                        contactIndex: props.index,
+                      })
+                    );
+                    handleDynamicListChange();
+                  }}
+                  id="company_name"
+                  index={props.index}
+                  label="Company Name"
+                />
+              </Grid>
+              <Grid item md={5} xs={12}>
+                <DynamicTextField
+                  onChange={(e) => {
+                    dispatch(
+                      setOnboardingContactField({
+                        id: e.target.id,
+                        value: e.target.value,
+                        contactIndex: props.index,
+                      })
+                    );
+                    handleDynamicListChange();
+                  }}
+                  index={props.index}
+                  id="company_number"
+                  label="Company Number"
+                />
+              </Grid>
+            </Grid>
+            <Grid item container md={12} spacing={3}>
+              <Grid item md={6} xs={12}>
+                <CustomSelect
+                  stateData={"company_types"}
+                  stateDataMap={"company_typesMap"}
+                  id={"company_type_uuid"}
+                  contactIndex={props.index}
+                  label={"Company Type"}
+                  handleChange={handleAddCompanyType}
+                />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <CountryAutoComplete
+                  id="country"
+                  index={props.index}
+                  label="Country of incorporation"
+                  handleChange={handleAddAutoComplete}
+                />
+              </Grid>
+            </Grid>
           </Grid>
           {props.arrLength > 2 && (
             <Grid item md={1}>
               <IconButton
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
                 onClick={(e) => dispatch(deleteContactAsync(props.index))}
               >
                 {<TrashIcon />}

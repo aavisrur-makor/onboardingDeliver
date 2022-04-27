@@ -84,7 +84,11 @@ const CountryAutoComplete = (props) => {
 export default CountryAutoComplete;
 
 export const StyledAutoComplete = withStyles((theme) => ({
-  // root: {
+  root: {
+    "& .MuiIconButton-root": {
+      color: "#3E2F71",
+    },
+  },
   //   color: "#6d6d6d",
   //   background: "0% 0% no-repeat padding-box",
   //   border: "1px solid #B9C6CD",

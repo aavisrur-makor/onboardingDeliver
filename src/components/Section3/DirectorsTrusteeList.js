@@ -23,7 +23,14 @@ const DirectorsTrusteeList = (props) => {
     <>
       {stateList?.map((director, index) => {
         return director.contact_type === "ownership" ? (
-          <Grid item container alignContent="center" xs={12} spacing={3}>
+          <Grid
+            item
+            container
+            alignItems="center"
+            xs={12}
+            spacing={2}
+            style={{ marginBottom: "3rem" }}
+          >
             <DynamicList
               arrLength={
                 stateList.filter(

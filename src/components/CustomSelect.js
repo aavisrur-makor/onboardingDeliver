@@ -36,7 +36,7 @@ const CustomSelect = (props) => {
       props.selectData ||
       (props.stateDataMap && props.stateData) ? (
         <Select
-          // className={clsx(classes.select, props.className)}
+          className={classes.selectIcon}
           name={props.id}
           id={props.id}
           style={{ textTransform: "capitalize" }}

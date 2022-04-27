@@ -518,7 +518,13 @@ export const deleteContactAsync = (index) => async (dispatch, getState) => {
             getState().onboarding.current.contacts[index].uuid,
         }
       );
+      if (response.status === 200) {
+        dispatch(
+          setAuthField({ id: "progress", value: response.data.progress })
+        );
+      }
     }
+
     dispatch(deleteContact(index));
   } catch (err) {
     console.log(err);

@@ -31,83 +31,79 @@ function DynamicList(props) {
 
   return (
     <>
-      <Grid item md={2} xs={12}>
-        <DynamicTextField
-          onChange={(e) => {
-            dispatch(
-              setOnboardingContactField({
-                id: e.target.id,
-                value: e.target.value,
-                contactIndex: props.index,
-              })
-            );
-            handleDynamicListChange();
-          }}
-          id="first_name"
-          label="First Name"
-          index={props.index}
-        />
+      <Grid item md={11} container spacing={3}>
+        <Grid item container spacing={3} md={12}>
+          <Grid item md={4} xs={12}>
+            <DynamicTextField
+              onChange={(e) => {
+                dispatch(
+                  setOnboardingContactField({
+                    id: e.target.id,
+                    value: e.target.value,
+                    contactIndex: props.index,
+                  })
+                );
+                handleDynamicListChange();
+              }}
+              id="first_name"
+              label="First Name"
+              index={props.index}
+            />
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <DynamicTextField
+              onChange={(e) => {
+                dispatch(
+                  setOnboardingContactField({
+                    id: e.target.id,
+                    value: e.target.value,
+                    contactIndex: props.index,
+                  })
+                );
+                handleDynamicListChange();
+              }}
+              id="last_name"
+              label="Last Name"
+              index={props.index}
+            />
+          </Grid>
+          <Grid item md={4} xs={12}>
+            <CustomKeyBoardDatePicker
+              id="birthday_at"
+              index={props.index}
+              handleDynamicListChange={handleDynamicListChange}
+            />
+          </Grid>
+        </Grid>
+        <Grid item container xs={12} spacing={3}>
+          <Grid item md={6} xs={12}>
+            <GoogleApiAutoComplete
+              index={props.index}
+              handleSelect={handleDynamicListChange}
+              id="address"
+              label="Address"
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <RoleSelectBox
+              index={props.index}
+              id={"position_uuid"}
+              label="Role"
+              data={props.data ? props.data : null}
+              handleSelect={handleDynamicListChange}
+            />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item md={2} xs={12}>
-        <DynamicTextField
-          onChange={(e) => {
-            dispatch(
-              setOnboardingContactField({
-                id: e.target.id,
-                value: e.target.value,
-                contactIndex: props.index,
-              })
-            );
-            handleDynamicListChange();
-          }}
-          id="last_name"
-          label="Last Name"
-          index={props.index}
-        />
-      </Grid>
-      <Grid item md={2} xs={12}>
-        <CustomKeyBoardDatePicker
-          id="birthday_at"
-          index={props.index}
-          handleDynamicListChange={handleDynamicListChange}
-        />
-      </Grid>
-      <Grid item md={2} xs={12}>
-        <GoogleApiAutoComplete
-          index={props.index}
-          handleSelect={handleDynamicListChange}
-          id="address"
-          label="Address"
-        />
-      </Grid>
-      <Grid item md={2} xs={12}>
-        <RoleSelectBox
-          index={props.index}
-          id={"position_uuid"}
-          label="Role"
-          data={props.data ? props.data : null}
-          handleSelect={handleDynamicListChange}
-        />
-      </Grid>
-      {props.companyType !== "Company Limited by Shares" &&
-      props.arrLength > 1 ? (
-        <Grid item md={2} xs={12}>
+      {props.arrLength > 1 && (
+        <Grid item md={1} xs={12}>
           <IconButton
+            style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
             onClick={(e) => dispatch(deleteContactAsync(props.index))}
           >
             {<TrashIcon />}
           </IconButton>
         </Grid>
-      ) : (
-        props.arrLength > 2 && (
-          <Grid item md={2} xs={12}>
-            <IconButton
-              onClick={(e) => dispatch(deleteContactAsync(props.index))}
-            >
-              {<TrashIcon />}
-            </IconButton>
-          </Grid>
-        )
       )}
     </>
   );

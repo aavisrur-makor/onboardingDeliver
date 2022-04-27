@@ -39,6 +39,34 @@ export const useStyles = makeStyles((theme) => ({
       fontSize: "0.5em",
     },
   },
+  selectIcon: {
+    "& .MuiSelect-icon": {
+      color: "#3E2F71",
+    },
+  },
+  toggleButtonColor: {
+    "& .css-17ndd9v-MuiButtonBase-root-MuiToggleButton-root.Mui-selected": {
+      backgroundColor: "#E7E6ED",
+      border: "1px solid #3E2F71",
+    },
+    "& .css-mgs850-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped": {
+      border: "1px solid #B9C6CD ",
+      backgroundColor: "#FCFCFC",
+    },
+    "&.css-mgs850-MuiToggleButtonGroup-root .MuiToggleButtonGroup-grouped:not(:first-of-type)":
+      {
+        borderLeft: "1px solid #3E2F71",
+      },
+  },
+  calenderIcon: {
+    "& .MuiIconButton-root:hover": {
+      backgroundColor: "transparent",
+    },
+    "& .css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root:hover": {
+      backgroundColor: "transparent",
+    },
+  },
+
   progressContainer: {
     display: "flex",
     alignItems: "center",

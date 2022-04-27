@@ -33,7 +33,7 @@ const OwnershipAndManagment = () => {
         ) : null}
       </Grid>
       <Grid item container>
-        <Grid item>
+        <Grid item xs={12}>
           <ShareHolderList />
         </Grid>
       </Grid>

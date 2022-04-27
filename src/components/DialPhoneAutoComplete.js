@@ -118,6 +118,9 @@ export default DialPhoneAutoComplete;
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {
+    "& .MuiIconButton-root": {
+      color: "#3E2F71",
+    },
     // color: "#6d6d6d",
     // border: "1px solid #B9C6CD",
     // borderRadius: "4px 0 0 4px",
@@ -131,11 +134,11 @@ export const StyledAutoComplete = withStyles((theme) => ({
     //     // Solid underline on hover
     //     borderBottomColor: "transparent",
     //   },
-      // "& .MuiInput-underline:after": {
-      //   // Solid underline on focus
-      //   // borderBottomColor: theme.palette.input.placeholder // on admins step 3
-      //   borderBottom: `1px solid transparent}`, // on step 1
-      // },
+    // "& .MuiInput-underline:after": {
+    //   // Solid underline on focus
+    //   // borderBottomColor: theme.palette.input.placeholder // on admins step 3
+    //   borderBottom: `1px solid transparent}`, // on step 1
+    // },
     // },
     // "& .MuiInputLabel-formControl": {
     //   top: "50%",
@@ -154,10 +157,10 @@ export const StyledAutoComplete = withStyles((theme) => ({
     //   "& .MuiButtonBase-root": {
     //     transform: "translateX(-5px)",
     //   },
-      // "& .MuiInputLabel-formControl": {
-      //   top: "50%",
-      //   transform: "translateY(calc(-20%))",
-      // },
+    // "& .MuiInputLabel-formControl": {
+    //   top: "50%",
+    //   transform: "translateY(calc(-20%))",
+    // },
     // },
   },
   inputRoot: {

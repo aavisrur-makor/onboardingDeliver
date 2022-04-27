@@ -26,8 +26,9 @@ const IndividualEntityList = () => {
           <Grid
             item
             container
-            justifyContent="center"
+            // justifyContent="center"
             alignItems="center"
+            style={{ marginBottom: "3rem" }}
             spacing={2}
             md={12}
             xs={12}
