@@ -24,7 +24,7 @@ const initialState = {
     risk_category: null,
     client_company_legal_name: null,
     trading_name: null,
-    company_type_uuid: null,
+    client_type_uuid: null,
     type_of_business_uuid: null,
     contacts: [
       {
@@ -32,25 +32,26 @@ const initialState = {
         last_name: null,
         address: null,
         birthday_at: {},
-        partner_type: null,
+        type: null,
         phone: [{ number: "", dialing_code: "" }],
         email: [""],
         position_uuid: null,
         company_name: null,
         company_number: null,
-        contact_type: "contact",
+        section: "contact",
         uuid: null,
         percentage_ownership: null,
         country: null,
       },
     ],
-    source_of_funds: null,
+    funds_source: null,
     has_regulation_required: false,
     regulator_uuid: null,
-    trading_frequency_from: 0,
-    trading_frequency_to: 0,
-    trades_per: null,
-    trading_volume_up_to: null,
+    trading_count_from: 0,
+    trading_count_to: 0,
+    trading_count_frequency: null,
+    trading_volume: null,
+    trading_volume_frequency: null,
   },
   files: {
     certificate_of_incorporation: "",
@@ -70,16 +71,16 @@ const newContact = {
   last_name: null,
   address: null,
   birthday_at: null,
-  partner_type: null,
+  type: null,
   phone: [{ number: "", dialing_code: "" }],
   email: [""],
   position_uuid: null,
   company_name: null,
   company_number: null,
-  contact_type: null,
+  section: null,
   uuid: null,
   country: null,
-  company_type_uuid: null,
+  client_type_uuid: null,
   percentage_ownership: null,
 };
 
@@ -138,10 +139,10 @@ export const singleOnboardingSlice = createSlice({
         name === "Limited Liability Partnership"
       ) {
         countedArray = state.current.contacts.filter(
-          (contact) => contact.contact_type === "ownership"
+          (contact) => contact.section === "ownership"
         );
         shareHolderArray = state.current.contacts.filter(
-          (contact) => contact.contact_type === "shareholder"
+          (contact) => contact.section === "shareholder"
         );
         if (countedArray.length < 2) {
           if (
@@ -152,8 +153,8 @@ export const singleOnboardingSlice = createSlice({
             console.log("COUNTED ARRAY", countedArray.length);
             for (let i = 0; i < minFields - countedArray.length; i++) {
               let partnerContact = { ...newContact };
-              partnerContact.partner_type = "individual";
-              partnerContact.contact_type = "ownership";
+              partnerContact.type = "individual";
+              partnerContact.section = "ownership";
 
               state.current.contacts.push(partnerContact);
             }
@@ -162,37 +163,36 @@ export const singleOnboardingSlice = createSlice({
         if (shareHolderArray.length < 1) {
           for (let i = 0; i < 1 - shareHolderArray; i++) {
             let partnerContact = { ...newContact };
-            partnerContact.contact_type = "shareholder";
-            partnerContact.partner_type = "individual";
+            partnerContact.section = "shareholder";
+            partnerContact.type = "individual";
 
             state.current.contacts.push(partnerContact);
           }
         }
-       
       } else if (
         name === "Charity" ||
         name === "Trust" ||
         name === "Non profit / Foundation"
       ) {
         countedArray = state.current.contacts.filter(
-          (contact) => contact.contact_type === "ownership"
+          (contact) => contact.section === "ownership"
         );
         shareHolderArray = state.current.contacts.filter(
-          (contact) => contact.contact_type === "shareholder"
+          (contact) => contact.section === "shareholder"
         );
         if (countedArray.length < 1) {
           for (let i = 0; i < minFields - countedArray.length; i++) {
             let partnerContact = newContact;
-            partnerContact.contact_type = "ownership";
-            partnerContact.partner_type = "individual";
+            partnerContact.section = "ownership";
+            partnerContact.type = "individual";
             state.current.contacts.push(newContact);
           }
         }
         if (shareHolderArray.length < 1) {
           for (let i = 0; i < 1 - shareHolderArray; i++) {
             let partnerContact = { ...newContact };
-            partnerContact.contact_type = "shareholder";
-            partnerContact.partner_type = "individual";
+            partnerContact.section = "shareholder";
+            partnerContact.type = "individual";
 
             state.current.contacts.push(partnerContact);
           }
@@ -201,20 +201,20 @@ export const singleOnboardingSlice = createSlice({
     },
     addOnboardingContact: (state, action) => {
       if (action.payload === "contact") {
-        state.current.contacts.push({ ...newContact, contact_type: "contact" });
+        state.current.contacts.push({ ...newContact, section: "contact" });
       }
       if (action.payload === "ownership") {
         state.current.contacts.push({
           ...newContact,
-          contact_type: "ownership",
-          partner_type: "individual",
+          section: "ownership",
+          type: "individual",
         });
       }
       if (action.payload === "shareholder") {
         state.current.contacts.push({
           ...newContact,
-          contact_type: "shareholder",
-          partner_type: "individual",
+          section: "shareholder",
+          type: "individual",
         });
       }
     },
@@ -288,7 +288,7 @@ export const updateContactFieldOnboarding =
   (contactIndex) => async (dispatch, getState) => {
     try {
       if (
-        getState().onboarding.current.contacts[contactIndex].contact_type ===
+        getState().onboarding.current.contacts[contactIndex].section ===
         "contact"
       ) {
         let contact = {
@@ -341,7 +341,6 @@ export const updateContactFieldOnboarding =
               );
             }
           }
-
         }
       }
     } catch (err) {
@@ -388,8 +387,6 @@ export const updateSection3Contact =
         );
       }
     }
-
-    
   };
 export const getOnboardingData = () => async (dispatch, getState) => {
   try {
@@ -405,18 +402,12 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       if (textFields.roles) {
         dispatch(setRolesData(textFields.roles));
       }
-      if (textFields.company_type_uuid) {
-        
-
+      if (textFields.client_type_uuid) {
         dispatch(
           setManagmentList({
-            name: getState().meta.company_typesMap[
-              textFields.company_type_uuid
-            ],
+            name: getState().meta.company_typesMap[textFields.client_type_uuid],
             minFields:
-              getState().meta.companyMinIndividual[
-                textFields.company_type_uuid
-              ],
+              getState().meta.companyMinIndividual[textFields.client_type_uuid],
           })
         );
       }
@@ -430,7 +421,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         function success(pos) {
           var crd = pos.coords;
 
-        
           dispatch(
             sendGeoLocation(crd.latitude, crd.longitude, getState().auth.uuid)
           );

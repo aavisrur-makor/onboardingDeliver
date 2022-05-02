@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import { useStyles } from "../../styles/UiForm";
 import DynamicList from "./DynamicList";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
-import {
-  addOnboardingContact,
-} from "../../redux/slices/singleOnboardingSlice";
+import { addOnboardingContact } from "../../redux/slices/singleOnboardingSlice";
 import { useDispatch } from "react-redux";
 
 const DirectorsTrusteeList = () => {
@@ -15,13 +13,13 @@ const DirectorsTrusteeList = () => {
 
   const stateList = useSelector((state) => state.onboarding.current.contacts);
   const companyType = useSelector(
-    (state) => state.onboarding.current.company_type_uuid
+    (state) => state.onboarding.current.client_type_uuid
   );
   const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
   return (
     <>
       {stateList?.map((director, index) => {
-        return director.contact_type === "ownership" ? (
+        return director.section === "ownership" ? (
           <Grid
             item
             container
@@ -32,9 +30,8 @@ const DirectorsTrusteeList = () => {
           >
             <DynamicList
               arrLength={
-                stateList.filter(
-                  (line) => line.contact_type === director.contact_type
-                ).length
+                stateList.filter((line) => line.section === director.section)
+                  .length
               }
               index={index}
               data={

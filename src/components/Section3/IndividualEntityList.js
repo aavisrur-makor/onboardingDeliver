@@ -5,9 +5,7 @@ import { useSelector } from "react-redux";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
 import { useStyles } from "../../styles/UiForm";
 import { useDispatch } from "react-redux";
-import {
-  addOnboardingContact,
-} from "../../redux/slices/singleOnboardingSlice";
+import { addOnboardingContact } from "../../redux/slices/singleOnboardingSlice";
 
 const IndividualEntityList = () => {
   const classes = useStyles();
@@ -20,7 +18,7 @@ const IndividualEntityList = () => {
   return (
     <Grid container spacing={2}>
       {data?.map((line, lineIndex) => {
-        return line.contact_type === "ownership" ? (
+        return line.section === "ownership" ? (
           <Grid
             item
             container
@@ -32,9 +30,8 @@ const IndividualEntityList = () => {
           >
             <IndividualEntityDynamicList
               arrLength={
-                data.filter(
-                  (ownerLine) => ownerLine.contact_type === line.contact_type
-                ).length
+                data.filter((ownerLine) => ownerLine.section === line.section)
+                  .length
               }
               index={lineIndex}
             />

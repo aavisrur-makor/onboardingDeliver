@@ -20,12 +20,12 @@ const ContactsForm = () => {
     <>
       <Grid item>
         {contacts.map((contact, contactIndex) => {
-          return contact.contact_type === "contact" ? (
+          return contact.section === "contact" ? (
             <Contacts
               arrLength={
                 contacts.filter(
                   (singleContact) =>
-                    singleContact.contact_type === contact.contact_type
+                    singleContact.section === contact.section
                 ).length
               }
               index={contactIndex}

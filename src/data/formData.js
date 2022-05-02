@@ -23,7 +23,7 @@ export default {
         label: "Country of Incorporation",
       },
       {
-        id: "type_of_business_uuid",
+        id: "business_type_uuid",
         label: "Type of Business & Activity",
       },
       { id: "website", label: "Website Url" },

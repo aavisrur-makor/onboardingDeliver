@@ -18,11 +18,7 @@ const TradingInfo = () => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <DispatcherField
-          id={"source_of_funds"}
-          label="Source of Funds"
-          required
-        />
+        <DispatcherField id={"funds_source"} label="Source of Funds" required />
       </Grid>
       <Grid item xs={12}>
         <TradingFrequency />

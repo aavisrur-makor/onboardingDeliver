@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid,  Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import DispatcherField from "./DispatcherField";
 import formData from "../data/formData";
 import { TextField } from "@material-ui/core";
@@ -10,10 +10,8 @@ import CustomSelect from "./CustomSelect";
 import { useStyles } from "../styles/UiForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
- 
   setCurrentOnboardingFields,
   setManagmentList,
-
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import GoogleApiAutoComplete from "../utils/GoogleApiAutoComplete";
@@ -25,7 +23,7 @@ const PseudoForm = function (props) {
     (state) => state.meta.companyMinIndividual
   );
   const companyType = useSelector(
-    (state) => state.onboarding.current.company_type_uuid
+    (state) => state.onboarding.current.client_type_uuid
   );
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -45,7 +43,6 @@ const PseudoForm = function (props) {
   };
 
   const handleCompanyTypeChange = (e, child) => {
-    
     dispatch(
       setManagmentList({
         name: child.props.value,
@@ -100,7 +97,7 @@ const PseudoForm = function (props) {
               stateData={"company_types"}
               stateDataMap={"company_typesMap"}
               required
-              id={"company_type_uuid"}
+              id={"client_type_uuid"}
               label={"Company Type"}
               handleChange={handleCompanyTypeChange}
             />
@@ -132,7 +129,7 @@ const PseudoForm = function (props) {
                   />
                 </Grid>
               );
-            } else if (id === "type_of_business_uuid") {
+            } else if (id === "business_type_uuid") {
               return (
                 <Grid item xs={12} md={6}>
                   <CustomSelect

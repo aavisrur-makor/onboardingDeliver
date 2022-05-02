@@ -32,13 +32,13 @@ function TradingFrequency() {
             </Typography>
           </Grid>
           <Grid item xs={3} md={3}>
-            <DispatcherField id="trading_frequency_from" type="number" />
+            <DispatcherField id="trading_count_from" type="number" />
           </Grid>
           <Grid item xs={3} md={3}>
             <Typography style={{ textAlign: "center" }}>To</Typography>
           </Grid>
           <Grid item xs={3} md={3}>
-            <DispatcherField id="trading_frequency_to" type="number" />
+            <DispatcherField id="trading_count_to" type="number" />
           </Grid>
         </Grid>
       </Grid>
@@ -54,7 +54,7 @@ function TradingFrequency() {
               required
               selectData={trades_per}
               label="Select Period"
-              id={"trades_per"}
+              id={"trading_count_frequency"}
               handleChange={handleFreqChange}
             />
           </Grid>

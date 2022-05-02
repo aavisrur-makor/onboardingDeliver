@@ -10,7 +10,7 @@ const OwnershipAndManagment = () => {
   const classes = useStyles();
 
   const companyType = useSelector(
-    (state) => state.onboarding.current.company_type_uuid
+    (state) => state.onboarding.current.client_type_uuid
   );
   const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
   return (

@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import { ReactComponent as AddIcon } from "../../../assets/icons/Group46.svg";
 import { useStyles } from "../../../styles/UiForm";
 import { useDispatch } from "react-redux";
-import {
-  addOnboardingContact,
-} from "../../../redux/slices/singleOnboardingSlice";
+import { addOnboardingContact } from "../../../redux/slices/singleOnboardingSlice";
 import ShareHolderDynamicList from "./ShareHolderDynamicList";
 
 const ShareHolderList = () => {
@@ -28,7 +26,7 @@ const ShareHolderList = () => {
         }`}</Typography>
       </Grid>
       {data?.map((line, lineIndex) => {
-        return line.contact_type === "shareholder" ? (
+        return line.section === "shareholder" ? (
           <Grid
             item
             container
@@ -42,8 +40,7 @@ const ShareHolderList = () => {
             <ShareHolderDynamicList
               arrLength={
                 data.filter(
-                  (contactLine) =>
-                    contactLine.contact_type === line.contact_type
+                  (contactLine) => contactLine.section === line.section
                 ).length
               }
               index={lineIndex}

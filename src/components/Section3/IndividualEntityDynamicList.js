@@ -19,7 +19,7 @@ import CustomSelect from "../CustomSelect";
 const IndividualEntityDynamicList = (props) => {
   const dispatch = useDispatch();
   const alignment = useSelector(
-    (state) => state.onboarding.current.contacts[props.index].partner_type
+    (state) => state.onboarding.current.contacts[props.index].type
   );
 
   const handleDynamicListChange = (e) => {
@@ -40,7 +40,7 @@ const IndividualEntityDynamicList = (props) => {
   const handleAddCompanyType = (e, child) => {
     dispatch(
       setOnboardingContactField({
-        id: "company_type_uuid",
+        id: "client_type_uuid",
         value: child.props.id,
         contactIndex: props.index,
       })
@@ -55,7 +55,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item container md={12} spacing={3}>
               <Grid item md={2} xs={12}>
                 <CustomToggleButton
-                  id="partner_type"
+                  id="type"
                   // setAlignment={setAlignment}
                   value={alignment}
                   index={props.index}
@@ -148,7 +148,7 @@ const IndividualEntityDynamicList = (props) => {
                 <CustomToggleButton
                   value={alignment}
                   index={props.index}
-                  id="partner_type"
+                  id="type"
                 />
               </Grid>
               <Grid item md={5} xs={12}>
@@ -194,7 +194,7 @@ const IndividualEntityDynamicList = (props) => {
                   required
                   stateData={"company_types"}
                   stateDataMap={"company_typesMap"}
-                  id={"company_type_uuid"}
+                  id={"client_type_uuid"}
                   contactIndex={props.index}
                   label={"Company Type"}
                   handleChange={handleAddCompanyType}
