@@ -13,12 +13,30 @@ const OwnershipAndManagment = () => {
     (state) => state.onboarding.current.client_type_uuid
   );
   const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
+  const renderSubTitle = (companyType) => {
+    switch (companyType) {
+      case "Company Limited by Shares":
+        return "Please enter the names and details of all company Directors";
+      case "Non profit / Foundation":
+      case "Charity":
+      case "Trust":
+        return "Please enter the names and details of all Trustees/Protectors";
+      default:
+        return null;
+    }
+  };
   return (
     <Grid container spacing={3}>
-      <Grid item>
-        <Typography className={classes.titleText}>
-          Ownership and Managment
-        </Typography>
+      <Grid item container>
+        <Grid item>
+          <Typography className={classes.titleText}>
+            Ownership and Managment
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography>{renderSubTitle(companyTypeMap[companyType])}</Typography>
+        </Grid>
+        <Grid item></Grid>
       </Grid>
       <Grid item xs={12} md={12}>
         {companyTypeMap[companyType] === "Company Limited by Shares" ||

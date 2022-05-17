@@ -14,7 +14,7 @@ export default {
       },
       {
         id: "principal_business_address_gapi",
-        label: "Principal Buisness Address(If different)",
+        label: "Principal Business Address (If different)",
       },
     ],
     grid4: [

@@ -10,8 +10,10 @@ import {
 function TradingVolume() {
   const dispatch = useDispatch();
   const trading_volume = useSelector((state) => state.meta.trading_volume);
+  const trading_volume_frequency = useSelector(
+    (state) => state.meta.trading_volume_frequency
+  );
   const handleFreqChange = (e, child) => {
-
     dispatch(updateFieldOnboarding({ [e.target.name]: e.target.value }));
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: e.target.value })
@@ -36,6 +38,20 @@ function TradingVolume() {
               handleChange={handleFreqChange}
             />
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid item md={5} container alignItems="center">
+        <Grid item md={4} xs={12}>
+          <Typography>Per</Typography>
+        </Grid>
+        <Grid item md={8} xs={12}>
+          <CustomSelect
+            required
+            label="Select Period"
+            id={"trading_volume_frequency"}
+            selectData={trading_volume_frequency}
+            handleChange={handleFreqChange}
+          />
         </Grid>
       </Grid>
     </Grid>

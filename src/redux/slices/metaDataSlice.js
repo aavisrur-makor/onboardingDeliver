@@ -17,11 +17,11 @@ const initialState = {
   positionsMap: {},
   regulators: [],
   regulatorsMap: {},
-  trades_per: [],
+  trading_count_frequency: [],
   trading_volume: [],
   type_of_business: [],
   TypeOfBusinessMap: {},
-  volume_per: [],
+  trading_volume_frequency: [],
   roles: [],
 };
 
@@ -36,20 +36,20 @@ export const metaDataSlice = createSlice({
         currencies,
         positions,
         regulators,
-        trades_per,
+        trading_count_frequency,
         trading_volume,
         type_of_business,
-        volume_per,
+        trading_volume_frequency,
       } = action.payload;
 
       state.countries = countries;
       state.company_types = company_types;
       state.currencies = currencies;
       state.positions = positions;
-      state.trades_per = trades_per;
+      state.trading_count_frequency = trading_count_frequency;
       state.trading_volume = trading_volume;
       state.type_of_business = type_of_business;
-      state.volume_per = volume_per;
+      state.trading_volume_frequency = trading_volume_frequency;
       state.regulators = regulators;
       state.dialCodes = countries.map((country) => country.dialing_code);
 

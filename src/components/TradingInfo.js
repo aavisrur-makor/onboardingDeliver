@@ -17,8 +17,20 @@ const TradingInfo = () => {
           Activity Details
         </Typography>
       </Grid>
-      <Grid item xs={12}>
-        <DispatcherField id={"funds_source"} label="Source of Funds" required />
+      <Grid item container>
+        <Grid item xs={12}>
+          <Typography>
+            Please detail where funds for trading with Enigma are from, both
+            cryptoasset and fiat
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <DispatcherField
+            id={"funds_source"}
+            label="Source of Funds"
+            required
+          />
+        </Grid>
       </Grid>
       <Grid item xs={12}>
         <TradingFrequency />
@@ -28,10 +40,17 @@ const TradingInfo = () => {
       </Grid>
       <Grid item>
         <Grid container spacing={2}>
-          <Grid item>
-            <Typography variant="body1" className={classes.titleText}>
-              Assets Details *
-            </Typography>
+          <Grid item container>
+            <Grid item>
+              <Typography variant="body1" className={classes.titleText}>
+                Asset Details *
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>
+                Please indicate the cryptoassets you wish to trade.
+              </Typography>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <AssetTable />

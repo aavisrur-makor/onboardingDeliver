@@ -12,7 +12,7 @@ function TradingFrequency() {
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
 
   const dispatch = useDispatch();
-  const trades_per = useSelector((state) => state.meta.trades_per);
+  const trades_per = useSelector((state) => state.meta.trading_count_frequency);
   const handleFreqChange = (e, child) => {
     dispatch(updateFieldOnboarding({ [e.target.name]: e.target.value }));
     dispatch(

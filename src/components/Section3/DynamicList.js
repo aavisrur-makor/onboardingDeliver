@@ -7,10 +7,8 @@ import { ReactComponent as TrashIcon } from "../../assets/icons/trashIcon.svg";
 
 import { useDispatch } from "react-redux";
 import {
-  
   deleteContactAsync,
   setOnboardingContactField,
-  
   updateSection3Contact,
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDebouncedCallback } from "use-debounce/lib";
@@ -30,7 +28,7 @@ function DynamicList(props) {
         <Grid item container spacing={3} md={12}>
           <Grid item md={4} xs={12}>
             <DynamicTextField
-            required
+              required
               onChange={(e) => {
                 dispatch(
                   setOnboardingContactField({
@@ -48,7 +46,7 @@ function DynamicList(props) {
           </Grid>
           <Grid item md={4} xs={12}>
             <DynamicTextField
-            required
+              required
               onChange={(e) => {
                 dispatch(
                   setOnboardingContactField({
@@ -66,17 +64,17 @@ function DynamicList(props) {
           </Grid>
           <Grid item md={4} xs={12}>
             <CustomKeyBoardDatePicker
-            required
+              required
               id="birthday_at"
               index={props.index}
               handleDynamicListChange={handleDynamicListChange}
             />
           </Grid>
         </Grid>
-        <Grid item container xs={12} spacing={3}>
+        <Grid item container spacing={3}>
           <Grid item md={6} xs={12}>
             <GoogleApiAutoComplete
-            required
+              required
               index={props.index}
               handleSelect={handleDynamicListChange}
               id="address"
@@ -85,7 +83,7 @@ function DynamicList(props) {
           </Grid>
           <Grid item md={6} xs={12}>
             <RoleSelectBox
-            required
+              required
               index={props.index}
               id={"position_uuid"}
               label="Role"

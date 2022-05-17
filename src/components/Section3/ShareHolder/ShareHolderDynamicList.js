@@ -118,7 +118,7 @@ const ShareHolderDynamicList = (props) => {
                   label="Address"
                 />
               </Grid>
-              <Grid item alignItems="center" xs={4} container>
+              <Grid item alignItems="center" md={4} xs={12} container>
                 <Grid item xs={11}>
                   <DynamicTextField
                     required

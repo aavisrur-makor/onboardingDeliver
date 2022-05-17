@@ -21,7 +21,7 @@ const ShareHolderList = () => {
   return (
     <>
       <Grid item xs={12} container style={{ marginBottom: "2rem" }}>
-        <Typography>{`Name of shareholders/beneficial owners over ${
+        <Typography>{`Please enter the names of shareholders/beneficial owners over ${
           riskCategory === "medium" ? "25%" : "10%"
         }`}</Typography>
       </Grid>
