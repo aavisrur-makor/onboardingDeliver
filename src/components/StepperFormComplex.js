@@ -21,7 +21,7 @@ import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
 const steps = [
   "Company Info",
   "Trading Info",
-  "Ownership and Managment",
+  "Ownership and Management",
   "Terms of Use",
 ];
 
