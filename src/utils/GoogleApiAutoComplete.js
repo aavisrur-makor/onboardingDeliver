@@ -1,8 +1,6 @@
 import { Box, Paper, TextField, Typography } from "@material-ui/core";
 import { useState } from "react";
-import PlacesAutocomplete, {
-
-} from "react-places-autocomplete";
+import PlacesAutocomplete from "react-places-autocomplete";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentOnboardingFields,
@@ -13,6 +11,8 @@ import {
 
 const GoogleApiAutoComplete = (props) => {
   const dispatch = useDispatch();
+  const [isChanged, setIsChanged] = useState(null);
+  const [isBlur, setIsBlur] = useState(null);
   const value = useSelector((state) =>
     props.id === "address"
       ? state.onboarding.current.contacts[props.index][props.id]
@@ -26,7 +26,10 @@ const GoogleApiAutoComplete = (props) => {
       dispatch(setCurrentOnboardingFields({ id: props.id, value }));
       dispatch(updateFieldOnboarding(fieldToUpdate));
     }
+    setIsChanged(false);
+    setIsBlur(false);
   };
+
   const handleSection3Select = async (value) => {
     dispatch(
       setOnboardingContactField({
@@ -52,6 +55,7 @@ const GoogleApiAutoComplete = (props) => {
                 })
               )
             : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
+          setIsChanged(true);
         }}
         onSelect={props.id === "address" ? handleSection3Select : handleSelect}
       >
@@ -59,11 +63,21 @@ const GoogleApiAutoComplete = (props) => {
           return (
             <Box style={{ position: "relative" }}>
               <TextField
+                error={isChanged && isBlur}
+                helperText={
+                  isChanged && isBlur && "You must choose from the list"
+                }
                 required={props.required}
                 fullWidth
                 label={props.label}
                 variant="outlined"
                 {...getInputProps()}
+                onFocus={() => {
+                  setIsChanged(false);
+                }}
+                onBlur={() => {
+                  setIsBlur(true);
+                }}
               />
               <Paper style={{ position: "absolute", zIndex: 300 }}>
                 {loading ? <Box>Loading...</Box> : null}

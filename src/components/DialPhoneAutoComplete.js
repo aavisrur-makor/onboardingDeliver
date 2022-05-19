@@ -29,7 +29,6 @@ const DialPhoneAutoComplete = (props) => {
     setCountryDialCode(inputValue);
     props.handleChange(e, e.dialing_code, props.index, props.objectField);
   };
-  console.log("CHECK THE DIAL CODE RENDER", dial_code);
   return (
     <StyledAutoComplete
       id="phone"
@@ -46,7 +45,6 @@ const DialPhoneAutoComplete = (props) => {
         option.dialing_code ? option.dialing_code : ""
       }
       onChange={(e, value) => {
-        console.log("INPUT VALUE", value);
         setCountryDialCode(value);
         props.handleContactDialCodeChange(
           e,

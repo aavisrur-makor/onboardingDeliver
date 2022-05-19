@@ -30,7 +30,7 @@ const OwnershipAndManagment = () => {
       <Grid item container>
         <Grid item>
           <Typography className={classes.titleText}>
-            Ownership and Managment
+            Ownership and Management
           </Typography>
         </Grid>
         <Grid item xs={12}>

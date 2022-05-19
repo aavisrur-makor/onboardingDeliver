@@ -1,10 +1,10 @@
-
 import { makeStyles, TextField } from "@material-ui/core";
-
 
 import { useDebouncedCallback } from "use-debounce";
 import { useDispatch, useSelector } from "react-redux";
 import { setOnboardingContactField } from "../redux/slices/singleOnboardingSlice";
+import validator from "validator";
+import { NightsStay } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -62,7 +62,6 @@ const ContactsDispatcherField = (props) => {
   };
 
   const debounced = useDebouncedCallback(handleChange, 400);
-  
   return (
     <TextField
       className={classes.textField}
@@ -70,6 +69,8 @@ const ContactsDispatcherField = (props) => {
       type={props.type}
       fullWidth
       required={props.required}
+      error={props.id === "email" && !props.error}
+      helperText={!props.error && props.helperText}
       onChange={(e) => {
         dispatch(
           setOnboardingContactField({

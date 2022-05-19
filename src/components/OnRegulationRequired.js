@@ -45,7 +45,6 @@ const OnRegulationRequired = () => {
     dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
   };
   const handleAddField = (e, child) => {
-    console.log("HANDLEADD", e.target.value);
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );

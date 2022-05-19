@@ -93,7 +93,6 @@ const InfoPopoverButton = (props) => {
 
   const handleClick = () => {
     if (queryMatch) {
-      console.log("clilcked");
       setOpen((prev) => !prev);
     }
   };

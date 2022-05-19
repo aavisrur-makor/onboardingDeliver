@@ -24,7 +24,6 @@ function AssetTable() {
   const currencies = useSelector((state) => state.meta.currencies);
   const dispatch = useDispatch();
   const handleAssetChange = (e, checkedAsset) => {
-    console.log(console.log("checked", e.target.checked));
 
     dispatch(
       setOnboardingAssets({

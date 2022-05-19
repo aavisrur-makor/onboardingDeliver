@@ -133,7 +133,7 @@ const TermsForm = (props) => {
                 textAlign: "center",
               }}
             >
-              Before you can submit application, you must aggree with Terms of
+              Before you can submit application, you must agree with Terms of
               Use
             </Typography>
           }

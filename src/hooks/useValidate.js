@@ -18,16 +18,7 @@ const useValidate = ([name, email, phone, dialCode]) => {
     dialCode: "",
   });
 
-  useEffect(
-    (x, y) => {
-      console.log(
-        "🚀 ~ file: useValidate.js ~ line 22 ~ useEffect ~ x, y",
-        x,
-        y
-      );
-    },
-    [name, email, phone, dialCode]
-  );
+
 
   return { isValid, errors };
 };

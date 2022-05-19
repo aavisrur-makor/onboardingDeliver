@@ -123,7 +123,6 @@ const ShareHolderDynamicList = (props) => {
                   <DynamicTextField
                     required
                     onChange={(e) => {
-                      // console.log("INSIDE PRECENTAGE");
                       dispatch(
                         setOnboardingContactField({
                           id: e.target.id,
@@ -187,7 +186,6 @@ const ShareHolderDynamicList = (props) => {
               <Grid item xs={12} md={5}>
                 <DynamicTextField
                   onChange={(e) => {
-                    console.log(typeof e.target.value);
                     dispatch(
                       setOnboardingContactField({
                         id: e.target.id,
@@ -226,7 +224,6 @@ const ShareHolderDynamicList = (props) => {
                 <Grid item xs={11}>
                   <DynamicTextField
                     onChange={(e) => {
-                      // console.log("INSIDE PRECENTAGE");
                       dispatch(
                         setOnboardingContactField({
                           id: e.target.id,

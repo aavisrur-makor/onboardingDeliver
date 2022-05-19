@@ -11,24 +11,28 @@ import { ReactComponent as TrashIcon } from "./../assets/icons/trashIcon.svg";
 import ContactsDispatcherField from "./ContactsDispatcherField";
 import {
   deleteContactAsync,
-  
   setOnboardingContactField,
   updateContactFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
 import ContactCustomSelect from "./ContactCustomSelect";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import validator from "validator";
 
 const Contacts = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();
-
+  const [validatedEmail, setValidatedEmail] = useState(true);
   const handleDeleteContact = (e, index) => {
     dispatch(deleteContactAsync(index));
   };
   const handleContactChange = (e, contactIndex, objectField) => {
     const fieldName = e.target.id.split("-")[0];
+    if (fieldName === "email") {
+      setValidatedEmail(validator.isEmail(e.target.value));
+    }
     dispatch(
       setOnboardingContactField({
         id: fieldName,
@@ -143,6 +147,8 @@ const Contacts = (props) => {
             label="Email"
             subIndex={0}
             required
+            error={validatedEmail}
+            helperText={"Email is not valid!"}
           />
         </Grid>
         {props.arrLength > 1 && (

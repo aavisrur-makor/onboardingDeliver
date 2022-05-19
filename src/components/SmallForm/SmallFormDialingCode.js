@@ -24,7 +24,6 @@ const SmallFormDialingCode = (props) => {
     setCountryDialCode(inputValue);
     props.handleChange(e, "", props.index);
   };
-  console.log("country", countryDialCodeInput);
   return (
     <StyledAutoComplete
       id="contact_phone"

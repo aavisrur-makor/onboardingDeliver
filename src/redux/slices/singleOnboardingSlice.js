@@ -150,7 +150,6 @@ export const singleOnboardingSlice = createSlice({
             name === "Limited Liability Partnership" ||
             name === "Company Limited by Shares"
           ) {
-            console.log("COUNTED ARRAY", countedArray.length);
             for (let i = 0; i < minFields - countedArray.length; i++) {
               let partnerContact = { ...newContact };
               partnerContact.type = "individual";
@@ -276,7 +275,6 @@ export const updateFieldOnboarding =
         }
 
         if (response.data.roles) {
-          console.log("response.data", response.data);
           dispatch(setRolesData(response.data.roles));
         }
       }
@@ -427,7 +425,6 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         }
 
         function error(err) {
-          console.log("blabla2", err);
           console.warn(`ERROR(${err.code}): ${err.message}`);
         }
 
@@ -467,7 +464,6 @@ export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
       dispatch(setAutoGapiLocation(response.data));
     }
   } catch (err) {
-    console.log("Error1", err);
   }
 };
 export const deleteContactAsync = (index) => async (dispatch, getState) => {
