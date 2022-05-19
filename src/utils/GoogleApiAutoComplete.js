@@ -26,8 +26,6 @@ const GoogleApiAutoComplete = (props) => {
       dispatch(setCurrentOnboardingFields({ id: props.id, value }));
       dispatch(updateFieldOnboarding(fieldToUpdate));
     }
-    setIsChanged(false);
-    setIsBlur(false);
   };
 
   const handleSection3Select = async (value) => {
@@ -55,7 +53,6 @@ const GoogleApiAutoComplete = (props) => {
                 })
               )
             : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
-          setIsChanged(true);
         }}
         onSelect={props.id === "address" ? handleSection3Select : handleSelect}
       >
@@ -63,21 +60,11 @@ const GoogleApiAutoComplete = (props) => {
           return (
             <Box style={{ position: "relative" }}>
               <TextField
-                error={isChanged && isBlur}
-                helperText={
-                  isChanged && isBlur && "You must choose from the list"
-                }
                 required={props.required}
                 fullWidth
                 label={props.label}
                 variant="outlined"
                 {...getInputProps()}
-                onFocus={() => {
-                  setIsChanged(false);
-                }}
-                onBlur={() => {
-                  setIsBlur(true);
-                }}
               />
               <Paper style={{ position: "absolute", zIndex: 300 }}>
                 {loading ? <Box>Loading...</Box> : null}
