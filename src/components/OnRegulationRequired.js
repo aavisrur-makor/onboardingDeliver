@@ -13,6 +13,7 @@ import {
   addOnboardingContact,
   removeOnboardingContact,
   setCurrentOnboardingFields,
+  setCurrentRegulatorField,
   setManagmentList,
   setOnboardingContactField,
   updateContactFieldOnboarding,
@@ -32,13 +33,14 @@ const OnRegulationRequired = () => {
   const regulators = useSelector((state) => state.meta.regulators);
   const regulatorsNameMap = useSelector((state) => state.meta.regulatorsName);
   const [isCustom, setIsCustom] = useState(false);
-  const value = useSelector((state) =>
-    isCustom
-      ? state.onboarding.current.regulator_name
-      : state.onboarding.current.regulator_uuid
+
+  const regulator_name = useSelector(
+    (state) => state.onboarding.current.regulator_name
   );
   const regulatorNames = useMemo(() => {
-    return Object.values(regulators).map((regulator) => regulator.name);
+    return Object.values(regulators).map((regulator) =>
+      regulator.name.toLowerCase()
+    );
   }, [regulators]);
 
   const handleActivitiesYes = (e) => {
@@ -61,23 +63,24 @@ const OnRegulationRequired = () => {
       return setIsCustom(true);
     }
     if (e.target.id === "regulator_name") {
-      if (regulatorNames.includes(e.target.value)) {
+      if (regulatorNames.includes(e.target.value.toLowerCase())) {
+        console.log("BLABLA");
         setIsCustom(false);
         dispatch(
-          setCurrentOnboardingFields({
+          setCurrentRegulatorField({
             id: "regulator_uuid",
-            value: regulatorsNameMap[e.target.value],
+            value: regulatorsNameMap[e.target.value.toLowerCase()],
           })
         );
 
         dispatch(
           updateFieldOnboarding({
-            regulator_uuid: regulatorsNameMap[e.target.value],
+            regulator_uuid: regulatorsNameMap[e.target.value.toLowerCase()],
           })
         );
       } else {
         dispatch(
-          setCurrentOnboardingFields({ id: e.target.id, value: e.target.value })
+          setCurrentRegulatorField({ id: e.target.id, value: e.target.value })
         );
         dispatch(
           updateFieldOnboarding({
@@ -87,7 +90,7 @@ const OnRegulationRequired = () => {
       }
     } else {
       dispatch(
-        setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
+        setCurrentRegulatorField({ id: e.target.name, value: child.props.id })
       );
       dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
     }
@@ -129,10 +132,12 @@ const OnRegulationRequired = () => {
       </Grid>
       {has_regulation_required && (
         <Grid item md={12} xs={12}>
-          {isCustom && !regulatorNames.includes(value) ? (
+          {(isCustom &&
+            !regulatorNames.includes(regulator_name?.toLowerCase())) ||
+          regulator_name ? (
             <TextField
               fullWidth
-              value={value}
+              value={regulator_name}
               id="regulator_name"
               label="Name of Regulator/authority"
               onChange={handleAddField}

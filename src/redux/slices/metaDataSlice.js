@@ -68,7 +68,7 @@ export const metaDataSlice = createSlice({
       }
       for (const regulator of regulators) {
         state.regulatorsMap[regulator.uuid] = regulator.name;
-        state.regulatorsName[regulator.name]= regulator.uuid
+        state.regulatorsName[regulator.name.toLowerCase()] = regulator.uuid;
       }
       for (const tob of type_of_business) {
         state.TypeOfBusinessMap[tob.uuid] = tob.name;

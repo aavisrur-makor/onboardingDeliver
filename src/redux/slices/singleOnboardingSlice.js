@@ -98,6 +98,15 @@ export const singleOnboardingSlice = createSlice({
         state.current[id] = value;
       }
     },
+    setCurrentRegulatorField: (state, action) => {
+      const { id, value } = action.payload;
+      state.current[id] = value;
+      if (id === "regulator_uuid") {
+        state.current.regulator_name = null;
+      } else {
+        state.current.regulator_uuid = null;
+      }
+    },
     setCurrentOnboarding: (state, action) => {
       state.current = action.payload;
     },
@@ -498,6 +507,7 @@ export const {
   deleteContact,
   setManagmentList,
   setCurrentOnboardingFiles,
+  setCurrentRegulatorField,
   addOnboardingContact,
   removeOnboardingContact,
   setOnboardingContactField,
