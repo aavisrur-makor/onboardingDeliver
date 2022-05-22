@@ -1,11 +1,5 @@
 import React from "react";
-import {
-
-  MenuItem,
-  FormControl,
-  Select,
-  InputLabel,
-} from "@material-ui/core";
+import { MenuItem, FormControl, Select, InputLabel } from "@material-ui/core";
 
 import { useSelector } from "react-redux";
 import { useStyles } from "../styles/UiForm";
@@ -86,9 +80,13 @@ const CustomSelect = (props) => {
                   </MenuItem>
                 );
               })}
+          {props.id === "regulator_uuid" && (
+            <MenuItem value="custom" id="custom">
+              Custom
+            </MenuItem>
+          )}
         </Select>
       ) : null}
-   
     </FormControl>
   );
 };

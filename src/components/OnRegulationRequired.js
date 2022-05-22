@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Grid,
@@ -20,6 +20,7 @@ import {
 } from "../redux/slices/singleOnboardingSlice";
 import CustomSelect from "./CustomSelect";
 import { useStyles } from "../styles/UiForm";
+import { TextField } from "@mui/material";
 
 const OnRegulationRequired = () => {
   const has_regulation_required = useSelector(
@@ -28,6 +29,17 @@ const OnRegulationRequired = () => {
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();
+  const regulators = useSelector((state) => state.meta.regulators);
+  const regulatorsNameMap = useSelector((state) => state.meta.regulatorsName);
+  const [isCustom, setIsCustom] = useState(false);
+  const value = useSelector((state) =>
+    isCustom
+      ? state.onboarding.current.regulator_name
+      : state.onboarding.current.regulator_uuid
+  );
+  const regulatorNames = useMemo(() => {
+    return Object.values(regulators).map((regulator) => regulator.name);
+  }, [regulators]);
 
   const handleActivitiesYes = (e) => {
     dispatch(
@@ -44,11 +56,41 @@ const OnRegulationRequired = () => {
     );
     dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
   };
-  const handleAddField = (e, child) => {
-    dispatch(
-      setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
-    );
-    dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
+  const handleAddField = (e, child, isCustomIncluded) => {
+    if (e.target.value === "custom") {
+      return setIsCustom(true);
+    }
+    if (e.target.id === "regulator_name") {
+      if (regulatorNames.includes(e.target.value)) {
+        setIsCustom(false);
+        dispatch(
+          setCurrentOnboardingFields({
+            id: "regulator_uuid",
+            value: regulatorsNameMap[e.target.value],
+          })
+        );
+
+        dispatch(
+          updateFieldOnboarding({
+            regulator_uuid: regulatorsNameMap[e.target.value],
+          })
+        );
+      } else {
+        dispatch(
+          setCurrentOnboardingFields({ id: e.target.id, value: e.target.value })
+        );
+        dispatch(
+          updateFieldOnboarding({
+            regulator_name: e.target.value,
+          })
+        );
+      }
+    } else {
+      dispatch(
+        setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
+      );
+      dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
+    }
   };
   return (
     <>
@@ -87,13 +129,23 @@ const OnRegulationRequired = () => {
       </Grid>
       {has_regulation_required && (
         <Grid item md={12} xs={12}>
-          <CustomSelect
-            id="regulator_uuid"
-            label="Name of Regulator/authority"
-            stateData={"regulators"}
-            stateDataMap={"regulatorsMap"}
-            handleChange={handleAddField}
-          />
+          {isCustom && !regulatorNames.includes(value) ? (
+            <TextField
+              fullWidth
+              value={value}
+              id="regulator_name"
+              label="Name of Regulator/authority"
+              onChange={handleAddField}
+            />
+          ) : (
+            <CustomSelect
+              id="regulator_uuid"
+              label="Name of Regulator/authority"
+              stateData={"regulators"}
+              stateDataMap={"regulatorsMap"}
+              handleChange={handleAddField}
+            />
+          )}
         </Grid>
       )}
     </>

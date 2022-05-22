@@ -47,6 +47,7 @@ const initialState = {
     funds_source: null,
     has_regulation_required: false,
     regulator_uuid: null,
+    regulator_name: null,
     trading_count_from: 0,
     trading_count_to: 0,
     trading_count_frequency: null,
@@ -463,8 +464,7 @@ export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
     if (response.status === 200) {
       dispatch(setAutoGapiLocation(response.data));
     }
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 export const deleteContactAsync = (index) => async (dispatch, getState) => {
   try {
