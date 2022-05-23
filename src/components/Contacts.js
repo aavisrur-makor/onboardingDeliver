@@ -78,11 +78,7 @@ const Contacts = (props) => {
       {querySelector && (
         <Divider style={{ marginTop: "10px", marginBottom: "10px" }}></Divider>
       )}
-      <Grid
-        container
-        spacing={querySelector ? 2 : 5}
-        style={{ paddingTop: 10 }}
-      >
+      <Grid container spacing={querySelector ? 2 : 1}>
         <Grid item xs={12} md={2}>
           <ContactCustomSelect
             stateData={"positions"}
@@ -94,14 +90,7 @@ const Contacts = (props) => {
             required
           />
         </Grid>
-        <Grid
-          item
-          container
-          style={{ padding: "5px", marginTop: "20px", marginBottom: "20px" }}
-          id="kaka"
-          md={3}
-          justifyContent="center"
-        >
+        <Grid item container id="kaka" md={3} justifyContent="center">
           <Grid item xs={6} md={4}>
             <DialPhoneAutoComplete
               required
