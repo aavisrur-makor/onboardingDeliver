@@ -59,11 +59,11 @@ const OnRegulationRequired = () => {
     dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
   };
   const handleAddField = (e, child, isCustomIncluded) => {
-    if (e.target.value === "custom") {
+    if (e.target.value === "other") {
       return setIsCustom(true);
     }
     if (e.target.value === "") {
-       setIsCustom(false);
+      setIsCustom(false);
     }
     if (e.target.id === "regulator_name") {
       if (regulatorNames.includes(e.target.value.toLowerCase())) {

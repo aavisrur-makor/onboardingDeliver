@@ -81,8 +81,8 @@ const CustomSelect = (props) => {
                 );
               })}
           {props.id === "regulator_uuid" && (
-            <MenuItem value="custom" id="custom">
-              Custom
+            <MenuItem value="other" id="other">
+              Other
             </MenuItem>
           )}
         </Select>
