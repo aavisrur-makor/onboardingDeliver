@@ -78,11 +78,11 @@ const PseudoForm = function (props) {
         )}
       </Grid>
 
-      <Grid item>
+      <Grid item xs={12}>
         <Grid container spacing={3}>
           {formData.form1.grid1.map(({ label, id, isRequired }) => {
             return (
-              <Grid item xs={12} md={6}>
+              <Grid key={id} item xs={12} md={6}>
                 <DispatcherField
                   required={isMandatory(id)}
                   type="text"
@@ -104,11 +104,11 @@ const PseudoForm = function (props) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item spacing={3}>
+      <Grid item xs={12}>
         <Grid container spacing={3}>
           {formData.form1.grid2.map(({ label, id }) => {
             return (
-              <Grid item xs={12} md={6}>
+              <Grid key={id} item xs={12} md={6}>
                 <GoogleApiAutoComplete
                   required={isMandatory(id)}
                   id={id}
@@ -120,7 +120,7 @@ const PseudoForm = function (props) {
           {formData.form1.grid4.map(({ label, id }) => {
             if (id === "country") {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid key={id} item xs={12} md={6}>
                   <CountryAutoComplete
                     required={isMandatory(id)}
                     handleChange={handleAddAutoComplete}
@@ -131,7 +131,7 @@ const PseudoForm = function (props) {
               );
             } else if (id === "business_type_uuid") {
               return (
-                <Grid item xs={12} md={6}>
+                <Grid key={id} item xs={12} md={6}>
                   <CustomSelect
                     required={isMandatory(id)}
                     handleChange={handleAddField}
@@ -144,7 +144,7 @@ const PseudoForm = function (props) {
               );
             } else if (id === "description_of_activity") {
               return (
-                <Grid item xs={12}>
+                <Grid key={id} item xs={12}>
                   <DispatcherField
                     required={isMandatory(id)}
                     rows={id === "description_of_activity" && 6}
@@ -169,7 +169,7 @@ const PseudoForm = function (props) {
         </Grid>
       </Grid>
 
-      <Grid item>
+      <Grid item xs={12}>
         <Grid
           container
           direction="row"
@@ -179,9 +179,9 @@ const PseudoForm = function (props) {
           <OnRegulationRequired />
         </Grid>
       </Grid>
-      <Grid item spacing={2} xs={12}>
+      <Grid item xs={12}>
         <Grid container spacing={2}>
-          <Grid item>
+          <Grid item xs={12}>
             <Typography className={classes.titleText} variant="body1">
               Contacts
             </Typography>
@@ -189,7 +189,6 @@ const PseudoForm = function (props) {
         </Grid>
         <Grid container direction="column">
           <ContactsForm />
-          <Grid item></Grid>
         </Grid>
       </Grid>
     </Grid>

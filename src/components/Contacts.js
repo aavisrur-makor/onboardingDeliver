@@ -50,6 +50,7 @@ const Contacts = (props) => {
     contactIndex,
     objectField
   ) => {
+    console.log("blabla");
     const fieldName = e.target.id.split("-")[0];
     dispatch(
       setOnboardingContactField({
@@ -93,7 +94,14 @@ const Contacts = (props) => {
             required
           />
         </Grid>
-        <Grid item container md={3} justifyContent="center">
+        <Grid
+          item
+          container
+          style={{ padding: "5px", marginTop: "20px", marginBottom: "20px" }}
+          id="kaka"
+          md={3}
+          justifyContent="center"
+        >
           <Grid item xs={6} md={4}>
             <DialPhoneAutoComplete
               required

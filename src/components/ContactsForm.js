@@ -14,8 +14,6 @@ const ContactsForm = () => {
   };
   const dispatch = useDispatch();
 
- 
-
   return (
     <>
       <Grid item>
@@ -24,8 +22,7 @@ const ContactsForm = () => {
             <Contacts
               arrLength={
                 contacts.filter(
-                  (singleContact) =>
-                    singleContact.section === contact.section
+                  (singleContact) => singleContact.section === contact.section
                 ).length
               }
               index={contactIndex}

@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { withStyles } from "@material-ui/core";
@@ -18,13 +18,11 @@ const DialPhoneAutoComplete = (props) => {
   const [countryDialCode, setCountryDialCode] = useState(
     dial_code ? dialCodeMap[dial_code] : {}
   );
-  const [countryDialCodeInput, setCountryDialCodeInput] = useState(
-    dial_code ? dial_code : ""
-  );
-  const dispatch = useDispatch();
+  const [countryDialCodeInput, setCountryDialCodeInput] = useState("");
 
- 
-
+  useEffect(() => {
+    setCountryDialCodeInput(dial_code);
+  }, [dial_code]);
   const handleChange = (e, inputValue) => {
     setCountryDialCode(inputValue);
     props.handleChange(e, e.dialing_code, props.index, props.objectField);
@@ -41,11 +39,14 @@ const DialPhoneAutoComplete = (props) => {
       className={props.className}
       autoHighlight
       fullWidth
+      value={countryDialCode ? countryDialCode : {}}
+      inputValue={countryDialCodeInput || ""}
       getOptionLabel={(option) =>
         option.dialing_code ? option.dialing_code : ""
       }
       onChange={(e, value) => {
         setCountryDialCode(value);
+        setCountryDialCodeInput(value.dialing_code);
         props.handleContactDialCodeChange(
           e,
           value.dialing_code,
@@ -53,13 +54,13 @@ const DialPhoneAutoComplete = (props) => {
           props.objectField
         );
       }}
-      value={countryDialCode}
-      inputValue={
-        dial_code ? dial_code : countryDialCodeInput ? countryDialCodeInput : ""
-      }
       onInputChange={(e, inputValue) => {
-       
-        setCountryDialCodeInput(inputValue);
+        if (inputValue === "") {
+          setCountryDialCode({});
+          setCountryDialCodeInput("");
+        } else {
+          setCountryDialCodeInput(inputValue);
+        }
       }}
       renderInput={(params) => (
         <StyledTextFieldCountry

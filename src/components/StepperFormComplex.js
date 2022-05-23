@@ -97,7 +97,7 @@ const StepperFormComplex = () => {
     dispatch(setAuthField({ id: "AcceptAndSendFinish", value: true }));
   };
   return uuidIsValid ? (
-    <Grid container className={classes.container} sm={12}>
+    <Grid container className={classes.container}>
       {queryMatch ? (
         <Grid item xs={10}>
           <MobileStepper
@@ -139,7 +139,7 @@ const StepperFormComplex = () => {
       <Grid item className={classes.BoxContainer} xs={11}>
         <Grid container direction="column">
           <Grid item>{!queryMatch && <ProgressBar />}</Grid>
-          <Grid item className={mixins.formBody}>
+          <Grid item xs={12} className={mixins.formBody}>
             {activeStep === 0 ? (
               <PseudoForm query={queryMatch} />
             ) : activeStep === 1 ? (
@@ -150,10 +150,10 @@ const StepperFormComplex = () => {
               <TermsForm query={queryMatch} />
             )}
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <Grid container>
               {activeStep !== 0 && (
-                <Grid item>
+                <Grid item >
                   <StyledButton
                     // className={classes.navButton}
                     color="inherit"

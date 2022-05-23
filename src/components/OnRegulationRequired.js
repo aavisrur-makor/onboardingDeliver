@@ -62,9 +62,11 @@ const OnRegulationRequired = () => {
     if (e.target.value === "custom") {
       return setIsCustom(true);
     }
+    if (e.target.value === "") {
+       setIsCustom(false);
+    }
     if (e.target.id === "regulator_name") {
       if (regulatorNames.includes(e.target.value.toLowerCase())) {
-        console.log("BLABLA");
         setIsCustom(false);
         dispatch(
           setCurrentRegulatorField({
