@@ -16,9 +16,9 @@ export const terms = {
   },
   4: {
     title: "Users",
-    1: "   You must set up and maintain an account to use the Service and submit orders (an “Account”). Your eligibility to use the Service will be assessed on a case-by-case basis and may depend on the country where You reside. Enigma reserves the right to refuse to allow You to establish an account or use the Service for any reason at its absolute discretion.",
-    2: "   You represent and warrant that Your use of the Service, and Your entry into each Transaction to which You become a party complies with applicable law and regulation in Your jurisdiction, including but not limited to: (i) legal capacity and any other applicable legal requirements in Your jurisdiction for trading Cryptocurrency and using the Service, (ii) any foreign exchange or regulatory restrictions applicable to Your use of the Service, and 1.2.1 the receipt of any governmental or other consents (or exemptions) that You may need to be obtain prior to Your use of the Service.  ",
-    3: "Nothing in these Terms shall be deemed, nor shall cause, You and Enigma to be treated as partners or joint ventures. ",
+    1: " You must set up and maintain an account to use the Service and submit orders (an “Account”). Your eligibility to use the Service will be assessed on a case-by-case basis and may depend on the country where You reside.Enigma reserves the right to refuse to allow You to establish an account or use the Service for any reason at its absolute discretion.",
+    2: "You represent and warrant that Your use of the Service, and Your entry into each Transaction to which You become a party complies with applicable law and regulation in Your jurisdiction, including but not limited to: (i) legal capacity and any other applicable legal requirements in Your jurisdiction for trading Cryptocurrency and",
+    3: "Nothing in these Terms shall be deemed, nor shall cause, You and Enigma to be treated as partners or joint ventures.",
   },
   5: {
     title: "The Service",
