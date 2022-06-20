@@ -22,6 +22,7 @@ const OwnershipAndManagment = () => {
       case "Trust":
         return "Please enter the names and details of all Trustees/Protectors";
       case "Limited Liability Partnership":
+      case "Partnership":
         return "Please provide names of all partners";
       default:
         return null;
