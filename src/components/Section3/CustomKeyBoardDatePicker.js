@@ -6,9 +6,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { ReactComponent as CalenderIcon } from "../../assets/icons/calender.svg";
 
 import TextField from "@mui/material/TextField";
-import {  SvgIcon } from "@mui/material";
+import { SvgIcon } from "@mui/material";
 import { useStyles } from "../../styles/UiForm";
-
 
 const CustomKeyBoardDatePicker = (props) => {
   const classes = useStyles();

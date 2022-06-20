@@ -1,7 +1,7 @@
 import React from "react";
 import GoogleApiAutoComplete from "../../../utils/GoogleApiAutoComplete";
 import DynamicTextField from "../DynamicTextField";
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import CountryAutoComplete from "../../CountryAutoComplete";
 import CustomToggleButton from "../../../utils/CustomToggleButton";
 import { ReactComponent as TrashIcon } from "../../../assets/icons/trashIcon.svg";
@@ -15,7 +15,6 @@ import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../../CustomSelect";
 import { useStyles } from "../../../styles/UiForm";
-import { Typography } from "@mui/material";
 
 const ShareHolderDynamicList = (props) => {
   const dispatch = useDispatch();
@@ -134,7 +133,7 @@ const ShareHolderDynamicList = (props) => {
                     }}
                     type="number"
                     label={"Percentage Ownership"}
-                    id="percentage_ownership"
+                    id="entity_ownership_percentage"
                     index={props.index}
                   />
                 </Grid>
@@ -178,7 +177,7 @@ const ShareHolderDynamicList = (props) => {
                     );
                     debounce(e);
                   }}
-                  id="company_name"
+                  id="entity_name"
                   index={props.index}
                   label="Company Name"
                 />
@@ -196,7 +195,7 @@ const ShareHolderDynamicList = (props) => {
                     debounce(e);
                   }}
                   index={props.index}
-                  id="company_number"
+                  id="entity_registration_number"
                   label="Company Number"
                 />
               </Grid>
@@ -235,7 +234,7 @@ const ShareHolderDynamicList = (props) => {
                     }}
                     type="number"
                     label={"Percentage Ownership"}
-                    id="percentage_ownership"
+                    id="entity_ownership_percentage"
                     index={props.index}
                   />
                 </Grid>

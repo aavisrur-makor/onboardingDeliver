@@ -7,6 +7,7 @@ import {
   IconButton,
   useMediaQuery,
   useTheme,
+  TextField,
 } from "@material-ui/core";
 import StyledButton from "./StyledButton";
 import {
@@ -21,7 +22,6 @@ import {
 } from "../redux/slices/singleOnboardingSlice";
 import CustomSelect from "./CustomSelect";
 import { useStyles } from "../styles/UiForm";
-import { TextField } from "@mui/material";
 
 const OnRegulationRequired = () => {
   const has_regulation_required = useSelector(

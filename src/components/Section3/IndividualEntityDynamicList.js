@@ -129,7 +129,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          {props.arrLength > 2 && (
+          {props.arrLength > 1 && (
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
@@ -164,7 +164,7 @@ const IndividualEntityDynamicList = (props) => {
                     );
                     handleDynamicListChange();
                   }}
-                  id="company_name"
+                  id="entity_name"
                   index={props.index}
                   label="Company Name"
                 />
@@ -183,7 +183,7 @@ const IndividualEntityDynamicList = (props) => {
                     handleDynamicListChange();
                   }}
                   index={props.index}
-                  id="company_number"
+                  id="entity_registration_number"
                   label="Company Number"
                 />
               </Grid>
@@ -211,7 +211,7 @@ const IndividualEntityDynamicList = (props) => {
               </Grid>
             </Grid>
           </Grid>
-          {props.arrLength > 2 && (
+          {props.arrLength > 1 && (
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}

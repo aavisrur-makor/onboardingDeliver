@@ -1,5 +1,5 @@
 import { Container, makeStyles } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { StrictMode, useEffect } from "react";
 import StepperFormComplex from "./components/StepperFormComplex";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SimpleForm from "./components/SimpleForm";
