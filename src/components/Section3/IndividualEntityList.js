@@ -56,7 +56,7 @@ const IndividualEntityList = () => {
         </Grid>
         <Grid item>
           <Typography style={{ cursor: "pointer" }} onClick={handleAdd}>
-            Add Trustee/protector
+            Add Partner
           </Typography>
         </Grid>
       </Grid>
