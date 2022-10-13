@@ -38,6 +38,7 @@ const ShareHolderList = () => {
             md={12}
           >
             <ShareHolderDynamicList
+              type="share_holder"
               arrLength={
                 data.filter(
                   (contactLine) => contactLine.section === line.section

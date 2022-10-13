@@ -22,6 +22,7 @@ import {
 } from "../redux/slices/singleOnboardingSlice";
 import CustomSelect from "./CustomSelect";
 import { useStyles } from "../styles/UiForm";
+import DispatcherField from "./DispatcherField";
 
 const OnRegulationRequired = () => {
   const has_regulation_required = useSelector(
@@ -47,7 +48,7 @@ const OnRegulationRequired = () => {
     dispatch(
       setCurrentOnboardingFields({ id: "has_regulation_required", value: true })
     );
-    dispatch(updateFieldOnboarding({ ["has_regulation_required"]: true }));
+    dispatch(updateFieldOnboarding({ "has_regulation_required": true }));
   };
   const handleActivitiesNo = (e) => {
     dispatch(
@@ -56,7 +57,7 @@ const OnRegulationRequired = () => {
         value: false,
       })
     );
-    dispatch(updateFieldOnboarding({ ["has_regulation_required"]: false }));
+    dispatch(updateFieldOnboarding({ "has_regulation_required": false }));
   };
   const handleAddField = (e, child, isCustomIncluded) => {
     if (e.target.value === "other") {
@@ -133,27 +134,32 @@ const OnRegulationRequired = () => {
         </Grid>
       </Grid>
       {has_regulation_required && (
-        <Grid item md={12} xs={12}>
+      <>
+        <Grid item md={6} xs={12}>
           {(isCustom &&
             !regulatorNames.includes(regulator_name?.toLowerCase())) ||
-          regulator_name ? (
+            regulator_name ? (
             <TextField
-              fullWidth
-              value={regulator_name}
-              id="regulator_name"
-              label="Name of Regulator/authority"
-              onChange={handleAddField}
+            fullWidth
+            value={regulator_name}
+            id="regulator_name"
+            label="Name of Regulator/authority"
+            onChange={handleAddField}
             />
-          ) : (
-            <CustomSelect
+            ) : (
+              <CustomSelect
               id="regulator_uuid"
               label="Name of Regulator/authority"
               stateData={"regulators"}
               stateDataMap={"regulatorsMap"}
               handleChange={handleAddField}
-            />
-          )}
+              />
+              )}
         </Grid>
+        <Grid item md={6} xs={12}>
+          <DispatcherField id="license_number" label="License/Registration number"/>
+        </Grid>
+      </>
       )}
     </>
   );

@@ -19,7 +19,7 @@ const TradingInfo = () => {
       </Grid>
       <Grid item container>
         <Grid item xs={12}>
-          <Typography>
+          <Typography className={classes.subTitle}>
             Please detail where funds for trading with Enigma are from, both
             cryptoasset and fiat
           </Typography>

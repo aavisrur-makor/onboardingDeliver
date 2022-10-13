@@ -5,12 +5,14 @@ import Contacts from "./Contacts";
 import { useStyles } from "../styles/UiForm";
 import { ReactComponent as AddIcon } from "./../assets/icons/Group46.svg";
 import { addOnboardingContact } from "../redux/slices/singleOnboardingSlice";
+import { setContactValidation } from "../redux/slices/validationSlice";
 
 const ContactsForm = () => {
   const contacts = useSelector((state) => state.onboarding.current.contacts);
   const classes = useStyles();
   const handleAdd = () => {
     dispatch(addOnboardingContact("contact"));
+    dispatch(setContactValidation({ type: "contacts" }));
   };
   const dispatch = useDispatch();
 

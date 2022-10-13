@@ -34,6 +34,7 @@ const IndividualEntityList = () => {
                   .length
               }
               index={lineIndex}
+              type="individual"
             />
           </Grid>
         ) : null;

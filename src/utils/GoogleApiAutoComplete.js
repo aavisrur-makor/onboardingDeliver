@@ -8,6 +8,10 @@ import {
   updateFieldOnboarding,
   updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
+import {
+  setValidation,
+  setOnboardingContactValidationField,
+} from "../redux/slices/validationSlice";
 
 const GoogleApiAutoComplete = (props) => {
   const dispatch = useDispatch();
@@ -18,6 +22,32 @@ const GoogleApiAutoComplete = (props) => {
       ? state.onboarding.current.contacts[props.index][props.id]
       : state.onboarding.current[props.id]
   );
+
+  const handleChange = (e) => {
+    console.log(props.id);
+    if (props.id === "address") {
+      dispatch(
+        setOnboardingContactField({
+          id: props.id,
+          value: e,
+          contactIndex: props.index,
+        })
+      );
+
+      if (!e)
+        dispatch(
+          setOnboardingContactValidationField({
+            contactIndex: props.index,
+            field: props.id,
+            value: false,
+          })
+        );
+    } else {
+      dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
+      if (!e) dispatch(setValidation({ field: props.id, value: false }));
+    }
+  };
+
   const handleSelect = async (value) => {
     let fieldToUpdate = { [props.id]: value };
     if (props.id === "address") {
@@ -25,6 +55,7 @@ const GoogleApiAutoComplete = (props) => {
     } else {
       dispatch(setCurrentOnboardingFields({ id: props.id, value }));
       dispatch(updateFieldOnboarding(fieldToUpdate));
+      dispatch(setValidation({ field: props.id, value: true }));
     }
   };
 
@@ -37,26 +68,24 @@ const GoogleApiAutoComplete = (props) => {
       })
     );
     dispatch(updateSection3Contact(props.index));
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: props.id,
+        value: true,
+      })
+    );
   };
   return (
     <div>
       <PlacesAutocomplete
         style={{ zIndex: 10000 }}
         value={value ? value : ""}
-        onChange={(e) => {
-          props.id === "address"
-            ? dispatch(
-                setOnboardingContactField({
-                  id: props.id,
-                  value: e,
-                  contactIndex: props.index,
-                })
-              )
-            : dispatch(setCurrentOnboardingFields({ id: props.id, value: e }));
-        }}
+        onChange={handleChange}
         onSelect={props.id === "address" ? handleSection3Select : handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
+          console.log(loading);
           return (
             <Box style={{ position: "relative" }}>
               <TextField

@@ -3,7 +3,7 @@ export default {
     grid1: [
       { id: "client_company_legal_name", label: "Company Legal Name" },
       { id: "trading_name", label: "Trading Name" },
-      { id: "registration_number", label: "Register Number" },
+      { id: "registration_number", label: "Registration Number" },
 
       // {id: 'country', label: 'COUNTRY'},
     ],
@@ -27,6 +27,7 @@ export default {
         label: "Type of Business & Activity",
       },
       { id: "website", label: "Website Url" },
+      {id:"LEI",label:"LEI"},
       {
         id: "description_of_activity",
         label: "Describe the type of Business & Activity",

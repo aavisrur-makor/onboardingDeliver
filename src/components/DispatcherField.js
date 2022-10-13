@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { makeStyles, TextField } from "@material-ui/core";
 import validate from "../utils/validate";
-
+import validator from "validator";
 import { useDebouncedCallback } from "use-debounce";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setCurrentOnboardingFields,
   updateFieldOnboarding,
 } from "../redux/slices/singleOnboardingSlice";
+import { setValidation } from "../redux/slices/validationSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,9 +58,13 @@ const DispatcherField = (props) => {
 
   const handleChange = async (e) => {
     let fieldToUpdate = {};
-    if (props.isRequired) {
-      validate(null, value, setError);
-    }
+    if (validator.isEmpty(e.target.value)) {
+			  setError('This field is required')
+				dispatch(setValidation({  field: e.target.id, value: false }))
+		} else {
+		    dispatch(setValidation({  field: e.target.id, value: true }))
+			setError('')
+		}
     if (props.type === "number") {
       fieldToUpdate = {
         [e.target.id]: +value,
@@ -79,6 +84,7 @@ const DispatcherField = (props) => {
       id={props.id}
       type={props.type}
       fullWidth
+      error={error}
       required={props.required}
       onChange={(e) => {
 
@@ -87,8 +93,9 @@ const DispatcherField = (props) => {
         );
         debounced(e);
       }}
-      inputProps={{ style: { padding: 2 } }}
+      inputProps={{ style: { padding: props.id==="license_number"? 0: 2 } }}
       label={props.label}
+      helperText={error&&error}
       value={value ? value : ""}
       variant="outlined"
       rows={props.rows}

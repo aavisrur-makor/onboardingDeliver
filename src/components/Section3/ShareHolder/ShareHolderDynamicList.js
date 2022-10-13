@@ -15,6 +15,7 @@ import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../../CustomSelect";
 import { useStyles } from "../../../styles/UiForm";
+import { setOnboardingContactValidationField } from "../../../redux/slices/validationSlice";
 
 const ShareHolderDynamicList = (props) => {
   const dispatch = useDispatch();
@@ -36,6 +37,13 @@ const ShareHolderDynamicList = (props) => {
       })
     );
     dispatch(updateSection3Contact(props.index));
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: id,
+        value: true,
+      })
+    );
   };
   const handleAddCompanyType = (e, child) => {
     dispatch(
@@ -46,8 +54,45 @@ const ShareHolderDynamicList = (props) => {
       })
     );
     dispatch(updateSection3Contact(props.index));
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: "client_type_uuid",
+        value: true,
+      })
+    );
   };
+
+  const handleChange = (e) => {
+    dispatch(
+      setOnboardingContactField({
+        id: e.target.id,
+        value: e.target.value,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateSection3Contact(props.index));
+    if (e.target.value) {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: true,
+        })
+      );
+    } else {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: false,
+        })
+      );
+    }
+  };
+
   const debounce = useDebouncedCallback(handleDynamicListChange, 400);
+
   return (
     <>
       {alignment === "individual" ? (
@@ -57,6 +102,7 @@ const ShareHolderDynamicList = (props) => {
               <Grid item md={2} xs={12}>
                 <CustomToggleButton
                   id="type"
+                  type={props.type}
                   // setAlignment={setAlignment}
                   value={alignment}
                   index={props.index}
@@ -65,16 +111,7 @@ const ShareHolderDynamicList = (props) => {
               <Grid item xs={12} md={5}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    debounce(e);
-                  }}
+                  onChange={handleChange}
                   id="first_name"
                   index={props.index}
                   label="First Name"
@@ -83,16 +120,7 @@ const ShareHolderDynamicList = (props) => {
               <Grid item xs={12} md={5}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    debounce(e);
-                  }}
+                  onChange={handleChange}
                   id="last_name"
                   index={props.index}
                   label="Last Name"
@@ -121,16 +149,7 @@ const ShareHolderDynamicList = (props) => {
                 <Grid item xs={11}>
                   <DynamicTextField
                     required
-                    onChange={(e) => {
-                      dispatch(
-                        setOnboardingContactField({
-                          id: e.target.id,
-                          value: +e.target.value,
-                          contactIndex: props.index,
-                        })
-                      );
-                      debounce(e);
-                    }}
+                    onChange={handleChange}
                     type="number"
                     label={"Percentage Ownership"}
                     id="entity_ownership_percentage"
@@ -161,22 +180,14 @@ const ShareHolderDynamicList = (props) => {
               <Grid item xs={12} md={2}>
                 <CustomToggleButton
                   value={alignment}
+                  type={props.type}
                   index={props.index}
                   id="type"
                 />
               </Grid>
               <Grid item xs={12} md={5}>
                 <DynamicTextField
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    debounce(e);
-                  }}
+                  onChange={handleChange}
                   id="entity_name"
                   index={props.index}
                   label="Company Name"
@@ -184,16 +195,7 @@ const ShareHolderDynamicList = (props) => {
               </Grid>
               <Grid item xs={12} md={5}>
                 <DynamicTextField
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    debounce(e);
-                  }}
+                  onChange={handleChange}
                   index={props.index}
                   id="entity_registration_number"
                   label="Company Number"
@@ -222,16 +224,7 @@ const ShareHolderDynamicList = (props) => {
               <Grid item alignItems="center" xs={4} container>
                 <Grid item xs={11}>
                   <DynamicTextField
-                    onChange={(e) => {
-                      dispatch(
-                        setOnboardingContactField({
-                          id: e.target.id,
-                          value: +e.target.value,
-                          contactIndex: props.index,
-                        })
-                      );
-                      debounce(e);
-                    }}
+                    onChange={handleChange}
                     type="number"
                     label={"Percentage Ownership"}
                     id="entity_ownership_percentage"

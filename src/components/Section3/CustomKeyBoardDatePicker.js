@@ -8,6 +8,7 @@ import { ReactComponent as CalenderIcon } from "../../assets/icons/calender.svg"
 import TextField from "@mui/material/TextField";
 import { SvgIcon } from "@mui/material";
 import { useStyles } from "../../styles/UiForm";
+import { setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
 
 const CustomKeyBoardDatePicker = (props) => {
   const classes = useStyles();
@@ -15,6 +16,24 @@ const CustomKeyBoardDatePicker = (props) => {
   const value = useSelector(
     (state) => state.onboarding.current.contacts[props.index][props.id]
   );
+
+  const handleChangeDate = (date) => {
+    dispatch(
+      setOnboardingContactField({
+        id: "birthday_at",
+        value: moment(date).isValid() ? moment(date) : "",
+        contactIndex: props.index,
+      })
+    );
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: "birthday_at",
+        value: true,
+      })
+    );
+    props.handleDynamicListChange(props.index);
+  };
   function DateIcon(props) {
     return (
       <SvgIcon {...props}>
@@ -27,16 +46,7 @@ const CustomKeyBoardDatePicker = (props) => {
     <DatePicker
       id={props.id}
       disableFuture
-      onAccept={(date) => {
-        dispatch(
-          setOnboardingContactField({
-            id: "birthday_at",
-            value: moment(date).isValid() ? moment(date) : "",
-            contactIndex: props.index,
-          })
-        );
-        props.handleDynamicListChange(props.index);
-      }}
+      onAccept={handleChangeDate}
       openTo="year"
       label={!value ? "Date of Birth" : ""}
       views={["year", "month", "day"]}

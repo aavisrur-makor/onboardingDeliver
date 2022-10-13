@@ -6,6 +6,10 @@ import {
   setOnboardingContactField,
   updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
+import {
+  setOwnerShipToggle,
+  setShareHolderToggle,
+} from "../redux/slices/validationSlice";
 import { useStyles } from "../styles/UiForm";
 const CustomToggleButton = (props) => {
   const classes = useStyles();
@@ -20,6 +24,23 @@ const CustomToggleButton = (props) => {
         })
       );
       dispatch(updateSection3Contact(props.index));
+      if (props.type === "share_holder") {
+        dispatch(
+          setShareHolderToggle({
+            contactIndex: props.index,
+            alignment: newAlignment,
+            stateType: props.slice,
+          })
+        );
+      } else {
+        dispatch(
+          setOwnerShipToggle({
+            contactIndex: props.index,
+            alignment: newAlignment,
+            stateType: props.slice,
+          })
+        );
+      }
     }
   };
   return (

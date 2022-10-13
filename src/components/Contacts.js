@@ -18,6 +18,7 @@ import ContactCustomSelect from "./ContactCustomSelect";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import validator from "validator";
+import { deleteContactValidation } from "../redux/slices/validationSlice";
 
 const Contacts = (props) => {
   const classes = useStyles();
@@ -27,6 +28,7 @@ const Contacts = (props) => {
   const [validatedEmail, setValidatedEmail] = useState(true);
   const handleDeleteContact = (e, index) => {
     dispatch(deleteContactAsync(index));
+    dispatch(deleteContactValidation({ contactIndex: index }));
   };
   const handleContactChange = (e, contactIndex, objectField) => {
     const fieldName = e.target.id.split("-")[0];

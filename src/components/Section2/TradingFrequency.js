@@ -7,6 +7,7 @@ import {
   setCurrentOnboardingFields,
   updateFieldOnboarding,
 } from "../../redux/slices/singleOnboardingSlice";
+import { setValidation } from "../../redux/slices/validationSlice";
 function TradingFrequency() {
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
@@ -18,6 +19,7 @@ function TradingFrequency() {
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: e.target.value })
     );
+    dispatch(setValidation({ field: e.target.name, value: true }));
   };
   return (
     <Grid container spacing={querySelector ? 4 : 2} alignItems="center">

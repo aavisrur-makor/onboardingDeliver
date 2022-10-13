@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, updateTermsAsync } from "../redux/slices/authSlice";
 import { getOnboardingData } from "../redux/slices/singleOnboardingSlice";
 import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
+import { setFirstContactValidation } from "../redux/slices/validationSlice";
 
 const steps = [
   "Company Info",
@@ -53,6 +54,7 @@ const StepperFormComplex = () => {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
       if (metaDataloader) {
         dispatch(getOnboardingData());
+        dispatch(setFirstContactValidation())
       }
     }
   }, [metaDataloader]);
@@ -183,7 +185,7 @@ const StepperFormComplex = () => {
                     onClick={handleAccept}
                     sx={{ mr: 1 }}
                     variant="outlined"
-                    disabled={!AcceptAndSendAgree || progress !== 100}
+                    // disabled={!AcceptAndSendAgree || progress !== 100}
                   >
                     Accept and Send
                   </StyledButton>
