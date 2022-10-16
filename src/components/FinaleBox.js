@@ -14,20 +14,22 @@ const FinaleBox = () => {
   const dispatch = useDispatch();
   const handleClose = () => {
     dispatch(setAuthField({ id: "AcceptAndSendFinish", value: false }));
-    // window.location.href = "https://enigma-securities.io/";
+    if (!remainingFields.length) {
+      window.location.href = "https://enigma-securities.io/";
+    }
   };
 
   const handleRemainingFields = () => {
     return remainingFields.map((field) => (
-        <Typography
-          style={{
-            textAlign: "center",
-            font: "normal normal normal 24px/28px Work Sans",
-            color: "red",
-          }}
-        >
-          {field.split("_").join(" ")}
-        </Typography>
+      <Typography
+        style={{
+          textAlign: "center",
+          font: "normal normal normal 24px/28px Work Sans",
+          color: "red",
+        }}
+      >
+        {field.split("_").join(" ")}
+      </Typography>
     ));
   };
 
@@ -37,7 +39,8 @@ const FinaleBox = () => {
         justifyContent="center"
         alignItems="center"
         direction="column"
-        container item
+        container
+        item
         className={classes.subContainer}
       >
         {remainingFields.length ? (
