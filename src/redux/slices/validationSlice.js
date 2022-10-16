@@ -222,7 +222,7 @@ export const validationSlice = createSlice({
           return value === true;
         });
         if (!contactValid)
-          state.remainingFields.push(`missing fields in contact ${index}`);
+          state.remainingFields.push(`missing fields in contact ${index+1}`);
       });
     },
   },
