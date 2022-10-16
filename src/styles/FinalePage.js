@@ -17,6 +17,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   Button: {
     marginTop: "70px",
+    marginBottom:"20px",
     border: "2px solid #222246",
     opacity: "1",
     width: "108px",
