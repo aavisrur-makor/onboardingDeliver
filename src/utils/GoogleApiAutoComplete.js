@@ -24,7 +24,6 @@ const GoogleApiAutoComplete = (props) => {
   );
 
   const handleChange = (e) => {
-    console.log(props.id);
     if (props.id === "address") {
       dispatch(
         setOnboardingContactField({
@@ -85,7 +84,6 @@ const GoogleApiAutoComplete = (props) => {
         onSelect={props.id === "address" ? handleSection3Select : handleSelect}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => {
-          console.log(loading);
           return (
             <Box style={{ position: "relative" }}>
               <TextField

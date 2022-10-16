@@ -6,6 +6,7 @@ import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
 import { useStyles } from "../../styles/UiForm";
 import { useDispatch } from "react-redux";
 import { addOnboardingContact } from "../../redux/slices/singleOnboardingSlice";
+import { addSingleContact } from "../../redux/slices/validationSlice";
 
 const IndividualEntityList = () => {
   const classes = useStyles();
@@ -13,7 +14,10 @@ const IndividualEntityList = () => {
   const dispatch = useDispatch();
   const handleAdd = (e) => {
     dispatch(addOnboardingContact("ownership"));
+    dispatch(addSingleContact({type:"ownership"}))
   };
+
+
 
   return (
     <Grid container spacing={2}>

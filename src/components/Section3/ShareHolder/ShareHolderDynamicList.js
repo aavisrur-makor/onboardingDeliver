@@ -15,7 +15,10 @@ import CustomKeyBoardDatePicker from "../CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../../CustomSelect";
 import { useStyles } from "../../../styles/UiForm";
-import { setOnboardingContactValidationField } from "../../../redux/slices/validationSlice";
+import {
+  deleteContactValidation,
+  setOnboardingContactValidationField,
+} from "../../../redux/slices/validationSlice";
 
 const ShareHolderDynamicList = (props) => {
   const dispatch = useDispatch();
@@ -67,7 +70,10 @@ const ShareHolderDynamicList = (props) => {
     dispatch(
       setOnboardingContactField({
         id: e.target.id,
-        value: e.target.value,
+        value:
+          e.target.id === "entity_ownership_percentage"
+            ? +e.target.value
+            : e.target.value,
         contactIndex: props.index,
       })
     );
@@ -89,6 +95,11 @@ const ShareHolderDynamicList = (props) => {
         })
       );
     }
+  };
+
+  const handleDeleteContact = () => {
+    dispatch(deleteContactAsync(props.index));
+    dispatch(deleteContactValidation({ contactIndex: props.index }));
   };
 
   const debounce = useDebouncedCallback(handleDynamicListChange, 400);
@@ -166,7 +177,7 @@ const ShareHolderDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>
@@ -241,7 +252,7 @@ const ShareHolderDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>

@@ -157,7 +157,7 @@ const OnRegulationRequired = () => {
               )}
         </Grid>
         <Grid item md={6} xs={12}>
-          <DispatcherField id="license_number" label="License/Registration number"/>
+          <DispatcherField id="regulation_number" label="License/Registration number"/>
         </Grid>
       </>
       )}

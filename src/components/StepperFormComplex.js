@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAuthField, updateTermsAsync } from "../redux/slices/authSlice";
 import { getOnboardingData } from "../redux/slices/singleOnboardingSlice";
 import OwnershipAndManagment from "./Section3/OwnershipAndManagment";
-import { setFirstContactValidation } from "../redux/slices/validationSlice";
+import { checkRemainingFields, setFirstContactValidation } from "../redux/slices/validationSlice";
 
 const steps = [
   "Company Info",
@@ -54,7 +54,7 @@ const StepperFormComplex = () => {
       dispatch(setAuthField({ id: "uuid", value: params.uuid }));
       if (metaDataloader) {
         dispatch(getOnboardingData());
-        dispatch(setFirstContactValidation())
+        // dispatch(setFirstContactValidation())
       }
     }
   }, [metaDataloader]);
@@ -95,6 +95,7 @@ const StepperFormComplex = () => {
     const fieldToUpdate = {
       accept_and_send: true,
     };
+    dispatch(checkRemainingFields())
     dispatch(updateTermsAsync("AcceptAndSendAgree", fieldToUpdate));
     dispatch(setAuthField({ id: "AcceptAndSendFinish", value: true }));
   };

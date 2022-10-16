@@ -13,13 +13,19 @@ import {
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
-import { setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
+import { deleteContactValidation, setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
 
 function DynamicList(props) {
   const dispatch = useDispatch();
   const handleDynamicListChange = (e) => {
     dispatch(updateSection3Contact(props.index));
   };
+
+  const handleDeleteContact =()=>{
+    dispatch(deleteContactAsync(props.index))
+    dispatch(deleteContactValidation({contactIndex:props.index}))
+
+  }
 
   const handleChange = (e) => {
     dispatch(
@@ -108,7 +114,7 @@ function DynamicList(props) {
         <Grid item md={1} xs={12}>
           <IconButton
             style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-            onClick={(e) => dispatch(deleteContactAsync(props.index))}
+            onClick={handleDeleteContact}
           >
             {<TrashIcon />}
           </IconButton>

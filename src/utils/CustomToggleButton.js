@@ -7,6 +7,7 @@ import {
   updateSection3Contact,
 } from "../redux/slices/singleOnboardingSlice";
 import {
+  handleToggleChange,
   setOwnerShipToggle,
   setShareHolderToggle,
 } from "../redux/slices/validationSlice";
@@ -24,6 +25,7 @@ const CustomToggleButton = (props) => {
         })
       );
       dispatch(updateSection3Contact(props.index));
+
       if (props.type === "share_holder") {
         dispatch(
           setShareHolderToggle({
@@ -32,6 +34,7 @@ const CustomToggleButton = (props) => {
             stateType: props.slice,
           })
         );
+        dispatch(handleToggleChange(props.index,newAlignment))
       } else {
         dispatch(
           setOwnerShipToggle({

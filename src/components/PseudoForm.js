@@ -62,7 +62,7 @@ const PseudoForm = function (props) {
       })
     );
 
-    if (companyType)
+    if (!companyType)
       dispatch(setContactValidation({ type: companyTypeMap[id] }));
 
     dispatch(setCurrentOnboardingFields({ id: name, value: id }));

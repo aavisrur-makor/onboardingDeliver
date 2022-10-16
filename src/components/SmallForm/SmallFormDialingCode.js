@@ -42,7 +42,6 @@ const SmallFormDialingCode = (props) => {
       value={countryDialCode}
       inputValue={countryDialCodeInput}
       onInputChange={(e, inputValue) => {
-        console.log("blabla3", inputValue);
         dispatch(
           setFormFields({
             id: "dialing_code",

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setOnboardingContactField } from "../redux/slices/singleOnboardingSlice";
 import validator from "validator";
 import { NightsStay } from "@material-ui/icons";
+import { useState } from "react";
+import { setOnboardingContactValidationField } from "../redux/slices/validationSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,10 +56,29 @@ const ContactsDispatcherField = (props) => {
         ][props.objectField]
       : state.onboarding.current.contacts[props.index][props.id]
   );
-
+  const [error, setError] = useState("");
   const classes = useStyles();
   const dispatch = useDispatch();
   const handleChange = async (e) => {
+    if (validator.isEmpty(e.target.value)) {
+      setError("This field is required");
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: props.id === "phone" ? props.objectField : e.target.id,
+          value: false,
+        })
+      );
+    } else {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: props.id === "phone" ? props.objectField : e.target.id,
+          value:props.id==="email"?validator.isEmail(e.target.value):true,
+        })
+      );
+      setError("");
+    }
     props.handleChange(e, props.index, props.objectField);
   };
 
@@ -69,8 +90,8 @@ const ContactsDispatcherField = (props) => {
       type={props.type}
       fullWidth
       required={props.required}
-      error={props.id === "email" && !props.error}
-      helperText={!props.error && props.helperText}
+      error={(props.id === "email" && !props.error) || error}
+      helperText={(!props.error && props.helperText) || (error && error)}
       onChange={(e) => {
         dispatch(
           setOnboardingContactField({

@@ -15,7 +15,7 @@ import {
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../CustomSelect";
-import { setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
+import { deleteContactValidation, setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
 
 const IndividualEntityDynamicList = (props) => {
   const dispatch = useDispatch();
@@ -90,6 +90,12 @@ const IndividualEntityDynamicList = (props) => {
       );
     }
   };
+
+  const handleDeleteContact =()=>{
+    dispatch(deleteContactAsync(props.index))
+    dispatch(deleteContactValidation({contactIndex:props.index}))
+
+  }
   return (
     <>
       {alignment === "individual" ? (
@@ -159,7 +165,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>
@@ -224,7 +230,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>
