@@ -15,6 +15,7 @@ import {
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomSelect from "../CustomSelect";
+import { deleteContactValidation, setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
 
 const IndividualEntityDynamicList = (props) => {
   const dispatch = useDispatch();
@@ -36,6 +37,13 @@ const IndividualEntityDynamicList = (props) => {
       })
     );
     dispatch(updateSection3Contact(props.index));
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: id,
+        value: true,
+      })
+    );
   };
   const handleAddCompanyType = (e, child) => {
     dispatch(
@@ -46,7 +54,48 @@ const IndividualEntityDynamicList = (props) => {
       })
     );
     dispatch(updateSection3Contact(props.index));
+    dispatch(
+      setOnboardingContactValidationField({
+        contactIndex: props.index,
+        field: "client_type_uuid",
+        value: true,
+      })
+    );
   };
+
+  const handleChange = (e) => {
+    dispatch(
+      setOnboardingContactField({
+        id: e.target.id,
+        value: e.target.value,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateSection3Contact(props.index));
+    if (e.target.value) {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: true,
+        })
+      );
+    } else {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: false,
+        })
+      );
+    }
+  };
+
+  const handleDeleteContact =()=>{
+    dispatch(deleteContactAsync(props.index))
+    dispatch(deleteContactValidation({contactIndex:props.index}))
+
+  }
   return (
     <>
       {alignment === "individual" ? (
@@ -56,6 +105,7 @@ const IndividualEntityDynamicList = (props) => {
               <Grid item md={2} xs={12}>
                 <CustomToggleButton
                   id="type"
+                  type={props.type}
                   // setAlignment={setAlignment}
                   value={alignment}
                   index={props.index}
@@ -64,16 +114,7 @@ const IndividualEntityDynamicList = (props) => {
               <Grid item md={5} xs={12}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    handleDynamicListChange();
-                  }}
+                  onChange={handleChange}
                   id="first_name"
                   index={props.index}
                   label="First Name"
@@ -82,16 +123,7 @@ const IndividualEntityDynamicList = (props) => {
               <Grid item md={5} xs={12}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    handleDynamicListChange();
-                  }}
+                  onChange={handleChange}
                   id="last_name"
                   index={props.index}
                   label="Last Name"
@@ -133,7 +165,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>
@@ -148,22 +180,14 @@ const IndividualEntityDynamicList = (props) => {
                 <CustomToggleButton
                   value={alignment}
                   index={props.index}
+                  type={props.type}
                   id="type"
                 />
               </Grid>
               <Grid item md={5} xs={12}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    handleDynamicListChange();
-                  }}
+                  onChange={handleChange}
                   id="entity_name"
                   index={props.index}
                   label="Company Name"
@@ -172,16 +196,7 @@ const IndividualEntityDynamicList = (props) => {
               <Grid item md={5} xs={12}>
                 <DynamicTextField
                   required
-                  onChange={(e) => {
-                    dispatch(
-                      setOnboardingContactField({
-                        id: e.target.id,
-                        value: e.target.value,
-                        contactIndex: props.index,
-                      })
-                    );
-                    handleDynamicListChange();
-                  }}
+                  onChange={handleChange}
                   index={props.index}
                   id="entity_registration_number"
                   label="Company Number"
@@ -215,7 +230,7 @@ const IndividualEntityDynamicList = (props) => {
             <Grid item md={1}>
               <IconButton
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-                onClick={(e) => dispatch(deleteContactAsync(props.index))}
+                onClick={handleDeleteContact}
               >
                 {<TrashIcon />}
               </IconButton>

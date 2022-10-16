@@ -6,6 +6,7 @@ import DynamicList from "./DynamicList";
 import { ReactComponent as AddIcon } from "../../assets/icons/Group46.svg";
 import { addOnboardingContact } from "../../redux/slices/singleOnboardingSlice";
 import { useDispatch } from "react-redux";
+import { addSingleContact } from "../../redux/slices/validationSlice";
 
 const DirectorsTrusteeList = () => {
   const classes = useStyles();
@@ -63,6 +64,7 @@ const DirectorsTrusteeList = () => {
             style={{ cursor: "pointer" }}
             onClick={() => {
               dispatch(addOnboardingContact("ownership"));
+              dispatch(addSingleContact({ type: "ownership" }));
             }}
           >
             {companyTypeMap[companyType] === "Company Limited by Shares"

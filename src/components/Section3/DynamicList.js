@@ -13,11 +13,46 @@ import {
 } from "../../redux/slices/singleOnboardingSlice";
 import { useDebouncedCallback } from "use-debounce/lib";
 import CustomKeyBoardDatePicker from "./CustomKeyBoardDatePicker";
+import { deleteContactValidation, setOnboardingContactValidationField } from "../../redux/slices/validationSlice";
 
 function DynamicList(props) {
   const dispatch = useDispatch();
   const handleDynamicListChange = (e) => {
     dispatch(updateSection3Contact(props.index));
+  };
+
+  const handleDeleteContact =()=>{
+    dispatch(deleteContactAsync(props.index))
+    dispatch(deleteContactValidation({contactIndex:props.index}))
+
+  }
+
+  const handleChange = (e) => {
+    dispatch(
+      setOnboardingContactField({
+        id: e.target.id,
+        value: e.target.value,
+        contactIndex: props.index,
+      })
+    );
+    dispatch(updateSection3Contact(props.index));
+    if (e.target.value) {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: true,
+        })
+      );
+    } else {
+      dispatch(
+        setOnboardingContactValidationField({
+          contactIndex: props.index,
+          field: e.target.id,
+          value: false,
+        })
+      );
+    }
   };
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
@@ -29,16 +64,7 @@ function DynamicList(props) {
           <Grid item md={4} xs={12}>
             <DynamicTextField
               required
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
+              onChange={handleChange}
               id="first_name"
               label="First Name"
               index={props.index}
@@ -47,16 +73,7 @@ function DynamicList(props) {
           <Grid item md={4} xs={12}>
             <DynamicTextField
               required
-              onChange={(e) => {
-                dispatch(
-                  setOnboardingContactField({
-                    id: e.target.id,
-                    value: e.target.value,
-                    contactIndex: props.index,
-                  })
-                );
-                handleDynamicListChange();
-              }}
+              onChange={handleChange}
               id="last_name"
               label="Last Name"
               index={props.index}
@@ -97,7 +114,7 @@ function DynamicList(props) {
         <Grid item md={1} xs={12}>
           <IconButton
             style={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
-            onClick={(e) => dispatch(deleteContactAsync(props.index))}
+            onClick={handleDeleteContact}
           >
             {<TrashIcon />}
           </IconButton>

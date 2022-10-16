@@ -17,16 +17,22 @@ import {
 import GoogleApiAutoComplete from "../utils/GoogleApiAutoComplete";
 import ContactsForm from "./ContactsForm";
 import OnRegulationRequired from "./OnRegulationRequired";
+import {
+  setContactValidation,
+  setValidation,
+} from "../redux/slices/validationSlice";
 
 const PseudoForm = function (props) {
   const companyMinIndividual = useSelector(
     (state) => state.meta.companyMinIndividual
   );
+  const companyTypeMap = useSelector((state) => state.meta.company_typesMap);
   const companyType = useSelector(
     (state) => state.onboarding.current.client_type_uuid
   );
   const classes = useStyles();
   const dispatch = useDispatch();
+
   const handleAddAutoComplete = (e, value) => {
     const id = e.target.id.split("-")[0];
 
@@ -34,25 +40,36 @@ const PseudoForm = function (props) {
       setCurrentOnboardingFields({ id, value: value ? value.iso_code_2 : "" })
     );
     dispatch(updateFieldOnboarding({ [id]: value ? value.iso_code_2 : "" }));
+    dispatch(setValidation({ field: id, value: true }));
   };
+
   const handleAddField = (e, child) => {
     dispatch(
       setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
     );
     dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
+    dispatch(setValidation({ field: e.target.name, value: true }));
   };
 
   const handleCompanyTypeChange = (e, child) => {
+    const { id, value } = child.props;
+    const { name } = e.target;
+
     dispatch(
       setManagmentList({
-        name: child.props.value,
-        minFields: companyMinIndividual[child.props.id],
+        name: value,
+        minFields: companyMinIndividual[id],
       })
     );
-    dispatch(
-      setCurrentOnboardingFields({ id: e.target.name, value: child.props.id })
-    );
-    dispatch(updateFieldOnboarding({ [e.target.name]: child.props.id }));
+
+    if (!companyType)
+      dispatch(setContactValidation({ type: companyTypeMap[id] }));
+
+    dispatch(setCurrentOnboardingFields({ id: name, value: id }));
+
+    dispatch(updateFieldOnboarding({ [name]: id }));
+
+    dispatch(setValidation({ field: name, value: true }));
   };
 
   const isMandatory = (id) => {
@@ -156,10 +173,9 @@ const PseudoForm = function (props) {
               );
             }
             return (
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <DispatcherField
                   required={isMandatory(id)}
-                  rows={id === "description_of_activity" && 6}
                   id={id}
                   label={label}
                 />
@@ -175,6 +191,7 @@ const PseudoForm = function (props) {
           direction="row"
           justifyContent="space-between"
           className={classes.activitiesRequireBox}
+          spacing={2}
         >
           <OnRegulationRequired />
         </Grid>
@@ -182,7 +199,11 @@ const PseudoForm = function (props) {
       <Grid item xs={12}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Typography className={classes.titleText} variant="body1">
+            <Typography
+              style={{ paddingBottom: "10px" }}
+              className={classes.titleText}
+              variant="body1"
+            >
               Contacts
             </Typography>
           </Grid>

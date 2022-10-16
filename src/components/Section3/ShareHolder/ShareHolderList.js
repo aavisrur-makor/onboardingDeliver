@@ -6,6 +6,7 @@ import { useStyles } from "../../../styles/UiForm";
 import { useDispatch } from "react-redux";
 import { addOnboardingContact } from "../../../redux/slices/singleOnboardingSlice";
 import ShareHolderDynamicList from "./ShareHolderDynamicList";
+import { addSingleContact } from "../../../redux/slices/validationSlice";
 
 const ShareHolderList = () => {
   const classes = useStyles();
@@ -16,6 +17,7 @@ const ShareHolderList = () => {
   const dispatch = useDispatch();
   const handleAdd = (e) => {
     dispatch(addOnboardingContact("shareholder"));
+    dispatch(addSingleContact({type:"shareholder"}))
   };
 
   return (
@@ -38,6 +40,7 @@ const ShareHolderList = () => {
             md={12}
           >
             <ShareHolderDynamicList
+              type="share_holder"
               arrLength={
                 data.filter(
                   (contactLine) => contactLine.section === line.section

@@ -18,21 +18,29 @@ import ContactCustomSelect from "./ContactCustomSelect";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import validator from "validator";
+import {
+  deleteContactValidation,
+  setContactValidation,
+  setOnboardingContactValidationField,
+} from "../redux/slices/validationSlice";
 
 const Contacts = (props) => {
   const classes = useStyles();
   const theme = useTheme();
+  const [error, setError] = useState("");
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
   const dispatch = useDispatch();
   const [validatedEmail, setValidatedEmail] = useState(true);
   const handleDeleteContact = (e, index) => {
     dispatch(deleteContactAsync(index));
+    dispatch(deleteContactValidation({ contactIndex: index }));
   };
   const handleContactChange = (e, contactIndex, objectField) => {
     const fieldName = e.target.id.split("-")[0];
     if (fieldName === "email") {
       setValidatedEmail(validator.isEmail(e.target.value));
     }
+   
     dispatch(
       setOnboardingContactField({
         id: fieldName,
@@ -50,8 +58,8 @@ const Contacts = (props) => {
     contactIndex,
     objectField
   ) => {
-    console.log("blabla");
     const fieldName = e.target.id.split("-")[0];
+    
     dispatch(
       setOnboardingContactField({
         id: fieldName,
@@ -61,6 +69,7 @@ const Contacts = (props) => {
       })
     );
     dispatch(updateContactFieldOnboarding(contactIndex));
+    dispatch(setOnboardingContactValidationField({contactIndex,field:objectField,value:true}))
   };
 
   const handleContactPositionChange = (e, child, contactIndex) => {
@@ -72,6 +81,7 @@ const Contacts = (props) => {
       })
     );
     dispatch(updateContactFieldOnboarding(contactIndex));
+    dispatch(setOnboardingContactValidationField({contactIndex,field:e.target.name,value:true}))
   };
   return (
     <>
@@ -90,7 +100,7 @@ const Contacts = (props) => {
             required
           />
         </Grid>
-        <Grid item container id="kaka" md={3} justifyContent="center">
+        <Grid item container md={3} justifyContent="center">
           <Grid item xs={6} md={4}>
             <DialPhoneAutoComplete
               required

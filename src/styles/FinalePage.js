@@ -13,11 +13,7 @@ export const useStyles = makeStyles((theme) => ({
     background: "#FCFCFC 0% 0% no-repeat padding-box",
     boxShadow: "0px 5px 15px #4E4E4E29",
     opacity: "1",
-    height: "247px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    minHeight: "247px",
   },
   Button: {
     marginTop: "70px",

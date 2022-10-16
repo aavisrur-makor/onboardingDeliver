@@ -5,6 +5,7 @@ import { object } from "yup";
 import { BASE_URL, END_POINT } from "../../constants";
 import { setAuthField, setCurrentAuth } from "./authSlice";
 import { getMetaDataAsync, setRolesData } from "./metaDataSlice";
+import { setCurrentOnboardingValidation } from "./validationSlice";
 
 const initialState = {
   current: {
@@ -22,6 +23,8 @@ const initialState = {
     currency_wallet: [],
     company_uuid: null,
     risk_category: null,
+    LEI: null,
+    license_number: null,
     client_company_legal_name: null,
     trading_name: null,
     client_type_uuid: null,
@@ -407,6 +410,7 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       dispatch(setAuthField({ id: "uuidIsValid", value: true }));
       const textFields = await res.data;
       dispatch(setCurrentOnboarding(textFields));
+      dispatch(setCurrentOnboardingValidation(textFields));
       if (textFields.roles) {
         dispatch(setRolesData(textFields.roles));
       }
@@ -450,16 +454,17 @@ export const getOnboardingData = () => async (dispatch, getState) => {
       );
     }
   } catch (err) {
-    if (err.response.status === 400) {
-      dispatch(setAuthField({ id: "uuidIsValid", value: false }));
-      dispatch(
-        setAuthField({
-          id: "loadingErrorMessage",
-          value: "Somethin went wrong...",
-        })
-      );
-      window.location.href = "https://enigma-securities.io/";
-    }
+    console.log(err);
+    // if (err.response.status === 400) {
+    //   dispatch(setAuthField({ id: "uuidIsValid", value: false }));
+    //   dispatch(
+    //     setAuthField({
+    //       id: "loadingErrorMessage",
+    //       value: "Somethin went wrong...",
+    //     })
+    //   );
+    //   window.location.href = "https://enigma-securities.io/";
+    // }
   }
 };
 export const sendGeoLocation = (lat, lon, id) => async (dispatch, getState) => {
@@ -483,8 +488,7 @@ export const deleteContactAsync = (index) => async (dispatch, getState) => {
           getState().auth.uuid
         }`,
         {
-          ["delete_contact"]:
-            getState().onboarding.current.contacts[index].uuid,
+          delete_contact: getState().onboarding.current.contacts[index].uuid,
         }
       );
       if (response.status === 200) {
