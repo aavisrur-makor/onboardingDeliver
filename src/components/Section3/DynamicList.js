@@ -28,14 +28,13 @@ function DynamicList(props) {
   }
 
   const handleChange = (e) => {
-    dispatch(
-      setOnboardingContactField({
-        id: e.target.id,
-        value: e.target.value,
-        contactIndex: props.index,
-      })
-    );
-    dispatch(updateSection3Contact(props.index));
+    // dispatch(
+    //   setOnboardingContactField({
+    //     id: e.target.id,
+    //     value: e.target.value,
+    //     contactIndex: props.index,
+    //   })
+    // );
     if (e.target.value) {
       dispatch(
         setOnboardingContactValidationField({
@@ -43,16 +42,17 @@ function DynamicList(props) {
           field: e.target.id,
           value: true,
         })
-      );
-    } else {
+        );
+      } else {
       dispatch(
         setOnboardingContactValidationField({
           contactIndex: props.index,
           field: e.target.id,
           value: false,
         })
-      );
-    }
+        );
+      }
+      dispatch(updateSection3Contact(props.index));
   };
   const theme = useTheme();
   const querySelector = useMediaQuery(theme.breakpoints.down("md"));
