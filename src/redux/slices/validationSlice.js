@@ -186,7 +186,7 @@ export const validationSlice = createSlice({
         const contactValid = Object.entries(contact).every(([key, value]) => {
           return value === true
         })
-        if (!contactValid) state.remainingFields.push(`missing fields in contact ${index + 1}`)
+        if (!contactValid) state.remainingFields.push(`All fields in contact ${index + 1} must be filled!`)
       })
     },
   },
