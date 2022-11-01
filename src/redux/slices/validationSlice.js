@@ -101,6 +101,8 @@ export const validationSlice = createSlice({
         } else if (key === 'currency_wallet') {
           const currencyWallets = Object.entries(action.payload.currency_wallet)
           state.validationState.currency_wallet = currencyWallets.every((key, value) => value)
+        } else if (key === 'trading_count_from') {
+          state.validationState.trading_count_from = value !== null
         }
       })
       action.payload.contacts.forEach((contact) => {
