@@ -5,7 +5,7 @@ export const isMandatory = (id) => {
     case 'client_type_uuid':
     case 'registered_office_address_gapi':
     case 'country':
-    case 'type_of_business_uuid':
+    case 'business_type_uuid':
     case 'description_of_activity':
     case 'funds_source':
     case 'trading_count_from':

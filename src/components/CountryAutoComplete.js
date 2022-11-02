@@ -12,7 +12,7 @@ const CountryAutoComplete = (props) => {
   const [countryStateInput, setCountryStateInput] = useState('')
   const countries = useSelector((state) => state.meta.countries)
   const countriesMap = useSelector((state) => state.meta.countriesMap)
-  const requiredField = useSelector((state) => state.validation.validationState[props.id])
+  const requiredField = useSelector((state) => (props.contact ? state.validation.validationState.contacts[props.index][props.id] : state.validation.validationState[props.id]))
   const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
   const country = useSelector((state) => (props.index ? state.onboarding.current.contacts[props.index][props.id] : state.onboarding.current[props.id]))
   const uuid = useSelector((state) => state.auth.uuid)

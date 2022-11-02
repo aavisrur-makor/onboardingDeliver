@@ -9,7 +9,7 @@ const GoogleApiAutoComplete = (props) => {
   const dispatch = useDispatch()
   const [isChanged, setIsChanged] = useState(null)
   const [isBlur, setIsBlur] = useState(null)
-  const requiredField = useSelector((state) => state.validation.validationState[props.id])
+  const requiredField = useSelector((state) => (props.contact ? state.validation.validationState.contacts[props.index][props.id] : state.validation.validationState[props.id]))
   const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
   const value = useSelector((state) => (props.id === 'address' ? state.onboarding.current.contacts[props.index][props.id] : state.onboarding.current[props.id]))
 

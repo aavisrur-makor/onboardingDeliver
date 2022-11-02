@@ -7,7 +7,7 @@ import numeral from 'numeral'
 
 const CustomSelect = (props) => {
   const value = useSelector((state) => (props.contactIndex ? state.onboarding.current.contacts[props.contactIndex][props.id] : state.onboarding.current[props.id]))
-  const requiredField = useSelector((state) => state.validation.validationState[props.id])
+  const requiredField = useSelector((state) => (props.contact ? state.validation.validationState.contacts[props.contactIndex][props.id] : state.validation.validationState[props.id]))
   const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
   const stateData = useSelector((state) => state.meta[props.stateData])
   const stateDataMap = useSelector((state) => state?.meta[props.stateDataMap])

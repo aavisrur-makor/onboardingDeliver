@@ -87,7 +87,6 @@ const ShareHolderDynamicList = (props) => {
 
   const handleDeleteContact = () => {
     dispatch(deleteContactAsync(props.index))
-    dispatch(deleteContactValidation({ contactIndex: props.index }))
   }
 
   const debounce = useDebouncedCallback(handleDynamicListChange, 400)
@@ -119,7 +118,7 @@ const ShareHolderDynamicList = (props) => {
                 <CustomKeyBoardDatePicker required id='birthday_at' index={props.index} label='Date of Birth' handleDynamicListChange={handleDynamicListChange} />
               </Grid>
               <Grid item xs={12} md={4}>
-                <GoogleApiAutoComplete required id='address' index={props.index} label='Address' />
+                <GoogleApiAutoComplete contact required id='address' index={props.index} label='Address' />
               </Grid>
               <Grid item alignItems='center' md={4} xs={12} container>
                 <Grid item xs={11}>
@@ -147,15 +146,17 @@ const ShareHolderDynamicList = (props) => {
                 <CustomToggleButton value={alignment} type={props.type} index={props.index} id='type' />
               </Grid>
               <Grid item xs={12} md={5}>
-                <DynamicTextField onChange={handleChange} id='entity_name' index={props.index} label='Company Name' />
+                <DynamicTextField required onChange={handleChange} id='entity_name' index={props.index} label='Company Name' />
               </Grid>
               <Grid item xs={12} md={5}>
-                <DynamicTextField onChange={handleChange} index={props.index} id='entity_registration_number' label='Company Number' />
+                <DynamicTextField required onChange={handleChange} index={props.index} id='entity_registration_number' label='Company Number' />
               </Grid>
             </Grid>
             <Grid item container md={12} spacing={3}>
               <Grid item md={4} xs={12}>
                 <CustomSelect
+                  contact
+                  required
                   stateData={'company_types'}
                   stateDataMap={'company_typesMap'}
                   id={'client_type_uuid'}
@@ -165,11 +166,11 @@ const ShareHolderDynamicList = (props) => {
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <CountryAutoComplete id='country' index={props.index} label='Country of incorporation' handleChange={handleAddAutoComplete} />
+                <CountryAutoComplete required contact id='country' index={props.index} label='Country of incorporation' handleChange={handleAddAutoComplete} />
               </Grid>
               <Grid item alignItems='center' xs={12} md={4} container>
                 <Grid item xs={11}>
-                  <DynamicTextField onChange={handleChange} type='number' label={'Percentage Ownership'} id='entity_ownership_percentage' index={props.index} />
+                  <DynamicTextField required   onChange={handleChange} type='number' label={'Percentage Ownership'} id='entity_ownership_percentage' index={props.index} />
                 </Grid>
                 <Grid item xs={1}>
                   <Typography style={{ textAlign: 'center' }}>%</Typography>

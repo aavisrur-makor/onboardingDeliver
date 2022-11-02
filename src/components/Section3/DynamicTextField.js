@@ -29,6 +29,8 @@ function DynamicTextField(props) {
   const value = useSelector((state) => state.onboarding.current?.contacts[props.index][props.id])
   const dispatch = useDispatch()
   const debounced = useDebouncedCallback(props.onChange, 400)
+  const contactFieldValidation = useSelector((state) => state.validation.validationState.contacts[props.index][props.id])
+  const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
 
   return (
     <TextField
@@ -49,6 +51,8 @@ function DynamicTextField(props) {
       label={props.label}
       type={props.type}
       id={props.id}
+      error={!contactFieldValidation && isFormSubmitted && props.required}
+      helperText={!contactFieldValidation && isFormSubmitted && props.required && 'This field is required'}
       variant='outlined'
     />
   )

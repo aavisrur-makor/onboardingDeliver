@@ -5,7 +5,7 @@ import { object } from 'yup'
 import { BASE_URL, END_POINT } from '../../constants'
 import { setAuthField, setCurrentAuth } from './authSlice'
 import { getMetaDataAsync, setRolesData } from './metaDataSlice'
-import { setContactValidation, setCurrentOnboardingValidation } from './validationSlice'
+import { deleteContactValidation, setContactValidation, setCurrentOnboardingValidation } from './validationSlice'
 
 const initialState = {
   current: {
@@ -420,6 +420,7 @@ export const deleteContactAsync = (index) => async (dispatch, getState) => {
     }
 
     dispatch(deleteContact(index))
+    dispatch(deleteContactValidation({ contactIndex: index }))
   } catch (err) {
     console.log(err)
   }
