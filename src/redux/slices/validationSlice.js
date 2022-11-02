@@ -1,5 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit'
 import validator from 'validator'
+
+const validationMessages = {
+  client_company_legal_name: 'Legal name is missing!',
+  registration_number: 'Registration number is missing!',
+  client_type_uuid: 'Company type is missing!',
+  registered_office_address_gapi: 'Registered office address is missing!',
+  country: 'country is missing!',
+  business_type_uuid: 'Type of business & activity is missing!',
+  description_of_activity: 'Description of activity is missing!',
+  funds_source: 'Source of funds is missing!',
+  trading_count_from: 'Trading frequency from is missing!',
+  trading_count_to: 'Trading frequency to is missing!',
+  trading_count_frequency: 'Trading frequency period is missing!',
+  trading_volume: 'Trading volume up to is missing!',
+  trading_volume_frequency: 'Trading volume period is missing!',
+  currency_wallet: 'Asset(Currency) or wallet is missing!',
+}
+
 const contactValidation = (type, contact = {}) => {
   switch (type) {
     case 'contacts':
@@ -189,9 +207,10 @@ export const validationSlice = createSlice({
     },
     checkRemainingFields: (state, action) => {
       state.remainingFields = []
+
       const contacts = state.validationState.contacts
       Object.entries(state.validationState).forEach(([key, value]) => {
-        if (!value && key !== 'contacts') state.remainingFields.push(key)
+        if (!value && key !== 'contacts') state.remainingFields.push(validationMessages[key])
       })
 
       contacts.forEach((contact, index) => {
