@@ -175,6 +175,14 @@ export const validationSlice = createSlice({
         state.validationState.contacts.push(contactValidation('partner-individual'))
       }
     },
+    addOpositeContact: (state, action) => {
+      const type = action.payload
+      if (type === 'shareholder') {
+        state.validationState.contacts.push(contactValidation('partner-individual'))
+      } else if (type === 'ownership') {
+        state.validationState.contacts.push(contactValidation('share-holder-individual'))
+      }
+    },
     checkRemainingFields: (state, action) => {
       state.remainingFields = []
       const contacts = state.validationState.contacts
@@ -208,6 +216,7 @@ export const {
   deleteContactValidation,
   handleToggleValidationChange,
   addSingleContact,
+  addOpositeContact,
   checkRemainingFields,
 } = validationSlice.actions
 export default validationSlice.reducer
