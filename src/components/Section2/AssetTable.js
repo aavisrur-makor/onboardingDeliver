@@ -1,46 +1,35 @@
-import {
-  Grid,
-  Tooltip,
-  FormControlLabel,
-  Checkbox,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
-import React, { useContext } from "react";
+import { Grid, Tooltip, FormControlLabel, Checkbox, useMediaQuery, useTheme } from '@material-ui/core'
+import React, { useContext } from 'react'
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setOnboardingAssets,
-  updateFieldOnboarding,
-} from "../../redux/slices/singleOnboardingSlice";
+import { useDispatch, useSelector } from 'react-redux'
+import { setOnboardingAssets, updateFieldOnboarding } from '../../redux/slices/singleOnboardingSlice'
+import { checkCurrencyWalletValidation } from '../../redux/slices/validationSlice'
 
 function AssetTable() {
-  const currency_wallet = useSelector(
-    (state) => state.onboarding.current.currency_wallet
-  );
-  const theme = useTheme();
-  const querySelector = useMediaQuery(theme.breakpoints.down("md"));
+  const currency_wallet = useSelector((state) => state.onboarding.current.currency_wallet)
+  const theme = useTheme()
+  const querySelector = useMediaQuery(theme.breakpoints.down('md'))
 
-  const currencies = useSelector((state) => state.meta.currencies);
-  const dispatch = useDispatch();
+  const currencies = useSelector((state) => state.meta.currencies)
+  const dispatch = useDispatch()
   const handleAssetChange = (e, checkedAsset) => {
-
     dispatch(
       setOnboardingAssets({
         id: e.target.id,
         value: checkedAsset.code,
         checkStatus: e.target.checked,
       })
-    );
+    )
     dispatch(
       updateFieldOnboarding({
         currency_wallet: {
           isActive: e.target.checked,
-          [checkedAsset.code]: "",
+          [checkedAsset.code]: '',
         },
       })
-    );
-  };
+    )
+    dispatch(checkCurrencyWalletValidation())
+  }
   return (
     <Grid container spacing={querySelector ? 3 : null}>
       {currencies.map((checkBox, index) => {
@@ -48,20 +37,12 @@ function AssetTable() {
           <Grid item xs={3} md={2}>
             <Tooltip title={checkBox.name}>
               <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={Object.keys(currency_wallet).includes(
-                      checkBox.code
-                    )}
-                    onChange={(e) => handleAssetChange(e, checkBox)}
-                    id={"currency_wallet"}
-                  />
-                }
+                control={<Checkbox checked={Object.keys(currency_wallet).includes(checkBox.code)} onChange={(e) => handleAssetChange(e, checkBox)} id={'currency_wallet'} />}
                 label={checkBox.code}
               />
             </Tooltip>
           </Grid>
-        );
+        )
       })}
       {/* <Grid item>
         <FormControlLabel
@@ -70,7 +51,7 @@ function AssetTable() {
         />
       </Grid> */}
     </Grid>
-  );
+  )
 }
 
-export default AssetTable;
+export default AssetTable

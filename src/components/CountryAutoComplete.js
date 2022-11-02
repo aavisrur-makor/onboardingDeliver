@@ -1,35 +1,31 @@
-              import React, {useEffect, useState } from "react";
-import { TextField } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import React, { useEffect, useState } from 'react'
+import { TextField } from '@material-ui/core'
+import { Autocomplete } from '@material-ui/lab'
 // import countries from "../data/countries";
-import { withStyles } from "@material-ui/core";
-import validate from "../utils/validate";
-import { useSelector } from "react-redux";
+import { withStyles } from '@material-ui/core'
+import validate from '../utils/validate'
+import { useSelector } from 'react-redux'
 
 const CountryAutoComplete = (props) => {
-  const [error, setError] = useState("");
-  const [countryState, setCountryState] = useState({});
-  const [countryStateInput, setCountryStateInput] = useState("");
-  const countries = useSelector((state) => state.meta.countries);
-  const countriesMap = useSelector((state) => state.meta.countriesMap);
-  const country = useSelector((state) =>
-    props.index
-      ? state.onboarding.current.contacts[props.index][props.id]
-      : state.onboarding.current[props.id]
-  );
-  const uuid = useSelector((state) => state.auth.uuid);
+  const [error, setError] = useState('')
+  const [countryState, setCountryState] = useState({})
+  const [countryStateInput, setCountryStateInput] = useState('')
+  const countries = useSelector((state) => state.meta.countries)
+  const countriesMap = useSelector((state) => state.meta.countriesMap)
+  const requiredField = useSelector((state) => (props.contact ? state.validation.validationState.contacts[props.index][props.id] : state.validation.validationState[props.id]))
+  const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
+  const country = useSelector((state) => (props.index ? state.onboarding.current.contacts[props.index][props.id] : state.onboarding.current[props.id]))
+  const uuid = useSelector((state) => state.auth.uuid)
   useEffect(() => {
-    setCountryState(countriesMap[country]);
-    setCountryStateInput(countriesMap[country]?.name);
-  }, [countriesMap, country]);
-
-  
+    setCountryState(countriesMap[country])
+    setCountryStateInput(countriesMap[country]?.name)
+  }, [countriesMap, country])
 
   const handleInputChange = (e, inputValue) => {
-    setCountryStateInput(inputValue);
+    setCountryStateInput(inputValue)
 
-    validate(null, inputValue, setError);
-  };
+    validate(null, inputValue, setError)
+  }
   return (
     <StyledAutoComplete
       id={props.id}
@@ -37,34 +33,34 @@ const CountryAutoComplete = (props) => {
       value={countryState}
       options={countries}
       autoHighlight
-      getOptionLabel={(option) => option.name || ""}
+      getOptionLabel={(option) => option.name || ''}
       onChange={(e, value) => props.handleChange(e, value)}
       onInputChange={(e, inputValue) => handleInputChange(e, inputValue)}
-      inputValue={countryStateInput || ""}
+      inputValue={countryStateInput || ''}
       renderInput={(params) => (
         <StyledTextFieldCountry
           {...params}
-          error={!!error}
+          error={!!error || (!requiredField && isFormSubmitted && props.required)}
           required={props.required}
-          helperText={error && "Field is empty."}
+          helperText={(error && 'Field is empty.') || (!requiredField && isFormSubmitted && props.required && 'This field is required!')}
           disableOutline
           label={props.label}
-          variant="outlined"
+          variant='outlined'
           inputProps={{
             ...params.inputProps,
-            autoComplete: "new-password", // disable autocomplete and autofill
+            autoComplete: 'new-password', // disable autocomplete and autofill
           }}
         />
       )}
     />
-  );
-};
-export default CountryAutoComplete;
+  )
+}
+export default CountryAutoComplete
 
 export const StyledAutoComplete = withStyles((theme) => ({
   root: {
-    "& .MuiIconButton-root": {
-      color: "#3E2F71",
+    '& .MuiIconButton-root': {
+      color: '#3E2F71',
     },
   },
   //   color: "#6d6d6d",
@@ -97,10 +93,10 @@ export const StyledAutoComplete = withStyles((theme) => ({
   // popper: {
   //   color: "white",
   // },
-}))(Autocomplete);
+}))(Autocomplete)
 
 export const StyledTextFieldCountry = withStyles((theme) => ({
   root: {
-    color: "white",
+    color: 'white',
   },
-}))(TextField);
+}))(TextField)
