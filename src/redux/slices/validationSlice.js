@@ -65,13 +65,12 @@ const validationState = {
   trading_count_frequency: false,
   trading_volume: false,
   trading_volume_frequency: false,
-  asset: false,
   currency_wallet: false,
   contacts: [],
 }
 export const validationSlice = createSlice({
   name: 'validation',
-  initialState: { validationState, remainingFields: [] },
+  initialState: { validationState, remainingFields: [], isFormSubmitted: false },
   reducers: {
     setContactValidation: (state, action) => {
       const { type } = action.payload
@@ -94,18 +93,18 @@ export const validationSlice = createSlice({
     setCurrentOnboardingValidation: (state, action) => {
       const requiredFields = Object.keys(validationState)
       Object.entries(action.payload).forEach(([key, value]) => {
-        if (requiredFields.includes(key) && key !== 'contacts' && value) {
-          state.validationState[key] = true
-        } else if (key === 'company_assets' && value[0]) {
-          state.validationState.asset = true
-        } else if (key === 'currency_wallet') {
-          const currencyWallets = Object.entries(action.payload.currency_wallet)
-          state.validationState.currency_wallet = currencyWallets.every((key, value) => value)
+        console.log(key, value)
+        if (key === 'currency_wallet') {
+          const currencyWallets = Object.values(value)
+          state.validationState.currency_wallet = currencyWallets.length ? currencyWallets.every((value) => value) : false
         } else if (key === 'trading_count_from') {
           state.validationState.trading_count_from = value !== null
+        } else if (requiredFields.includes(key) && key !== 'contacts' && value) {
+          state.validationState[key] = true
         }
       })
       action.payload.contacts.forEach((contact) => {
+        console.log(contact)
         //consider to switch case
         const { type, section } = contact
         switch (section) {
@@ -129,7 +128,12 @@ export const validationSlice = createSlice({
     },
     setValidation: (state, action) => {
       const { field, value } = action.payload
+      if (field === 'currency_wallet') {
+      }
       state.validationState[field] = value
+    },
+    setIsFormSubmitted: (state, action) => {
+      state.isFormSubmitted = action.payload
     },
     setOnboardingContactValidationField: (state, action) => {
       const { contactIndex, field, value } = action.payload
@@ -197,11 +201,18 @@ export const handleToggleChange = (contactIndex, alignment) => (dispatch, getSta
   dispatch(handleToggleValidationChange({ contactIndex, contact, alignment }))
 }
 
+export const checkCurrencyWalletValidation = () => (dispatch, getState) => {
+  const currencyWallet = getState().onboarding.current.currency_wallet
+  const isCurrencyWalletValid = Object.values(currencyWallet).every((value) => value)
+
+  dispatch(setValidation({ field: 'currency_wallet', value: isCurrencyWalletValid }))
+}
 export const {
   setContactValidation,
   setFirstContactValidation,
   setCurrentOnboardingValidation,
   setValidation,
+  setIsFormSubmitted,
   setOnboardingContactValidationField,
   setShareHolderToggle,
   setOwnerShipToggle,

@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useDebouncedCallback } from 'use-debounce/lib'
 import { setCurrentOnboardingFields, updateFieldOnboarding } from '../../redux/slices/singleOnboardingSlice'
+import { checkCurrencyWalletValidation, setValidation } from '../../redux/slices/validationSlice'
 import { useStyles } from '../../styles/TradingInfoStyle'
 function WalletList() {
   const currency_wallet = useSelector((state) => state.onboarding.current.currency_wallet)
@@ -10,6 +11,7 @@ function WalletList() {
   const dispatch = useDispatch()
   const handleWallet = (e, index, asset) => {
     dispatch(updateFieldOnboarding({ [e.target.id]: { [asset]: e.target.value } }))
+    dispatch(checkCurrencyWalletValidation())
   }
 
   const debounced = useDebouncedCallback(handleWallet, 400)

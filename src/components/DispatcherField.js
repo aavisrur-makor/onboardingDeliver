@@ -49,6 +49,8 @@ const DispatcherField = (props) => {
   const value = useSelector((state) => state.onboarding.current[props.id])
   const dispatch = useDispatch()
   const [error, setError] = useState('')
+  const requiredField = useSelector((state) => state.validation.validationState[props.id])
+  const isFormSubmitted = useSelector((state) => state.validation.isFormSubmitted)
   const classes = useStyles()
 
   const handleChange = async (e) => {
@@ -76,10 +78,13 @@ const DispatcherField = (props) => {
   return (
     <TextField
       className={classes.textField}
+      FormHelperTextProps={{
+        style: { whiteSpace: 'nowrap' },
+      }}
       id={props.id}
       type={props.type}
       fullWidth
-      error={error}
+      error={error || (!requiredField && isFormSubmitted && props.required)}
       required={props.required}
       onChange={(e) => {
         dispatch(setCurrentOnboardingFields({ id: props.id, value: e.target.value }))
@@ -87,7 +92,7 @@ const DispatcherField = (props) => {
       }}
       inputProps={{ style: { padding: props.id === 'license_number' ? 0 : 2 } }}
       label={props.label}
-      helperText={error && error}
+      helperText={(error && error) || (!requiredField && isFormSubmitted && props.required && 'This field is required')}
       value={value !== null ? value : ''}
       variant='outlined'
       rows={props.rows}
