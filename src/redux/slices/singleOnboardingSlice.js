@@ -5,7 +5,7 @@ import { object } from 'yup'
 import { BASE_URL, END_POINT } from '../../constants'
 import { setAuthField, setCurrentAuth } from './authSlice'
 import { getMetaDataAsync, setRolesData } from './metaDataSlice'
-import { deleteContactValidation, setContactValidation, setCurrentOnboardingValidation } from './validationSlice'
+import { deleteContactValidation, addOpositeContact, addSingleContact, setContactValidation, setCurrentOnboardingValidation } from './validationSlice'
 
 const initialState = {
   current: {
@@ -351,12 +351,16 @@ export const getOnboardingData = () => async (dispatch, getState) => {
         dispatch(setRolesData(textFields.roles))
       }
       if (textFields.client_type_uuid) {
+        const companyTypeMap = getState().meta.company_typesMap
         dispatch(
           setManagmentList({
             name: getState().meta.company_typesMap[textFields.client_type_uuid],
             minFields: getState().meta.companyMinIndividual[textFields.client_type_uuid],
           })
         )
+        const ownerShipAndShareholders = textFields.contacts.filter((contact) => contact.section !== 'contact')
+        if (ownerShipAndShareholders.length === 0) dispatch(setContactValidation({ type: companyTypeMap[textFields.client_type_uuid] }))
+        if (ownerShipAndShareholders.length === 1) dispatch(addOpositeContact(ownerShipAndShareholders[0].section))
       }
       if (!textFields.registered_office_address_gapi || !textFields.country) {
         var options = {
