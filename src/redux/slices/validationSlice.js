@@ -111,7 +111,6 @@ export const validationSlice = createSlice({
     setCurrentOnboardingValidation: (state, action) => {
       const requiredFields = Object.keys(validationState)
       Object.entries(action.payload).forEach(([key, value]) => {
-        console.log(key, value)
         if (key === 'currency_wallet') {
           const currencyWallets = Object.values(value)
           state.validationState.currency_wallet = currencyWallets.length ? currencyWallets.every((value) => value) : false
@@ -122,7 +121,6 @@ export const validationSlice = createSlice({
         }
       })
       action.payload.contacts.forEach((contact) => {
-        console.log(contact)
         //consider to switch case
         const { type, section } = contact
         switch (section) {
